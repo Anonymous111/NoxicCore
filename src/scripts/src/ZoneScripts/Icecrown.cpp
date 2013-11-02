@@ -17,7 +17,7 @@
  *
  */
 
-#include "StdAfx.h"
+/*#include "StdAfx.h"
 #include "Setup.h"
 
 #define PARACHUTE 54168
@@ -78,10 +78,10 @@ void SpectralGryphonHook(Player * plr, uint32 Zone, uint32 OldZone)
 			plr->CastSpell(plr, PARACHUTE, true);
 		}
 	}
-}
+}*/
 
 void SetupZoneIcecrown(ScriptMgr* mgr)
 {
 	//SpectralGryphons
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_ZONE, (void*)&SpectralGryphonHook);
+	//mgr->register_hook(SERVER_HOOK_EVENT_ON_ZONE, (void*)&SpectralGryphonHook);
 }

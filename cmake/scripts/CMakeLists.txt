@@ -39,7 +39,7 @@ add_subdirectory( luaengine )
 add_subdirectory( spellhandlers )
 add_subdirectory( battlegrounds )
 #add_subdirectory( worldpvpscripts )
-#add_subdirectory( zonescripts )
+add_subdirectory( zonescripts )
 
 unset(SCRIPTS_PATH)
 unset(include_dirs)

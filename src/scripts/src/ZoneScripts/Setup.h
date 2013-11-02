@@ -22,7 +22,10 @@
 #ifndef ZONE_SCRIPTS_SETUP_H
 #define ZONE_SCRIPTS_SETUP_H
 
-// Northrend spell handlers
+// Northrend
 void SetupZoneIcecrown(ScriptMgr* mgr);
+
+// Eastern Kingdom
+void SetupZoneArathiHighlands(ScriptMgr* mgr);
 
 #endif
