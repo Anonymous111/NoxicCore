@@ -30,7 +30,7 @@ public:
 		if(iWaypointId == 15)
 		{
 			GetUnit()->GetAIInterace()->deleteWaypoints();
-			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG)UNIVERSAL, "Thanks, I found the fact that, it searched.");
+			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched.");
 			GetUnit()->Despawn(DESPAWN_TIME, 1000);
 
 			if(GetUnit()->m_escorter != NULL)

@@ -10,6 +10,8 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 #sources -contains source files for our library.
 SET( sources
 	ArathiHighlands.cpp
+	BladeEdgeMountains.cpp
+	BlastedLands.cpp
 	Icecrown.cpp
     Setup.cpp
  )

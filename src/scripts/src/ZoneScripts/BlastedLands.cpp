@@ -17,21 +17,21 @@
  *
  */
 
-#include "StdAfx.h"
+#include "Setup.h"
 
-#ifndef ZONE_SCRIPTS_SETUP_H
-#define ZONE_SCRIPTS_SETUP_H
+class KirithAI : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
+	KirithAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-// Northrend
-void SetupZoneIcecrown(ScriptMgr* mgr);
+	void OnDied(Unit* mKiller)
+	{
+		GetUnit()->CastSpell(GetUnit(), 10853, true);
+	}
+};
 
-// Eastern Kingdom
-void SetupZoneArathiHighlands(ScriptMgr* mgr);
-void SetupZoneBlastedLands(ScriptMgr* mgr);
-
-// Kalimdor
-
-// Outland
-void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);
-
-#endif
+void SetupZoneBlastedLands(ScriptMgr* mgr)
+{
+	mgr->register_creature_script(7728,  &KirithAI::Create); // Kirith the Damned
+}
