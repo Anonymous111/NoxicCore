@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -220,7 +220,6 @@ struct Formation
 	float dist;
 };
 
-
 enum UNIT_TYPE
 {
     UNIT_TYPE_NONE			= 0,
@@ -301,8 +300,9 @@ enum ELITE
     ELITE_RAREELITE = 2,
     ELITE_WORLDBOSS = 3,
     ELITE_RARE = 4,
-//    ELITE_UNKNOWN = 5
+	ELITE_UNKOWN = 5
 };
+
 enum TIME_REMOVE_CORPSE
 {
     TIME_CREATURE_REMOVE_CORPSE = 180000,
@@ -335,7 +335,6 @@ class GossipScript;
 class AuctionHouse;
 struct Trainer;
 #define CALL_SCRIPT_EVENT(obj, func) if(obj->IsInWorld() && obj->IsCreature() && TO< Creature* >(obj)->GetScript() != NULL) TO< Creature* >(obj)->GetScript()->func
-
 
 uint8 get_byte(uint32 buffer, uint32 index);
 
@@ -666,7 +665,6 @@ class SERVER_DECL Creature : public Unit
 
 			return false;
 		}
-
 
 		bool isCritter();
 		bool isTrainingDummy()
