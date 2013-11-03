@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -350,8 +350,8 @@ typedef std::list<const AchievementCriteriaEntry*>					AchievementCriteriaEntryL
 #endif
 
 #ifndef WIN32
-#define arcpro_USE_MAP_PLAYER_INDEX
-#ifdef arcpro_USE_MAP_PLAYER_INDEX
+#define ARCPRO_USE_MAP_PLAYER_INDEX
+#ifdef ARCPRO_USE_MAP_PLAYER_INDEX
 
 // you can use the string map (slower)
 typedef map<string, PlayerInfo*> PlayerNameStringIndexMap;

@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -50,11 +50,13 @@ ObjectMgr::~ObjectMgr()
 	Log.Notice("ObjectMgr", "Deleting Itemsets...");
 	for(ItemSetContentMap::iterator i = mItemSets.begin(); i != mItemSets.end(); ++i)
 		delete i->second;
+
 	mItemSets.clear();
 
 	Log.Notice("ObjectMgr", "Deleting PlayerCreateInfo...");
 	for(PlayerCreateInfoMap::iterator i = mPlayerCreateInfo.begin(); i != mPlayerCreateInfo.end(); ++ i)
 		delete i->second;
+
 	mPlayerCreateInfo.clear();
 
 	Log.Notice("ObjectMgr", "Deleting Guilds...");
@@ -75,6 +77,7 @@ ObjectMgr::~ObjectMgr()
 		Trainer* t = i->second;
 		if(t->UIMessage && t->UIMessage != (char*)NormalTalkMessage)
 			delete [] t->UIMessage;
+
 		delete t;
 	}
 
@@ -84,6 +87,7 @@ ObjectMgr::~ObjectMgr()
 		LevelMap* l = i->second;
 		for(LevelMap::iterator i2 = l->begin(); i2 != l->end(); ++i2)
 			delete i2->second;
+
 		l->clear();
 		delete l;
 	}
@@ -120,6 +124,7 @@ ObjectMgr::~ObjectMgr()
 			p = itr->second;
 			for(uint32 j = 0; j < p->TextCount; ++j)
 				free((char*)p->Texts[j]);
+
 			delete [] p->Texts;
 			free((char*)p->MonsterName);
 			delete p;
@@ -166,6 +171,7 @@ ObjectMgr::~ObjectMgr()
 			for(uint32 i = 0; i < pGroup->GetSubGroupCount(); ++i)
 				if(SubGroup* pSubGroup = pGroup->GetSubGroup(i))
 					pSubGroup->Disband();
+
 			delete pGroup;
 		}
 	}
@@ -196,7 +202,9 @@ ObjectMgr::~ObjectMgr()
 
 	Log.Notice("ObjectMgr", "Deleting Arena Teams...");
 	for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeams.begin(); itr != m_arenaTeams.end(); ++itr)
+	{
 		delete(*itr).second;
+	}
 
 	Log.Notice("ObjectMgr", "Deleting Profession Discoveries...");
 	for(std::set<ProfessionDiscovery*>::iterator itr = ProfessionDiscoveryTable.begin(); itr != ProfessionDiscoveryTable.end(); itr++)
@@ -214,9 +222,9 @@ ObjectMgr::~ObjectMgr()
 	Log.Notice("ObjectMgr", "Cleaning up vehicle accessories...");
 	for(std::map< uint32, std::vector< VehicleAccessoryEntry* >* >::iterator itr = vehicle_accessories.begin(); itr != vehicle_accessories.end(); ++itr)
 	{
-		std::vector< VehicleAccessoryEntry* > *v = itr->second;
+		std::vector<VehicleAccessoryEntry*> *v = itr->second;
 
-		for( std::vector< VehicleAccessoryEntry* >::iterator itr2 = v->begin(); itr2 != v->end(); ++itr2 )
+		for(std::vector<VehicleAccessoryEntry*>::iterator itr2 = v->begin(); itr2 != v->end(); ++itr2)
 			delete *itr2;
 		v->clear();
 
@@ -227,7 +235,7 @@ ObjectMgr::~ObjectMgr()
 
 
 	Log.Notice( "ObjectMgr", "Cleaning up worldstate templates" );
-	for(std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr)
+	for(std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr
 	{
 		itr->second->clear();
 		delete itr->second;
@@ -576,7 +584,9 @@ void ObjectMgr::LoadPlayerCreateInfo()
 		int index;
 		vector<string>::iterator iter;
 		for(iter = tokens.begin(), index = 0; (index < 12) && (iter != tokens.end()); ++iter, ++index)
+		{
 			pPlayerCreateInfo->taximask[index] = atol((*iter).c_str());
+		}
 
 		QueryResult* sk_sql = WorldDatabase.Query("SELECT * FROM playercreateinfo_skills WHERE indexid=%u", pPlayerCreateInfo->index);
 
@@ -730,7 +740,6 @@ Corpse* ObjectMgr::GetCorpseByOwner(uint32 ownerguid)
 	}
 	_corpseslock.Release();
 
-
 	return rv;
 }
 
@@ -741,6 +750,7 @@ void ObjectMgr::DelinkPlayerCorpses(Player* pOwner)
 	c = this->GetCorpseByOwner(pOwner->GetLowGUID());
 	if(!c)
 		return;
+
 	sEventMgr.AddEvent(c, &Corpse::Delink, EVENT_CORPSE_SPAWN_BONES, 1, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 	CorpseAddEventDespawn(c);
 }
@@ -879,6 +889,7 @@ void ObjectMgr::SaveGMTicket(GM_Ticket* ticket, QueryBuffer* buf)
 		ss << uint32(1);
 	else
 		ss << uint32(0);
+
 	ss << ",";
 
 	ss << ticket->assignedToPlayer << ", '";
@@ -964,7 +975,6 @@ void ObjectMgr::SetHighestGuids()
 		delete result;
 	}
 
-
 	result = CharacterDatabase.Query("SELECT MAX( message_id ) FROM mailbox");
 	if(result)
 	{
@@ -1013,6 +1023,7 @@ uint32 ObjectMgr::GenerateMailID()
 {
 	return ++m_mailid;
 }
+
 uint32 ObjectMgr::GenerateLowGuid(uint32 guidhigh)
 {
 	ARCPRO_ASSERT(guidhigh == HIGHGUID_TYPE_ITEM || guidhigh == HIGHGUID_TYPE_CONTAINER || guidhigh == HIGHGUID_TYPE_PLAYER);
@@ -1618,6 +1629,7 @@ void ObjectMgr::LoadAchievementCriteriaList()
 	}
 }
 #endif
+
 std::list<ItemPrototype*>* ObjectMgr::GetListForItemSet(uint32 setid)
 {
 	return mItemSets[setid];
@@ -2407,7 +2419,8 @@ TimedEmoteList* ObjectMgr::GetTimedEmoteList(uint32 spawnid)
 void ObjectMgr::LoadCreatureWaypoints()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM creature_waypoints");
-	if(!result)return;
+	if(!result)
+		return;
 
 	do
 	{
@@ -3470,7 +3483,7 @@ PlayerCache* ObjectMgr::GetPlayerCache(const char* name, bool caseSensitive /*= 
 
 void ObjectMgr::LoadVehicleAccessories()
 {
-	QueryResult *result = WorldDatabase.Query( "SELECT creature_entry, accessory_entry, seat FROM vehicle_accessories;" );
+	QueryResult *result = WorldDatabase.Query("SELECT creature_entry, accessory_entry, seat FROM vehicle_accessories;");
 
 	if(result != NULL)
 	{
@@ -3488,10 +3501,10 @@ void ObjectMgr::LoadVehicleAccessories()
 				= vehicle_accessories.find(creature_entry);
 
 			if(itr != vehicle_accessories.end())
-				itr->second->push_back(entry);
-			else
 			{
-				std::vector<VehicleAccessoryEntry*>* v = new std::vector<VehicleAccessoryEntry*>();
+				itr->second->push_back(entry);
+			}else{
+				std::vector< VehicleAccessoryEntry* >* v = new std::vector<VehicleAccessoryEntry*>();
 				v->push_back(entry);
 				vehicle_accessories.insert(std::make_pair(creature_entry, v));
 			}
@@ -3503,9 +3516,10 @@ void ObjectMgr::LoadVehicleAccessories()
 	}
 }
 
-std::vector< VehicleAccessoryEntry* >* ObjectMgr::GetVehicleAccessories( uint32 creature_entry ){
-	std::map< uint32, std::vector< VehicleAccessoryEntry* >* >::iterator itr =
-		vehicle_accessories.find( creature_entry );
+std::vector<VehicleAccessoryEntry*>* ObjectMgr::GetVehicleAccessories(uint32 creature_entry)
+{
+	std::map<uint32, std::vector<VehicleAccessoryEntry*>*>::iterator itr =
+		vehicle_accessories.find(creature_entry);
 	
 	if(itr == vehicle_accessories.end())
 		return NULL;
@@ -3525,7 +3539,8 @@ void ObjectMgr::LoadWorldStateTemplates(){
 		
 		worldstate_templates.insert( std::make_pair( mapid, new std::multimap< uint32, WorldState >() ) );
 
-	}while(result->NextRow());
+	}
+	while(result->NextRow());
 
 	delete result;
 
@@ -3534,7 +3549,8 @@ void ObjectMgr::LoadWorldStateTemplates(){
 	if(result == NULL)
 		return;
 
-	do{
+	do
+	{
 		Field *row = result->Fetch();
 		WorldState ws;
 
@@ -3543,7 +3559,7 @@ void ObjectMgr::LoadWorldStateTemplates(){
 		ws.field = row[2].GetUInt32();
 		ws.value = row[3].GetUInt32();
 
-		std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr
+		std::map<uint32, std::multimap<uint32, WorldState>*>::iterator itr
 			= worldstate_templates.find(mapid);
 
 		if(itr == worldstate_templates.end())
@@ -3551,13 +3567,15 @@ void ObjectMgr::LoadWorldStateTemplates(){
 
 		itr->second->insert(std::make_pair(zone, ws));
 
-	}while(result->NextRow());
+	}
+	while( result->NextRow());
 
 	delete result;
 }
 
-std::multimap< uint32, WorldState >* ObjectMgr::GetWorldStatesForMap(uint32 map) const{
-	std::map< uint32, std::multimap< uint32, WorldState >* >::const_iterator itr =
+std::multimap<uint32, WorldState>* ObjectMgr::GetWorldStatesForMap(uint32 map) const
+{
+	std::map<uint32, std::multimap<uint32, WorldState>*>::const_iterator itr =
 		worldstate_templates.find(map);
 
 	if(itr == worldstate_templates.end())

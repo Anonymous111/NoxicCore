@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -54,7 +54,7 @@ uint32 QuestMgr::PlayerMeetsReqs(Player* plr, Quest* qst, bool skiplevelcheck)
 	else
 	{
 		status = QMGR_QUEST_REPEATABLE;
-		if(qst->is_repeatable == arcpro_QUEST_REPEATABLE_DAILY && plr->HasFinishedDaily(qst->id))
+		if(qst->is_repeatable == ARCPRO_QUEST_REPEATABLE_DAILY && plr->HasFinishedDaily(qst->id))
 			return QMGR_QUEST_NOT_AVAILABLE;
 	}
 
@@ -1203,7 +1203,7 @@ void QuestMgr::OnQuestFinished(Player* plr, Quest* qst, Object* qst_giver, uint3
 		plr->ModGold(GenerateRewardMoney(plr, qst));
 
 		// if daily then append to finished dailies
-		if(qst->is_repeatable == arcpro_QUEST_REPEATABLE_DAILY)
+		if(qst->is_repeatable == ARCPRO_QUEST_REPEATABLE_DAILY)
 			plr->PushToFinishedDailies(qst->id);
 	}
 	else

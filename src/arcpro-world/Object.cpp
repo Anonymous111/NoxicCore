@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -2172,7 +2172,7 @@ void Object::PlaySoundToSet(uint32 sound_entry)
 		SendMessageToSet(&data, true);
 	}
 	else
-		sLog.Error("Object", "Object type %u tryed to play invalid sound entry %u, ignoring", GetTypeId(), sound_entry);
+		sLog.Error("Object", "Object type %u tried to play invalid sound entry %u, ignoring", GetTypeId(), sound_entry);
 }
 
 void Object::_SetExtension(const string & name, void* ptr)
