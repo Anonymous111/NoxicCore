@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -558,7 +558,7 @@ class SERVER_DECL ChatHandler : public Singleton<ChatHandler>
 		bool HandleLookupAchievementCmd(const char* args, WorldSession* m_session);
 #endif
 		// Deprecated GMScript reload.
-		//bool HandleReloadScriptsCommand(const char * args, WorldSession * m_session);
+		bool HandleReloadScriptsCommand(const char * args, WorldSession * m_session);
 		bool HandleNpcPossessCommand(const char* args, WorldSession* m_session);
 		bool HandleNpcUnPossessCommand(const char* args, WorldSession* m_session);
 		bool HandleRehashCommand(const char* args, WorldSession* m_session);

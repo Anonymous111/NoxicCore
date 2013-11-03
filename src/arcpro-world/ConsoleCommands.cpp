@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -63,7 +63,7 @@ bool HandleInfoCommand(BaseConsole* pConsole, int argc, const char* argv[])
 	pConsole->Write("======================================================================\r\n");
 	pConsole->Write("Server Information: \r\n");
 	pConsole->Write("======================================================================\r\n");
-	pConsole->Write("Server Revision: ArcPro %s/%s-%s-%s (www.arcpro.info)\r\n", BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH);
+	pConsole->Write("Server Revision: ArcPro %s/%s-%s-%s (http://arcpro.info)\r\n", BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH);
 	pConsole->Write("Server Uptime: %s\r\n", sWorld.GetUptimeString().c_str());
 	pConsole->Write("Current Players: %d (%d GMs, %d queued)\r\n", clientsNum, gm,  0);
 	pConsole->Write("Active Thread Count: %u\r\n", ThreadPool.GetActiveThreadCount());
@@ -390,10 +390,9 @@ bool HandleClearConsoleCommand(BaseConsole* pConsole, int argc, const char* argv
 
 bool HandleReloadConsoleCommand(BaseConsole* pConsole, int argc, const char* argv[])
 {
-	sWorld.SendWorldText("Support for reloading tables on the fly was disabled in ArcPro revision 3621. You are seeing this message because apparently reading SVN changelog or using forums search is way over the head of some of our users.", 0);
-	return true;
+	//sWorld.SendWorldText("Support for reloading tables on the fly was disabled in ArcPro revision 3621. You are seeing this message because apparently reading SVN changelog or using forums search is way over the head of some of our users.", 0);
+	//return true;
 
-	/*
 	if( argc < 2 || strlen(argv[1]) < 3 )
 		return false;
 
@@ -434,9 +433,8 @@ bool HandleReloadConsoleCommand(BaseConsole* pConsole, int argc, const char* arg
 
 	return true;
 
-	*/
-
 }
+
 bool HandleScriptEngineReloadCommand(BaseConsole*, int, const char* [])
 {
 	sScriptMgr.ReloadScriptEngines();
