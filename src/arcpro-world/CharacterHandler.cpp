@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -83,7 +83,7 @@ bool ChatHandler::HandleRenameAllCharacter(const char* args, WorldSession* m_ses
 
 			if(VerifyName(pName, szLen) != E_CHAR_NAME_SUCCESS)
 			{
-				LOG_DEBUG("renaming character %s, %u", pName, uGuid);
+				LOG_DEBUG("Renaming character %s, %u", pName, uGuid);
 				Player* pPlayer = objmgr.GetPlayer(uGuid);
 				if(pPlayer != NULL)
 				{
@@ -644,7 +644,7 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
 	CHECK_PACKET_SIZE(recv_data, 8);
 	uint64 playerGuid = 0;
 
-	LOG_DEBUG("WORLD: Recvd Player Logon Message");
+	LOG_DEBUG("WORLD: Received Player Logon Message");
 
 	recv_data >> playerGuid; // this is the GUID selected by the player
 	if(objmgr.GetPlayer((uint32)playerGuid) != NULL || m_loggingInPlayer || _player)
