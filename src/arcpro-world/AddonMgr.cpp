@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -37,15 +37,14 @@ AddonMgr::~AddonMgr()
 {
 	KnownAddonsItr itr;
 	for(itr = mKnownAddons.begin(); itr != mKnownAddons.end(); ++itr)
-	{
 		delete itr->second;
-	}
+
 	mKnownAddons.clear();
 }
 
 bool AddonMgr::IsAddonBanned(uint64 crc, std::string name)
 {
-	return false;	// bleh needs work
+	return false; // bleh needs work
 }
 
 bool AddonMgr::IsAddonBanned(std::string name, uint64 crc)
@@ -120,7 +119,7 @@ void AddonMgr::SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession
 	}
 	catch(ByteBuffer::error &)
 	{
-		LOG_DEBUG("Warning: Incomplete auth session sent.");
+		LOG_DEBUG("Warning: Incomplete authentication session sent.");
 		return;
 	}
 
@@ -133,7 +132,7 @@ void AddonMgr::SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession
 	if((source->size() - position) < 4 || realsize == 0)
 	{
 		// we shouldn't get here.. but just in case this will stop any crash here.
-		LOG_DEBUG("Warning: Incomplete auth session sent.");
+		LOG_DEBUG("Warning: Incomplete authentication session sent.");
 		return;
 	}
 

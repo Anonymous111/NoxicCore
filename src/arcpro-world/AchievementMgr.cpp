@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -448,7 +448,6 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 								guidIndex = guidCount;
 							}
 						}
-
 						if(!alreadySent)
 						{
 							(*groupItr)->m_loggedInPlayer->GetSession()->SendPacket(&cdata);
@@ -460,7 +459,6 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 			grp->Unlock();
 		}
 		// Send Achievement message to nearby players
-		
 		for(std::set<Object*>::iterator inRangeItr = GetPlayer()->GetInRangePlayerSetBegin(); inRangeItr != GetPlayer()->GetInRangePlayerSetEnd(); ++inRangeItr)
 		{
 
@@ -561,6 +559,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, in
 	uint64 selectedGUID = 0;
 	if(type == ACHIEVEMENT_CRITERIA_TYPE_DO_EMOTE)
 		selectedGUID = GetPlayer()->GetSelection();
+
 	AchievementCriteriaEntryList const & achievementCriteriaList = objmgr.GetAchievementCriteriaByType(type);
 	for(AchievementCriteriaEntryList::const_iterator i = achievementCriteriaList.begin(); i != achievementCriteriaList.end(); ++i)
 	{
@@ -1381,9 +1380,7 @@ bool AchievementMgr::IsCompletedCriteria(AchievementCriteriaEntry const* achieve
 
 	// 0 or negative, not completed.
 	if(progress->counter < 1)
-	{
 		return false;
-	}
 
 	if(achievement->ID == 2716) // Dual talent spec
 		return false;

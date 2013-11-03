@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 
 #include "StdAfx.h"
 
@@ -104,9 +105,7 @@ void AuctionHouse::UpdateAuctions()
 				this->SendAuctionExpiredNotificationPacket(auct);
 			}
 			else
-			{
 				auct->DeletedReason = AUCTION_REMOVE_WON;
-			}
 
 			auct->Deleted = true;
 			removalList.push_back(auct);
@@ -298,7 +297,8 @@ void AuctionHouse::SendBidListPacket(Player* plr, WorldPacket* packet)
 		auct = itr->second;
 		if(auct->HighestBidder == plr->GetGUID())
 		{
-			if(auct->Deleted) continue;
+			if(auct->Deleted)
+				continue;
 
 			auct->AddToPacket(data);
 			(*(uint32*)&data.contents()[0])++;
@@ -321,6 +321,7 @@ void AuctionHouse::UpdateOwner(uint32 oldGuid, uint32 newGuid)
 		auction = itr->second;
 		if(auction->Owner == oldGuid)
 			auction->Owner = newGuid;
+
 		if(auction->HighestBidder == oldGuid)
 		{
 			auction->HighestBidder = newGuid;
@@ -345,7 +346,8 @@ void AuctionHouse::SendOwnerListPacket(Player* plr, WorldPacket* packet)
 		auct = itr->second;
 		if(auct->Owner == plr->GetGUID())
 		{
-			if(auct->Deleted) continue;
+			if(auct->Deleted)
+				continue;
 
 			auct->AddToPacket(data);
 			(*(uint32*)&data.contents()[0])++;
@@ -535,7 +537,8 @@ void WorldSession::HandleCancelAuction(WorldPacket & recv_data)
 
 	// Find Item
 	Auction* auct = pCreature->auctionHouse->GetAuction(auction_id);
-	if(auct == 0) return;
+	if(auct == 0)
+		return;
 
 	pCreature->auctionHouse->QueueDeletion(auct, AUCTION_REMOVE_CANCELLED);
 

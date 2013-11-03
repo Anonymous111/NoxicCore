@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -25,13 +25,13 @@
 
 enum AreaTriggerType
 {
-    ATTYPE_NULL		 = 0,
-    ATTYPE_INSTANCE	 = 1,
-    ATTYPE_QUESTTRIGGER = 2,
-    ATTYPE_INN		  = 3,
-    ATTYPE_TELEPORT	 = 4,
+    ATTYPE_NULL			= 0,
+    ATTYPE_INSTANCE		= 1,
+    ATTYPE_QUESTTRIGGER	= 2,
+    ATTYPE_INN			= 3,
+    ATTYPE_TELEPORT		= 4,
     ATTYPE_SPELL		= 5,
-    ATTYPE_BATTLEGROUND = 6,
+    ATTYPE_BATTLEGROUND	= 6,
 };
 
 #pragma pack(push,1)
@@ -49,8 +49,7 @@ typedef struct AreaTrigger
 	uint32 required_honor_rank;
 	uint32 required_level;
 } AreaTrigger;
+
 #pragma pack(pop)
-
-
 
 #endif

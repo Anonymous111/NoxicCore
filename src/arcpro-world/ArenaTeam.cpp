@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -95,6 +95,7 @@ ArenaTeam::ArenaTeam(Field* f)
 			m_members[i].Info = objmgr.GetPlayerInfo(guid);
 			if(m_members[i].Info)
 				++m_memberCount;
+
 			if(ret == 5)
 			{
 				// In case PersonalRating is not in the string just set the rating to the team rating
@@ -136,9 +137,7 @@ void ArenaTeam::Destroy()
 	}
 
 	for(vector<PlayerInfo*>::iterator itr = tokill.begin(); itr != tokill.end(); ++itr)
-	{
 		RemoveMember(*itr);
-	}
 
 	objmgr.RemoveArenaTeam(this);
 	delete this;
@@ -285,15 +284,11 @@ void ArenaTeam::SaveToDB()
 			   << m_members[i].Won_ThisSeason << " " << m_members[i].PersonalRating << "'";
 		}
 		else
-		{
 			ss << ",'0 0 0 0 0 0'";
-		}
 	}
 
 	for(; i < 10; ++i)
-	{
 		ss << ",'0 0 0 0 0 0'";
-	}
 
 	ss << ")";
 	CharacterDatabase.Execute(ss.str().c_str());

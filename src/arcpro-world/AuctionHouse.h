@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -28,6 +28,7 @@ enum AuctionRemoveType
     AUCTION_REMOVE_WON,
     AUCTION_REMOVE_CANCELLED,
 };
+
 enum AUCTIONRESULT
 {
     AUCTION_CREATE,
@@ -35,6 +36,7 @@ enum AUCTIONRESULT
     AUCTION_BID,
     AUCTION_BUYOUT,
 };
+
 enum AUCTIONRESULTERROR
 {
     AUCTION_ERROR_NONE = 0,
@@ -43,6 +45,7 @@ enum AUCTIONRESULTERROR
     AUCTION_ERROR_ITEM = 4,
     AUCTION_ERROR_BID_OWN_AUCTION = 10
 };
+
 enum AuctionMailResult
 {
     AUCTION_OUTBID,
@@ -115,5 +118,5 @@ class AuctionHouse
 
 		bool enabled;
 };
-#endif
 
+#endif

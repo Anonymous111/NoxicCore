@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -37,25 +37,25 @@ typedef KnownAddons::iterator KnownAddonsItr;
 typedef std::map<std::string, ByteBuffer> AddonData;
 typedef AddonData::iterator AddonDataItr;
 
-class AddonMgr : public Singleton < AddonMgr >
+class AddonMgr : public Singleton <AddonMgr>
 {
 	public:
 		AddonMgr();
 		~AddonMgr();
 
-		void					LoadFromDB();
-		void					SaveToDB();
+		void LoadFromDB();
+		void SaveToDB();
 
-		void					SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession* m_session);
-		bool					AppendPublicKey(WorldPacket & data, std::string & AddonName, uint32 CRC);
+		void SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession* m_session);
+		bool AppendPublicKey(WorldPacket & data, std::string & AddonName, uint32 CRC);
 
 	private:
-		bool					IsAddonBanned(uint64 crc, std::string name = "");
-		bool					IsAddonBanned(std::string name, uint64 crc = 0);
-		bool					ShouldShowInList(std::string name);
+		bool IsAddonBanned(uint64 crc, std::string name = "");
+		bool IsAddonBanned(std::string name, uint64 crc = 0);
+		bool ShouldShowInList(std::string name);
 
-		KnownAddons				mKnownAddons;
-		AddonData				mAddonData;
+		KnownAddons mKnownAddons;
+		AddonData mAddonData;
 };
 
 #define sAddonMgr AddonMgr::getSingleton()

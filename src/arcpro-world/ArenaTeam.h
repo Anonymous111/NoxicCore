@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef arcpro_ARENATEAMS_H
-#define arcpro_ARENATEAMS_H
+#ifndef ARCPRO_ARENATEAMS_H
+#define ARCPRO_ARENATEAMS_H
 
 struct ArenaTeamMember
 {
@@ -43,6 +43,7 @@ class SERVER_DECL ArenaTeam
 				Slots = 6;
 			else if(Type == ARENA_TEAM_TYPE_5V5)
 				Slots = 10;
+
 			ARCPRO_ASSERT(Slots > 0);
 			m_members = new ArenaTeamMember[Slots];
 			memset(m_members, 0, sizeof(ArenaTeamMember)*Slots);
@@ -101,10 +102,8 @@ class SERVER_DECL ArenaTeam
 			{
 				case ARENA_TEAM_TYPE_2V2:
 					return 2;
-
 				case ARENA_TEAM_TYPE_3V3:
 					return 3;
-
 				case ARENA_TEAM_TYPE_5V5:
 					return 5;
 			}
@@ -114,4 +113,4 @@ class SERVER_DECL ArenaTeam
 		}
 };
 
-#endif // arcpro_ARENATEAMS_H
+#endif // ARCPRO_ARENATEAMS_H

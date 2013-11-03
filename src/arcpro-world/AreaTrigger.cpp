@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -100,12 +100,9 @@ uint32 CheckTriggerPrerequisites(AreaTrigger* pAreaTrigger, WorldSession* pSessi
 	if(pMapInfo && pMapInfo->required_item && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->required_item, true))
 		return AREA_TRIGGER_FAILURE_NO_ATTUNE_I;
 
-	if(pPlayer->iInstanceType >= MODE_HEROIC &&
-	        pMapInfo->type == INSTANCE_MULTIMODE
+	if(pPlayer->iInstanceType >= MODE_HEROIC && pMapInfo->type == INSTANCE_MULTIMODE
 	        && ((pMapInfo->heroic_key_1 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_1, false))
-	            &&	(pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))
-	           )
-	  )
+	            && (pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))))
 		return AREA_TRIGGER_FAILURE_NO_KEY;
 
 	if(pMapInfo->type != INSTANCE_NULL && pPlayer->iInstanceType >= MODE_HEROIC && pPlayer->getLevel() < pMapInfo->minlevel_heroic)
@@ -150,7 +147,8 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
 		return;
 	}
 
-	if(pAreaTrigger == NULL) return;
+	if(pAreaTrigger == NULL)
+		return;
 
 	switch(pAreaTrigger->Type)
 	{
