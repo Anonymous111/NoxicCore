@@ -37,4 +37,3 @@ extern "C" SCRIPT_DECL const char* _exp_get_version()
 #endif
 
 #endif
-

@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -130,8 +130,8 @@ enum QUEST_SHARE
     QUEST_SHARE_MSG_DIFFERENT_SERVER_DAILY		= 11,
 };
 
-#define arcpro_QUEST_REPEATABLE 1
-#define arcpro_QUEST_REPEATABLE_DAILY 2
+#define ARCPRO_QUEST_REPEATABLE 1
+#define ARCPRO_QUEST_REPEATABLE_DAILY 2
 #define MAX_REQUIRED_QUEST_ITEM 6
 
 class QuestScript;

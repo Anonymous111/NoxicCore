@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -769,7 +769,7 @@ class SERVER_DECL WorldSession
 
 	public:
 
-		void SendShowBank( uint64 guid ); // Custom bank command
+		void SendShowBank(uint64 guid); // Custom bank command
 		void SendInventoryList(Creature* pCreature);
 		void SendTrainerList(Creature* pCreature);
 		void SendCharterRequest(Creature* pCreature);

@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -5890,7 +5890,7 @@ void Spell::HandleCastEffects(uint64 guid, uint32 i)
 			else
 				time = dist * 1000.0f / m_spellInfo->speed;
 
-			//todo: arcpro doesn't support reflected spells
+			//TODO: ArcPro doesn't support reflected spells
 			//if (reflected)
 			//	time *= 1.25; //reflected projectiles move back 4x faster
 
@@ -5936,7 +5936,7 @@ void Spell::HandleModeratedTarget(uint64 guid)
 
 				destx = obj->GetPositionX();
 				desty = obj->GetPositionY();
-				//todo: this should be destz = obj->GetPositionZ() + (obj->GetModelHighBoundZ() / 2 * obj->GetUInt32Value(OBJECT_FIELD_SCALE_X))
+				//TODO: this should be destz = obj->GetPositionZ() + (obj->GetModelHighBoundZ() / 2 * obj->GetUInt32Value(OBJECT_FIELD_SCALE_X))
 				if(obj->IsUnit())
 					destz = obj->GetPositionZ() + TO_UNIT(obj)->GetModelHalfSize();
 				else
@@ -5954,7 +5954,7 @@ void Spell::HandleModeratedTarget(uint64 guid)
 		else
 		{
 			float time = dist * 1000.0f / m_spellInfo->speed;
-			//todo: arcpro doesn't support reflected spells
+			//TODO: ArcPro doesn't support reflected spells
 			//if (reflected)
 			//	time *= 1.25; //reflected projectiles move back 4x faster
 			sEventMgr.AddEvent(this, &Spell::HandleModeratedEffects, guid, EVENT_SPELL_HIT, float2int32(time), 1, 0);

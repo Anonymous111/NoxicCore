@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -543,7 +543,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 				}
 			}
 			// if daily then append to finished dailies
-			if(qst->is_repeatable == arcpro_QUEST_REPEATABLE_DAILY)
+			if(qst->is_repeatable == ARCPRO_QUEST_REPEATABLE_DAILY)
 				plr->PushToFinishedDailies(qst->id);
 			// Remove quests that are listed to be removed on quest complete.
 			set<uint32>::iterator iter = qst->remove_quest_list.begin();

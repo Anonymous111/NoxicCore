@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -125,7 +125,7 @@ void Spell::FillTargetMap(uint32 i)
 		AddTarget(i, TargetType, m_caster);
 	if(TargetType & (SPELL_TARGET_AREA | SPELL_TARGET_AREA_SELF))  //targetted aoe
 		AddAOETargets(i, TargetType, GetRadius(i), m_spellInfo->MaxTargets);
-	//TODO: arcpro, doesn't support summon slots?
+	//TODO: ArcPro, doesn't support summon slots?
 	/*if (TargetType & SPELL_TARGET_OBJECT_CURTOTEMS && u_caster != NULL)
 		for (uint32 i=1; i<5; ++i) //totem slots are 1, 2, 3, 4
 			AddTarget(i, TargetType, u_caster->m_summonslot[i]);*/
@@ -481,7 +481,7 @@ bool Spell::AddTarget(uint32 i, uint32 TargetType, Object* obj)
 		}
 		else if(TargetType & SPELL_TARGET_AREA_CHAIN)
 		{
-			//TODO: Add support for this in arcpro
+			//TODO: Add support for this in ArcPro
 			/*Object* lasttarget = NULL;
 			if (m_orderedObjects.size() > 0)
 			{

@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -4849,59 +4849,45 @@ void Aura::SpellAuraTransform(bool apply)
 				{
 					switch(GetSpellProto()->Id)
 					{
-
 						/*case 51514: // Frog
 							displayId = ;
 							break;*/
-
 						case 28270: // Cow
 							displayId = 1060;
 							break;
-
 						case 28272: // Pig
 							displayId = 16356 + RandomUInt(2);
 							break;
-
 						case 28271: // Turtle
 							displayId = 16359 + RandomUInt(2);
 							break;
-
 						case 61780: // Turkey
 							displayId = 32822;
 							break;
-
 						case 30838: // Helboar
 							displayId = 11410;
 							break;
-
 						case 61721: // Rabbit
 							displayId = 32789;
 							break;
-
 						case 61305: // Black Cat
 							displayId = 32570;
 							break;
-
 						case 61025: // Serpent
 							displayId = 1206;
 							break;
-
 						case 34639: // Lasher
 							displayId = 11634;
 							break;
-
 						case 228: // Chicken
 							displayId = 304;
 							break;
-
 						case 61834:
 							displayId = 16372;
 							break;
-
 						default: // Sheep
 							displayId = 856;
 							break;
-
 					}
 				}
 

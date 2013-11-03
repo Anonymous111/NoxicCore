@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -244,4 +244,3 @@ extern SERVER_DECL SessionLogWriter* Player_Log;
 
 #define RECRUITING "Info: |cff00FF7FArcPro is recruiting developers: http://forums.arcpro.info"
 #define BUGTRACKER "https://github.com/ArcPro/ArcPro/issues"
-

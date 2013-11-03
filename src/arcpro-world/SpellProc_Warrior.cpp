@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -47,7 +47,6 @@ class DamageShieldSpellProc : public SpellProc
 		}
 };
 
-
 class JuggernautSpellProc : public SpellProc{
 	SPELL_PROC_FACTORY_FUNCTION( JuggernautSpellProc );
 
@@ -65,5 +64,5 @@ class JuggernautSpellProc : public SpellProc{
 void SpellProcMgr::SetupWarrior()
 {
 	AddByNameHash(SPELL_HASH_DAMAGE_SHIELD, &DamageShieldSpellProc::Create);
-	AddById( 65156, &JuggernautSpellProc::Create );
+	AddById(65156, &JuggernautSpellProc::Create);
 }

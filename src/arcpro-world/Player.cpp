@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -727,7 +727,6 @@ bool Player::Create(WorldPacket & data)
 	// Set Starting stats for char
 	//SetScale(  ((race==RACE_TAUREN)?1.3f:1.0f));
 	SetTalentPointsForAllSpec(class_ == DEATHKNIGHT ? sWorld.DKStartTalentPoints : 0); // Default is 0 in case you do not want to modify it
-
 	if(class_ != DEATHKNIGHT || sWorld.StartingLevel > 55)
 	{
 		setLevel(sWorld.StartingLevel);
@@ -834,7 +833,7 @@ bool Player::Create(WorldPacket & data)
 			}
 		}
 	}
-	
+
 	SetHealth(GetMaxHealth() + (getLevel() > 1 ? (GetStat(STAT_STAMINA)*14) : GetStat(STAT_STAMINA)));
 	SetPower(POWER_TYPE_MANA, GetMaxPower(POWER_TYPE_MANA) + (getLevel() > 1 ? (GetStat(STAT_INTELLECT)*15) : GetStat(STAT_INTELLECT)));
 	SetPower(POWER_TYPE_RAGE, 0);
