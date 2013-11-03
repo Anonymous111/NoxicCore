@@ -24,12 +24,14 @@
 
 // Northrend
 void SetupZoneIcecrown(ScriptMgr* mgr);
+void SetupZoneBoreanTundra(ScriptMgr* mgr);
 
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
 void SetupZoneBlastedLands(ScriptMgr* mgr);
 
 // Kalimdor
+void SetupZoneBloodmystIsle(ScriptMgr* mgr);
 
 // Outland
 void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);

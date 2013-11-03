@@ -12,6 +12,8 @@ SET( sources
 	ArathiHighlands.cpp
 	BladeEdgeMountains.cpp
 	BlastedLands.cpp
+	BloodmystIsle.cpp
+	BoreanTundra.cpp
 	Icecrown.cpp
     Setup.cpp
  )

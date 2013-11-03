@@ -28,12 +28,11 @@
 /************************************************************************/
 
 // Arcatraz DefenderAI
-
 #define CN_ARCATRAZ_DEFENDER 20857
 #define PROTEAN_SUBDUAL 36288
 #define FLAMING_WEAPON 36601
 #define IMMOLATE 36638
-class ArcatrazDefenderAI : public CreatureAIScript
+/*class ArcatrazDefenderAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ArcatrazDefenderAI);
@@ -154,14 +153,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Arcatraz SentinelAI
 #define CN_ARCATRAZ_SENTINEL 20869
 #define ENERGY_DISCHARGE 36717
 #define EXPLODE 36719 // DBC: 36722, 36719
 //Permanent Feign Death (Root) 31261 ?
-class ArcatrazSentinelAI : public CreatureAIScript
+/*class ArcatrazSentinelAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ArcatrazSentinelAI);
@@ -278,7 +277,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Arcatraz WarderAI
 // SPELL CASTING TO REWRITE (spell ids are correct)
@@ -288,7 +287,7 @@ protected:
 #define IMPROVED_WING_CLIP 35963
 #define CHARGED_ARCANE_SHOT 36608
 //Shoot Arcane Explosion Arrow 36327 ?
-class ArcatrazWarderAI : public CreatureAIScript
+/*class ArcatrazWarderAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ArcatrazWarderAI);
@@ -451,7 +450,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Blackwing DrakonaarAI
 // SIMPLE_TELEPORT should be used when creature is summoned during Skyriss encounter
@@ -460,7 +459,7 @@ protected:
 #define BROOD_POWER_BLACK 39033
 #define MORTAL_STRIKE 13737
 #define BLAST_WAVE 39038
-class BlackwingDrakonaarAI : public CreatureAIScript
+/*class BlackwingDrakonaarAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(BlackwingDrakonaarAI);
@@ -584,13 +583,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Blazing TricksterAI
 #define CN_BLACKWING_TRICKSTER 20905
 #define FIREBOLT 36906
 #define FIRE_SHIELD 36907
-class BlackwingTricksterAI : public CreatureAIScript
+/*class BlackwingTricksterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(BlackwingTricksterAI);
@@ -700,14 +699,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Death WatcherAI
 #define CN_DEATH_WATCHER 20867
 #define TENTACLE_CLEAVE 36664
 #define DRAIN_LIFE 36655
 #define DEATH_COUNT 36657	// DBC: 36657, 36660
-class DeathWatcherAI : public CreatureAIScript
+/*class DeathWatcherAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(DeathWatcherAI);
@@ -839,7 +838,7 @@ protected:
 
 	uint32 MarkApplied;
 	int nrspells;
-};
+};*/
 
 // Defender CorpseAI
 // Seems to be ok, but not sure if I won't mess with this script a bit
@@ -848,7 +847,7 @@ protected:
 #define BLOODY_EXPLOSION 36599
 //#define PERMANENT_FEIGN_DEATH_ROOT 31261	// I don't have much infos and I am not sure about how it should work
 											// I presume this is just corpse which should cast spell when player is close or attack it
-class DefenderCorpseAI : public CreatureAIScript
+/*class DefenderCorpseAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(DefenderCorpseAI);
@@ -960,13 +959,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Protean SpawnAI
 #define CN_PROTEAN_SPAWN 21395	// it's sth that spawns from Defender Corpse
 #define ACIDIC_BITE 36796
 //#define BLOODY_EXPLOSION 36588
-class ProteanSpawnAI : public CreatureAIScript
+/*class ProteanSpawnAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ProteanSpawnAI);
@@ -1069,7 +1068,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Entropic EyeAI
 #define CN_ENTROPIC_EYE 20868
@@ -1092,7 +1091,7 @@ protected:
 #define WAVERING_WILL_EYE 36699
 #define CORROSIVE_POISON_EYE 36694
 #define ARCANE_BOLT_EYE 36712*/
-class EntropicEyeAI : public CreatureAIScript
+/*class EntropicEyeAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EntropicEyeAI);
@@ -1216,14 +1215,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Eredar DeathbringerAI
 #define CN_EREDAR_DEATHBRINGER 20880
 #define UNHOLY_AURA 27987	// DBC: 27988, 27987
 #define DIMINISH_SOUL 36789	// DBC: 36789, 36791 (SSS)
 #define FORCEFUL_CLEAVE 36787
-class EredarDeathbringerAI : public CreatureAIScript
+/*class EredarDeathbringerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EredarDeathbringerAI);
@@ -1342,14 +1341,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Eredar Soul-EaterAI
 #define CN_EREDAR_SOUL_EATER 20879
 #define SOUL_CHILL 36786
 #define SOUL_STEAL1 36778	// this on target, another on self
 #define SOUL_STEAL2 36782	// DBC: 36782, 36778
-class EredarSoulEaterAI : public CreatureAIScript
+/*class EredarSoulEaterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EredarSoulEaterAI);
@@ -1469,13 +1468,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Ethereum Life-BinderAI
 #define CN_ETHEREUM_LIFE_BINDER 21702
 #define BIND 37480
 #define SHADOW_WORD_PAIN 15654
-class EthereumLifeBinderAI : public CreatureAIScript
+/*class EthereumLifeBinderAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EthereumLifeBinderAI);
@@ -1585,14 +1584,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Ethereum SlayerAI
 #define CN_ETHEREUM_SLAYER 20896
 #define IMPARING_POISON 36839
 #define SLAYER_STRIKE 36838
 #define EVASION 15087
-class EthereumSlayerAI : public CreatureAIScript
+/*class EthereumSlayerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EthereumSlayerAI);
@@ -1709,7 +1708,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Ethereum Wave-CasterAI
 #define CN_ETHEREUM_WAVE_CASTER 20897
@@ -1717,7 +1716,7 @@ protected:
 #define ARCANE_HASTE 32693
 #define SONIC_BOMB 36841	// should counter spell so I must code it a bit more
 // KNOCKBACK ?
-class EthereumWaveCasterAI : public CreatureAIScript
+/*class EthereumWaveCasterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(EthereumWaveCasterAI);
@@ -1834,13 +1833,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Gargantuan AbyssalAI
 #define CN_GARGANTUAN_ABYSSAL 20898
 #define FIRE_SHIELD_ABY 38855	// DBC: 38855, 38893
 #define METEOR 36837
-class GargantuanAbyssalAI : public CreatureAIScript
+/*class GargantuanAbyssalAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(GargantuanAbyssalAI);
@@ -1950,7 +1949,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Greater Fire ElementalAI
 // FIX ME: Mark of death
@@ -1959,7 +1958,7 @@ protected:
 #define FIRE_NOVA 12470
 #define FIRE_BLAST 13339
 #define MARK_OF_DEATH 37128	// SSS	// should be applied on target
-class GreaterFireElementalAI : public CreatureAIScript
+/*class GreaterFireElementalAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(GreaterFireElementalAI);
@@ -2085,7 +2084,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // IronjawAI	// spells verification, cause some of those are for sure pet spells?
 #define CN_IRONJAW 18670
@@ -2100,7 +2099,7 @@ protected:
 #define BESTIAL_WRATH 24395	// DBC: 24395, 24396, 24397, 26592 (all are diffrent)	// ?
 #define SNARL 32919
 #define CHILLING_HOWL 32918
-class IronjawAI : public CreatureAIScript
+/*class IronjawAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(IronjawAI);
@@ -2266,7 +2265,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Millhouse ManastormAI
 // Probably should be rewritten and is part of Skyriss encounter 
@@ -2283,7 +2282,7 @@ protected:
 #define ARCANE_MISSILES 33832	// DBC: 33832, 33833
 #define PYROBLAST 33975
 //#define CHILLED 7321 effect of ICE_ARMOR 36881
-class MillhouseManastormAI : public CreatureAIScript
+/*class MillhouseManastormAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(MillhouseManastormAI);
@@ -2389,13 +2388,13 @@ public:
 	}
 
     void OnCombatStop(Unit *mTarget)
-    {/*
-		CastTime();
-		if(_unit->GetUInt32Value(UNIT_FIELD_POWER1) < _unit->GetUInt32Value(UNIT_FIELD_BASE_MANA))
-		{
-			_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
-			_unit->CastSpell(_unit, spells[4].info, spells[4].instant);
-		}*/
+    {
+		//CastTime();
+		//if(_unit->GetUInt32Value(UNIT_FIELD_POWER1) < _unit->GetUInt32Value(UNIT_FIELD_BASE_MANA))
+		//{
+		//	_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
+		//	_unit->CastSpell(_unit, spells[4].info, spells[4].instant);
+		//}
 		_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
 		_unit->CastSpell(_unit, spells[4].info, spells[4].instant);
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
@@ -2465,7 +2464,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Negaton ScreamerAI	// this one needs some more work for dmg taken dmg type, but I don't have time for it...
 // Add missing function ------------------------------ look below
@@ -2493,7 +2492,7 @@ protected:
 #define HOLY_VOLLEY 36743
 #define LIGHTNING_BOLT_VOLLEY	36740
 //#define _VOLLEY
-class NegatonScreamerAI : public CreatureAIScript
+/*class NegatonScreamerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(NegatonScreamerAI);
@@ -2722,12 +2721,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Negaton Warp-MasterAI
 #define CN_NEGATON_WARP_MASTER 20873
 #define SUMMON_NEGATION_FIELD 36813
-class NegatonWarpMasterAI : public CreatureAIScript
+/*class NegatonWarpMasterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(NegatonWarpMasterAI);
@@ -2831,13 +2830,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Negaton FieldAI
 // Not sure if shouldn't be rewritten.
 #define CN_NEGATON_FIELD 21414
 #define NEGATION_FIELD 36728 // DBC: 36728, 36729;
-class NegatonFieldAI : public CreatureAIScript
+/*class NegatonFieldAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(NegatonFieldAI);
@@ -2942,7 +2941,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Phase-HunterAI
 // This unit is part of Skyriss encounter and it's teleport skill should be used during that encounter
@@ -2951,7 +2950,7 @@ protected:
 #define BACK_ATTACK 36909
 #define WARP 36908	// lack of core support?
 #define PHASE_BURST 36910
-class PhaseHunterAI : public CreatureAIScript
+/*class PhaseHunterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(PhaseHunterAI);
@@ -3083,13 +3082,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Protean HorrorAI
 #define CN_PROTEAN_HORROR 20865
 #define TOOTHY_BITE 36612
 //#define BLOODY_EXPLOSION 36588
-class ProteanHorrorAI : public CreatureAIScript
+/*class ProteanHorrorAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ProteanHorrorAI);
@@ -3192,14 +3191,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Protean NightmareAI
 #define CN_PROTEAN_NIGHTMARE 20864
 #define INCUBATION 36622
 #define INFECTIOUS_POISON 36619
 #define GAPIND_MAW 36617
-class ProteanNightmareAI : public CreatureAIScript
+/*class ProteanNightmareAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ProteanNightmareAI);
@@ -3316,7 +3315,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Sulfuron Magma-ThrowerAI
 // Part of Skyriss encounter (so same thing to teleport stuff)
@@ -3325,7 +3324,7 @@ protected:
 #define SHADOW_BOLT_SMT 36986	// DBC: 36987, 36986;
 #define MAGMA_THROWERS_CURSE 36917
 #define RAIN_OF_FIRE 19717
-class SulfuronMagmaThrowerAI : public CreatureAIScript
+/*class SulfuronMagmaThrowerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SulfuronMagmaThrowerAI);
@@ -3451,7 +3450,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Spiteful TemptressAI
 #define CN_SPITEFUL_TEMPTRESS 20883
@@ -3459,7 +3458,7 @@ protected:
 #define DOMINATION_ST 36866
 #define SPITEFUL_FURY 36886
 #define PRAYER_OF_MENDING 33280	// DBC: 33280, 33110; SSS
-class SpitefulTemptressAI : public CreatureAIScript
+/*class SpitefulTemptressAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SpitefulTemptressAI);
@@ -3585,7 +3584,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Soul DevourerAI
 #define CN_SOUL_DEVOURER 20866
@@ -3593,7 +3592,7 @@ protected:
 #define LAVA_BREATH 21333	// doesn't have animation?
 #define FEL_BREATH 36654
 #define FRENZY 33958
-class SoulDevourerAI : public CreatureAIScript
+/*class SoulDevourerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SoulDevourerAI);
@@ -3720,7 +3719,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // SolomonAI
 #define CN_SOLOMON 798	// not sure if this boy should be scripted, but he was in DBC and had spells, so I couldn't
@@ -3728,7 +3727,7 @@ protected:
 #define SLIME_SPRAY 36486
 #define SAW_BLADE 32735
 #define CRUSADER_STRIKE 35509	// SE (script effect)
-class SolomonAI : public CreatureAIScript
+/*class SolomonAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SolomonAI);
@@ -3846,7 +3845,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Skulking WitchAI
 #define CN_SKULKING_WITCH 20882	// works really cool as assassin :)
@@ -3854,7 +3853,7 @@ protected:
 #define GOUGE 36862
 #define LASH_OF_PAIN 36864
 #define GREAT_INVISIBILITY 16380
-class SkulkingWitchAI : public CreatureAIScript
+/*class SkulkingWitchAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SkulkingWitchAI);
@@ -4002,12 +4001,12 @@ public:
 protected:
 	uint32 FIRST_ATTACK;
 	int nrspells;
-};
+};*/
 
 // Sightless EyeAI
 #define CN_SIGHTLESS_EYE 21346	
 #define SIGHTLESS_TOUCH 36646
-class SightlessEyeAI : public CreatureAIScript
+/*class SightlessEyeAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SightlessEyeAI);
@@ -4110,14 +4109,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Sargeron HellcallerAI
 #define CN_SARGERON_HELLCALLER 20902	
 #define HELL_RAIN 36829
 #define CURSE_OF_THE_ELEMENTS 36831
 #define INCINERATE 36832
-class SargeronHellcallerAI : public CreatureAIScript
+/*class SargeronHellcallerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SargeronHellcallerAI);
@@ -4234,13 +4233,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Unbound DevastatorAI
 #define CN_UNBOUND_DEVASTATOR 20881
 #define DEAFENING_ROAR 36887
 #define DEVASTATE 36894	// DBC: 36891, 36894;
-class UnboundDevastatorAI : public CreatureAIScript
+/*class UnboundDevastatorAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(UnboundDevastatorAI);
@@ -4350,7 +4349,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Unchained DoombringerAI
 // TO DO: Look at charge note
@@ -4358,7 +4357,7 @@ protected:
 #define AGONIZING_ARMOR 36836
 #define WAR_STOMP 36835
 #define BERSEKER_CHARGE 36833	// should charge the furthest enemy
-class UnchainedDoombringerAI : public CreatureAIScript
+/*class UnchainedDoombringerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(UnchainedDoombringerAI);
@@ -4475,7 +4474,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Warder CorpseAI
 #define CN_WARDER_CORPSE 21303
@@ -4484,7 +4483,7 @@ protected:
 //#define PERMANENT_FEIGN_DEATH_ROOT_WC 31261	// I don't have much infos and I am not sure about how it should work
 												// I presume this is just corpse which should cast spell when player is close or attk it
 												// so same situation like in Defender Corpse
-class WarderCorpseAI : public CreatureAIScript
+/*class WarderCorpseAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(WarderCorpseAI);
@@ -4596,7 +4595,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Sargeron ArcherAI
 // Probably to rewrite
@@ -4607,7 +4606,7 @@ protected:
 #define SCATTER_SHOT 23601
 #define HOOKED_NET 36827
 #define IMMOLATION_ARROW 35932	// DBC: 35932, 35935
-class SargeronArcherAI : public CreatureAIScript
+/*class SargeronArcherAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SargeronArcherAI);
@@ -4800,7 +4799,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Zereketh the UnboundAI
 #define CN_ZEREKETH			20870
@@ -5484,42 +5483,42 @@ class WardenMellicharAI : public MoonScriptBossAI
 
 void SetupArcatraz(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_ARCATRAZ_DEFENDER, &ArcatrazDefenderAI::Create);
-	mgr->register_creature_script(CN_ARCATRAZ_SENTINEL, &ArcatrazSentinelAI::Create);
-	mgr->register_creature_script(CN_ARCATRAZ_WARDER, &ArcatrazWarderAI::Create);
-	mgr->register_creature_script(CN_BLACKWING_DRAKONAAR, &BlackwingDrakonaarAI::Create);
-	mgr->register_creature_script(CN_BLACKWING_TRICKSTER, &BlackwingTricksterAI::Create);
-	mgr->register_creature_script(CN_DEATH_WATCHER, &DeathWatcherAI::Create);
-	mgr->register_creature_script(CN_DEFENDER_CORPSE, &DefenderCorpseAI::Create);
-	mgr->register_creature_script(CN_PROTEAN_SPAWN, &ProteanSpawnAI::Create);
-	mgr->register_creature_script(CN_ENTROPIC_EYE, &EntropicEyeAI::Create);
-	mgr->register_creature_script(CN_EREDAR_DEATHBRINGER, &EredarDeathbringerAI::Create);
-	mgr->register_creature_script(CN_EREDAR_SOUL_EATER, &EredarSoulEaterAI::Create);
-	mgr->register_creature_script(CN_ETHEREUM_LIFE_BINDER, &EthereumLifeBinderAI::Create);
-	mgr->register_creature_script(CN_ETHEREUM_SLAYER, &EthereumSlayerAI::Create);
-	mgr->register_creature_script(CN_ETHEREUM_WAVE_CASTER, &EthereumWaveCasterAI::Create);
-	mgr->register_creature_script(CN_GARGANTUAN_ABYSSAL, &GargantuanAbyssalAI::Create);
-	mgr->register_creature_script(CN_GREATER_FIRE_ELEMENTAL, &GreaterFireElementalAI::Create);
-	mgr->register_creature_script(CN_IRONJAW, &IronjawAI::Create);
-	mgr->register_creature_script(CN_MILLHOUSE_MANASTORM, &MillhouseManastormAI::Create);
-	mgr->register_creature_script(CN_NEGATON_SCREAMER, &NegatonScreamerAI::Create);
-	mgr->register_creature_script(CN_NEGATON_WARP_MASTER, &NegatonWarpMasterAI::Create);
-	mgr->register_creature_script(CN_NEGATON_FIELD, &NegatonFieldAI::Create);
-	mgr->register_creature_script(CN_PHASE_HUNTER, &PhaseHunterAI::Create);
-	mgr->register_creature_script(CN_PROTEAN_HORROR, &ProteanHorrorAI::Create);
-	mgr->register_creature_script(CN_PROTEAN_NIGHTMARE, &ProteanNightmareAI::Create);
+	//mgr->register_creature_script(CN_ARCATRAZ_DEFENDER, &ArcatrazDefenderAI::Create);
+	//mgr->register_creature_script(CN_ARCATRAZ_SENTINEL, &ArcatrazSentinelAI::Create);
+	//mgr->register_creature_script(CN_ARCATRAZ_WARDER, &ArcatrazWarderAI::Create);
+	//mgr->register_creature_script(CN_BLACKWING_DRAKONAAR, &BlackwingDrakonaarAI::Create);
+	//mgr->register_creature_script(CN_BLACKWING_TRICKSTER, &BlackwingTricksterAI::Create);
+	//mgr->register_creature_script(CN_DEATH_WATCHER, &DeathWatcherAI::Create);
+	//mgr->register_creature_script(CN_DEFENDER_CORPSE, &DefenderCorpseAI::Create);
+	//mgr->register_creature_script(CN_PROTEAN_SPAWN, &ProteanSpawnAI::Create);
+	//mgr->register_creature_script(CN_ENTROPIC_EYE, &EntropicEyeAI::Create);
+	//mgr->register_creature_script(CN_EREDAR_DEATHBRINGER, &EredarDeathbringerAI::Create);
+	//mgr->register_creature_script(CN_EREDAR_SOUL_EATER, &EredarSoulEaterAI::Create);
+	//mgr->register_creature_script(CN_ETHEREUM_LIFE_BINDER, &EthereumLifeBinderAI::Create);
+	//mgr->register_creature_script(CN_ETHEREUM_SLAYER, &EthereumSlayerAI::Create);
+	//mgr->register_creature_script(CN_ETHEREUM_WAVE_CASTER, &EthereumWaveCasterAI::Create);
+	//mgr->register_creature_script(CN_GARGANTUAN_ABYSSAL, &GargantuanAbyssalAI::Create);
+	//mgr->register_creature_script(CN_GREATER_FIRE_ELEMENTAL, &GreaterFireElementalAI::Create);
+	//mgr->register_creature_script(CN_IRONJAW, &IronjawAI::Create);
+	//mgr->register_creature_script(CN_MILLHOUSE_MANASTORM, &MillhouseManastormAI::Create);
+	//mgr->register_creature_script(CN_NEGATON_SCREAMER, &NegatonScreamerAI::Create);
+	//mgr->register_creature_script(CN_NEGATON_WARP_MASTER, &NegatonWarpMasterAI::Create);
+	//mgr->register_creature_script(CN_NEGATON_FIELD, &NegatonFieldAI::Create);
+	//mgr->register_creature_script(CN_PHASE_HUNTER, &PhaseHunterAI::Create);
+	//mgr->register_creature_script(CN_PROTEAN_HORROR, &ProteanHorrorAI::Create);
+	//mgr->register_creature_script(CN_PROTEAN_NIGHTMARE, &ProteanNightmareAI::Create);
 
-	mgr->register_creature_script(CN_SULFURON_MAGMA_THROWER, &SulfuronMagmaThrowerAI::Create);
-	mgr->register_creature_script(CN_SPITEFUL_TEMPTRESS, &SpitefulTemptressAI::Create);
-	mgr->register_creature_script(CN_SOUL_DEVOURER, &SoulDevourerAI::Create);
-	mgr->register_creature_script(CN_SOLOMON, &SolomonAI::Create);
-	mgr->register_creature_script(CN_SKULKING_WITCH, &SkulkingWitchAI::Create);
-	mgr->register_creature_script(CN_SIGHTLESS_EYE, &SightlessEyeAI::Create);
-	mgr->register_creature_script(CN_SARGERON_HELLCALLER, &SargeronHellcallerAI::Create);
-	mgr->register_creature_script(CN_UNBOUND_DEVASTATOR, &UnboundDevastatorAI::Create);
-	mgr->register_creature_script(CN_UNCHAINED_DOOMBRINGER, &UnchainedDoombringerAI::Create);
-	mgr->register_creature_script(CN_WARDER_CORPSE, &WarderCorpseAI::Create);
-	mgr->register_creature_script(CN_SARGERON_ARCHER, &SargeronArcherAI::Create);
+	//mgr->register_creature_script(CN_SULFURON_MAGMA_THROWER, &SulfuronMagmaThrowerAI::Create);
+	//mgr->register_creature_script(CN_SPITEFUL_TEMPTRESS, &SpitefulTemptressAI::Create);
+	//mgr->register_creature_script(CN_SOUL_DEVOURER, &SoulDevourerAI::Create);
+	//mgr->register_creature_script(CN_SOLOMON, &SolomonAI::Create);
+	//mgr->register_creature_script(CN_SKULKING_WITCH, &SkulkingWitchAI::Create);
+	//mgr->register_creature_script(CN_SIGHTLESS_EYE, &SightlessEyeAI::Create);
+	//mgr->register_creature_script(CN_SARGERON_HELLCALLER, &SargeronHellcallerAI::Create);
+	//mgr->register_creature_script(CN_UNBOUND_DEVASTATOR, &UnboundDevastatorAI::Create);
+	//mgr->register_creature_script(CN_UNCHAINED_DOOMBRINGER, &UnchainedDoombringerAI::Create);
+	//mgr->register_creature_script(CN_WARDER_CORPSE, &WarderCorpseAI::Create);
+	//mgr->register_creature_script(CN_SARGERON_ARCHER, &SargeronArcherAI::Create);
 
 	mgr->register_creature_script(CN_ZEREKETH, &ZerekethAI::Create);
 	mgr->register_creature_script(CN_VOIDZONEARC, &VoidZoneARC::Create);

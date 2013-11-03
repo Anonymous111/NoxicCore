@@ -29,13 +29,13 @@ public:
 	{
 		if(iWaypointId == 15)
 		{
-			GetUnit()->GetAIInterace()->deleteWaypoints();
+			GetUnit()->GetAIInterface()->deleteWaypoints();
 			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched.");
-			GetUnit()->Despawn(DESPAWN_TIME, 1000);
+			GetUnit()->Despawn(/*DESPAWN_TIME*/1000, 1000);
 
 			if(GetUnit()->m_escorter != NULL)
 			{
-				GetUnit()->m_escorter->GetQuestLogForEntry(665)->SendQuestcomplete();
+				GetUnit()->m_escorter->GetQuestLogForEntry(665)->SendQuestComplete();
 				GetUnit()->m_escorter = NULL;
 			}
 		}

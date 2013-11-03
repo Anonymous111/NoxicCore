@@ -33,12 +33,12 @@ public:
 		GetUnit()->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 		GetUnit()->GetAIInterface()->disable_melee = true;
 		GetUnit()->GetAIInterface()->m_canMove = false;
-
+/*
 		sEAS.EventSay(GetUnit(), "Muahahahahaha! You fool! you've released me from my banishment in the interstices between space and time!", 5000);
 		sEAS.EventSay(GetUnit(), "All of Draenor shall quake beneath my feet! I Will destroy this world and reshape it in my image!", 10000);
 		sEAS.EventSay(GetUnit(), "Where shall I Begin? I cannot bother myself with a worm such as yourself. There's a World to be Conquered!", 15000);
 		sEAS.EventSay(GetUnit(), "No doubt the fools that banished me are long dead. I shall take the wing and survey my new demesne, Pray to whatever gods you hold dear that we do not meet again.", 20000);
-
+*/
 		GetUnit()->Despawn(25000, 0);
 	}
 };
@@ -65,7 +65,7 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTrigger)
 	BrutebaneStoutTrigger(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		GetUnit()->Root();
+		/*GetUnit()->Root();
 		Plr = sEAS.GetNearestPlayer(GetUnit());
 
 		uint32 BladespireOgres[] = { 19995, 19998, 20756, 0 };
@@ -73,12 +73,12 @@ public:
 		if(Ogre != NULL)
 			Ogre->GetAIInterface()->_CalcDestinationAndMove(GetUnit(), 0.3f);
 
-		RegisterAIUpdateEvent(1000);
+		RegisterAIUpdateEvent(1000);*/
 	}
 
 	void AIUpdate()
 	{
-		if(Ogre == NULL)
+		/*if(Ogre == NULL)
 			return;
 
 		if(GetUnit()->CalcDistance(Ogre) <= 5)
@@ -97,7 +97,7 @@ public:
 				sEAS.KillMobForQuest(Plr, 10512, 0);
 
 			GetUnit()->Despawn(0, 0);
-		}
+		}*/
 	}
 
 protected:

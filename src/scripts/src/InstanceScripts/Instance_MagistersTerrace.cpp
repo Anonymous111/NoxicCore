@@ -504,7 +504,7 @@ class ZelfanAI : public MoonScriptCreatureAI
 #define COILSKAR_WITCH_FROST_ARROW 44639
 #define COILSKAR_WITCH_MANA_SHIELD 46151
 #define COILSKAR_WITCH_SHOOT 35946
-class CoilskarWitchAI : public MoonScriptBossAI
+/*class CoilskarWitchAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(CoilskarWitchAI, MoonScriptBossAI);
 	CoilskarWitchAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
@@ -514,13 +514,13 @@ class CoilskarWitchAI : public MoonScriptBossAI
 		AddSpell(COILSKAR_WITCH_MANA_SHIELD, Target_Self, 6, 0, 40, 0, 0);
 		AddSpell(COILSKAR_WITCH_SHOOT, Target_RandomPlayer, 75, 1.5, 4, 5, 30);
 	}
-};
+};*/
 
 // Sister of Torment
 #define CN_SISTER_OF_TORMENT 24697
 #define SISTER_OF_TORMENT_DEADLY_EMBRACE 44547
 #define SISTER_OF_TORMENT_LASH_OF_PAIN 44640
-class SisterOfTormentAI : public MoonScriptBossAI
+/*class SisterOfTormentAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SisterOfTormentAI, MoonScriptBossAI);
 	SisterOfTormentAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
@@ -528,14 +528,14 @@ class SisterOfTormentAI : public MoonScriptBossAI
 		AddSpell(SISTER_OF_TORMENT_LASH_OF_PAIN, Target_Current, 60, 0, 8, 0, 5);
 		AddSpell(SISTER_OF_TORMENT_DEADLY_EMBRACE, Target_RandomPlayer, 20, 1.5, 16, 0, 20);
 	}
-};
+};*/
 
 // Sunblade Blood Knight
 #define CN_SB_BLOOD_KNIGHT 24684
 #define SUNBLADE_BLOOD_KNIGHT_HOLY_LIGHT 46029
 #define SUNBLADE_BLOOD_KNIGHT_JUDGEMENT_OF_WRATH 44482
 #define SUNBLADE_BLOOD_KNIGHT_SEAL_OF_WRATH 46030
-class SunbladeBloodKnightAI : public MoonScriptBossAI
+/*class SunbladeBloodKnightAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeBloodKnightAI, MoonScriptBossAI);
 	SunbladeBloodKnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
@@ -544,26 +544,26 @@ class SunbladeBloodKnightAI : public MoonScriptBossAI
 		AddSpell(SUNBLADE_BLOOD_KNIGHT_SEAL_OF_WRATH, Target_Self, 99, 0, 30, 0, 0);
 		AddSpell(SUNBLADE_BLOOD_KNIGHT_HOLY_LIGHT, Target_Self, 10, 2, 30, 0, 40);
 	}
-};
+};*/
 
 // Sunblade Imp
 #define CN_SB_IMP 24815
 #define SUNBLADE_IMP_FIREBOLT 44577
-class SunbladeImpAI : public MoonScriptBossAI
+/*class SunbladeImpAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeImpAI, MoonScriptBossAI);
 	SunbladeImpAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(SUNBLADE_IMP_FIREBOLT, Target_Current, 100, 2, (int32)2.5, 0, 30);
 	}
-};
+};*/
 
 // Sunblade Keeper
 #define SUNBLADE_KEEPER 24762
 #define SUNBLADE_KEEPER_BANISH 44765
 #define SUNBLADE_KEEPER_SHADOW_BOLT 15232
 #define SUNBLADE_KEEPER_SHADOW_BOLT_VOLLEY 20741
-class SunbladeKeeperAI : public MoonScriptCreatureAI
+/*class SunbladeKeeperAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeKeeperAI, MoonScriptCreatureAI);
 	SunbladeKeeperAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -572,13 +572,13 @@ class SunbladeKeeperAI : public MoonScriptCreatureAI
 		AddSpell(SUNBLADE_KEEPER_SHADOW_BOLT, Target_RandomPlayer, 35, 3, 4, 0, 40);
 		AddSpell(SUNBLADE_KEEPER_SHADOW_BOLT_VOLLEY, Target_Self, 30, 0, 10);
 	}
-};
+};*/
 
 // Sunblade Mage Guard
 #define CN_SB_MAGE_GUARD 24683
 #define SUNBLADE_MAGE_GUARD_GLAVE_THROW 46028
 #define SUNBLADE_MAGE_GUARD_MAGIC_DAMPENING_FIELD 44475
-class SunbladeMageGuardAI : public MoonScriptBossAI
+/*class SunbladeMageGuardAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeMageGuardAI, MoonScriptBossAI);
 	SunbladeMageGuardAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
@@ -586,13 +586,13 @@ class SunbladeMageGuardAI : public MoonScriptBossAI
 		AddSpell(SUNBLADE_MAGE_GUARD_GLAVE_THROW, Target_Current, 60, 0, 25, 0, 5);
 		AddSpell(SUNBLADE_MAGE_GUARD_MAGIC_DAMPENING_FIELD, Target_RandomPlayer, 20, 1, 35, 0, 20);
 	}
-};
+};*/
 
 // Sunblade Magister
 #define CN_SB_MAGISTER 24685
 #define SUNBLADE_MAGISTER_ARCANE_NOVA 46036
 #define SUNBLADE_MAGISTER_FROSTBOLT 46035
-class SunbladeMagisterAI : public MoonScriptBossAI
+/*class SunbladeMagisterAI : public MoonScriptBossAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeMagisterAI, MoonScriptBossAI);
 	SunbladeMagisterAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
@@ -600,12 +600,12 @@ class SunbladeMagisterAI : public MoonScriptBossAI
 		AddSpell(SUNBLADE_MAGISTER_FROSTBOLT, Target_Current, 65, 2, 4, 0, 30);
 		AddSpell(SUNBLADE_MAGISTER_ARCANE_NOVA, Target_Self, 12, 1.5, 40, 0, 0);
 	}
-};
+};*/
 
 // Brightscale Wyrm
 #define BRIGHTSCALE_WYRM 24761
 #define BRIGHTSCALE_WYRM_ENERGY_INFUSION 44406
-class BrightscaleWyrmAI : public MoonScriptCreatureAI
+/*class BrightscaleWyrmAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(BrightscaleWyemAI, MoonScriptCreatureAI);
 	BrightscaleWyrmAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -619,24 +619,24 @@ class BrightscaleWyrmAI : public MoonScriptCreatureAI
 		if(pAura != NULL)
 			mKiller->AddAura(pAura, NULLAURA);
 	}
-};
+};*/
 
 // Ethereum Smuggler
 #define ETHEREUM_SMUGGLER 24698
 #define ETHEREUM_SMUGGLER_ARCANE_EXPLOSION 44538
-class EthereumSmugglerAI : public MoonScriptCreatureAI
+/*class EthereumSmugglerAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(EtereumSmugglerAI, MoonScriptCreatureAI);
 	EthereumSmugglerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(ETHEREUM_SMUGGLER_ARCANE_EXPLOSION, Target_Self, 35, 1, 10);
 	}
-};
+};*/
 
 // Fizzle
 #define FIZZLE 24656
 #define FIZZLE_FIREBOLT 44164
-class FizzleAI : public MoonScriptCreatureAI
+/*class FizzleAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(FizzleAI, MoonScriptCreatureAI);
 	FizzleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -644,13 +644,13 @@ class FizzleAI : public MoonScriptCreatureAI
 		AddSpell(FIZZLE_FIREBOLT, Target_RandomPlayer, 35, 1, 1, 0, 30);
 		_unit->GetAIInterface()->disable_melee = true;
 	}
-};
+};*/
 
 // Sunblade Physician
 #define SUNBLADE_PHYSICIAN 24687
 #define SUNBLADE_PHYSICIAN_INJECT_POISON 46046
 #define SUNBLADE_PHYSICIAN_PRAYER_OF_MENDING 46045
-class SunbladePhysicianAI : public MoonScriptCreatureAI
+/*class SunbladePhysicianAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladePhysicianAI, MoonScriptCreatureAI);
 	SunbladePhysicianAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -658,7 +658,7 @@ class SunbladePhysicianAI : public MoonScriptCreatureAI
 		AddSpell(SUNBLADE_PHYSICIAN_INJECT_POISON, Target_Self, 35, 1, 8);
 		AddSpell(SUNBLADE_PHYSICIAN_PRAYER_OF_MENDING, Target_RandomFriendly, 25, 0, 10);
 	}
-};
+};*/
 
 // Sunblade Warlock
 #define SUNBLADE_WARLOCK 24686
@@ -666,7 +666,7 @@ class SunbladePhysicianAI : public MoonScriptCreatureAI
 #define SUNBLADE_WARLOCK_IMMOLATE 46042
 #define SUNBLADE_WARLOCK_INCINERATE 46043
 #define SUNBLADE_WARLOCK_SUMMON_SUNBLADE_IMP 48320
-class SunbladeWarlockAI : public MoonScriptCreatureAI
+/*class SunbladeWarlockAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(SunbladeWarlockAI, MoonScriptCreatureAI);
 	SunbladeWarlockAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -676,13 +676,13 @@ class SunbladeWarlockAI : public MoonScriptCreatureAI
 		AddSpell(SUNBLADE_WARLOCK_INCINERATE, Target_RandomPlayer, 30, 2, 5);
 		AddSpell(SUNBLADE_WARLOCK_SUMMON_SUNBLADE_IMP, Target_Self, 25, 0, 15);
 	}
-};
+};*/
 
 // Wretched Bruiser
 #define WRETCHED_BRUISER 24689
 #define WRETCHED_BRUISER_WRETCHED_STRIKE 44534
 #define WRETCHED_BRUISER_DRINK_FEL_INFUSION 44505
-class WretchedBruiserAI : public MoonScriptCreatureAI
+/*class WretchedBruiserAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(WretchedBruiserAI, MoonScriptCreatureAI);
 	WretchedBruiserAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -690,13 +690,13 @@ class WretchedBruiserAI : public MoonScriptCreatureAI
 		AddSpell(WRETCHED_BRUISER_DRINK_FEL_INFUSION, Target_Self, 2, 0, 30);
 		AddSpell(WRETCHED_BRUISER_WRETCHED_STRIKE, Target_Current, 35, 0, 5);
 	}
-};
+};*/
 
 // Wretched HUSK
 #define WRETCHED_HUSK 24690
 #define WRETCHED_HUSK_WRETCHED_FROSTBOLT 44504
 #define WRETCHED_HUSK_WRETCHED_FIREBALL 44503
-class WretchedHuskAI : public MoonScriptCreatureAI
+/*class WretchedHuskAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(WretchedHuskAI, MoonScriptCreatureAI);
 	WretchedHuskAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -705,12 +705,12 @@ class WretchedHuskAI : public MoonScriptCreatureAI
 		AddSpell(WRETCHED_HUSK_WRETCHED_FROSTBOLT, Target_RandomPlayer, 35, 3, 5);
 		AddSpell(WRETCHED_HUSK_WRETCHED_FIREBALL, Target_RandomPlayer, 35, 3, 5);
 	}
-};
+};*/
 
 // Wretched Skulker
 #define WRETCHED_SKULKER 24688
 #define WRETCHED_SKULKER_WRETCHED_STAB 44533
-class WretchedSkulkerAI : public MoonScriptCreatureAI
+/*class WretchedSkulkerAI : public MoonScriptCreatureAI
 {
 	MOONSCRIPT_FACTORY_FUNCTION(WretchedSkulkerAI, MoonScriptCreatureAI);
 	WretchedSkulkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -718,11 +718,11 @@ class WretchedSkulkerAI : public MoonScriptCreatureAI
 		AddSpell(WRETCHED_BRUISER_DRINK_FEL_INFUSION, Target_Self, 2, 0, 30);
 		AddSpell(WRETCHED_SKULKER_WRETCHED_STAB, Target_Current, 35, 0, 5);
 	}
-};
+};*/
 
 // Fel Crystal
 #define FEL_CRYSTAL 24722
-class FelCrystalAI : public MoonScriptCreatureAI
+/*class FelCrystalAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(FelCrystalAI);
@@ -744,12 +744,12 @@ public:
 			}
 		}
 	}
-};
+};*/
 
 // Pure Energy
 #define PURE_ENERGY 24745
 #define PURE_ENERGY_ENERGY_BOLT 44342
-class PureEnergyAI : public MoonScriptCreatureAI
+/*class PureEnergyAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(PureEnergyAI);
@@ -783,7 +783,7 @@ public:
 		RemoveAIUpdateEvent();
 		_unit->Despawn(0, 0);
 	}
-};
+};*/
 
 // Kael'thas Sunstrider
 #define KAELTHAS 24664
@@ -795,7 +795,7 @@ public:
 #define PHOENIX_EGG 24675
 
 // Phoenix
-class KaelPhoenixAI : public MoonScriptCreatureAI
+/*class KaelPhoenixAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(KaelPhoenixAI);
@@ -914,12 +914,12 @@ public:
 			_unit->Despawn(0, 0);
 		}
 	}
-};
+};*/
 
 // Gravity Lapse Bubble
 #define BUBBLE_DMG 29765
 #define GL_BUBBLE 100922
-class GLBubbleAI : public MoonScriptCreatureAI
+/*class GLBubbleAI : public MoonScriptCreatureAI
 {
 public:
 	int t;
@@ -1010,13 +1010,13 @@ public:
 			pUnit->GetAIInterface()->addWayPoint(wp);
 		}
 	}
-};
+};*/
 
 // Flamestrike AI
 #define KAEL_FLAMESTRIKE 24666
 #define FLAMESTRIKE_SPELL 44190
 #define FLAME_STRIKE_TRIGGER_FLAME_STRIKE_EFFECT    36730
-class KaelFlamestrikeAI : public MoonScriptCreatureAI
+/*class KaelFlamestrikeAI : public MoonScriptCreatureAI
 {
 public:
 	int g;
@@ -1045,7 +1045,7 @@ public:
 			_unit->Despawn(0, 0);
 		}
 	}
-};
+};*/
 
 // Kael'thas
 #define KAEL_FLAME_STRIKE 46162
@@ -1057,7 +1057,7 @@ public:
 #define KAEL_GL_VISUAL 44251
 #define KAEL_GL_SUMMON 35989
 #define KAEL_KNOCKBACK 28405
-class KaelThasMTAI : public MoonScriptCreatureAI
+/*class KaelThasMTAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(KaelThasMTAI);
@@ -1408,7 +1408,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 void SetupMagistersTerrace(ScriptMgr* pScriptMgr)
 {
@@ -1416,7 +1416,7 @@ void SetupMagistersTerrace(ScriptMgr* pScriptMgr)
 	pScriptMgr->register_creature_script(BOSS_SelinFireheart, &SelinFireheartAI::Create);
 	pScriptMgr->register_creature_script(BOSS_VEXALLUS, &VexallusAI::Create);
 	pScriptMgr->register_creature_script(BOSS_Priestess_Delrissa, &Priestess_DelrissaAI::Create);
-	pScriptMgr->register_creature_script(KAELTHAS, &KaelThasMTAI::Create);
+	//pScriptMgr->register_creature_script(KAELTHAS, &KaelThasMTAI::Create);
 	//Priestess Delrissa Encounter Creature AI
 	pScriptMgr->register_creature_script(CN_KaganiNightstrike, &Kagani_NightstrikeAI::Create);
 	pScriptMgr->register_creature_script(CN_EllrysDuskhallow, &Ellrys_DuskhallowAI::Create);
@@ -1428,28 +1428,28 @@ void SetupMagistersTerrace(ScriptMgr* pScriptMgr)
 	pScriptMgr->register_creature_script(CN_ZELFAN, &ZelfanAI::Create);
 
 	//Trash Mobs
-	pScriptMgr->register_creature_script(CN_COILSKAR_WITCH, &CoilskarWitchAI::Create);
-	pScriptMgr->register_creature_script(CN_SISTER_OF_TORMENT, &SisterOfTormentAI::Create);
-	pScriptMgr->register_creature_script(CN_SB_IMP, &SunbladeImpAI::Create);
-	pScriptMgr->register_creature_script(CN_SB_MAGE_GUARD, &SunbladeMageGuardAI::Create);
-	pScriptMgr->register_creature_script(CN_SB_MAGISTER, &SunbladeMagisterAI::Create);
-	pScriptMgr->register_creature_script(PURE_ENERGY, &PureEnergyAI::Create);
-	pScriptMgr->register_creature_script(GL_BUBBLE, &GLBubbleAI::Create);
-	pScriptMgr->register_creature_script(PHOENIX_EGG, &PhoenixEggAI::Create);
-	pScriptMgr->register_creature_script(PHOENIX, &KaelPhoenixAI::Create);
-	pScriptMgr->register_creature_script(KAEL_FLAMESTRIKE, &KaelFlamestrikeAI::Create);
-	pScriptMgr->register_creature_script(WRETCHED_HUSK, &WretchedHuskAI::Create);
-	pScriptMgr->register_creature_script(WRETCHED_SKULKER, &WretchedSkulkerAI::Create);
-	pScriptMgr->register_creature_script(WRETCHED_BRUISER, &WretchedBruiserAI::Create);
-	pScriptMgr->register_creature_script(SUNBLADE_WARLOCK, &SunbladeWarlockAI::Create);
-	pScriptMgr->register_creature_script(SUNBLADE_PHYSICIAN, &SunbladePhysicianAI::Create);
-	pScriptMgr->register_creature_script(SUNBLADE_KEEPER, &SunbladeKeeperAI::Create);
-	pScriptMgr->register_creature_script(SUNBLADE_IMP, &SunbladeImpAI::Create);
-	pScriptMgr->register_creature_script(SISTER_OF_TORMENT, &TormentSisterAI::Create);
-	pScriptMgr->register_creature_script(FIZZLE, &FizzleAI::Create);
-	pScriptMgr->register_creature_script(ETHEREUM_SMUGGLER, &EthereumSmugglerAI::Create);
-	pScriptMgr->register_creature_script(COILSKAR_WITCH, &CoilskarWitchAI::Create);
-	pScriptMgr->register_creature_script(SUNBLADE_BLOOD_KNIGHT, &SunbladeBloodKnightAI::Create);
-	pScriptMgr->register_creature_script(BRIGHTSCALE_WYRM, &BrightscaleWyrmAI::Create);
-	pScriptMgr->register_creature_script(FEL_CRYSTAL, &FelCrystalAI::Create);
+	//pScriptMgr->register_creature_script(CN_COILSKAR_WITCH, &CoilskarWitchAI::Create);
+	//pScriptMgr->register_creature_script(CN_SISTER_OF_TORMENT, &SisterOfTormentAI::Create);
+	//pScriptMgr->register_creature_script(CN_SB_IMP, &SunbladeImpAI::Create);
+	//pScriptMgr->register_creature_script(CN_SB_MAGE_GUARD, &SunbladeMageGuardAI::Create);
+	//pScriptMgr->register_creature_script(CN_SB_MAGISTER, &SunbladeMagisterAI::Create);
+	//pScriptMgr->register_creature_script(PURE_ENERGY, &PureEnergyAI::Create);
+	//pScriptMgr->register_creature_script(GL_BUBBLE, &GLBubbleAI::Create);
+	//pScriptMgr->register_creature_script(PHOENIX_EGG, &PhoenixEggAI::Create);
+	//pScriptMgr->register_creature_script(PHOENIX, &KaelPhoenixAI::Create);
+	//pScriptMgr->register_creature_script(KAEL_FLAMESTRIKE, &KaelFlamestrikeAI::Create);
+	//pScriptMgr->register_creature_script(WRETCHED_HUSK, &WretchedHuskAI::Create);
+	//pScriptMgr->register_creature_script(WRETCHED_SKULKER, &WretchedSkulkerAI::Create);
+	//pScriptMgr->register_creature_script(WRETCHED_BRUISER, &WretchedBruiserAI::Create);
+	//pScriptMgr->register_creature_script(SUNBLADE_WARLOCK, &SunbladeWarlockAI::Create);
+	//pScriptMgr->register_creature_script(SUNBLADE_PHYSICIAN, &SunbladePhysicianAI::Create);
+	//pScriptMgr->register_creature_script(SUNBLADE_KEEPER, &SunbladeKeeperAI::Create);
+	//pScriptMgr->register_creature_script(SUNBLADE_IMP, &SunbladeImpAI::Create);
+	//pScriptMgr->register_creature_script(SISTER_OF_TORMENT, &TormentSisterAI::Create);
+	//pScriptMgr->register_creature_script(FIZZLE, &FizzleAI::Create);
+	//pScriptMgr->register_creature_script(ETHEREUM_SMUGGLER, &EthereumSmugglerAI::Create);
+	//pScriptMgr->register_creature_script(COILSKAR_WITCH, &CoilskarWitchAI::Create);
+	//pScriptMgr->register_creature_script(SUNBLADE_BLOOD_KNIGHT, &SunbladeBloodKnightAI::Create);
+	//pScriptMgr->register_creature_script(BRIGHTSCALE_WYRM, &BrightscaleWyrmAI::Create);
+	//pScriptMgr->register_creature_script(FEL_CRYSTAL, &FelCrystalAI::Create);
 }

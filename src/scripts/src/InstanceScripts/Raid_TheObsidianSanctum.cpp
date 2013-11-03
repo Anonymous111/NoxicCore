@@ -447,7 +447,7 @@ class LavaBlazeAI : public MoonScriptBossAI
 
 };
 
-class TwilightPortal : public GameObjectAIScript
+/*class TwilightPortal : public GameObjectAIScript
 {
 public:
 	TwilightPortal(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
@@ -457,7 +457,7 @@ public:
 	{
 		pPlayer->SetPass(2);
 	}
-};
+};*/
 
 void SetupTheObsidianSanctum(ScriptMgr* mgr)
 {

@@ -1671,7 +1671,7 @@ class ArchimondeAI : public CreatureAIScript
 
 // DeathTrigger (Doom effect)
 #define CN_LESSER_DOOMGUARD	17864
-class DeathTriggerAI : public CreatureAIScript
+/*class DeathTriggerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(DeathTriggerAI);
@@ -1683,12 +1683,12 @@ public:
 		_unit->GetMapMgr()->GetInterface()->SpawnCreature(CN_LESSER_DOOMGUARD,_unit->GetPositionX(),_unit->GetPositionY(),_unit->GetPositionZ(),0,false,false,0,0);
 		_unit->Despawn(1000, 0);
 	}
-};
+};*/
 
 // Lesser Doomguard
 #define CRIPPLE 31406			
 #define WARSTOMP 31408
-class LesserDoomGuardAI : public CreatureAIScript
+/*class LesserDoomGuardAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(LesserDoomGuardAI);
@@ -1796,13 +1796,13 @@ public:
 protected:
 
 	int nrspells;
-};
+};*/
 
 // Towering Infernal
 #define CN_TOWERING_INFERNAL 17818
 #define INFERNOE 31302
 #define IMMOLATION 31303
-class ToweringInfernalAI : public CreatureAIScript
+/*class ToweringInfernalAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(ToweringInfernalAI);
@@ -1909,12 +1909,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Abomination
 #define DISEASECLOUD 31607
 #define KNOCKDOWN 31610
-class AbominationAI : public CreatureAIScript
+/*class AbominationAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(AbominationAI);
@@ -2019,13 +2019,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Banshee
 #define ANTIMAGIC 31662  
 #define BANSHEECURSE 31651
 #define BANSHEEWAIL 38183
-class BansheeAI : public CreatureAIScript
+/*class BansheeAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(BansheeAI);
@@ -2191,11 +2191,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Crypt Fiend
 #define POISONSPRAY 30043
-class CfiendAI : public CreatureAIScript
+/*class CfiendAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(CfiendAI);
@@ -2346,12 +2346,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Ghoul
 #define CANIBALIZE 31537
 #define FRENZY 31540
-class GhoulAI : public CreatureAIScript
+/*class GhoulAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(GhoulAI);
@@ -2454,15 +2454,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Shadowy Necromancer
 #define SHADOWBOLTSN			31627/*
 #define SUMMONMAGE				31625
 #define SUMMONINVADER			31624
 #define SUMMONBOTH				31617*/ 
-
-class SNecromancerAI : public CreatureAIScript
+/*class SNecromancerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(SNecromancerAI);
@@ -2483,27 +2482,27 @@ public:
 		spells[0].cooldown = 10;
 		spells[0].mindist2cast = 0.0f;
 		spells[0].maxdist2cast = 40.0f;
-/*
-		spells[1].info = dbcSpell.LookupEntry(SUMMONMAGE);
-		spells[1].targettype = TARGET_SELF;
-		spells[1].instant = true;
-		spells[1].perctrigger = 5.0f;
-		spells[1].attackstoptimer = 1000;
-		spells[1].cooldown = 10;
 
-		spells[2].info = dbcSpell.LookupEntry(SUMMONINVADER);
-		spells[2].targettype = TARGET_SELF;
-		spells[2].instant = true;
-		spells[2].perctrigger = 5.0f;
-		spells[2].attackstoptimer = 1000;
-		spells[2].cooldown = 10;
+		//spells[1].info = dbcSpell.LookupEntry(SUMMONMAGE);
+		//spells[1].targettype = TARGET_SELF;
+		//spells[1].instant = true;
+		//spells[1].perctrigger = 5.0f;
+		//spells[1].attackstoptimer = 1000;
+		//spells[1].cooldown = 10;
 
-		spells[3].info = dbcSpell.LookupEntry(SUMMONBOTH);
-		spells[3].targettype = TARGET_SELF;
-		spells[3].instant = true;
-		spells[3].perctrigger = 5.0f;
-		spells[3].attackstoptimer = 1000;
-		spells[3].cooldown = 10;*/
+		//spells[2].info = dbcSpell.LookupEntry(SUMMONINVADER);
+		//spells[2].targettype = TARGET_SELF;
+		//spells[2].instant = true;
+		//spells[2].perctrigger = 5.0f;
+		//spells[2].attackstoptimer = 1000;
+		//spells[2].cooldown = 10;
+
+		//spells[3].info = dbcSpell.LookupEntry(SUMMONBOTH);
+		//spells[3].targettype = TARGET_SELF;
+		//spells[3].instant = true;
+		//spells[3].perctrigger = 5.0f;
+		//spells[3].attackstoptimer = 1000;
+		//spells[3].cooldown = 10;
     }
     
     void OnCombatStart(Unit* mTarget)
@@ -2633,11 +2632,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Gargoyle
 #define GARGOYLESTRIKE 31664
-class HGargoyleAI : public CreatureAIScript
+/*class HGargoyleAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HGargoyleAI);
@@ -2788,11 +2787,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Fel Stalker
 #define MANABURN 31729
-class HFelStalkerAI : public CreatureAIScript
+/*class HFelStalkerAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HFelStalkerAI);
@@ -2942,11 +2941,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Frost Wyrm
 #define FROSTBREATH 31688
-class HFwyrmAI : public CreatureAIScript
+/*class HFwyrmAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HFwyrmAI);
@@ -3097,10 +3096,10 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Giant Infernal // No Info --> Abomination KNOCKBACK
-class GiantInfAI : public CreatureAIScript
+/*class GiantInfAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(GiantInfAI);
@@ -3249,7 +3248,7 @@ public:
 	
 protected:
 	int nrspells;
-};
+};*/
 
 // Skeleton Invader // No Info T_T
 #define CN_HSKI 17902
@@ -3258,7 +3257,7 @@ protected:
 #define FIREBALLSK 31620
 #define FROSTBALLSK 31622
 #define SHADOWBOLTSK 31618
-class HSkeletonMageAI : public CreatureAIScript
+/*class HSkeletonMageAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HSkeletonMageAI);
@@ -3431,12 +3430,12 @@ public:
 protected:
 	int nrspells;
 	uint32 TimerDespawn;
-};
+};*/
 
 // Alliance Footman
 #define CN_FOOTMAN 17919
 #define SHIELDWALL 31731
-class HAFootmanAI : public CreatureAIScript
+/*class HAFootmanAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HAFootmanAI);
@@ -3531,12 +3530,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Alliance Knight
 #define CN_HAKNIGHT 17920
 #define RALLYINGCRY 31732
-class HAKnightAI : public CreatureAIScript
+/*class HAKnightAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HAKnightAI);
@@ -3632,14 +3631,14 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Alliance Peasant
 // Alliance Priest
 #define CN_PRIEST		17928
 #define HEAL			31739 //46564
 #define SMITE			31740
-class HAPriestAI : public CreatureAIScript
+/*class HAPriestAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HAPriestAI);
@@ -3798,13 +3797,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Alliance Rifleman
 #define CN_HARIFLE 17921
 #define EXPLODINGSHOOT 7896
 #define SHOOT 32103
-class HARiflemanAI : public CreatureAIScript
+/*class HARiflemanAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HARiflemanAI);
@@ -3963,13 +3962,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Alliance Sorceress
 #define CN_ASORCERESS 17922
 #define	SLOW 31741
 #define	ARCANE_MISSILE 31743
-class HASorceressAI : public CreatureAIScript
+/*class HASorceressAI : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(HASorceressAI);
@@ -4128,12 +4127,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Ancient Wisp
 #define CN_ANCIENTW 17946
 #define ANCIENTSPARK 39349
-class HAAncientWAI : public CreatureAIScript
+/*class HAAncientWAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HAAncientWAI);
@@ -4289,12 +4288,12 @@ public:
 protected:
 	int nrspells;
 	uint32 TimerDespawn;
-};
+};*/
 
 // Dire Wolf
 #define CN_DIRE_WOLF 17854
 #define GROWL 31334
-class HHDireWolfAI : public CreatureAIScript
+/*class HHDireWolfAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHDireWolfAI);
@@ -4443,7 +4442,7 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Druid of the Claw
 // Druid of the Talon
@@ -4452,7 +4451,7 @@ protected:
 // Guardian Water Elemental
 #define CN_WATERELE		18001	
 #define FROSTBOLTWE		31622
-class HWaterEleAI : public CreatureAIScript
+/*class HWaterEleAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HWaterEleAI);
@@ -4604,12 +4603,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Horde Grunt
 #define CN_HGRUNT 17932
 #define STRIKE 31754
-class HHGruntAI : public CreatureAIScript
+/*class HHGruntAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHGruntAI);
@@ -4705,12 +4704,12 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Horde Headhunter
 #define CN_HEADH 17934
 #define SPEART 31758
-class HHHeadHunterAI : public CreatureAIScript
+/*class HHHeadHunterAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHHeadHunterAI);
@@ -4858,11 +4857,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Horde Healing Ward
 #define CN_HHWARD 18036
-class HHHWardAI : public CreatureAIScript
+/*class HHHWardAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHHWardAI);
@@ -4872,7 +4871,7 @@ public:
 		sEventMgr.AddEvent(((Unit*)_unit), &Unit::EventCastSpell, ((Unit*)_unit), dbcSpell.LookupEntry(HEAL), EVENT_UNK, 5000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 		_unit->Despawn(30000, 0);
     }
-};
+};*/
 
 // Horde Peon
 
@@ -4881,7 +4880,7 @@ public:
 #define BLOODLUST 6742
 #define LSHIELD 31765
 #define LBOLT 31764
-class HHShamanAI : public CreatureAIScript
+/*class HHShamanAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHShamanAI);
@@ -5045,13 +5044,13 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Horde Witch Doctor
 #define CN_HWITCHDR 17935
 #define HOLYBOLT 31759
 #define SUMMONWARD 31760
-class HHWitchDrAI : public CreatureAIScript
+/*class HHWitchDrAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHWitchDrAI);
@@ -5108,9 +5107,9 @@ public:
 
     void AIUpdate()
     {
-		/*TimerSummon--;
-			if(!TimerSummon)
-				_unit->GetMapMgr()->GetInterface()->SpawnCreature(18036, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 0, false, false, 0, 0);*/
+		//TimerSummon--;
+			//if(!TimerSummon)
+				//_unit->GetMapMgr()->GetInterface()->SpawnCreature(18036, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 0, false, false, 0, 0);
 
 		float val = (float)RandomFloat(100.0f);
         SpellCast(val);
@@ -5213,7 +5212,7 @@ public:
 	protected:
 	int nrspells;
 	uint32 TimerSummon;
-};
+};*/
 
 
 // Night Elf Ancient Protector // --> Ancient Whisp
@@ -5232,7 +5231,7 @@ public:
 // Tauren Warrior
 #define CN_TWARRIOR			17933
 #define WARSTOMP2			31755
-class HHTaurenWarriorAI : public CreatureAIScript
+/*class HHTaurenWarriorAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(HHTaurenWarriorAI);
@@ -5327,11 +5326,11 @@ public:
 
 protected:
 	int nrspells;
-};
+};*/
 
 // Puerta Keeper
 #define CN_PUERTAKEEPER 90003
-class PuertasAI : public CreatureAIScript
+/*class PuertasAI : public CreatureAIScript
 {
 public:
     ADD_CREATURE_FACTORY_FUNCTION(PuertasAI);
@@ -5386,7 +5385,7 @@ protected:
 	GameObject* GateElfa;
 	bool GateHordaOn;
 	bool GateElfaOn;
-};
+};*/
 
 void SetupBattleOfMountHyjal(ScriptMgr* mgr)
 {
@@ -5408,39 +5407,39 @@ void SetupBattleOfMountHyjal(ScriptMgr* mgr)
 	mgr->register_creature_script(CN_DOOMFIRE, &DoomfireAI::Create);
 	mgr->register_creature_script(CN_ARCHIMONDE, &ArchimondeAI::Create);
 
-	mgr->register_creature_script(CN_DEATHTRIGGER, &DeathTriggerAI::Create);
-	mgr->register_creature_script(CN_LESSER_DOOMGUARD, &LesserDoomGuardAI::Create);
-	mgr->register_creature_script(CN_TOWERING_INFERNAL, &ToweringInfernalAI::Create);
-	mgr->register_creature_script(CN_TRIGGER_HYJALA, &TriggerHyjalaAI::Create);
-	mgr->register_creature_script(CN_ABOMINATION, &AbominationAI::Create);
-	mgr->register_creature_script(CN_BANSH, &BansheeAI::Create);
-	mgr->register_creature_script(CN_CRYPT, &CfiendAI::Create);
-	mgr->register_creature_script(CN_GHOUL, &GhoulAI::Create);
+	//mgr->register_creature_script(CN_DEATHTRIGGER, &DeathTriggerAI::Create);
+	//mgr->register_creature_script(CN_LESSER_DOOMGUARD, &LesserDoomGuardAI::Create);
+	//mgr->register_creature_script(CN_TOWERING_INFERNAL, &ToweringInfernalAI::Create);
+	//mgr->register_creature_script(CN_TRIGGER_HYJALA, &TriggerHyjalaAI::Create);
+	//mgr->register_creature_script(CN_ABOMINATION, &AbominationAI::Create);
+	//mgr->register_creature_script(CN_BANSH, &BansheeAI::Create);
+	//mgr->register_creature_script(CN_CRYPT, &CfiendAI::Create);
+	//mgr->register_creature_script(CN_GHOUL, &GhoulAI::Create);
 	//mgr->register_creature_script(CN_NECROMANCER, &SNecromancerAI::Create);
-	mgr->register_creature_script(CN_GARGO, &HGargoyleAI::Create);
-	mgr->register_creature_script(CN_FWYRM, &HFwyrmAI::Create);
-	mgr->register_creature_script(CN_FSTAL, &HFelStalkerAI::Create);
-	mgr->register_creature_script(CN_GINFE, &GiantInfAI::Create);
-	mgr->register_creature_script(CN_HSKM, &HSkeletonMageAI::Create);
-	mgr->register_creature_script(CN_FOOTMAN, &HAFootmanAI::Create);
-	mgr->register_creature_script(CN_HAKNIGHT, &HAKnightAI::Create);
-	mgr->register_creature_script(CN_PRIEST, &HAPriestAI::Create);
-	mgr->register_creature_script(CN_HARIFLE, &HARiflemanAI::Create);
-	mgr->register_creature_script(CN_ASORCERESS, &HASorceressAI::Create);
-	mgr->register_creature_script(CN_DIRE_WOLF, &HHDireWolfAI::Create);
-	mgr->register_creature_script(CN_WATERELE, &HWaterEleAI::Create);
-	mgr->register_creature_script(CN_HGRUNT, &HHGruntAI::Create);
-	mgr->register_creature_script(CN_HHWARD, &HHHWardAI::Create);
-	mgr->register_creature_script(CN_HASHAMAN, &HHShamanAI::Create);
-	mgr->register_creature_script(CN_HEADH, &HHHeadHunterAI::Create);
-	mgr->register_creature_script(CN_HWITCHDR, &HHWitchDrAI::Create);
-	mgr->register_creature_script(CN_ANCIENTW, &HAAncientWAI::Create);
-	mgr->register_creature_script(CN_NEWHISP, &HAAncientWAI::Create);
-	mgr->register_creature_script(CN_NEHUNT, &HHHeadHunterAI::Create);
-	mgr->register_creature_script(CN_NEARCHER, &HARiflemanAI::Create);
-	mgr->register_creature_script(CN_NEAWAR, &HAAncientWAI::Create);
-	mgr->register_creature_script(CN_NEALORE, &HAAncientWAI::Create);
-	mgr->register_creature_script(CN_NEAPROTE, &HAAncientWAI::Create);
-	mgr->register_creature_script(CN_TWARRIOR, &HHTaurenWarriorAI::Create);
-	mgr->register_creature_script(CN_PUERTAKEEPER, &PuertasAI::Create);
+	//mgr->register_creature_script(CN_GARGO, &HGargoyleAI::Create);
+	//mgr->register_creature_script(CN_FWYRM, &HFwyrmAI::Create);
+	//mgr->register_creature_script(CN_FSTAL, &HFelStalkerAI::Create);
+	//mgr->register_creature_script(CN_GINFE, &GiantInfAI::Create);
+	//mgr->register_creature_script(CN_HSKM, &HSkeletonMageAI::Create);
+	//mgr->register_creature_script(CN_FOOTMAN, &HAFootmanAI::Create);
+	//mgr->register_creature_script(CN_HAKNIGHT, &HAKnightAI::Create);
+	//mgr->register_creature_script(CN_PRIEST, &HAPriestAI::Create);
+	//mgr->register_creature_script(CN_HARIFLE, &HARiflemanAI::Create);
+	//mgr->register_creature_script(CN_ASORCERESS, &HASorceressAI::Create);
+	//mgr->register_creature_script(CN_DIRE_WOLF, &HHDireWolfAI::Create);
+	//mgr->register_creature_script(CN_WATERELE, &HWaterEleAI::Create);
+	//mgr->register_creature_script(CN_HGRUNT, &HHGruntAI::Create);
+	//mgr->register_creature_script(CN_HHWARD, &HHHWardAI::Create);
+	//mgr->register_creature_script(CN_HASHAMAN, &HHShamanAI::Create);
+	//mgr->register_creature_script(CN_HEADH, &HHHeadHunterAI::Create);
+	//mgr->register_creature_script(CN_HWITCHDR, &HHWitchDrAI::Create);
+	//mgr->register_creature_script(CN_ANCIENTW, &HAAncientWAI::Create);
+	//mgr->register_creature_script(CN_NEWHISP, &HAAncientWAI::Create);
+	//mgr->register_creature_script(CN_NEHUNT, &HHHeadHunterAI::Create);
+	//mgr->register_creature_script(CN_NEARCHER, &HARiflemanAI::Create);
+	//mgr->register_creature_script(CN_NEAWAR, &HAAncientWAI::Create);
+	//mgr->register_creature_script(CN_NEALORE, &HAAncientWAI::Create);
+	//mgr->register_creature_script(CN_NEAPROTE, &HAAncientWAI::Create);
+	//mgr->register_creature_script(CN_TWARRIOR, &HHTaurenWarriorAI::Create);
+	//mgr->register_creature_script(CN_PUERTAKEEPER, &PuertasAI::Create);
 }

@@ -38,6 +38,7 @@ void SetupPriestSpells(ScriptMgr* mgr);
 void SetupDruidSpells(ScriptMgr* mgr);
 void SetupDeathKnightSpells(ScriptMgr* mgr);
 
+void SetupHolidaySpells(ScriptMgr* mgr);
 void SetupOldSpellCPPSuff(ScriptMgr* mgr);
 void SetupPetAISpells(ScriptMgr* mgr);
 void SetupQuestItems(ScriptMgr* mgr);

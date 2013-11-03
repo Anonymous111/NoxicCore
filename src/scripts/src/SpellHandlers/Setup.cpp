@@ -35,6 +35,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupShamanSpells(mgr);
 	SetupWarlockSpells(mgr);
 	SetupWarriorSpells(mgr);
+	SetupHolidaySpells(mgr);
 	SetupHunterSpells(mgr);
 	SetupItemSpells_1(mgr);
 	SetupQuestItems(mgr); //this was commented for crash reason, let see what are those...

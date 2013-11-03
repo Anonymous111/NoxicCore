@@ -9,21 +9,27 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
-DeathKnightSpells.cpp
-DruidSpells.cpp
-HunterSpells.cpp
-ItemSpells_1.cpp
-MageSpells.cpp
-PaladinSpells.cpp
-PetAISpells.cpp
-PriestSpells.cpp
-QIspells.cpp
-RogueSpells.cpp
-Setup.cpp
-ShamanSpells.cpp
-WarlockSpells.cpp
-WarriorSpells.cpp
-MiscSpells.cpp )
+	DeathKnightSpells.cpp
+	DruidSpells.cpp
+	HolidaySpells.cpp
+	HunterSpells.cpp
+	ItemSpells_1.cpp
+	MageSpells.cpp
+	PaladinSpells.cpp
+	PetAISpells.cpp
+	PriestSpells.cpp
+	QIspells.cpp
+	RogueSpells.cpp
+	Setup.cpp
+	ShamanSpells.cpp
+	WarlockSpells.cpp
+	WarriorSpells.cpp
+	MiscSpells.cpp
+)
+
+SET( headers
+	Setup.h
+)
 
 foreach(src IN ITEMS ${sources} )
   SET( SRCS ${SRCS} ${prefix}/${src} )
