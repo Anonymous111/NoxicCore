@@ -235,7 +235,7 @@ ObjectMgr::~ObjectMgr()
 
 
 	Log.Notice( "ObjectMgr", "Cleaning up worldstate templates" );
-	for(std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr
+	for(std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr)
 	{
 		itr->second->clear();
 		delete itr->second;
