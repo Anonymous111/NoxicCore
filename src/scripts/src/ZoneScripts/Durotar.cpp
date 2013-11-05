@@ -17,28 +17,25 @@
  *
  */
 
-#include "StdAfx.h"
+#include "Setup.h"
 
-#ifndef ZONE_SCRIPTS_SETUP_H
-#define ZONE_SCRIPTS_SETUP_H
+class PeonSleepingAI : CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI)
+	PeonSleepingAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	{
+		RegisterAIUpdateEvent(3000 + RandomUInt(180000));
+	}
 
-// Northrend
-void SetupZoneIcecrown(ScriptMgr* mgr);
-void SetupZoneBoreanTundra(ScriptMgr* mgr);
+	void AIUpdate()
+	{
+		GetUnit()->CastSpell(GetUnit(), 17743, true);
+		RemoveAIUpdateEvent();
+	}
+};
 
-// Eastern Kingdom
-void SetupZoneArathiHighlands(ScriptMgr* mgr);
-void SetupZoneBlastedLands(ScriptMgr* mgr);
-
-// Kalimdor
-void SetupZoneBloodmystIsle(ScriptMgr* mgr);
-void SetupZoneDurotar(ScriptMgr* mgr);
-
-// Outland
-void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);
-void SetupZoneHellfirePeninsula(ScriptMgr* mgr);
-
-// Other
-void SetupZoneMisc(ScriptMgr* mgr);
-
-#endif
+void SetupZoneDurotar(ScriptMgr* mgr)
+{
+	mgr->register_creature_script(10556, &PeonSleepingAI::Create); // Lazy Peon
+}

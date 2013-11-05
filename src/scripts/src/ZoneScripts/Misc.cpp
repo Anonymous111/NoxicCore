@@ -18,31 +18,33 @@
  */
 
 #include "Setup.h"
-#include <ScriptSetup.h>
 
-extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
+void GuardsOnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
 {
-	return SCRIPT_TYPE_MISC;
+	if(Emote == EMOTE_ONESHOT_KISS)
+		Emote = EMOTE_ONESHOT_BOW;
+
+	if(RandomUInt(100) <= 33 && pPlayer->GetStandingRank(pUnit->m_factionDBC->ID) >= STANDING_FRIENDLY)
+		pUnit->Emote(static_cast<EmoteType>(Emote));
 }
 
-extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
+void OnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
 {
-	SetupZoneArathiHighlands(mgr);
-	SetupZoneBladeEdgeMountains(mgr);
-	SetupZoneBlastedLands(mgr);
-	SetupZoneBloodmystIsle(mgr);
-	SetupZoneBoreanTundra(mgr);
-	SetupZoneDurotar(mgr);
-	SetupZoneHellfirePeninsula(mgr)
-	SetupZoneMisc(mgr);
-	SetupZoneIcecrown(mgr);
+	if(!pUnit || pUnit->IsDead() || pUnit->CombatStatus.IsInCombat() || !pUnit->GetAIInterface())
+		return;
+
+	switch(Emote)
+	{
+		case EMOTE_ONESHOT_SALUTE:
+		case EMOTE_ONESHOT_WAVE:
+		case EMOTE_ONESHOT_KISS:
+			if(pUnit->GetAIInterface()->m_isGuard)
+				GuardsOnEmote(pPlayer, pUnit, Emote);
+			break;
+	}
 }
 
-#ifdef WIN32
-
-BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+void SetupZoneMisc(ScriptMgr* mgr)
 {
-	return TRUE;
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&OnEmote);
 }
-
-#endif
