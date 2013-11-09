@@ -14,8 +14,17 @@ SET( sources
 	BlastedLands.cpp
 	BloodmystIsle.cpp
 	BoreanTundra.cpp
+	Durotar.cpp
+	HellfirePeninsula.cpp
 	Icecrown.cpp
+	Orgrimmar.cpp
     Setup.cpp
+	ShadowmoonValley.cpp
+	SilverpineForest.cpp
+	Tanaris.cpp
+	TheBarrens.cpp
+	TheScarletEnclave.cpp
+	WesternPlaguelands.cpp
  )
 
 SET( headers

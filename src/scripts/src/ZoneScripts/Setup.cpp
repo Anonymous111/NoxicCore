@@ -33,8 +33,15 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupZoneBloodmystIsle(mgr);
 	SetupZoneBoreanTundra(mgr);
 	SetupZoneDurotar(mgr);
-	SetupZoneHellfirePeninsula(mgr)
+	SetupZoneHellfirePeninsula(mgr);
 	SetupZoneMisc(mgr);
+	SetupZoneOrgrimmar(mgr);
+	SetupZoneShadowmoonValley(mgr);
+	SetupZoneSilverpineForest(mgr);
+	SetupZoneTanaris(mgr);
+	SetupZoneTheBarrens(mgr);
+	SetupZoneTheScarletEnclave(mgr);
+	SetupZoneWesternPlaguelands(mgr);
 	SetupZoneIcecrown(mgr);
 }
 

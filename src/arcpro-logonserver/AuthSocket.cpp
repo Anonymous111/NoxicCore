@@ -429,7 +429,7 @@ void AuthSocket::HandleProof()
 	m_authenticated = true;
 
 	// Don't update when IP banned, but update anyway if it's an account ban
-	sLogonSQL->Execute("UPDATE accounts SET lastlogin=NOW(), lastip='%s' WHERE acct=%u;", GetRemoteIP().c_str(), m_account->AccountId);
+	sLogonSQL->Execute("UPDATE accounts SET last_login=NOW(), last_ip='%s' WHERE id=%u;", GetRemoteIP().c_str(), m_account->AccountId);
 }
 
 void AuthSocket::SendChallengeError(uint8 Error)
@@ -658,7 +658,7 @@ void AuthSocket::HandleReconnectChallenge()
 		return;
 	}
 
-	/** burlex: this is pure speculation, I really have no idea what this does :p
+	/** this is pure speculation, I really have no idea what this does :p
 	 * just guessed the md5 because it was 16 byte blocks.
 	 */
 
@@ -688,7 +688,7 @@ void AuthSocket::HandleReconnectProof()
 		return;
 
 	// Don't update when IP banned, but update anyway if it's an account ban
-	sLogonSQL->Execute("UPDATE accounts SET lastlogin=NOW(), lastip='%s' WHERE acct=%u;", GetRemoteIP().c_str(), m_account->AccountId);
+	sLogonSQL->Execute("UPDATE accounts SET last_login=NOW(), last_ip='%s' WHERE id=%u;", GetRemoteIP().c_str(), m_account->AccountId);
 	//RemoveReadBufferBytes(GetReadBufferSize(), true);
 	readBuffer.Remove(readBuffer.GetSize());
 

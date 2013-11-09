@@ -29,7 +29,7 @@ void AccountMgr::ReloadAccounts(bool silent)
 	if(!silent) sLog.outString("[AccountMgr] Reloading Accounts...");
 
 	// Load *all* accounts.
-	QueryResult* result = sLogonSQL->Query("SELECT acct, login, password, encrypted_password, gm, flags, banned, forceLanguage, muted FROM accounts");
+	QueryResult* result = sLogonSQL->Query("SELECT id, username, password, sha_pass_hash, gmlevel, expansion, locked, locale, mutetime FROM accounts");
 	Field* field;
 	string AccountName;
 	set<string> account_list;
@@ -116,7 +116,7 @@ void AccountMgr::AddAccount(Field* field)
 		acct->Banned = 0;
 		//me go boom :(
 		//printf("Account %s's ban has expired.\n",acct->UsernamePtr->c_str());
-		sLogonSQL->Execute("UPDATE accounts SET banned = 0 WHERE acct=%u", acct->AccountId);
+		sLogonSQL->Execute("UPDATE accounts SET locked = 0 WHERE id=%u", acct->AccountId);
 	}
 	acct->SetGMFlags(GMFlags.c_str());
 	acct->Locale[0] = 'e';
@@ -138,7 +138,7 @@ void AccountMgr::AddAccount(Field* field)
 		//Accounts should be unbanned once the date is past their set expiry date.
 		acct->Muted = 0;
 		//LOG_DEBUG("Account %s's mute has expired.",acct->UsernamePtr->c_str());
-		sLogonSQL->Execute("UPDATE accounts SET muted = 0 WHERE acct=%u", acct->AccountId);
+		sLogonSQL->Execute("UPDATE accounts SET locked = 0 WHERE id=%u", acct->AccountId);
 	}
 	// Convert username/password to uppercase. this is needed ;)
 	arcpro_TOUPPER(Username);
@@ -193,8 +193,8 @@ void AccountMgr::UpdateAccount(Account* acct, Field* field)
 
 	if(id != acct->AccountId)
 	{
-		LOG_ERROR(" >> deleting duplicate account %u [%s]...", id, Username.c_str());
-		sLogonSQL->Execute("DELETE FROM accounts WHERE acct=%u", id);
+		LOG_ERROR(" >> Deleting duplicate account %u [%s]...", id, Username.c_str());
+		sLogonSQL->Execute("DELETE FROM accounts WHERE id=%u", id);
 		return;
 	}
 
@@ -206,7 +206,7 @@ void AccountMgr::UpdateAccount(Account* acct, Field* field)
 		//Accounts should be unbanned once the date is past their set expiry date.
 		acct->Banned = 0;
 		LOG_DEBUG("Account %s's ban has expired.", acct->UsernamePtr->c_str());
-		sLogonSQL->Execute("UPDATE accounts SET banned = 0 WHERE acct=%u", acct->AccountId);
+		sLogonSQL->Execute("UPDATE accounts SET locked = 0 WHERE id=%u", acct->AccountId);
 	}
 	acct->SetGMFlags(GMFlags.c_str());
 	if(strcmp(field[7].GetString(), "enUS"))
@@ -224,7 +224,7 @@ void AccountMgr::UpdateAccount(Account* acct, Field* field)
 		//Accounts should be unbanned once the date is past their set expiry date.
 		acct->Muted = 0;
 		LOG_DEBUG("Account %s's mute has expired.", acct->UsernamePtr->c_str());
-		sLogonSQL->Execute("UPDATE accounts SET muted = 0 WHERE acct=%u", acct->AccountId);
+		sLogonSQL->Execute("UPDATE accounts SET mutetime = 0 WHERE id=%u", acct->AccountId);
 	}
 	// Convert username/password to uppercase. this is needed ;)
 	arcpro_TOUPPER(Username);
@@ -570,7 +570,7 @@ void InformationCore::TimeoutSockets()
 
 	uint32 now = uint32(time(NULL));
 
-	/* burlex: this is vulnerable to race conditions, adding a mutex to it. */
+	/* this is vulnerable to race conditions, adding a mutex to it. */
 	serverSocketLock.Acquire();
 
 	for(set< LogonCommServerSocket* >::iterator itr = m_serverSockets.begin(); itr != m_serverSockets.end();)

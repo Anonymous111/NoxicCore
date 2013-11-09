@@ -19,11 +19,11 @@
 
 #include "Setup.h"
 
-class Aeranas : public MoonScriptCreatureAI
+class Aeranas : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Aeranas, MoonScriptCreatureAI)
-	Aeranas(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	ADD_CREATURE_FACTORY_FUNCTION(Aeranas, CreatureAIScript)
+	Aeranas(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
 		AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
 		AddSpell(12553, Target_Current, 50.0f, 0, 10);
@@ -42,12 +42,12 @@ public:
 
 	void AIUpdate()
 	{
-		if( GetUnit()->GetHealthPct() <= 30 )
+		if(GetUnit()->GetHealthPct() <= 30)
 		{
 			GetUnit()->smsg_AttackStop(GetUnit()->GetAIInterface()->getNextTarget());
 			GetUnit()->GetAIInterface()->getNextTarget()->smsg_AttackStop(GetUnit());
-			GetUnit()->GetAIInterface()->setNextTarget( TO_UNIT(NULL) );
-			GetUnit()->SetFaction( 35 );
+			GetUnit()->GetAIInterface()->setNextTarget(TO_UNIT(NULL));
+			GetUnit()->SetFaction(35);
 		}
 		ParentClass::AIUpdate();
 	}

@@ -46,10 +46,10 @@ void _OnSignal(int s)
 	{
 #ifndef WIN32
 		case SIGHUP:
-			{
-				LOG_DETAIL("Received SIGHUP signal, reloading accounts.");
-				AccountMgr::getSingleton().ReloadAccounts(true);
-			}break;
+		{
+			LOG_DETAIL("Received SIGHUP signal, reloading accounts.");
+			AccountMgr::getSingleton().ReloadAccounts(true);
+		}break;
 #endif
 		case SIGINT:
 		case SIGTERM:
@@ -84,7 +84,6 @@ int main(int argc, char** argv)
 	delete LogonServer::getSingletonPtr();
 }
 
-
 /**
   * Initialises the logon database
   *
@@ -111,8 +110,8 @@ bool startdb()
 	bool existsUsername		= Config.MainConfig.GetString("LogonDatabase", "Username", &lusername);
 	bool existsPassword		= Config.MainConfig.GetString("LogonDatabase", "Password", &lpassword);
 	bool existsHostname		= Config.MainConfig.GetString("LogonDatabase", "Hostname", &lhostname);
-	bool existsName			= Config.MainConfig.GetString("LogonDatabase", "Name",     &ldatabase);
-	bool existsPort			= Config.MainConfig.GetInt("LogonDatabase", "Port",     &lport);
+	bool existsName			= Config.MainConfig.GetString("LogonDatabase", "Name", &ldatabase);
+	bool existsPort			= Config.MainConfig.GetInt("LogonDatabase", "Port", &lport);
 	bool existsCompression	= Config.MainConfig.GetBool("LogonDatabase", "Compression", &lcompression);
 	bool existsSSLCA		= Config.MainConfig.GetString("LogonDatabase", "SSLCA", &lsslca);
 	bool existsSSLKey		= Config.MainConfig.GetString("LogonDatabase", "SSLKey", &lsslkey);
@@ -163,7 +162,7 @@ bool startdb()
 			lsslkey.c_str(), lsslcert.c_str(), lsslca.c_str(),
 			lcompression, Config.MainConfig.GetIntDefault("LogonDatabase", "ConnectionCount", 5), 16384))
 	{
-		LOG_ERROR("sql: Logon database initialization failed. Exiting.");
+		LOG_ERROR("SQL: Logon database initialization failed. Exiting.");
 		return false;
 	}
 
