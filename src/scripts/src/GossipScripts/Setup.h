@@ -20,11 +20,13 @@
  *
  */
 
-#include "StdAfx.h"
-
 #ifndef GOSSIP_SCRIPTS_SETUP_H
 #define GOSSIP_SCRIPTS_SETUP_H
 
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
+
+void SetupArgentTournamentGossip(Scriptmgr* mgr);
 void SetupDalaranGossip(ScriptMgr* mgr);
 void SetupInnkeepers(ScriptMgr* mgr);
 void SetupGuardGossip(ScriptMgr* mgr);
