@@ -17,10 +17,11 @@
  *
  */
 
-#include "StdAfx.h"
-
 #ifndef WORLDPVP_SCRIPTS_SETUP_H
 #define WORLDPVP_SCRIPTS_SETUP_H
+
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 void SetupPvPTerokkarForest(ScriptMgr* mgr);
 void SetupPvPHellfirePeninsula(ScriptMgr* mgr);

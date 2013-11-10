@@ -21,10 +21,11 @@
  *
  */
 
-#include "StdAfx.h"
-
 #ifndef SPELL_SCRIPTS_SETUP_H
 #define SPELL_SCRIPTS_SETUP_H
+
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 // Class spell handlers
 void SetupShamanSpells(ScriptMgr* mgr);

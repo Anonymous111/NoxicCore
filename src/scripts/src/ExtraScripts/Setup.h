@@ -18,9 +18,11 @@
  *
  */
 
-#include "StdAfx.h"
 #ifndef EXTRA_SCRIPTS_SETUP_H
 #define EXTRA_SCRIPTS_SETUP_H
+
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 void SetupNeutralGuards(ScriptMgr* mgr);
 

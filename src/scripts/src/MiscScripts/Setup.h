@@ -21,11 +21,11 @@
  *
  */
 
-#include "StdAfx.h"
-#include "../Common/EasyFunctions.h"
-
 #ifndef MISC_SCRIPTS_SETUP_H
 #define MISC_SCRIPTS_SETUP_H
+
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 void SetupGoHandlers(ScriptMgr* mgr);
 void SetupQDGoHandlers(ScriptMgr* mgr);

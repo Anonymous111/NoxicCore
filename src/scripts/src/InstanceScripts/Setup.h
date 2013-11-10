@@ -21,13 +21,13 @@
  *
  */
 
+#ifndef INSTANCE_SCRIPTS_SETUP_H
+#define INSTANCE_SCRIPTS_SETUP_H
+
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
 #include "../Common/Instance_Base.h"
 #include "../Common/Base.h"
-
-#ifndef INSTANCE_SCRIPTS_SETUP_H
-#define INSTANCE_SCRIPTS_SETUP_H
 
 //Instances
 void SetupArcatraz(ScriptMgr* mgr);

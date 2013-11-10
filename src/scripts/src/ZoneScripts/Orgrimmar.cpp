@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class TrollRoofStalker : public CreatureAIScript
 {

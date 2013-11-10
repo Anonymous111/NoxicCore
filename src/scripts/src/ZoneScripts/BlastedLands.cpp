@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class KirithAI : public CreatureAIScript
 {

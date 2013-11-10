@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 uint32 BristlelimbKilled = 0; // TODO: This variable should be unique for each player
 class HighChiefBristlelimb : public CreatureAIScript

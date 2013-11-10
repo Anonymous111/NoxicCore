@@ -17,10 +17,11 @@
  *
  */
 
-#include "StdAfx.h"
-
 #ifndef ZONE_SCRIPTS_SETUP_H
 #define ZONE_SCRIPTS_SETUP_H
+
+#include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 // Northrend
 void SetupZoneIcecrown(ScriptMgr* mgr);

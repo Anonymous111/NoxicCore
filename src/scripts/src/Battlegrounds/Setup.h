@@ -23,6 +23,7 @@
 #define BATTLEGROUNDS_SETUP_H
 
 #include "StdAfx.h"
+#include "../Common/EasyFunctions.h"
 
 #endif
 

@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 void GuardsOnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
 {

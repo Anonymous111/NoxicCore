@@ -17,7 +17,6 @@
  *
  */
 
-#include "StdAfx.h"
 #include "Setup.h"
 
 #define PARACHUTE 54168

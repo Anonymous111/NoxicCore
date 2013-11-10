@@ -21,13 +21,13 @@
  *
  */
 
+#ifndef	QUEST_SCRIPTS_Setup_H
+#define QUEST_SCRIPTS_Setup_H
+
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
 #include "../Common/Instance_Base.h"
 #include "../Common/Base.h"
-
-#ifndef	QUEST_SCRIPTS_Setup_H
-#define QUEST_SCRIPTS_Setup_H
 
 //	###		Classes Quests	###
 void SetupDruid(ScriptMgr* mgr);

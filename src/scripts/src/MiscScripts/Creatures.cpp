@@ -22,7 +22,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 //Crimson Hammersmith
 class CrimsonHammersmith : public CreatureAIScript
