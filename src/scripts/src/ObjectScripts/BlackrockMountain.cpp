@@ -24,15 +24,15 @@ class OrbOfCommand : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(OrbOfCommand)
-		OrbOfCommand(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		OrbOfCommand(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-		void OnActivate(Player *pPlayer)
+		void OnActivate(Player* pPlayer)
 		{
 			pPlayer->SafeTeleport(469, 0, -7672.939941f, -1107.307617f, 396.649994f, 0.616532f);
 		}
 };
 
-void SetupBlackrockMountainGameobjects(ScriptMgr * mgr)
+void SetupBlackrockMountainGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(179879, &OrbOfCommand::Create);	// Orb of Command
 }

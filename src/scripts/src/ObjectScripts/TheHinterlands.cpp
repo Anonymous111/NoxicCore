@@ -19,15 +19,14 @@
  */
  
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class VilebranchKidnapper : public GameObjectAIScript
 {
 public:
 	ADD_GAMEOBJECT_FACTORY_FUNCTION(VilebranchKidnapper)
-	VilebranchKidnapper(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	VilebranchKidnapper(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
+	void OnActivate(Player* pPlayer)
 	{
 		LocationVector vect(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
 		for(uint8 i = 0; i < 2; ++i)
@@ -39,7 +38,7 @@ public:
 	}
 };
 
-void SetupTheHinterlandsGameobjects(ScriptMgr * mgr)
+void SetupTheHinterlandsGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(179910, &VilebranchKidnapper::Create);	// Lard's Picnic Basket
+	mgr->register_gameobject_script(179910, &VilebranchKidnapper::Create); // Lard's Picnic Basket
 }

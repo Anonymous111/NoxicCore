@@ -19,15 +19,14 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class CatFigurine : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(CatFigurine)
-		CatFigurine(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		CatFigurine(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-		void OnActivate(Player *pPlayer)
+		void OnActivate(Player* pPlayer)
 		{
 			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
 			if(RandomUInt(100) <= 10)
@@ -35,8 +34,8 @@ class CatFigurine : public GameObjectAIScript
 		}
 };
 
-void SetupDarkshoreGameobjects(ScriptMgr * mgr)
+void SetupDarkshoreGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(13359,  &CatFigurine::Create);	// Cat Figurine
-	mgr->register_gameobject_script(13873,  &CatFigurine::Create);	// Cat Figurine
+	mgr->register_gameobject_script(13359, &CatFigurine::Create); // Cat Figurine
+	mgr->register_gameobject_script(13873, &CatFigurine::Create); // Cat Figurine
 }

@@ -24,9 +24,9 @@ class StrongholdCache : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(StrongholdCache)
-		StrongholdCache(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+		StrongholdCache(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-		void OnActivate(Player * pPlayer)
+		void OnActivate(Player* pPlayer)
 		{
 			uint32 spellid = 0;
 			switch( RandomUInt(3) )
@@ -40,13 +40,13 @@ class StrongholdCache : public GameObjectAIScript
 			if(spellid == 0)
 				return;
 
-			Spell * spell = new Spell(_gameobject, dbcSpell.LookupEntryForced(spellid), true, NULL);
+			Spell* spell = new Spell(_gameobject, dbcSpell.LookupEntryForced(spellid), true, NULL);
 			SpellCastTargets targets(pPlayer->GetGUID());
 			spell->prepare(&targets);
 		}
 };
 
-void SetupZulDrakGameobjects(ScriptMgr * mgr)
+void SetupZulDrakGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(190836, &StrongholdCache::Create);	// Zol'Maz Stronghold Cache
+	mgr->register_gameobject_script(190836, &StrongholdCache::Create); // Zol'Maz Stronghold Cache
 }

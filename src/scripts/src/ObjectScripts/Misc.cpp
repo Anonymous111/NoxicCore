@@ -19,15 +19,14 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class Blacksmithing_Plans_Use : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(Blacksmithing_Plans_Use)
-		Blacksmithing_Plans_Use(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		Blacksmithing_Plans_Use(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-		void OnLootTaken(Player *pLooter, ItemPrototype *pItemInfo)
+		void OnLootTaken(Player* pLooter, ItemPrototype *pItemInfo)
 		{
 			if(pLooter->GetMapId() != 230)
 			{
@@ -41,7 +40,7 @@ class DeathGate1 : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(DeathGate1)
-		DeathGate1(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		DeathGate1(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
 		void OnSpawn()
 		{
@@ -65,7 +64,7 @@ class DeathGate2 : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(DeathGate2)
-		DeathGate2(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		DeathGate2(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
 		void OnSpawn()
 		{
@@ -75,7 +74,7 @@ class DeathGate2 : public GameObjectAIScript
 		void AIUpdate()
 		{
 			Player* plr = sEAS.GetNearestPlayer(_gameobject);
-			if( plr && _gameobject->CalcDistance(_gameobject, plr) <= 1.5f)
+			if(plr && _gameobject->CalcDistance(_gameobject, plr) <= 1.5f)
 			{
 				if(plr->GetMapId() == 609)
 					plr->SafeTeleport(609, 0, 2397.57f, -5636.03f, 377.05f, 0.57f);
@@ -89,13 +88,13 @@ class Blastenheimer5000 : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(Blastenheimer5000)
-		Blastenheimer5000(GameObject * goinstance) : GameObjectAIScript(goinstance)
+		Blastenheimer5000(GameObject* goinstance) : GameObjectAIScript(goinstance)
 		{
 			pUser = NULL;
 			spell = NULL;
 		}
 
-		void OnActivate(Player * pPlayer)
+		void OnActivate(Player* pPlayer)
 		{
 			if(pUser != NULL)
 				return;
@@ -140,29 +139,29 @@ class Blastenheimer5000 : public GameObjectAIScript
 		}
 
 	protected:
-		Player * pUser;
-		Spell * spell;
+		Player* pUser;
+		Spell* spell;
 };
 
 class ManaThistle : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(ManaThistle)
-		ManaThistle(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+		ManaThistle(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
-		void OnLootTaken(Player *pLooter, ItemPrototype *pItemInfo) 
+		void OnLootTaken(Player* pLooter, ItemPrototype* pItemInfo) 
 		{
-			Spell * spell = new Spell(_gameobject, dbcSpell.LookupEntryForced(28718), true, NULL);
+			Spell* spell = new Spell(_gameobject, dbcSpell.LookupEntryForced(28718), true, NULL);
 			SpellCastTargets targets(pLooter->GetGUID());
 			spell->prepare(&targets); // Cast spell: "Mana Thistle".
 		}
 };
 
-void SetupMiscGameobjects(ScriptMgr * mgr)
+void SetupMiscGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(173232, &Blacksmithing_Plans_Use::Create);	// Blacksmithing Plans
-	mgr->register_gameobject_script(191538, &DeathGate1::Create);				// Doodad_Nox_portal_purple_bossroom01
-	mgr->register_gameobject_script(191539, &DeathGate2::Create);				// Doodad_Nox_portal_purple_bossroom17
-	mgr->register_gameobject_script(180515, &Blastenheimer5000::Create);		// Blastenheimer 5000 Ultra Cannon
-	mgr->register_gameobject_script(181281, &ManaThistle::Create);				// Mana Thistle
+	mgr->register_gameobject_script(173232, &Blacksmithing_Plans_Use::Create); // Blacksmithing Plans
+	mgr->register_gameobject_script(191538, &DeathGate1::Create); // Doodad_Nox_portal_purple_bossroom01
+	mgr->register_gameobject_script(191539, &DeathGate2::Create); // Doodad_Nox_portal_purple_bossroom17
+	mgr->register_gameobject_script(180515, &Blastenheimer5000::Create); // Blastenheimer 5000 Ultra Cannon
+	mgr->register_gameobject_script(181281, &ManaThistle::Create); // Mana Thistle
 }
