@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupArathiHighlandsGameobjects(ScriptMgr * mgr)
+void SetupArathiHighlandsGameobjects(ScriptMgr* mgr)
 {
 }

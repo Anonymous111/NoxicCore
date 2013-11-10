@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupBlastedLandsGameobjects(ScriptMgr * mgr)
+void SetupBlastedLandsGameobjects(ScriptMgr* mgr)
 {
 }

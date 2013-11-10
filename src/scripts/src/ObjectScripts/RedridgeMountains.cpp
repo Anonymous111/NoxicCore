@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupRedridgeMountainsGameobjects(ScriptMgr * mgr)
+void SetupRedridgeMountainsGameobjects(ScriptMgr* mgr)
 {
 }

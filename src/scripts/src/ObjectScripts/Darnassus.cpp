@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDarnassusGameobjects(ScriptMgr * mgr)
+void SetupDarnassusGameobjects(ScriptMgr* mgr)
 {
 }

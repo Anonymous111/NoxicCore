@@ -15,13 +15,13 @@ SET( sources
 	Ashenvale.cpp
 	Azshara.cpp
 	AzuremystIsle.cpp
+	Barrens.cpp
 	BlackrockMountain.cpp
 	BladeEdgeMountains.cpp
 	BlastedLands.cpp
 	BloodmystIsle.cpp
 	BoreanTundra.cpp
 	BurningSteppes.cpp
-	CapeofStranglethorn.cpp
 	CrystalsongForest.cpp
 	Dalaran.cpp
 	Darkshore.cpp
@@ -40,24 +40,18 @@ SET( sources
 	Felwood.cpp
 	Feralas.cpp
 	Ghostlands.cpp
-	Gilneas.cpp
 	HellfirePeninsula.cpp
 	HillsbradFoothills.cpp
 	Hinterlands.cpp
 	Ironforge.cpp
 	IsleofQuelDanas.cpp
 	LochModan.cpp
-	LostIsles.cpp
 	Maelstrom.cpp
 	Misc.cpp
-	MoltenFront.cpp
 	Moonglade.cpp
-	MountHyjal.cpp
 	Mulgore.cpp
 	Nagrand.cpp
 	Netherstorm.cpp
-	NorthernBarrens.cpp
-	NorthernStranglethorn.cpp
 	Orgrimmar.cpp
 	RedridgeMountains.cpp
 	RuinsofGilneas.cpp
@@ -66,9 +60,9 @@ SET( sources
 	Silithus.cpp
 	SilvermoonCity.cpp
 	SilverpineForest.cpp
-	SouthernBarrens.cpp
 	StonetalonMountains.cpp
 	StormwindCity.cpp
+	Stranglethorn.cpp
 	SwampofSorrows.cpp
 	Tanaris.cpp
 	Teldrassil.cpp
@@ -79,15 +73,8 @@ SET( sources
 	ThousandNeedles.cpp
 	ThunderBluff.cpp
 	TirisfalGlades.cpp
-	TolBarad.cpp
-	TolBaradPeninsula.cpp
-	TwilightHighlands.cpp
-	TwinPeaks.cpp
-	Uldum.cpp
 	UnderCity.cpp
 	UnGoroCrater.cpp
-	Vashjir.cpp
-	VeiledSea.cpp
 	WesternPlaguelands.cpp
 	Westfall.cpp
 	Wintergrasp.cpp

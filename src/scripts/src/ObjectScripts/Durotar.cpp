@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDurotarGameobjects(ScriptMgr * mgr)
+void SetupDurotarGameobjects(ScriptMgr* mgr)
 {
 }

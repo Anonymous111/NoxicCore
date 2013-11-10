@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupWintergraspGameobjects(ScriptMgr * mgr)
+void SetupWintergraspGameobjects(ScriptMgr* mgr)
 {
 }

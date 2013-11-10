@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupTheFallenKindomGameobjects(ScriptMgr * mgr)
+void SetupTheFallenKingdomGameobjects(ScriptMgr* mgr)
 {
 }

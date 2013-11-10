@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupSilvermoonCityGameobjects(ScriptMgr * mgr)
+void SetupSilvermoonCityGameobjects(ScriptMgr* mgr)
 {
 }

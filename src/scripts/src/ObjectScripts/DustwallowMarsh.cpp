@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDustwallowMarshGameobjects(ScriptMgr * mgr)
+void SetupDustwallowMarshGameobjects(ScriptMgr* mgr)
 {
 }

@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupStonetalonMountainsGameobjects(ScriptMgr * mgr)
+void SetupStonetalonMountainsGameobjects(ScriptMgr* mgr)
 {
 }

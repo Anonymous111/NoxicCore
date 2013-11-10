@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupOrgrimmarGameobjects(ScriptMgr * mgr)
+void SetupOrgrimmarGameobjects(ScriptMgr* mgr)
 {
 }

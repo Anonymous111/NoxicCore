@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupHillsbradFoothillsGameobjects(ScriptMgr * mgr)
+void SetupHillsbradFoothillsGameobjects(ScriptMgr* mgr)
 {
 }

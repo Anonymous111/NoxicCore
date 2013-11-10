@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupArathiBasinGameobjects(ScriptMgr * mgr)
+void SetupArathiBasinGameobjects(ScriptMgr* mgr)
 {
 }

@@ -36,7 +36,7 @@ class VioletHoldLever : public GameObjectAIScript
 		}
 };
 
-void SetupCrystalsongForestGameobjects(ScriptMgr * mgr)
+void SetupCrystalsongForestGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(193020, &VioletHoldLever::Create);
 }

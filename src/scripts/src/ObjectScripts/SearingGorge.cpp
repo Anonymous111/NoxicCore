@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupSearingGorgeGameobjects(ScriptMgr * mgr)
+void SetupSearingGorgeGameobjects(ScriptMgr* mgr)
 {
 }

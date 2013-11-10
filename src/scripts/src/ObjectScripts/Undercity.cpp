@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupUndercityGameobjects(ScriptMgr * mgr)
+void SetupUndercityGameobjects(ScriptMgr* mgr)
 {
 }

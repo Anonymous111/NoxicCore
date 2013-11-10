@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupEversongWoodsGameobjects(ScriptMgr * mgr)
+void SetupEversongWoodsGameobjects(ScriptMgr* mgr)
 {
 }

@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDeadwindPassGameobjects(ScriptMgr * mgr)
+void SetupDeadwindPassGameobjects(ScriptMgr* mgr)
 {
 }

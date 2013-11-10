@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupExodarGameobjects(ScriptMgr * mgr)
+void SetupExodarGameobjects(ScriptMgr* mgr)
 {
 }

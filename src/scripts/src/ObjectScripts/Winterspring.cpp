@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupWinterspringGameobjects(ScriptMgr * mgr)
+void SetupWinterspringGameobjects(ScriptMgr* mgr)
 {
 }

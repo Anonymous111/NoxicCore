@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupMoongladeGameobjects(ScriptMgr * mgr)
+void SetupMoongladeGameobjects(ScriptMgr* mgr)
 {
 }

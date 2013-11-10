@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupStormwindCityGameobjects(ScriptMgr * mgr)
+void SetupStormwindCityGameobjects(ScriptMgr* mgr)
 {
 }

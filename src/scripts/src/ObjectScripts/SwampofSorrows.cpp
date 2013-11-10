@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupSwampofSorrowsGameobjects(ScriptMgr * mgr)
+void SetupSwampofSorrowsGameobjects(ScriptMgr* mgr)
 {
 }

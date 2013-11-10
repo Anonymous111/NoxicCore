@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDuskwoodGameobjects(ScriptMgr * mgr)
+void SetupDuskwoodGameobjects(ScriptMgr* mgr)
 {
 }

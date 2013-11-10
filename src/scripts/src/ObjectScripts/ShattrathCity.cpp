@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupShattrathCityGameobjects(ScriptMgr * mgr)
+void SetupShattrathCityGameobjects(ScriptMgr* mgr)
 {
 }

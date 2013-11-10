@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDalaranGameobjects(ScriptMgr * mgr)
+void SetupDalaranGameobjects(ScriptMgr* mgr)
 {
 }

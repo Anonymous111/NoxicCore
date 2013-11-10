@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupMulgoreGameobjects(ScriptMgr * mgr)
+void SetupMulgoreGameobjects(ScriptMgr* mgr)
 {
 }

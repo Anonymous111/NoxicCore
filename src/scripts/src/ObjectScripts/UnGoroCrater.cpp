@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupUnGoroCraterGameobjects(ScriptMgr * mgr)
+void SetupUnGoroCraterGameobjects(ScriptMgr* mgr)
 {
 }

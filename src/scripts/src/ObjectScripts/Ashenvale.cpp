@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupAshenvaleGameobjects(ScriptMgr * mgr)
+void SetupAshenvaleGameobjects(ScriptMgr* mgr)
 {
 }

@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupFelwoodGameobjects(ScriptMgr * mgr)
+void SetupFelwoodGameobjects(ScriptMgr* mgr)
 {
 }

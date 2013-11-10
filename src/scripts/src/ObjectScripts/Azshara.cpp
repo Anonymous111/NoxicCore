@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupAzsharaGameobjects(ScriptMgr * mgr)
+void SetupAzsharaGameobjects(ScriptMgr* mgr)
 {
 }

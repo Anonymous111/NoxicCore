@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupElwynnForestGameobjects(ScriptMgr * mgr)
+void SetupElwynnForestGameobjects(ScriptMgr* mgr)
 {
 }

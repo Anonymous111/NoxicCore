@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupFeralasGameobjects(ScriptMgr * mgr)
+void SetupFeralasGameobjects(ScriptMgr* mgr)
 {
 }

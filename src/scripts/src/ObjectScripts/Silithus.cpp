@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupSilithusGameobjects(ScriptMgr * mgr)
+void SetupSilithusGameobjects(ScriptMgr* mgr)
 {
 }

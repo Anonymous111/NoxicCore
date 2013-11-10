@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDeeprunTramGameobjects(ScriptMgr * mgr)
+void SetupDeeprunTramGameobjects(ScriptMgr* mgr)
 {
 }

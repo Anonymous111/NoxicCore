@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupNorthernBarrensGameobjects(ScriptMgr * mgr)
+void SetupBarrensGameobjects(ScriptMgr* mgr)
 {
 }

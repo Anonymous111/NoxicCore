@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupTeldrassilGameobjects(ScriptMgr * mgr)
+void SetupTeldrassilGameobjects(ScriptMgr* mgr)
 {
 }

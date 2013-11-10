@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupLochModanGameobjects(ScriptMgr * mgr)
+void SetupLochModanGameobjects(ScriptMgr* mgr)
 {
 }

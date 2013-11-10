@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupWestfallGameobjects(ScriptMgr * mgr)
+void SetupWestfallGameobjects(ScriptMgr* mgr)
 {
 }

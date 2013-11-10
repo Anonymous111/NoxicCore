@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupIronforgeGameobjects(ScriptMgr * mgr)
+void SetupIronforgeGameobjects(ScriptMgr* mgr)
 {
 }

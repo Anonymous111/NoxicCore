@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupIsleofQuelDanasGameobjects(ScriptMgr * mgr)
+void SetupIsleofQuelDanasGameobjects(ScriptMgr* mgr)
 {
 }

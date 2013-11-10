@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupGhostlandsGameobjects(ScriptMgr * mgr)
+void SetupGhostlandsGameobjects(ScriptMgr* mgr)
 {
 }

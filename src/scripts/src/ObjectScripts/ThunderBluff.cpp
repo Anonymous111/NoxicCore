@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupThunderBluffGameobjects(ScriptMgr * mgr)
+void SetupThunderBluffGameobjects(ScriptMgr* mgr)
 {
 }

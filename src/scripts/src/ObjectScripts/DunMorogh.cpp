@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupDunMoroghGameobjects(ScriptMgr * mgr)
+void SetupDunMoroghGameobjects(ScriptMgr* mgr)
 {
 }

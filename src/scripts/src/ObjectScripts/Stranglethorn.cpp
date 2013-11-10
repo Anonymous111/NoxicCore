@@ -19,6 +19,6 @@
 
 #include "Setup.h"
 
-void SetupCapeofStranglethornGameobjects(ScriptMgr * mgr)
+void SetupStranglethornGameobjects(ScriptMgr* mgr)
 {
 }
