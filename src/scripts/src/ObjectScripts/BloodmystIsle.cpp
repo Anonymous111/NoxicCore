@@ -19,6 +19,53 @@
 
 #include "Setup.h"
 
-void SetupBloodmystIsleGameobjects(ScriptMgr * mgr)
+class BarrelOfFilth : public GameObjectAIScript
 {
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(BarrelOfFilth)
+	BarrelOfFilth(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+		if(pPlayer->HasQuest(9508))
+			sEAS.SpawnCreature(pPlayer, 17359, vect, 1000);
+	}
+};
+
+class Razormaw : public GameObjectAIScript
+{
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(Razormaw)
+	Razormaw(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(pPlayer->HasQuest(9689))
+			sEAS.SpawnCreature(pPlayer, 17592, -1203.8f, -12424.7f, 95.36f, 4.7f, 1000);
+	}
+};
+
+class SavingPrincessStillpine : public GameObjectAIScript // TODO: Find what it do on retail.
+{
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(SavingPrincessStillpine)
+	SavingPrincessStillpine(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(!pPlayer->HasQuest(9667))
+			return;
+
+		Creature* Princess = sEAS.GetNearestCreature(pPlayer, 17682);
+		if(Princess != NULL)
+			Princess->Despawn(1000, 1000);
+	}
+};
+
+void SetupBloodmystIsleGameobjects(ScriptMgr* mgr)
+{
+	mgr->register_gameobject_script(181699, &BarrelOfFilth::Create); // Barrel of Filth
+	mgr->register_gameobject_script(181988, &Razormaw::Create); // Ever-burning Pyre
+	mgr->register_gameobject_script(181928, &SavingPrincessStillpine::Create); // Princess Stillpine's Cage
 }

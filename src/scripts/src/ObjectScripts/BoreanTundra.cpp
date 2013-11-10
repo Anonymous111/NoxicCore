@@ -19,6 +19,33 @@
 
 #include "Setup.h"
 
-void SetupBoreanTundraGameobjects(ScriptMgr * mgr)
+class NerubarEggSac : public GameObjectAIScript
 {
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(NerubarEggSac)
+	NerubarEggSac(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(!pPlayer->HasQuest(11602))
+			return;
+
+		switch(rand()%3)
+		{
+			case 0:
+				break; // 33% of chance get nothing...
+			case 1:
+				sEAS.SpawnCreature(pPlayer, 24562, _gameobject->GetPositionNC(), 1000); // 33% to spawn a Nerub'ar Invader...
+			case 2:
+				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000); // and 33% to spawn 3 Nerub'ar Scarab
+				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000);
+				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000);
+		}
+		_gameobject->Despawn(500, 60000);
+	}
+};
+
+void SetupBoreanTundraGameobjects(ScriptMgr* mgr)
+{
+	mgr->register_gameobject_script(187655, &NerubarEggSac::Create); // Nerub'ar Egg Sac
 }
