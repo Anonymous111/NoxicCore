@@ -19,6 +19,21 @@
 
 #include "Setup.h"
 
-void SetupAzuremystIsleGameobjects(ScriptMgr * mgr)
+class ProphecyofAkida : public GameObjectAIScript
 {
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(ProphecyofAkida)
+	ProphecyofAkida(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		Creature* prisoner = sEAS.GetNearestCreature(pPlayer, 17375);
+		if(pPlayer->HasQuest(9544) && prisoner)
+			prisoner->Despawn(1, 1000);
+	}
+};
+
+void SetupAzuremystIsleGameobjects(ScriptMgr* mgr)
+{
+	mgr->register_gameobject_script(181730, &ProphecyofAkida::Create); // Bristlelimb Cage
 }
