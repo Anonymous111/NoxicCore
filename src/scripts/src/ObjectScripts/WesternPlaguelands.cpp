@@ -19,6 +19,123 @@
 
 #include "Setup.h"
 
-void SetupWesternPlaguelandsGameobjects(ScriptMgr * mgr)
+class APlagueUponThee : public GameObjectAIScript
 {
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(APlagueUponThee)
+	APlagueUponThee(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(pPlayer->GetQuestLogForEntry(5902) || pPlayer->GetQuestLogForEntry(5904))
+		{
+			if( sEAS.GetNearestGameObject(pPlayer, 177491))
+				sEAS.SpawnGameobject(pPlayer, 177491, 2449.51f, -1662.32f, 104.38f, 1.0f, 1000);
+		}
+	}
+};
+
+class AndorhalTower1 : public GameObjectAIScript{
+public:
+
+	AndorhalTower1(GameObject* goinstance) : GameObjectAIScript( goinstance ){}
+	static GameObjectAIScript* Create(GameObject* GO){ return new AndorhalTower1( GO ); }
+
+	void OnActivate(Player* plr){
+		
+		QuestLogEntry *qle = plr->GetQuestLogForEntry(5097);
+		
+		if(qle == NULL){
+			qle = plr->GetQuestLogForEntry(5098);
+			if(qle == NULL)
+				return;
+		}
+		
+		if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0]){
+			qle->SetMobCount(0, qle->GetMobCount(0)+1);
+			qle->SendUpdateAddKill(0);
+			qle->UpdatePlayerFields();
+		}
+	}
+};
+
+class AndorhalTower2 : public GameObjectAIScript{
+public:
+
+	AndorhalTower2(GameObject *goinstance) : GameObjectAIScript( goinstance ){}
+	static GameObjectAIScript* Create(GameObject* GO){ return new AndorhalTower2( GO ); }
+
+	void OnActivate(Player *plr){
+		
+		QuestLogEntry* qle = plr->GetQuestLogForEntry(5097);
+		
+		if(qle == NULL){
+			qle = plr->GetQuestLogForEntry(5098);
+			if(qle == NULL)
+				return;
+		}
+		
+		if(qle->GetMobCount(1) < qle->GetQuest()->required_mobcount[1]){
+			qle->SetMobCount(1, qle->GetMobCount(1)+1);
+			qle->SendUpdateAddKill(1);
+			qle->UpdatePlayerFields();
+
+		}
+	}
+};
+
+class AndorhalTower3 : public GameObjectAIScript{
+public:
+	AndorhalTower3(GameObject* goinstance) : GameObjectAIScript( goinstance ){}
+	static GameObjectAIScript* Create(GameObject* GO){ return new AndorhalTower3( GO ); }
+
+	void OnActivate(Player* plr ){
+		
+		QuestLogEntry* qle = p->GetQuestLogForEntry(5097);
+		
+		if(qle == NULL){
+			qle = plr->GetQuestLogForEntry(5098);
+			if(qle == NULL)
+				return;
+		}
+		
+		if(qle->GetMobCount(2) < qle->GetQuest()->required_mobcount[2]){
+			qle->SetMobCount(2, qle->GetMobCount(2)+1);
+			qle->SendUpdateAddKill(2);
+			qle->UpdatePlayerFields();
+		}
+	}
+};
+
+class AndorhalTower4 : public GameObjectAIScript{
+public:
+	AndorhalTower4(GameObject* goinstance) : GameObjectAIScript( goinstance ){}
+	static GameObjectAIScript* Create(GameObject* GO){ return new AndorhalTower4( GO ); }
+
+	void OnActivate(Player* plr){
+		
+		QuestLogEntry* qle = plr->GetQuestLogForEntry(5097);
+		
+		if(qle == NULL){
+			qle = plr->GetQuestLogForEntry(5098);
+			if(qle == NULL)
+				return;
+		}
+		
+		if(qle->GetMobCount(3) < qle->GetQuest()->required_mobcount[3]){
+			qle->SetMobCount(3, qle->GetMobCount(3)+1);
+			qle->SendUpdateAddKill(3);
+			qle->UpdatePlayerFields();
+		}
+	}
+};
+
+void SetupWesternPlaguelandsGameobjects(ScriptMgr* mgr)
+{
+	mgr->register_gameobject_script(177490, &APlagueUponThee::Create); // Northridge Lumber Mill Crate
+
+	mgr->register_gameobject_script(310030, &AndorhalTower1::Create);
+	mgr->register_gameobject_script(310031, &AndorhalTower2::Create);
+	mgr->register_gameobject_script(310032, &AndorhalTower3::Create);
+	mgr->register_gameobject_script(310033, &AndorhalTower4::Create);
 }
