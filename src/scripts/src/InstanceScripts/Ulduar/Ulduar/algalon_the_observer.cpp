@@ -17,9 +17,10 @@
  *
  */
 
-#include "StdAfx.h"
+/*#include "StdAfx.h"
 #include "Raid_Ulduar.h"
-#include "../Common/Base.h" 
+#include "../Common/Base.h"
+#include "../Common/EasyFunctions.h"
 
 static Coords RoomPoints[]=
 {
@@ -272,9 +273,9 @@ public:
 		ParentClass::OnCombatStop( pTarget );
 
 		if( !mEndScene )
-		{
+		{*/
 			/* to prevent possible bugs */
-			mFirstEncounter = false;
+			/*mFirstEncounter = false;
 			RemoveAIUpdateEvent();
 			_unit->SetUInt64Value( UNIT_FIELD_FLAGS, 0 );
 		}
@@ -283,12 +284,12 @@ public:
 	void OnReachWP(uint32 iWaypointId, bool bForwards )
 	{
 		if ( iWaypointId == 1 )
-		{
+		{*/
 			/*for( set<Player*>::iterator PlayerIter = _unit->GetInRangePlayerSetBegin(); PlayerIter != _unit->GetInRangePlayerSetEnd(); ++PlayerIter ) 
 			{
 				(*PlayerIter)->CastSpell( (*PlayerIter), ALGALON_KILLCREDIT, true );
 			}*/
-			_unit->GetMapMgr()->GetInterface()->SpawnGameObject( UL_GIFT_OF_THE_OBSERVER, AlgalonEndEvent[0].mX, AlgalonEndEvent[0].mY, AlgalonEndEvent[0].mZ, AlgalonEndEvent[0].mO, false, 0, 0, 1 ); 
+			/*_unit->GetMapMgr()->GetInterface()->SpawnGameObject( UL_GIFT_OF_THE_OBSERVER, AlgalonEndEvent[0].mX, AlgalonEndEvent[0].mY, AlgalonEndEvent[0].mZ, AlgalonEndEvent[0].mO, false, 0, 0, 1 ); 
 			//RegisterAIUpdate( 1000 );
 			//_unit->CombatStatus.TryToClearAttackTargets();
 		};
@@ -827,11 +828,11 @@ public:
 			};
 		}
 	};
-};
+};*/
 
-void SetupAlgalon(ScriptMgr * mgr)
+void SetupAlgalon(ScriptMgr* mgr)
 {
-	mgr->register_creature_script( CN_ALGALON, &AlgalonAI::Create);
+	/*mgr->register_creature_script( CN_ALGALON, &AlgalonAI::Create);
 	mgr->register_creature_script( CN_AZEROTH, &AzerothAI::Create);
 	mgr->register_creature_script( CN_COLLAPSING_STAR, &CollapsingStarAI::Create);
 	mgr->register_creature_script( CN_BLACK_HOLE, &BlackHoleAI::Create);
@@ -839,7 +840,7 @@ void SetupAlgalon(ScriptMgr * mgr)
 	mgr->register_creature_script( CN_LIVING_CONSTELLATION, &LivingConstellationAI::Create);
 	mgr->register_creature_script( CN_UNLEASEHED_DARK_MATTER, &UnleashedDarkMatterAI::Create );
 
-	mgr->register_gameobject_script( Doodad_UL_SigilDoor_01, &AlgalonDoorGO::Create);
+	mgr->register_gameobject_script( Doodad_UL_SigilDoor_01, &AlgalonDoorGO::Create);*/
 
 	//mgr->register_spell_script( ALGALON_PHASE_PUNCH, &PhasePunchAI::Create);
 };

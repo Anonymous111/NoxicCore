@@ -18,9 +18,10 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 uint32 BristlelimbKilled = 0; // TODO: This variable should be unique for each player
-/*class HighChiefBristlelimb : public CreatureAIScript
+class HighChiefBristlelimb : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(HighChiefBristlelimb)
@@ -28,8 +29,8 @@ public:
 
 	void OnDamageDealt()
 	{
-		if(GetUnit()->GetHealthPct() <= 10)
-			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Chief, we need your help!");
+		if(_unit->GetHealthPct() <= 10)
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Chief, we need your help!");
 	}
 
 	void OnDied(Unit* mKiller)
@@ -41,9 +42,9 @@ public:
 		if(BristlelimbKilled > 8 && (rand()%80))
 			sEAS.SpawnCreature(mKiller, 17702, -2419, -12166, 33, 3.45f, DESPAWN_TIME);
 	}
-};*/
+};
 
-/*class WebbedCreature : public CreatureAIScript
+class WebbedCreature : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(WebbedCreature)
@@ -51,9 +52,9 @@ public:
 
 	void OnCombatStart(Unit* pTarget)
 	{
-		GetUnit()->GetAIInterface()->disable_melee = true;
-		GetUnit()->Root();
-		GetUnit()->GetAIInterface()->StopMovement(0);
+		_unit->GetAIInterface()->disable_melee = true;
+		_unit->Root();
+		_unit->GetAIInterface()->StopMovement(0);
 	}
 
 	void OnDied(Unit* pKiller)
@@ -68,7 +69,7 @@ public:
 			return;
 
 		// TODO: I don't think the method is correct, but it can stay the way it was until someone gives proper infos
-		LocationVector vec(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
+		LocationVector vec(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 		if(!pPlayer->HasQuest(9670))
 		{
 			// Creatures from Bloodmyst Isle
@@ -100,11 +101,11 @@ public:
 			}
 		}
 	}
-};*/
+};
 
 void SetupZoneBloodmystIsle(ScriptMgr* mgr)
 {
-	//mgr->register_creature_script(17320, &HighChiefBristlelimb::Create); // Bristlelimb Shaman
-	//mgr->register_creature_script(17321, &HighChiefBristlelimb::Create); // Bristlelimb Warrior
-	//mgr->register_creature_script(17680, &WebbedCreature::Create); // Webbed Creature
+	mgr->register_creature_script(17320, &HighChiefBristlelimb::Create); // Bristlelimb Shaman
+	mgr->register_creature_script(17321, &HighChiefBristlelimb::Create); // Bristlelimb Warrior
+	mgr->register_creature_script(17680, &WebbedCreature::Create); // Webbed Creature
 }

@@ -18,9 +18,8 @@
  */
  
 #include "StdAfx.h"
-#ifndef EXTRA_SCRIPTS_SETUP_H
-#define EXTRA_SCRIPTS_SETUP_H
+#ifndef OBJECT_SCRIPTS_SETUP_H
+#define OBJECT_SCRIPTS_SETUP_H
 
-void SetupObjectScripts(ScriptMgr* mgr);
 
 #endif

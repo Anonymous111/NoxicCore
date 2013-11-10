@@ -19,6 +19,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class CatFigurine : public GameObjectAIScript
 {
@@ -30,7 +31,7 @@ class CatFigurine : public GameObjectAIScript
 		{
 			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
 			if(RandomUInt(100) <= 10)
-				sEAS.SpawnCreature(pPlayer, 3619, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+				sEAS.SpawnCreature(pPlayer, 3619, vect.x, vect.y, vect.z, vect.o, 1000);
 		}
 };
 

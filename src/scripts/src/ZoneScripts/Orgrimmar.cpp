@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class TrollRoofStalker : public CreatureAIScript
 {
@@ -27,7 +28,7 @@ public:
 
 	void OnLoad()
 	{
-		GetUnit()->CastSpell(GetUnit(), 30991, true);
+		_unit->CastSpell(_unit, 30991, true);
 	}
 };
 

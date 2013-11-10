@@ -19,6 +19,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 //quest #9397
 class KaliriNest : public GameObjectAIScript

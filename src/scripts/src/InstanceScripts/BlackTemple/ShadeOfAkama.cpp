@@ -23,7 +23,7 @@
 
 #include "StdAfx.h"
 #include "../Setup.h"
-#include "../Base.h"
+#include "../../Common/Base.h"
 
 //Shade of AkamaAI
 
@@ -233,7 +233,7 @@ class ShadeofakamaAI : public CreatureAIScript
 
 		void SpellCast(float val)
 		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
+			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
 			{
 				float comulativeperc = 0;
 				Unit* target = NULL;
@@ -243,7 +243,7 @@ class ShadeofakamaAI : public CreatureAIScript
 
 					if(m_spellcheck[i])
 					{
-						target = _unit->GetAIInterface()->GetNextTarget();
+						target = _unit->GetAIInterface()->getNextTarget();
 						switch(spells[i].targettype)
 						{
 							case TARGET_SELF:
@@ -344,7 +344,7 @@ class AshtonguedefenderAI : public CreatureAIScript
 
 		void SpellCast(float val)
 		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
+			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
 			{
 				float comulativeperc = 0;
 				Unit* target = NULL;
@@ -355,7 +355,7 @@ class AshtonguedefenderAI : public CreatureAIScript
 					if(m_spellcheck[i])
 					{
 						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->GetNextTarget();
+						target = _unit->GetAIInterface()->getNextTarget();
 						switch(spells[i].targettype)
 						{
 							case TARGET_SELF:
@@ -453,7 +453,7 @@ class AshtongueelementalistAI : public CreatureAIScript
 
 		void SpellCast(float val)
 		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
+			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
 			{
 				float comulativeperc = 0;
 				Unit* target = NULL;
@@ -464,7 +464,7 @@ class AshtongueelementalistAI : public CreatureAIScript
 					if(m_spellcheck[i])
 					{
 						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->GetNextTarget();
+						target = _unit->GetAIInterface()->getNextTarget();
 						switch(spells[i].targettype)
 						{
 							case TARGET_SELF:
@@ -562,7 +562,7 @@ class AshtonguerogueAI : public CreatureAIScript
 
 		void SpellCast(float val)
 		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
+			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
 			{
 				float comulativeperc = 0;
 				Unit* target = NULL;
@@ -573,7 +573,7 @@ class AshtonguerogueAI : public CreatureAIScript
 					if(m_spellcheck[i])
 					{
 						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->GetNextTarget();
+						target = _unit->GetAIInterface()->getNextTarget();
 						switch(spells[i].targettype)
 						{
 							case TARGET_SELF:
@@ -678,7 +678,7 @@ class AshtonguespiritbinderAI : public CreatureAIScript
 
 		void SpellCast(float val)
 		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
+			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
 			{
 				float comulativeperc = 0;
 				Unit* target = NULL;
@@ -689,7 +689,7 @@ class AshtonguespiritbinderAI : public CreatureAIScript
 					if(m_spellcheck[i])
 					{
 						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->GetNextTarget();
+						target = _unit->GetAIInterface()->getNextTarget();
 						switch(spells[i].targettype)
 						{
 							case TARGET_SELF:

@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class PurifyingTotem : public CreatureAIScript
 {
@@ -25,27 +26,27 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(PurifyingTotem)
 	PurifyingTotem(Creature* pCreature ) : CreatureAIScript(pCreature)
 	{
-		GetUnit()->GetAIInterface()->disable_melee = true;
-		GetUnit()->Root();
-		GetUnit()->Despawn(8000, 0);
+		_unit->GetAIInterface()->disable_melee = true;
+		_unit->Root();
+		_unit->Despawn(8000, 0);
 	}
 };
 
-/*class SeaforiumDepthCharge : public CreatureAIScript
+class SeaforiumDepthCharge : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(SeaforiumDepthCharge)
 	SeaforiumDepthCharge(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		GetUnit()->GetAIInterface()->disable_melee = true;
-		GetUnit()->Root();
-		sEAS.EventCastSpell(GetUnit(), GetUnit(), 45502, 3000);
-		GetUnit()->Despawn(3500, 0);
+		_unit->GetAIInterface()->disable_melee = true;
+		_unit->Root();
+		sEAS.EventCastSpell(_unit, _unit, 45502, 3000);
+		_unit->Despawn(3500, 0);
 	}
-};*/
+};
 
 void SetupZoneBoreanTundra(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(25494, &PurifyingTotem::Create); // Purifying Totem
-	//mgr->register_creature_script(25401, &SeaforiumDepthCharge::Create); // Seaforium Depth Charge
+	mgr->register_creature_script(25401, &SeaforiumDepthCharge::Create); // Seaforium Depth Charge
 }

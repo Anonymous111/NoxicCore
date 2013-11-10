@@ -27,7 +27,7 @@ public:
 
 	void OnDied(Unit* mKiller)
 	{
-		GetUnit()->CastSpell(GetUnit(), 17064, true); // Cast spell: "Summon Rotting Worms".
+		_unit->CastSpell(_unit, 17064, true); // Cast spell: "Summon Rotting Worms".
 	}
 };
 
@@ -39,7 +39,7 @@ public:
 
 	void OnDied(Unit* mKiller)
 	{
-		GetUnit()->CastSpell(GetUnit(), 12018, true); // Cast spell: "Summon Oozeling".
+		_unit->CastSpell(_unit, 12018, true); // Cast spell: "Summon Oozeling".
 	}
 };
 

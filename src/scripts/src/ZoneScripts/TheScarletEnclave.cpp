@@ -26,8 +26,8 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(SalanarTheHorseman)
 	SalanarTheHorseman(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		GetUnit()->SendChatMessage(CHAT_MSG_SAY, LANG_UNIVERSAL, "Impressive, death knight. Return to me in the world of living for your reward.");
-		GetUnit()->Despawn(10000, 0); // despawn after 10 seconds
+		_unit->SendChatMessage(CHAT_MSG_SAY, LANG_UNIVERSAL, "Impressive, death knight. Return to me in the world of living for your reward.");
+		_unit->Despawn(10000, 0); // despawn after 10 seconds
 	}
 };
 
@@ -40,7 +40,7 @@ public:
 	void OnCombatStart(Unit* mTarget)
 	{
 		float chance = 40.0f;
-		if(GetUnit()->getGender() == 1)
+		if(_unit->getGender() == 1)
 			chance *= 2; // double chance for women
 
 		// cover only if its player, they fight with other npcs normally
@@ -117,35 +117,35 @@ public:
 			}
 
 			// this will make creature stop attacking you and stay at 1 place with emote
-			GetUnit()->smsg_AttackStop(mTarget);
-			GetUnit()->GetAIInterface()->disable_melee = true;
-			GetUnit()->GetAIInterface()->_UpdateCombat(0);
-			GetUnit()->Root();
-			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "No! Please! I.. I have children! I... I...");
-			GetUnit()->WipeHateList();
-			GetUnit()->SetEmoteState(EMOTE_STATE_COWER);
+			_unit->smsg_AttackStop(mTarget);
+			_unit->GetAIInterface()->disable_melee = true;
+			_unit->GetAIInterface()->_UpdateCombat(0);
+			_unit->Root();
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "No! Please! I.. I have children! I... I...");
+			_unit->WipeHateList();
+			_unit->SetEmoteState(EMOTE_STATE_COWER);
 		}
 		else
 		{
 			switch(RandomUInt(1))
 			{
 				case 0:
-					GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Come then, death knight!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Come then, death knight!");
 					break;
 				case 1:
-					GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You may take my life, but you won't take my freedom!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You may take my life, but you won't take my freedom!");
 					break;
 			}
 
-			GetUnit()->CastSpell(GetUnit(), 52262, false);
+			_unit->CastSpell(_unit, 52262, false);
 		}
 	}
 
 	void OnReachWP(uint32 WPId, bool bForwards)
 	{
 		// Despawn them when they reach their last WP, they are not running backwards
-		if(WPId == GetUnit()->GetAIInterface()->GetWayPointsCount())
-			GetUnit()->Despawn(0, 10000);
+		if(WPId == _unit->GetAIInterface()->GetWayPointsCount())
+			_unit->Despawn(0, 10000);
 	}
 };
 
@@ -162,7 +162,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetUnit()->GetHealthPct() < 75) // they covered around 75% of HP
+		if(_unit->GetHealthPct() < 75) // they covered around 75% of HP
 		{
 			string say = "";
 			switch(RandomUInt(4))
@@ -185,16 +185,16 @@ public:
 			}
 			RemoveAIUpdateEvent();
 
-			Unit *u = GetUnit()->GetAIInterface()->getNextTarget();
+			Unit *u = _unit->GetAIInterface()->getNextTarget();
 			if(u)
-				GetUnit()->smsg_AttackStop(u);
+				_unit->smsg_AttackStop(u);
 
-			GetUnit()->GetAIInterface()->disable_melee = true;
-			GetUnit()->GetAIInterface()->_UpdateCombat(0);
-			GetUnit()->Root();
-			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, say.c_str());
-			GetUnit()->WipeHateList();
-			GetUnit()->SetEmoteState(EMOTE_STATE_COWER);
+			_unit->GetAIInterface()->disable_melee = true;
+			_unit->GetAIInterface()->_UpdateCombat(0);
+			_unit->Root();
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, say.c_str());
+			_unit->WipeHateList();
+			_unit->SetEmoteState(EMOTE_STATE_COWER);
 		}
 	}
 };
@@ -205,7 +205,7 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(CanonAI);
 	CanonAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		GetUnit()->GetAIInterface()->m_canMove = false;
+		_unit->GetAIInterface()->m_canMove = false;
 	}
 };
 
@@ -217,11 +217,11 @@ public:
 
 	void OnReachWP(uint32 WPId, bool bForwards)
 	{
-		Creature *car = sEAS.GetNearestCreature(GetUnit(), 28821);
+		Creature *car = sEAS.GetNearestCreature(_unit, 28821);
 		// Despawn them when they reach their last WP, they are not running backwards
-		if(WPId == GetUnit()->GetAIInterface()->GetWayPointsCount())
+		if(WPId == _unit->GetAIInterface()->GetWayPointsCount())
 		{
-			GetUnit()->Despawn(0, 10000);
+			_unit->Despawn(0, 10000);
 			if(car != NULL)
 				car->Despawn(0, 10000);
 		}
@@ -242,23 +242,23 @@ public:
 
 	void AIUpdate()
 	{
-		Player *plr = TO_PLAYER(GetUnit()->GetAIInterface()->getNextTarget());
-		if(plr == NULL || (plr->GetHealthPct() > 10 && GetUnit()->GetHealthPct() > 10))
+		Player *plr = TO_PLAYER(_unit->GetAIInterface()->getNextTarget());
+		if(plr == NULL || (plr->GetHealthPct() > 10 && _unit->GetHealthPct() > 10))
 			return;
 
 		RemoveAIUpdateEvent();
 		// plr stuff (stop attacking etc.)
-		plr->smsg_AttackStop(GetUnit());
+		plr->smsg_AttackStop(_unit);
 		plr->GetSession()->OutPacket(SMSG_CANCEL_COMBAT);
 		plr->EventAttackStop();
 
 		// NPC stuff (stop attacking, despawn)
-		if(GetUnit()->isAlive())
+		if(_unit->isAlive())
 		{
-			GetUnit()->Root();
-			GetUnit()->smsg_AttackStop(plr);
-			GetUnit()->SetFaction(2084);
-			GetUnit()->Despawn(3000, 30000);
+			_unit->Root();
+			_unit->smsg_AttackStop(plr);
+			_unit->SetFaction(2084);
+			_unit->Despawn(3000, 30000);
 		}
 
 		// duel arbiter
@@ -270,11 +270,11 @@ public:
 		}
 		plr->SetDuelArbiter(0); // reset players arbiter
 
-		if(GetUnit()->GetHealthPct() < 10) // Player is winner
+		if(_unit->GetHealthPct() < 10) // Player is winner
 		{
 			sEAS.KillMobForQuest(plr, 12733, 0);
-			if(GetUnit()->isAlive())
-				GetUnit()->Emote(EMOTE_ONESHOT_BEG);
+			if(_unit->isAlive())
+				_unit->Emote(EMOTE_ONESHOT_BEG);
 		}
 		else
 			plr->Emote(EMOTE_ONESHOT_BEG);

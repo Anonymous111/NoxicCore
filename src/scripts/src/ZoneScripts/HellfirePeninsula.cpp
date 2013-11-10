@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class Aeranas : public CreatureAIScript
 {
@@ -37,17 +38,17 @@ public:
 	void OnCombatStop(Unit* mTarget)
 	{
 		ParentClass::OnCombatStop(mTarget);
-		GetUnit()->Despawn(0,0);
+		_unit->Despawn(0,0);
 	}
 
 	void AIUpdate()
 	{
-		if(GetUnit()->GetHealthPct() <= 30)
+		if(_unit->GetHealthPct() <= 30)
 		{
-			GetUnit()->smsg_AttackStop(GetUnit()->GetAIInterface()->getNextTarget());
-			GetUnit()->GetAIInterface()->getNextTarget()->smsg_AttackStop(GetUnit());
-			GetUnit()->GetAIInterface()->setNextTarget(TO_UNIT(NULL));
-			GetUnit()->SetFaction(35);
+			_unit->smsg_AttackStop(_unit->GetAIInterface()->getNextTarget());
+			_unit->GetAIInterface()->getNextTarget()->smsg_AttackStop(_unit);
+			_unit->GetAIInterface()->setNextTarget(TO_UNIT(NULL));
+			_unit->SetFaction(35);
 		}
 		ParentClass::AIUpdate();
 	}

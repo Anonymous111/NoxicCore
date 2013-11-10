@@ -17,7 +17,7 @@
  *
  */
 
-/*#include "StdAfx.h"
+#include "StdAfx.h"
 #include "Setup.h"
 
 #define PARACHUTE 54168
@@ -30,7 +30,7 @@
 
 #define MAP_NORTHREND 571
 
-bool isSpectralGryphonZone(uint32 zone)
+/*bool isSpectralGryphonZone(uint32 zone)
 {
 	return ( map == MAP_NORTHREND && ( zone == ZONE_ICECROWN || zone == ZONE_STORMPEAKS || zone == ZONE_WYRMREST_TEMPLE ) );
 }

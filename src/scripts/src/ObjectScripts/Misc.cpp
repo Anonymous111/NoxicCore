@@ -19,6 +19,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class Blacksmithing_Plans_Use : public GameObjectAIScript
 {
@@ -31,7 +32,7 @@ class Blacksmithing_Plans_Use : public GameObjectAIScript
 			if(pLooter->GetMapId() != 230)
 			{
 				LocationVector vect(pLooter->GetPositionX()+RandomFloat(2.0f), pLooter->GetPositionY()+RandomFloat(2.0f), pLooter->GetPositionZ(), pLooter->GetOrientation()+3.14f);
-				sEAS.SpawnCreature(pLooter, 11120, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+				sEAS.SpawnCreature(pLooter, 11120, vect.x, vect.y, vect.z, vect.o, 1000);
 			}
 		}
 };

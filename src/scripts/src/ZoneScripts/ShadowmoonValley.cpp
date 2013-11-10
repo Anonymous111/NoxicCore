@@ -27,7 +27,7 @@ public:
 
 	void OnDied(Unit* mKiller)
 	{
-		GetUnit()->CastSpell(GetUnit(), 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
+		_unit->CastSpell(_unit, 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
 	}
 };
 

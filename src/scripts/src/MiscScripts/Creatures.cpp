@@ -22,6 +22,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 //Crimson Hammersmith
 class CrimsonHammersmith : public CreatureAIScript
@@ -53,62 +54,6 @@ class Corrupt_Minor_Manifestation_Water_Dead : public CreatureAIScript
 			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(5895, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
 			if(NewCreature != NULL)
 				NewCreature->Despawn(600000, 0);
-		}
-};
-
-class SavannahProwler : public CreatureAIScript
-{
-	public:
-		SavannahProwler(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			uint8 chance = RandomUInt(3);
-
-			if(chance == 1)
-				_unit->SetStandState(STANDSTATE_SLEEP);
-		}
-
-		void OnCombatStart(Unit* pTarget)
-		{
-			if(_unit->GetStandState() == STANDSTATE_SLEEP)
-				_unit->SetStandState(0);
-		}
-
-		static CreatureAIScript* Create(Creature* c) { return new SavannahProwler(c); }
-};
-
-//Lazy Peons
-class PeonSleepingAI : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI);
-		PeonSleepingAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(3000 + RandomUInt(180000));
-		};
-
-		void AIUpdate()
-		{
-			_unit->CastSpell(_unit, 17743, true);
-			RemoveAIUpdateEvent();
-		};
-};
-
-class KirithAI : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KirithAI);
-		KirithAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* mKiller)
-		{
-			if(mKiller->IsPlayer())
-			{
-				Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(7729, _unit->GetPositionX() + 2, _unit->GetPositionY() + 2, _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-				if(NewCreature != NULL)
-					NewCreature->Despawn(3 * 6 * 1000, 0);
-			}
 		}
 };
 
@@ -206,12 +151,14 @@ public:
 
 	void OnCombatStart(Unit* mTarget)
 	{
-		LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
+		LocationVector vect(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 		for(int i = 0; i < 2; ++i)
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 27946, vect, 0);
+			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(27946, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(360000, 0);
 		}
 	}
 };
@@ -224,12 +171,14 @@ public:
 
 	void OnCombatStart(Unit* mTarget)
 	{
-		LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
+		LocationVector vect(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 		for(int i = 0; i < 2; ++i)
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9526+i, vect, 0);
+			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9526+i, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(360000, 0);
 		}
 	}
 };
@@ -246,8 +195,6 @@ class TyrandeWhisperwind : public CreatureAIScript
 		}
 };
 
-/*--------------------------------------------------------------------------------------------------------*/
-
 class ProphetVelen : public CreatureAIScript
 {
 	public:
@@ -259,8 +206,6 @@ class ProphetVelen : public CreatureAIScript
 			_unit->PlaySoundToSet(10155);
 		}
 };
-
-/*--------------------------------------------------------------------------------------------------------*/
 
 class KingMagniBronzebeard : public CreatureAIScript
 {
@@ -274,8 +219,6 @@ class KingMagniBronzebeard : public CreatureAIScript
 		}
 };
 
-/*--------------------------------------------------------------------------------------------------------*/
-
 class Thrall : public CreatureAIScript
 {
 	public:
@@ -287,8 +230,6 @@ class Thrall : public CreatureAIScript
 			_unit->PlaySoundToSet(5880);
 		}
 };
-
-/*--------------------------------------------------------------------------------------------------------*/
 
 class CairneBloodhoof : public CreatureAIScript
 {
@@ -302,8 +243,6 @@ class CairneBloodhoof : public CreatureAIScript
 		}
 };
 
-/*--------------------------------------------------------------------------------------------------------*/
-
 class LadySylvanasWindrunner : public CreatureAIScript
 {
 	public:
@@ -314,20 +253,6 @@ class LadySylvanasWindrunner : public CreatureAIScript
 		{
 			_unit->PlaySoundToSet(5886);
 		}
-};
-
-/*--------------------------------------------------------------------------------------------------------*/
-
-class TrollRoofStalker : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TrollRoofStalker);
-		TrollRoofStalker(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->CastSpell(_unit, 30991, true);
-		};
 };
 
 ///////////////////////////////////////////////////////////
@@ -358,9 +283,6 @@ void SetupMiscCreatures(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(11120, &CrimsonHammersmith::Create);
 	mgr->register_creature_script(5894, &Corrupt_Minor_Manifestation_Water_Dead::Create);
-	mgr->register_creature_script(3425, &SavannahProwler::Create);
-	mgr->register_creature_script(10556, &PeonSleepingAI::Create);
-	mgr->register_creature_script(7728, &KirithAI::Create);
 
 	// Gryphon Master
 	uint32 GryphonMasterIds[] = { 352, 523, 931, 1571, 1572, 1573, 2299, 2409, 2432, 2835, 2859,
@@ -401,8 +323,6 @@ void SetupMiscCreatures(ScriptMgr* mgr)
 	mgr->register_creature_script(4949, &Thrall::Create);
 	mgr->register_creature_script(3057, &CairneBloodhoof::Create);
 	mgr->register_creature_script(10181, &LadySylvanasWindrunner::Create);
-
-	mgr->register_creature_script(23090, &TrollRoofStalker::Create);
 
 	mgr->register_creature_script(27989, &DISCO::Create);
 }

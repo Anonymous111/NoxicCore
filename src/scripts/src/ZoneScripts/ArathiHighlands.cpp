@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+
 // TODO: Add the missing text!
 class ProfessorPhizzlethorpe : public CreatureAIScript
 {
@@ -29,14 +30,14 @@ public:
 	{
 		if(iWaypointId == 15)
 		{
-			GetUnit()->GetAIInterface()->deleteWaypoints();
-			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched.");
-			GetUnit()->Despawn(/*DESPAWN_TIME*/1000, 1000);
+			_unit->GetAIInterface()->deleteWaypoints();
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched.");
+			_unit->Despawn(1000, 0);
 
-			if(GetUnit()->m_escorter != NULL)
+			if(_unit->m_escorter != NULL)
 			{
-				GetUnit()->m_escorter->GetQuestLogForEntry(665)->SendQuestComplete();
-				GetUnit()->m_escorter = NULL;
+				_unit->m_escorter->GetQuestLogForEntry(665)->SendQuestComplete();
+				_unit->m_escorter = NULL;
 			}
 		}
 	}

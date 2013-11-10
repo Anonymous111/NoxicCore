@@ -27,9 +27,19 @@ public:
 
 	void OnLoad()
 	{
-		if(RandomUInt(3) == 1)
-			GetUnit()->SetStandState(STANDSTATE_SLEEP); 
+		uint8 chance = RandomUInt(3);
+
+		if(chance == 1)
+			_unit->SetStandState(STANDSTATE_SLEEP);
 	}
+
+	void OnCombatStart(Unit* pTarget)
+	{
+		if(_unit->GetStandState() == STANDSTATE_SLEEP)
+			_unit->SetStandState(0);
+	}
+
+	static CreatureAIScript* Create(Creature* c) { return new SavannahProwler(c); }
 };
 
 void SetupZoneTheBarrens(ScriptMgr* mgr)

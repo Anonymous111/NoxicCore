@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class PeonSleepingAI : CreatureAIScript
 {
@@ -30,7 +31,7 @@ public:
 
 	void AIUpdate()
 	{
-		GetUnit()->CastSpell(GetUnit(), 17743, true);
+		_unit->CastSpell(_unit, 17743, true);
 		RemoveAIUpdateEvent();
 	}
 };

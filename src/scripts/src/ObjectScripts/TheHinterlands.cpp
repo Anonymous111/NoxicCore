@@ -19,6 +19,7 @@
  */
  
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class VilebranchKidnapper : public GameObjectAIScript
 {
@@ -33,7 +34,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(pPlayer, 14748, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+			sEAS.SpawnCreature(pPlayer, 14748, vect.x, vect.y, vect.z, vect.o, 1000);
 		}
 	}
 };

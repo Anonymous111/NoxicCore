@@ -607,7 +607,7 @@ bool DiseasedWolf(uint32 i, Aura* pAura, bool apply)
 }
 
 //Summon Screecher Spirit - 12699
-class SummonScreecherSpirit : public SpellScript
+/*class SummonScreecherSpirit : public SpellScript
 {
 public:
 	ADD_SPELL_FACTORY_FUNCTION(SummonScreecherSpirit);
@@ -863,7 +863,7 @@ public:
 
 		return SPELL_CANCAST_OK;
 	}
-};
+};*/
 
 void SetupMiscSpellhandlers(ScriptMgr* mgr)
 {
@@ -947,7 +947,7 @@ void SetupMiscSpellhandlers(ScriptMgr* mgr)
 	
 	mgr->register_dummy_aura(71764, &DiseasedWolf);
 
-	mgr->register_spell_script(12699, &SummonScreecherSpirit::Create);
+	/*mgr->register_spell_script(12699, &SummonScreecherSpirit::Create);
 	mgr->register_spell_script(30877, &TagMurloc::Create);
 	mgr->register_spell_script(34665, &AdministerAntidote::Create);
 	mgr->register_spell_script(3607, &YennikusRelease::Create);
@@ -962,6 +962,6 @@ void SetupMiscSpellhandlers(ScriptMgr* mgr)
 	mgr->register_spell_script(36314, &TheSeersPresence::Create);
 	mgr->register_spell_script(38177, &BlackwhelpNet::Create);
 	mgr->register_spell_script(44997, &ConvertingSentry::Create);
-	mgr->register_spell_script(30077, &CarindasRetribution::Create);
+	mgr->register_spell_script(30077, &CarindasRetribution::Create);*/
 }
 

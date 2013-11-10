@@ -19,6 +19,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class TyraliusPrison : public GameObjectAIScript
 {

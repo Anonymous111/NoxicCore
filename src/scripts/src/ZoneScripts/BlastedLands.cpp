@@ -18,6 +18,7 @@
  */
 
 #include "Setup.h"
+#include "../Common/EasyFunctions.h"
 
 class KirithAI : public CreatureAIScript
 {
@@ -27,7 +28,13 @@ public:
 
 	void OnDied(Unit* mKiller)
 	{
-		GetUnit()->CastSpell(GetUnit(), 10853, true);
+		if(mKiller->IsPlayer())
+		{
+			_unit->CastSpell(_unit, 10853, true);
+			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(7729, _unit->GetPositionX() + 2, _unit->GetPositionY() + 2, _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(3 * 6 * 1000, 0);
+		}
 	}
 };
 

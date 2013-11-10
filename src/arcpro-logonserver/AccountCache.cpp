@@ -138,7 +138,7 @@ void AccountMgr::AddAccount(Field* field)
 		//Accounts should be unbanned once the date is past their set expiry date.
 		acct->Muted = 0;
 		//LOG_DEBUG("Account %s's mute has expired.",acct->UsernamePtr->c_str());
-		sLogonSQL->Execute("UPDATE accounts SET locked = 0 WHERE id=%u", acct->AccountId);
+		sLogonSQL->Execute("UPDATE accounts SET mutetime = 0 WHERE id=%u", acct->AccountId);
 	}
 	// Convert username/password to uppercase. this is needed ;)
 	arcpro_TOUPPER(Username);
