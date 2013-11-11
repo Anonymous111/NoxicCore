@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,13 +19,17 @@
  */
 
 #include "WowCrypt.h"
+
 #include <algorithm>
+
 #include <openssl/hmac.h>
+
 
 WowCrypt::WowCrypt()
 {
 	m_initialized = false;
 }
+
 
 void WowCrypt::Init(uint8* K)
 {

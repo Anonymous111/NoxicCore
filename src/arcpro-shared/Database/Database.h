@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -81,10 +81,9 @@ class SERVER_DECL Database : public CThread
 		/************************************************************************/
 		/* Virtual Functions                                                    */
 		/************************************************************************/
-		virtual bool Initialize(const char* Hostname, unsigned int port, const char *Socket,
+		virtual bool Initialize(const char* Hostname, unsigned int port,
 		                        const char* Username, const char* Password, const char* DatabaseName,
-		                        const char *ssl_key, const char *ssl_cert, const char *ssl_ca,
-								bool Compress, uint32 ConnectionCount, uint32 BufferSize) = 0;
+		                        uint32 ConnectionCount, uint32 BufferSize) = 0;
 
 		virtual void Shutdown() = 0;
 
@@ -100,6 +99,8 @@ class SERVER_DECL Database : public CThread
 		// Initialized on load: Database::Database() : CThread()
 		bool ThreadRunning;
 
+		ARCPRO_INLINE const string & GetHostName() { return mHostname; }
+		ARCPRO_INLINE const string & GetDatabaseName() { return mDatabaseName; }
 		ARCPRO_INLINE const uint32 GetQueueSize() { return queries_queue.get_size(); }
 
 		virtual string EscapeString(string Escape) = 0;
@@ -146,6 +147,13 @@ class SERVER_DECL Database : public CThread
 		///////////////////////////////
 
 		int32 mConnectionCount;
+
+		// For reconnecting a broken connection
+		string mHostname;
+		string mUsername;
+		string mPassword;
+		string mDatabaseName;
+		uint32 mPort;
 
 		QueryThread* qt;
 };

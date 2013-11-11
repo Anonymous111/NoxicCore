@@ -2,7 +2,7 @@
  * ArcPro MMORPG Server
  * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
  * Copyright (c) 2008-2013 TrinityCore <http://www.trinitycore.org/>
- * Copyright (c) 2005-2013 MaNGOS <http://getmangos.com/>
+ * Copyright (c) 2005-2013 MaNGOS <http://www.getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
