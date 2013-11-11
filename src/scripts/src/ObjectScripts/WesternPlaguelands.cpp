@@ -43,7 +43,7 @@ public:
 
 	void OnActivate(Player* plr){
 		
-		QuestLogEntry *qle = plr->GetQuestLogForEntry(5097);
+		QuestLogEntry* qle = plr->GetQuestLogForEntry(5097);
 		
 		if(qle == NULL){
 			qle = plr->GetQuestLogForEntry(5098);

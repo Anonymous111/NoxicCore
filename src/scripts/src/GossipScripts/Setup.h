@@ -26,7 +26,7 @@
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
 
-void SetupArgentTournamentGossip(Scriptmgr* mgr);
+void SetupArgentTournamentGossip(ScriptMgr* mgr);
 void SetupDalaranGossip(ScriptMgr* mgr);
 void SetupInnkeepers(ScriptMgr* mgr);
 void SetupGuardGossip(ScriptMgr* mgr);

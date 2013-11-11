@@ -34,7 +34,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBlackrockMountainGameobjects(mgr);
 	SetupBlastedLandsGameobjects(mgr);
 	SetupBurningSteppesGameobjects(mgr);
-	SetupDeadwindPassGameobjects(ScriptMgr* mgr);
+	SetupDeadwindPassGameobjects(mgr);
 	SetupDeeprunTramGameobjects(mgr);
 	SetupDunMoroghGameobjects(mgr);
 	SetupDuskwoodGameobjects(mgr);

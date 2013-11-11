@@ -37,7 +37,7 @@ public:
 	}
 };
 
-void SetupArgentTournamentGossip(Scriptmgr* mgr)
+void SetupArgentTournamentGossip(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(44685, new GetKraken_Gossip());
 }
