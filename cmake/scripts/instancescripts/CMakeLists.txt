@@ -62,6 +62,7 @@ Raid_Ulduar.cpp
 Raid_ZulGurub.cpp 
 Raid_Magtheridons_Lair.cpp 
 SUNWELL_PLAT/Raid_SunwellPlateau.cpp 
+Raid_RubySanctum.cpp
 Raid_WorldBosses.cpp 
 Raid_ZulAman.cpp 
 ../Common/Instance_Base.cpp 

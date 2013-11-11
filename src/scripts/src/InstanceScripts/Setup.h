@@ -85,6 +85,7 @@ void SetupZulGurub(ScriptMgr* mgr);
 void SetupSerpentshrineCavern(ScriptMgr* mgr);
 void SetupMagtheridonsLair(ScriptMgr* mgr);
 void SetupSunwellPlateau(ScriptMgr* pScriptMgr);
+void SetupTheRubySanctum(ScriptMgr* mgr);
 void SetupWorldBosses(ScriptMgr* mgr);
 void SetupZulAman(ScriptMgr* mgr);
 //other
