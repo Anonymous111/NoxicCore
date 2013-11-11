@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -67,7 +67,7 @@ void LogonCommServerSocket::OnConnect()
 {
 	if(!IsServerAllowed(GetRemoteAddress().s_addr))
 	{
-		LOG_ERROR("Server connection from %s:%u DENIED, not an allowed IP. ArcPro Denied #1057", GetRemoteIP().c_str(), GetRemotePort());
+		LOG_ERROR("Server connection from %s:%u DENIED, not an allowed IP.", GetRemoteIP().c_str(), GetRemotePort());
 		Disconnect();
 		return;
 	}
@@ -159,7 +159,7 @@ void LogonCommServerSocket::HandlePacket(WorldPacket & recvData)
 
 	if(recvData.GetOpcode() >= RMSG_COUNT || Handlers[recvData.GetOpcode()] == 0)
 	{
-		LOG_ERROR("Got unknown packet from logoncomm: %u", recvData.GetOpcode());
+		LOG_ERROR("Got unknwon packet from logoncomm: %u", recvData.GetOpcode());
 		return;
 	}
 
@@ -474,7 +474,7 @@ void LogonCommServerSocket::HandleDatabaseModify(WorldPacket & recvData)
 				pAccount->Banned = duration;
 
 				// update it in the sql (duh)
-				sLogonSQL->Execute("UPDATE accounts SET locked = %u, banreason = '%s' WHERE login = \"%s\"", duration, sLogonSQL->EscapeString(banreason).c_str(), sLogonSQL->EscapeString(account).c_str());
+				sLogonSQL->Execute("UPDATE accounts SET banned = %u, banreason = '%s' WHERE login = \"%s\"", duration, sLogonSQL->EscapeString(banreason).c_str(), sLogonSQL->EscapeString(account).c_str());
 
 			}
 			break;
@@ -495,7 +495,7 @@ void LogonCommServerSocket::HandleDatabaseModify(WorldPacket & recvData)
 				pAccount->SetGMFlags(account.c_str());
 
 				// update it in the sql (duh)
-				sLogonSQL->Execute("UPDATE accounts SET gmlevel = \"%s\" WHERE login = \"%s\"", sLogonSQL->EscapeString(gm).c_str(), sLogonSQL->EscapeString(account).c_str());
+				sLogonSQL->Execute("UPDATE accounts SET gm = \"%s\" WHERE login = \"%s\"", sLogonSQL->EscapeString(gm).c_str(), sLogonSQL->EscapeString(account).c_str());
 
 			}
 			break;
@@ -516,7 +516,7 @@ void LogonCommServerSocket::HandleDatabaseModify(WorldPacket & recvData)
 				pAccount->Muted = duration;
 
 				// update it in the sql (duh)
-				sLogonSQL->Execute("UPDATE accounts SET mutetime = %u WHERE login = \"%s\"", duration, sLogonSQL->EscapeString(account).c_str());
+				sLogonSQL->Execute("UPDATE accounts SET muted = %u WHERE login = \"%s\"", duration, sLogonSQL->EscapeString(account).c_str());
 			}
 			break;
 

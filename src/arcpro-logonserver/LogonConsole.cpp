@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ bool Rehash();
 
 void LogonConsole::TranslateRehash(char* str)
 {
-	sLog.outString("Rehashing config file...");
+	sLog.outString("rehashing config file...");
 	Rehash();
 }
 
@@ -189,12 +189,12 @@ void LogonConsole::ProcessHelp(char* command)
 {
 	if(command == NULL)
 	{
-		printf("Console: -------- Help --------\n");
+		printf("Console:--------help--------\n");
 		printf("	Help, ?: Prints this help text.\n");
 		printf("	createaccount: Creates new accounts\n");
 		printf("	Reload: Reloads accounts.\n");
 		printf("	Netstatus: Shows network status.\n");
-		printf("	info: Shows some information about the server.\n");
+		printf("	info:  shows some information about the server.\n");
 		printf("	Shutdown, exit: Closes the logonserver.\n");
 	}
 }
@@ -217,7 +217,7 @@ void LogonConsole::CreateAccount(char* str)
 	if(count != 3)
 	{
 		std::cout << "usage: createaccount <name> <password> <email>" << std::endl;
-		std::cout << "example: createaccount username password email@to.me" << std::endl;
+		std::cout << "example: createaccount ghostcrawler Ih4t3p4l4dins greg.street@blizzard.com" << std::endl;
 		return;
 	}
 
@@ -230,7 +230,7 @@ void LogonConsole::CreateAccount(char* str)
 
 		if(AccountMgr::getSingleton().GetAccount(aname) != NULL)
 		{
-			std::cout << "There's already an account with that name " << name << std::endl;
+			std::cout << "There's already an account with name " << name << std::endl;
 			return;
 		}
 	}
@@ -255,7 +255,7 @@ void LogonConsole::CreateAccount(char* str)
 
 	AccountMgr::getSingleton().ReloadAccounts(true);
 
-	std::cout << "Account creation is successful." << std::endl;
+	std::cout << "Account created." << std::endl;
 }
 
 //------------------------------------------------------------------------------

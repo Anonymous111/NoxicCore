@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -46,10 +46,11 @@ void _OnSignal(int s)
 	{
 #ifndef WIN32
 		case SIGHUP:
-		{
-			LOG_DETAIL("Received SIGHUP signal, reloading accounts.");
-			AccountMgr::getSingleton().ReloadAccounts(true);
-		}break;
+			{
+				LOG_DETAIL("Received SIGHUP signal, reloading accounts.");
+				AccountMgr::getSingleton().ReloadAccounts(true);
+			}
+			break;
 #endif
 		case SIGINT:
 		case SIGTERM:
@@ -60,6 +61,7 @@ void _OnSignal(int s)
 			mrunning.SetVal(false);
 			break;
 	}
+
 	signal(s, _OnSignal);
 }
 
@@ -84,10 +86,11 @@ int main(int argc, char** argv)
 	delete LogonServer::getSingletonPtr();
 }
 
+
 /**
   * Initialises the logon database
   *
-  * Reads the configs\arcpro-logon.conf file and parses the <LogonDatabase> tag
+  * Reads the configs\logon.conf file and parses the <LogonDatabase> tag
   *
   * Any errors in this file, such as a missing parameter should be caught
   * and the user notified in an intelligent way
@@ -97,9 +100,7 @@ int main(int argc, char** argv)
 bool startdb()
 {
 	string lhostname, lusername, lpassword, ldatabase;
-	string lsslca, lsslkey, lsslcert;
 	int lport = 0;
-	bool lcompression = false;
 	// Configure Main Database
 
 	bool result;
@@ -107,20 +108,16 @@ bool startdb()
 	// Set up reusable parameter checks for each parameter
 	// Note that the Config.MainConfig.Get[$type] methods returns boolean value and not $type
 
-	bool existsUsername		= Config.MainConfig.GetString("LogonDatabase", "Username", &lusername);
-	bool existsPassword		= Config.MainConfig.GetString("LogonDatabase", "Password", &lpassword);
-	bool existsHostname		= Config.MainConfig.GetString("LogonDatabase", "Hostname", &lhostname);
-	bool existsName			= Config.MainConfig.GetString("LogonDatabase", "Name", &ldatabase);
-	bool existsPort			= Config.MainConfig.GetInt("LogonDatabase", "Port", &lport);
-	bool existsCompression	= Config.MainConfig.GetBool("LogonDatabase", "Compression", &lcompression);
-	bool existsSSLCA		= Config.MainConfig.GetString("LogonDatabase", "SSLCA", &lsslca);
-	bool existsSSLKey		= Config.MainConfig.GetString("LogonDatabase", "SSLKey", &lsslkey);
-	bool existsSSLCert		= Config.MainConfig.GetString("LogonDatabase", "SSLCert", &lsslcert);
+	bool existsUsername = Config.MainConfig.GetString("LogonDatabase", "Username", &lusername);
+	bool existsPassword = Config.MainConfig.GetString("LogonDatabase", "Password", &lpassword);
+	bool existsHostname = Config.MainConfig.GetString("LogonDatabase", "Hostname", &lhostname);
+	bool existsName     = Config.MainConfig.GetString("LogonDatabase", "Name",     &ldatabase);
+	bool existsPort     = Config.MainConfig.GetInt("LogonDatabase", "Port",     &lport);
 
 	// Configure Logon Database...
 
 	// logical AND every parameter to ensure we catch any error
-	result = existsUsername && existsPassword && existsHostname && existsName && existsPort && existsCompression && existsSSLCA && existsSSLKey && existsSSLCert;
+	result = existsUsername && existsPassword && existsHostname && existsName && existsPort;
 
 	if(!result)
 	{
@@ -130,24 +127,21 @@ bool startdb()
 		//  resulting in unreadable error messages.
 		//If the <LogonDatabase> tag is malformed, all parameters will fail, and a different error message is given
 
-		string errorMessage = "sql: Certain <LogonDatabase> parameters not found in " CONFDIR "\\arcpro-logon.conf \r\n";
-		if(!(existsHostname || existsUsername || existsPassword || existsName || existsPort))
+		string errorMessage = "sql: Certain <LogonDatabase> parameters not found in " CONFDIR "\\logon.conf \r\n";
+		if(!(existsHostname || existsUsername || existsPassword  ||
+		        existsName     || existsPort))
 		{
 			errorMessage += "  Double check that you have remembered the entire <LogonDatabase> tag.\r\n";
 			errorMessage += "  All parameters missing. It is possible you forgot the first '<' character.\r\n";
 		}
 		else
 		{
-			errorMessage +=	"  Missing paramer(s):\r\n";
+			errorMessage +=                        "  Missing paramer(s):\r\n";
 			if(!existsHostname) { errorMessage += "    Hostname\r\n" ; }
 			if(!existsUsername) { errorMessage += "    Username\r\n" ; }
 			if(!existsPassword) { errorMessage += "    Password\r\n" ; }
 			if(!existsName) { errorMessage += "    Name\r\n"; }
 			if(!existsPort) { errorMessage += "    Port\r\n"; }
-			if(!existsCompression) { errorMessage += "    Compression\r\n"; }
-			if(!existsSSLCA) { errorMessage += "    SSLCA\r\n"; }
-			if(!existsSSLKey) { errorMessage += "    SSLKey\r\n"; }
-			if(!existsSSLCert) { errorMessage += "    SSLCert\r\n"; }
 		}
 
 		LOG_ERROR(errorMessage.c_str());
@@ -157,12 +151,11 @@ bool startdb()
 	sLogonSQL = Database::CreateDatabaseInterface();
 
 	// Initialize it
-	if(!sLogonSQL->Initialize(lhostname.c_str(), (unsigned int)lport, NULL,
-			lusername.c_str(), lpassword.c_str(), ldatabase.c_str(),
-			lsslkey.c_str(), lsslcert.c_str(), lsslca.c_str(),
-			lcompression, Config.MainConfig.GetIntDefault("LogonDatabase", "ConnectionCount", 5), 16384))
+	if(!sLogonSQL->Initialize(lhostname.c_str(), (unsigned int)lport, lusername.c_str(),
+	                          lpassword.c_str(), ldatabase.c_str(), Config.MainConfig.GetIntDefault("LogonDatabase", "ConnectionCount", 5),
+	                          16384))
 	{
-		LOG_ERROR("SQL: Logon database initialization failed. Exiting.");
+		LOG_ERROR("sql: Logon database initialization failed. Exiting.");
 		return false;
 	}
 
@@ -208,7 +201,7 @@ bool IsServerAllowedMod(unsigned int IP)
 
 bool Rehash()
 {
-	char* config_file = (char*)CONFDIR "/arcpro-logon.conf";
+	char* config_file = (char*)CONFDIR "/logon.conf";
 	if(!Config.MainConfig.SetSource(config_file))
 	{
 		LOG_ERROR("Config file could not be rehashed.");
@@ -291,7 +284,7 @@ void LogonServer::Run(int argc, char** argv)
 {
 	UNIXTIME = time(NULL);
 	g_localTime = *localtime(&UNIXTIME);
-	char* config_file = (char*)CONFDIR "/arcpro-logon.conf";
+	char* config_file = (char*)CONFDIR "/logon.conf";
 	int file_log_level = DEF_VALUE_NOT_SET;
 	int screen_log_level = DEF_VALUE_NOT_SET;
 	int do_check_conf = 0;

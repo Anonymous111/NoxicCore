@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,7 @@ PatchMgr::PatchMgr()
 {
 	// load patches
 #ifdef WIN32
-	Log.Notice("PatchMgr", "ArcPro is loading patches...");
+	Log.Notice("PatchMgr", "Loading Patches...");
 	char Buffer[MAX_PATH * 10];
 	char Buffer2[MAX_PATH * 10];
 	char Buffer3[MAX_PATH * 10];
@@ -108,7 +108,7 @@ PatchMgr::PatchMgr()
 	/*
 	 *nix patch loader
 	 */
-	Log.Notice("PatchMgr", "ArcPro is loading patches...");
+	Log.Notice("PatchMgr", "Loading Patches...");
 	char Buffer[MAX_PATH * 10];
 	char Buffer2[MAX_PATH * 10];
 	char Buffer3[MAX_PATH * 10];
@@ -130,7 +130,7 @@ PatchMgr::PatchMgr()
 	filecount = scandir("./ClientPatches", &list, 0, 0);
 	if(filecount <= 0 || list == NULL)
 	{
-		Log.Error("PatchMgr", "ArcPro couldn't find any patches.");
+		Log.Error("PatchMgr", "No patches found.");
 		return;
 	}
 
