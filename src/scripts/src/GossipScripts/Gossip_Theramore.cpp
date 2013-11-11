@@ -40,7 +40,7 @@ class CassaCrimsonwing_Gossip : public Arcpro::Gossip::Script
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
 			plr->GetQuestLogForEntry(11142)->SendQuestComplete();
-			plr->TaxiStart(sTaxiMgr.GetTaxiPath(724), 1147, 0);     // Gryph
+			plr->TaxiStart(sTaxiMgr.GetTaxiPath(724), 1147, 0); // Gryph
 		}
 
 		void Destroy() { delete this; }

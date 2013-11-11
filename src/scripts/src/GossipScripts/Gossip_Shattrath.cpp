@@ -85,12 +85,11 @@ class ZephyrGossipScript : public Arcpro::Gossip::Script
 			Arcpro::Gossip::Menu::Complete(plr);
 		}
 		void Destroy() { delete this; }
-
 };
 
 void SetupShattrathGossip(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(25967, new ZephyrGossipScript);		// Zephyr
+	mgr->register_creature_gossip(25967, new ZephyrGossipScript); // Zephyr
 	mgr->register_creature_gossip(24932, new ExarchNasuun_Gossip); // Exarch Nasuun
 
 }

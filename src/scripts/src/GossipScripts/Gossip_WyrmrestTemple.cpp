@@ -106,9 +106,7 @@ class SCRIPT_DECL WyrmrestTemple_FlightGossip : public Arcpro::Gossip::Script
 
 void SetupWyrmrestTempleGossip(ScriptMgr* mgr)
 {
-	Arcpro::Gossip::Script* WyrmrestTempleFlightGossip = new WyrmrestTemple_FlightGossip;
-
-	mgr->register_creature_gossip(CN_TOP, WyrmrestTempleFlightGossip);	// Torastrasza <Majordomo to the Ruling Council>
-	mgr->register_creature_gossip(CN_MIDDLE, WyrmrestTempleFlightGossip);	// Lord Afrasastrasz <Commander of Wyrmrest Temple Defenses>
-	mgr->register_creature_gossip(CN_BOTTOM, WyrmrestTempleFlightGossip);	// Tariolstrasz <Steward of Wyrmrest Temple>
+	mgr->register_creature_gossip(CN_TOP, new WyrmrestTemple_FlightGossip); // Torastrasza <Majordomo to the Ruling Council>
+	mgr->register_creature_gossip(CN_MIDDLE, new WyrmrestTemple_FlightGossip); // Lord Afrasastrasz <Commander of Wyrmrest Temple Defenses>
+	mgr->register_creature_gossip(CN_BOTTOM, new WyrmrestTemple_FlightGossip); // Tariolstrasz <Steward of Wyrmrest Temple>
 }

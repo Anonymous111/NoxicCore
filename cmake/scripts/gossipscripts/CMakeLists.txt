@@ -10,23 +10,28 @@ SET( prefix ${SCRIPTS_PATH}/GossipScripts )
 #SRCS - contains the source files that compose this project.
 
 set( sources
-Gossip_ArgentTournament.cpp
-Gossip_Dalaran.cpp
-Gossip_Innkeepers.cpp
-Gossip_Guard.cpp
-Gossip_Trainer.cpp
-Gossip_Mulgore.cpp
-Gossip_Shattrath.cpp
-Gossip_Tanaris.cpp
-Gossip_Stormwind.cpp
-Gossip_Moonglade.cpp
-Gossip_DarkmoonFaire.cpp
-Gossip_Theramore.cpp
-Gossip_Teldrassil.cpp
-Gossip_BoreanTundra.cpp
-Gossip_WyrmrestTemple.cpp
-Gossip_XpEliminator.cpp
-Setup.cpp )
+	Gossip_ArgentTournament.cpp
+	Gossip_AzuremystIsle.cpp
+	Gossip_BlastedLands.cpp
+	Gossip_Dalaran.cpp
+	Gossip_Innkeepers.cpp
+	Gossip_Guard.cpp
+	Gossip_Locksmiths.cpp
+	Gossip_Trainer.cpp
+	Gossip_Mulgore.cpp
+	Gossip_Shattrath.cpp
+	Gossip_Tanaris.cpp
+	Gossip_Stormwind.cpp
+	Gossip_Moonglade.cpp
+	Gossip_DarkmoonFaire.cpp
+	Gossip_Theramore.cpp
+	Gossip_Teldrassil.cpp
+	Gossip_TheScarletEnclave.cpp
+	Gossip_BoreanTundra.cpp
+	Gossip_WyrmrestTemple.cpp
+	Gossip_XpEliminator.cpp
+	Setup.cpp
+)
 
 SET( headers
 Setup.h )

@@ -230,7 +230,7 @@ class MasterAxesmith : public Arcpro::Gossip::Script
 
 void SetupTrainerScript(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(11191, new MasterHammersmith);		// Lilith the Lithe
-	mgr->register_creature_gossip(11193, new MasterSwordsmith);		// Seril Scourgebane
-	mgr->register_creature_gossip(11192, new MasterAxesmith);			// Kilram
+	mgr->register_creature_gossip(11191, new MasterHammersmith); // Lilith the Lithe
+	mgr->register_creature_gossip(11193, new MasterSwordsmith); // Seril Scourgebane
+	mgr->register_creature_gossip(11192, new MasterAxesmith); // Kilram
 }

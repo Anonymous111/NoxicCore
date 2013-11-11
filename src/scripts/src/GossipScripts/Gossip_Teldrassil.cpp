@@ -24,18 +24,18 @@
 
 class ErelasAmbersky_Gossip : public Arcpro::Gossip::Script
 {
-	public:
-		void OnHello(Object* pObject, Player* plr)
-		{
-			Arcpro::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2153, plr, 1, Arcpro::Gossip::ICON_CHAT, "Tell me more about these hippogryphs.");
-		}
+public:
+	void OnHello(Object* pObject, Player* plr)
+	{
+		Arcpro::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2153, plr, 1, Arcpro::Gossip::ICON_CHAT, "Tell me more about these hippogryphs.");
+	}
 
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
-		{
-			Arcpro::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 2154, plr);
-		}
+	void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+	{
+		Arcpro::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 2154, plr);
+	}
 
-		void Destroy() { delete this; }
+	void Destroy() { delete this; }
 };
 
 void SetupTeldrassilGossip(ScriptMgr* mgr)

@@ -72,6 +72,6 @@ void SetupXpEliminatorGossip(ScriptMgr* mgr)
 
 	Arcpro::Gossip::Script* xegs = new XpEliminatorGossip();
 
-	mgr->register_creature_gossip(35364, xegs); // Slahtzt the Horde NPC
-	mgr->register_creature_gossip(35365, xegs); // Besten the Alliance NPC
+	mgr->register_creature_gossip(35364, new XpEliminatorGossip()); // Slahtzt the Horde NPC
+	mgr->register_creature_gossip(35365, new XpEliminatorGossip()); // Besten the Alliance NPC
 }

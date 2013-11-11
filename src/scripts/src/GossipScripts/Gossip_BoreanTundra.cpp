@@ -20,10 +20,10 @@
 
 #include "Setup.h"
 
-class TiareGossipScript : public Arcpro::Gossip::Script
+class TiareGossipScript : public GossipScript
 {
 	public:
-		void OnHello(Object* pObject, Player* Plr)
+		void OnHello(Object* pObject, Player* Plr, bool AutoSend)
 		{
 			Arcpro::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 1, Plr, 1, 0, "Teleport me to Amber Ledge!");
 		}
@@ -34,10 +34,62 @@ class TiareGossipScript : public Arcpro::Gossip::Script
 			TO_CREATURE(pObject)->CastSpell(plr, dbcSpell.LookupEntry(50135), true);
 		}
 		void Destroy() { delete this; }
+};
 
+class FizzcrankGossip : public GossipScript
+{
+public:
+	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
+	{
+		GossipMenu* Menu;
+		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12435, Plr);
+		if(Plr->HasQuest(11708))
+			Menu->AddItem(0, "Tell me what's going on out here, Fizzcrank.", 1);
+
+		Menu->SendTo(Plr);
+	}
+
+	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
+	{
+		GossipMenu* Menu;
+		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12455+IntId, Plr);
+		if(IntId != 9)
+			Menu->AddItem(0, "Go on.", ++IntId);
+
+		Menu->SendTo(Plr);
+	}
+};
+
+class SurristraszGossip : public GossipScript
+{
+public:
+	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
+	{
+		GossipMenu* Menu;
+		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12730, Plr);
+		Menu->AddItem(0, "I'd like passage to the Transitus Shield.", 1); 
+		Menu->AddItem(3, "May I use a drake to fly elsewhere?", 2);
+
+		Menu->SendTo( Plr );
+	};
+
+	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
+	{
+		Creature* pCreature = TO_CREATURE(pObject);
+
+		if(IntId == 1)
+		{
+			Plr->Gossip_Complete();
+			pCreature->CastSpell(Plr, 46064, true);
+		}
+		else
+			Plr->GetSession()->SendTaxiList(pCreature);
+	}
 };
 
 void SetupBoreanTundraGossip(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(30051, new TiareGossipScript);		// Tiare
+	mgr->register_creature_gossip(30051, new TiareGossipScript); // Librarian Tiare
+	mgr->register_gossip_script(25590, new FizzcrankGossip); // Fizzcrank Fullthrottle
+	mgr->register_gossip_script(24795, new SurristraszGossip); // Surristrasz
 }

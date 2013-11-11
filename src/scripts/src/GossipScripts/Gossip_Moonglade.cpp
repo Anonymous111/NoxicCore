@@ -45,7 +45,7 @@ class SilvaFilnaveth_Gossip : public Arcpro::Gossip::Script
 			Creature* pCreature = (pObject->IsCreature()) ? (TO_CREATURE(pObject)) : NULL;
 			if(pCreature == NULL)
 				return;
-			plr->TaxiStart(sTaxiMgr.GetTaxiPath(315), 479, 0);     // Hippogryph
+			plr->TaxiStart(sTaxiMgr.GetTaxiPath(315), 479, 0); // Hippogryph
 		}
 
 		void Destroy() { delete this; }
@@ -76,16 +76,14 @@ class BunthenPlainswind_Gossip : public Arcpro::Gossip::Script
 			Creature* pCreature = (pObject->IsCreature()) ? (TO_CREATURE(pObject)) : NULL;
 			if(pCreature == NULL)
 				return;
-			plr->TaxiStart(sTaxiMgr.GetTaxiPath(316), 295, 0);     // Wyvern
+			plr->TaxiStart(sTaxiMgr.GetTaxiPath(316), 295, 0); // Wyvern
 		}
 
 		void Destroy() { delete this; }
-
 };
 
 void SetupMoongladeGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(11800, new SilvaFilnaveth_Gossip); // Silva Fil'naveth
 	mgr->register_creature_gossip(11798, new BunthenPlainswind_Gossip); // Bunthen Plainswind
-
 }
