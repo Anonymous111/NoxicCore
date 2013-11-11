@@ -19,6 +19,7 @@
  *
  */
 
+
 /* * Class MapScriptInterface
    * Provides an interface to mapmgr for scripts, to obtain objects,
    * get players, etc.

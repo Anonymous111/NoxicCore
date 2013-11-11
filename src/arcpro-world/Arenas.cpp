@@ -49,34 +49,43 @@ Arena::Arena(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t, uint32 players_per
 		case BATTLEGROUND_ARENA_5V5:
 			m_arenateamtype = 2;
 			break;
+
 		case BATTLEGROUND_ARENA_3V3:
 			m_arenateamtype = 1;
 			break;
+
 		case BATTLEGROUND_ARENA_2V2:
 			m_arenateamtype = 0;
 			break;
+
 		default:
 			m_arenateamtype = 0;
 			break;
 	}
 	rated_match = false;
 
+
 	switch( m_mapMgr->GetMapId() ){
 		case 559:
 			m_zoneid = 3698;
 			break;
+
 		case 562:
 			m_zoneid = 3702;
 			break;
+
 		case 572:
 			m_zoneid = 3968;
 			break;
+
 		case 617:
 			m_zoneid = 4378;
 			break;
+
 		case 618:
 			m_zoneid = 4408;
 			break;
+
 	}
 }
 
@@ -91,6 +100,7 @@ Arena::~Arena()
 			delete m_buffs[i];
 	}
 
+
 	for(set<GameObject*>::iterator itr = m_gates.begin(); itr != m_gates.end(); ++itr)
 	{
 		if((*itr) != NULL)
@@ -99,6 +109,7 @@ Arena::~Arena()
 				delete(*itr);
 		}
 	}
+
 }
 
 void Arena::OnAddPlayer(Player* plr)
@@ -116,7 +127,9 @@ void Arena::OnAddPlayer(Player* plr)
 			if(plr->m_auras[x] && !plr->m_auras[x]->GetSpellProto()->DurationIndex && plr->m_auras[x]->GetSpellProto()->AttributesExC & CAN_PERSIST_AND_CASTED_WHILE_DEAD)
 				continue;
 			else
+			{
 				plr->m_auras[x]->Remove();
+			}
 		}
 	}
 	// On arena start all conjured items are removed

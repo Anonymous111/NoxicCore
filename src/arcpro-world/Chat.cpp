@@ -695,8 +695,7 @@ void CommandTableStorage::Init()
 	};
 	dupe_command_table(achievementCommandTable, _achievementCommandTable);
 
-	static ChatCommand vehicleCommandTable[] =
-	{
+	static ChatCommand vehicleCommandTable[] = {
 		{ "ejectpassenger",       'm', &ChatHandler::HandleVehicleEjectPassengerCommand,     "Ejects the passenger from the specified seat",      NULL, 0, 0, 0 },
 		{ "ejectallpassengers",   'm', &ChatHandler::HandleVehicleEjectAllPassengersCommand, "Ejects all passengers from the vehicle",            NULL, 0, 0, 0 },
 		{ "installaccessories",   'm', &ChatHandler::HandleVehicleInstallAccessoriesCommand, "Installs the accessories for the selected vehicle", NULL, 0, 0, 0 },
@@ -704,6 +703,7 @@ void CommandTableStorage::Init()
 		{ "addpassenger",         'm', &ChatHandler::HandleVehicleAddPassengerCommand,       "Adds a new NPC passenger to the vehicle",           NULL, 0, 0, 0 },
 		{ NULL,                   '0', NULL,                                                 "",                                                  NULL, 0, 0, 0 }
 	};
+
 	dupe_command_table(vehicleCommandTable, _vehicleCommandTable);
 
 	static ChatCommand commandTable[] =
@@ -768,7 +768,6 @@ void CommandTableStorage::Init()
 		{ "addtrainerspell", 'm', &ChatHandler::HandleAddTrainerSpellCommand,               "",                                                                                                                                        NULL,                     0, 0, 0 },
 		{ "achieve",         '0', NULL,                                                     "",                                                                                                                                        achievementCommandTable,  0, 0, 0 },
 		{ "vehicle",         'm', NULL,                                                     "",                                                                                                                                        vehicleCommandTable,      0, 0, 0 },
-		{ "bank",			 'a', &ChatHandler::HandleShowBankCommand,						"Open your bank from anywhere.",																										   NULL,					 0, 0, 0 },
 		{ NULL,              '0', NULL,                                                     "",                                                                                                                                        NULL,                     0, 0, 0 }
 	};
 	dupe_command_table(commandTable, _commandTable);
@@ -1384,11 +1383,5 @@ bool ChatHandler::HandleGetPosCommand(const char* args, WorldSession* m_session)
 	SpellEntry* se = dbcSpell.LookupEntryForced(spell);
 	if(se)
 		BlueSystemMessage(m_session, "SpellIcon for %d is %d", se->Id, se->field114);
-	return true;
-}
-
-bool ChatHandler::HandleShowBankCommand(const char* args, WorldSession *m_session) // custom bank command
-{
-	m_session->SendShowBank(m_session->GetPlayer()->GetGUID());
 	return true;
 }

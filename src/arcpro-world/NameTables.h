@@ -19,6 +19,10 @@
  *
  */
 
+//
+// NameTables.h
+//
+
 #ifndef __NAMETABLES_H
 #define __NAMETABLES_H
 

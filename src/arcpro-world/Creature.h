@@ -143,11 +143,9 @@ struct CreatureProto
 	uint32 Faction;
 	uint32 MinHealth;
 	uint32 MaxHealth;
-	uint8 uPowerType;
-	uint32 MinPower;
-	uint32 MaxPower;
-	float Scale;
-	uint32 NPCFLags;
+	uint32 Mana;
+	float  Scale;
+	uint32	NPCFLags;
 	uint32 AttackTime;
 	uint32 AttackType;
 	float MinDamage;
@@ -164,8 +162,8 @@ struct CreatureProto
 	uint32 boss;
 	uint32 money;
 	uint32 invisibility_type;
-	float walk_speed; // base movement
-	float run_speed; // most of the time mobs use this
+	float	walk_speed;//base movement
+	float	run_speed;//most of the time mobs use this
 	float fly_speed;
 	uint32 extra_a9_flags;
 	uint32 AISpells[ MAX_CREATURE_PROTO_SPELLS ];
@@ -219,6 +217,7 @@ struct Formation
 	float ang;
 	float dist;
 };
+
 
 enum UNIT_TYPE
 {
@@ -296,13 +295,11 @@ enum FAMILY
 enum ELITE
 {
     ELITE_NORMAL = 0,
-    ELITE_ELITE = 1,
-    ELITE_RAREELITE = 2,
-    ELITE_WORLDBOSS = 3,
-    ELITE_RARE = 4,
-	ELITE_UNKOWN = 5
+    ELITE_ELITE,
+    ELITE_RAREELITE,
+    ELITE_WORLDBOSS,
+    ELITE_RARE
 };
-
 enum TIME_REMOVE_CORPSE
 {
     TIME_CREATURE_REMOVE_CORPSE = 180000,
@@ -335,6 +332,7 @@ class GossipScript;
 class AuctionHouse;
 struct Trainer;
 #define CALL_SCRIPT_EVENT(obj, func) if(obj->IsInWorld() && obj->IsCreature() && TO< Creature* >(obj)->GetScript() != NULL) TO< Creature* >(obj)->GetScript()->func
+
 
 uint8 get_byte(uint32 buffer, uint32 index);
 
@@ -665,6 +663,7 @@ class SERVER_DECL Creature : public Unit
 
 			return false;
 		}
+
 
 		bool isCritter();
 		bool isTrainingDummy()

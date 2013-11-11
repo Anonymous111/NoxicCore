@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 // Class WorldSocket - Main network code functions, handles
 // reading/writing of all packets.
 

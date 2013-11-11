@@ -1212,8 +1212,8 @@ void World::Rehash(bool load)
 {
 	if(load)
 	{
-		Config.MainConfig.SetSource(CONFDIR "/world.conf", true);
-		Config.OptionalConfig.SetSource(CONFDIR "/optional.conf", true);
+		Config.MainConfig.SetSource(CONFDIR "/arcpro-world.conf", true);
+		Config.OptionalConfig.SetSource(CONFDIR "/arcpro-optional.conf", true);
 	}
 	if(!ChannelMgr::getSingletonPtr())
 		new ChannelMgr;
@@ -1272,7 +1272,7 @@ void World::Rehash(bool load)
 	SocketRecvBufSize = Config.MainConfig.GetIntDefault("WorldSocket", "RecvBufSize", WORLDSOCKET_RECVBUF_SIZE);
 	SocketSendBufSize = Config.MainConfig.GetIntDefault("WorldSocket", "SendBufSize", WORLDSOCKET_SENDBUF_SIZE);
 
-	bool log_enabled = Config.MainConfig.GetBoolDefault("Log", "Cheaters", true);
+	bool log_enabled = Config.MainConfig.GetBoolDefault("Log", "Cheaters", false);
 	if(Anticheat_Log->IsOpen())
 	{
 		if(!log_enabled)
@@ -1281,7 +1281,7 @@ void World::Rehash(bool load)
 	else if(log_enabled)
 		Anticheat_Log->Open();
 
-	log_enabled = Config.MainConfig.GetBoolDefault("Log", "GMCommands", true);
+	log_enabled = Config.MainConfig.GetBoolDefault("Log", "GMCommands", false);
 	if(GMCommand_Log->IsOpen())
 	{
 		if(!log_enabled)

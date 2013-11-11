@@ -1662,9 +1662,8 @@ void WorldSession::HandleGameObjectUse(WorldPacket & recv_data)
 			{
 				plyr->CastSpell(guid, goinfo->Unknown1, false);
 
-				if(Arcpro::Gossip::Script* mScript = sScriptMgr.get_go_gossip(obj->GetEntry()))
-					mScript->OnHello(obj, plyr);
-				else if(goinfo->sound7) // show page
+				// show page
+				if(goinfo->sound7)
 				{
 					WorldPacket data(SMSG_GAMEOBJECT_PAGETEXT, 8);
 					data << obj->GetGUID();

@@ -39,6 +39,7 @@ class SERVER_DECL WorldStatesHandler{
 
 		~WorldStatesHandler(){}
 
+
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//void SetWorldStateForZone( uint32 zone, uint32 area, uint32 field, uint32 value )
 		//  Sets the specified worldstate's value for the specified zone

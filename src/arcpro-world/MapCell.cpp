@@ -19,6 +19,9 @@
  *
  */
 
+//
+// MapCell.cpp
+//
 #include "StdAfx.h"
 
 extern bool bServerShutdown;

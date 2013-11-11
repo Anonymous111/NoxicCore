@@ -32,6 +32,7 @@ class Group;
 // AV - Corpse
 class Corpse;
 
+
 enum BattlegroundDbcIndex
 {
     BGDBC_ALTERAC_VALLEY			= 1,

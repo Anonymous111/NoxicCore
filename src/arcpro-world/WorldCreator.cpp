@@ -19,6 +19,10 @@
  *
  */
 
+//
+// WorldCreator.cpp
+//
+
 #include "StdAfx.h"
 
 SERVER_DECL InstanceMgr sInstanceMgr;

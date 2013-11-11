@@ -23,7 +23,9 @@
 // revision:		$Rev$
 // date:		$Date$
 
+
 #include "StdAfx.h"
+
 
 static float AttackToRageConversionTable[PLAYER_LEVEL_CAP + 1] =
 {

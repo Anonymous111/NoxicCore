@@ -34,3 +34,4 @@ class DatabaseCleaner : public Singleton<DatabaseCleaner>
 };
 
 #endif
+

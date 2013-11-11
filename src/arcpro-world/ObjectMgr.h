@@ -350,8 +350,8 @@ typedef std::list<const AchievementCriteriaEntry*>					AchievementCriteriaEntryL
 #endif
 
 #ifndef WIN32
-#define ARCPRO_USE_MAP_PLAYER_INDEX
-#ifdef ARCPRO_USE_MAP_PLAYER_INDEX
+#define arcpro_USE_MAP_PLAYER_INDEX
+#ifdef arcpro_USE_MAP_PLAYER_INDEX
 
 // you can use the string map (slower)
 typedef map<string, PlayerInfo*> PlayerNameStringIndexMap;

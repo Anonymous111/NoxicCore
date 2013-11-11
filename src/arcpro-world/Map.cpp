@@ -151,10 +151,6 @@ void Map::LoadSpawns(bool reload)
 					cspawn->id = fields[0].GetUInt32();
 					cspawn->form = FormationMgr::getSingleton().GetFormation(cspawn->id);
 					cspawn->entry = fields[1].GetUInt32();
-						CreatureInfo* creature_info = CreatureNameStorage.LookupEntry(cspawn->entry);
-						if(creature_info)
-							continue;
-
 					cspawn->x = fields[3].GetFloat();
 					cspawn->y = fields[4].GetFloat();
 					cspawn->z = fields[5].GetFloat();
@@ -172,11 +168,7 @@ void Map::LoadSpawns(bool reload)
 					if(!spawns[cellx][celly])
 						spawns[cellx][celly] = new CellSpawns;
 					cspawn->movetype = fields[7].GetUInt8();
-
-					uint32 DisplayId = 0;
-					creature_info->GenerateModelId(&DisplayId);
-					cspawn->displayid = fields[8].GetUInt32() != 0 ? fields[8].GetUInt32() : DisplayId;
-
+					cspawn->displayid = fields[8].GetUInt32();
 					cspawn->factionid = fields[9].GetUInt32();
 					cspawn->flags = fields[10].GetUInt32();
 					cspawn->bytes0 = fields[11].GetUInt32();
@@ -219,20 +211,12 @@ void Map::LoadSpawns(bool reload)
 				cspawn->id = fields[0].GetUInt32();
 				cspawn->form = FormationMgr::getSingleton().GetFormation(cspawn->id);
 				cspawn->entry = fields[1].GetUInt32();
-					CreatureInfo* creature_info = CreatureNameStorage.LookupEntry(cspawn->entry);
-					if(creature_info)
-						continue;
-
 				cspawn->x = fields[3].GetFloat();
 				cspawn->y = fields[4].GetFloat();
 				cspawn->z = fields[5].GetFloat();
 				cspawn->o = fields[6].GetFloat();
 				cspawn->movetype = fields[7].GetUInt8();
-
-				uint32 DisplayId = 0;
-				creature_info->GenerateModelId(&DisplayId);
-				cspawn->displayid = fields[8].GetUInt32() != 0 ? fields[8].GetUInt32() : DisplayId;
-
+				cspawn->displayid = fields[8].GetUInt32();
 				cspawn->factionid = fields[9].GetUInt32();
 				cspawn->flags = fields[10].GetUInt32();
 				cspawn->bytes0 = fields[11].GetUInt32();

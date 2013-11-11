@@ -430,7 +430,9 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 			{
 				SubGroup* sg = grp->GetSubGroup(i);
 				if(sg == NULL)
+				{
 					continue;
+				}
 
 				groupItr = sg->GetGroupMembersBegin();
 				groupItrLast = sg->GetGroupMembersEnd();
@@ -459,7 +461,9 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 			grp->Unlock();
 		}
 		// Send Achievement message to nearby players
-		for(std::set<Object*>::iterator inRangeItr = GetPlayer()->GetInRangePlayerSetBegin(); inRangeItr != GetPlayer()->GetInRangePlayerSetEnd(); ++inRangeItr)
+		std::set<Object*>::iterator inRangeItr = GetPlayer()->GetInRangePlayerSetBegin();
+		std::set<Object*>::iterator inRangeItrLast = GetPlayer()->GetInRangePlayerSetEnd();
+		for(; inRangeItr != inRangeItrLast; ++inRangeItr)
 		{
 
 			Player* p = TO< Player* >((*inRangeItr));
@@ -507,7 +511,9 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 	data << uint32(0);
 	GetPlayer()->GetSession()->SendPacket(&data);
 	if(guidList)
+	{
 		delete [] guidList;
+	}
 }
 
 /**
@@ -516,7 +522,9 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 void AchievementMgr::SendCriteriaUpdate(CriteriaProgress* progress)
 {
 	if(progress == NULL || isCharacterLoading)
+	{
 		return;
+	}
 
 	WorldPacket data(SMSG_CRITERIA_UPDATE, 32);
 	data << uint32(progress->id);
@@ -556,31 +564,41 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, in
 	if( m_player->GetSession()->HasGMPermissions() && sWorld.gamemaster_disableachievements )
 		return;
 	
-	uint64 selectedGUID = 0;
+	uint64 selectedGUID;
 	if(type == ACHIEVEMENT_CRITERIA_TYPE_DO_EMOTE)
+	{
 		selectedGUID = GetPlayer()->GetSelection();
-
+	}
 	AchievementCriteriaEntryList const & achievementCriteriaList = objmgr.GetAchievementCriteriaByType(type);
 	for(AchievementCriteriaEntryList::const_iterator i = achievementCriteriaList.begin(); i != achievementCriteriaList.end(); ++i)
 	{
 		AchievementCriteriaEntry const* achievementCriteria = (*i);
 
 		if(IsCompletedCriteria(achievementCriteria))
+		{
 			// don't bother updating it, if it has already been completed
 			continue;
+		}
 
 		if((achievementCriteria->groupFlag & ACHIEVEMENT_CRITERIA_GROUP_NOT_IN_GROUP) && GetPlayer()->GetGroup())
+		{
 			// criteria requires that the player not be in a group, but they are in a group, so don't update it
 			continue;
+		}
 
 		AchievementEntry const* achievement = dbcAchievementStore.LookupEntryForced(achievementCriteria->referredAchievement);
 		if(!achievement)
+		{
 			// referred achievement not found (shouldn't normally happen)
 			continue;
+		}
 
-		if((achievement->factionFlag == ACHIEVEMENT_FACTION_FLAG_HORDE && !GetPlayer()->IsTeamHorde()) || (achievement->factionFlag == ACHIEVEMENT_FACTION_FLAG_ALLIANCE && !GetPlayer()->IsTeamAlliance()))
+		if((achievement->factionFlag == ACHIEVEMENT_FACTION_FLAG_HORDE && !GetPlayer()->IsTeamHorde()) ||
+		        (achievement->factionFlag == ACHIEVEMENT_FACTION_FLAG_ALLIANCE && !GetPlayer()->IsTeamAlliance()))
+		{
 			// achievement requires a faction of which the player is not a member
 			continue;
+		}
 
 		switch(type)
 		{
@@ -721,9 +739,6 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, in
 						case 1721: // Heroic: Archavon the Stone Watcher
 						case 1817: // The Culling of Time
 						case 1865: // Lockdown!
-						case 4519: // Heroic: The Forge of Souls
-						case 4521: // Heroic: The Halls of Reflection
-						case 4520: // Heroic: The Pit of Saron
 							if(GetPlayer()->iInstanceType >= MODE_HEROIC)
 							{
 								UpdateCriteriaProgress(achievementCriteria, 1);
@@ -842,7 +857,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, in
 							// Defeat Ley-Guardian Eregos in The Oculus on Heroic Difficulty without anyone in your party using an Amber Drake.
 							break;
 						default:
-							if(IS_INSTANCE(GetPlayer()->GetMapId()) && (GetPlayer()->iInstanceType == MODE_NORMAL))
+							if(!IS_INSTANCE(GetPlayer()->GetMapId()) || (GetPlayer()->iInstanceType == MODE_NORMAL))
 							{
 								// already tested heroic achievements above, the rest should be normal or non-dungeon
 								UpdateCriteriaProgress(achievementCriteria, 1);
@@ -1380,10 +1395,9 @@ bool AchievementMgr::IsCompletedCriteria(AchievementCriteriaEntry const* achieve
 
 	// 0 or negative, not completed.
 	if(progress->counter < 1)
+	{
 		return false;
-
-	if(achievement->ID == 2716) // Dual talent spec
-		return false;
+	}
 
 	uint32 progresscounter = (uint32)progress->counter;
 	switch(achievementCriteria->requiredType)

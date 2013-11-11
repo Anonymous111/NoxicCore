@@ -19,6 +19,11 @@
  *
  */
 
+//
+//
+// WorldSession.h
+//
+
 #ifndef __WORLDSESSION_H
 #define __WORLDSESSION_H
 
@@ -769,7 +774,6 @@ class SERVER_DECL WorldSession
 
 	public:
 
-		void SendShowBank(uint64 guid); // Custom bank command
 		void SendInventoryList(Creature* pCreature);
 		void SendTrainerList(Creature* pCreature);
 		void SendCharterRequest(Creature* pCreature);

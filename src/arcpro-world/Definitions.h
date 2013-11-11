@@ -22,8 +22,10 @@
 #ifndef WOWSERVER_DEFINITION_H
 #define WOWSERVER_DEFINITION_H
 
+
 const unsigned NUM_MAPS = 800;
 const unsigned NUM_INSTANCE_MODES = 4;
+
 
 // Sorry...need this enumeration in Player.*
 enum INSTANCE_MODE
@@ -40,5 +42,6 @@ enum RAID_MODE
     MODE_HEROIC_25MEN	=	3,
     TOTAL_RAID_MODES    =   4
 };
+
 
 #endif

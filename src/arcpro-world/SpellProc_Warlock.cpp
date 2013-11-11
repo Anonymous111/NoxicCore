@@ -23,5 +23,4 @@
 
 void SpellProcMgr::SetupWarlock()
 {
-
 }

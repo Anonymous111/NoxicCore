@@ -31,4 +31,5 @@ class SERVER_DECL HonorHandler
 		static void OnPlayerKilled(Player* pPlayer, Player* pVictim);
 };
 
+
 #endif

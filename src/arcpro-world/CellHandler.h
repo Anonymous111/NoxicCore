@@ -19,6 +19,10 @@
  *
  */
 
+//
+// CellHandler.h
+//
+
 #ifndef __CELLHANDLER_H
 #define __CELLHANDLER_H
 

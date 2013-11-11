@@ -19,6 +19,10 @@
  *
  */
 
+//
+// WorldSession.cpp
+//
+
 #include "StdAfx.h"
 
 OpcodeHandler WorldPacketHandlers[NUM_MSG_TYPES];
@@ -2019,12 +2023,4 @@ void WorldSession::HandleDismissCritter(WorldPacket & recv_data)
 	}
 
 	_player->SetSummonedCritterGUID(0);
-}
-
-void WorldSession::SendShowBank(uint64 guid) // Custom bank command
-{
-	WorldPacket data(SMSG_SHOW_BANK, 8);
-	data << guid;
-	SendPacket(&data);
-	return;
 }

@@ -90,7 +90,7 @@ int main(int argc, char** argv)
 /**
   * Initialises the logon database
   *
-  * Reads the configs\logon.conf file and parses the <LogonDatabase> tag
+  * Reads the configs\arcpro-logon.conf file and parses the <LogonDatabase> tag
   *
   * Any errors in this file, such as a missing parameter should be caught
   * and the user notified in an intelligent way
@@ -127,7 +127,7 @@ bool startdb()
 		//  resulting in unreadable error messages.
 		//If the <LogonDatabase> tag is malformed, all parameters will fail, and a different error message is given
 
-		string errorMessage = "sql: Certain <LogonDatabase> parameters not found in " CONFDIR "\\logon.conf \r\n";
+		string errorMessage = "sql: Certain <LogonDatabase> parameters not found in " CONFDIR "\\arcpro-logon.conf \r\n";
 		if(!(existsHostname || existsUsername || existsPassword  ||
 		        existsName     || existsPort))
 		{
@@ -201,7 +201,7 @@ bool IsServerAllowedMod(unsigned int IP)
 
 bool Rehash()
 {
-	char* config_file = (char*)CONFDIR "/logon.conf";
+	char* config_file = (char*)CONFDIR "/arcpro-logon.conf";
 	if(!Config.MainConfig.SetSource(config_file))
 	{
 		LOG_ERROR("Config file could not be rehashed.");
@@ -284,7 +284,7 @@ void LogonServer::Run(int argc, char** argv)
 {
 	UNIXTIME = time(NULL);
 	g_localTime = *localtime(&UNIXTIME);
-	char* config_file = (char*)CONFDIR "/logon.conf";
+	char* config_file = (char*)CONFDIR "/arcpro-logon.conf";
 	int file_log_level = DEF_VALUE_NOT_SET;
 	int screen_log_level = DEF_VALUE_NOT_SET;
 	int do_check_conf = 0;

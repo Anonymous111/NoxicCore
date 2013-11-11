@@ -100,9 +100,12 @@ uint32 CheckTriggerPrerequisites(AreaTrigger* pAreaTrigger, WorldSession* pSessi
 	if(pMapInfo && pMapInfo->required_item && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->required_item, true))
 		return AREA_TRIGGER_FAILURE_NO_ATTUNE_I;
 
-	if(pPlayer->iInstanceType >= MODE_HEROIC && pMapInfo->type == INSTANCE_MULTIMODE
+	if(pPlayer->iInstanceType >= MODE_HEROIC &&
+	        pMapInfo->type == INSTANCE_MULTIMODE
 	        && ((pMapInfo->heroic_key_1 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_1, false))
-	            && (pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))))
+	            &&	(pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))
+	           )
+	  )
 		return AREA_TRIGGER_FAILURE_NO_KEY;
 
 	if(pMapInfo->type != INSTANCE_NULL && pPlayer->iInstanceType >= MODE_HEROIC && pPlayer->getLevel() < pMapInfo->minlevel_heroic)
@@ -147,8 +150,7 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
 		return;
 	}
 
-	if(pAreaTrigger == NULL)
-		return;
+	if(pAreaTrigger == NULL) return;
 
 	switch(pAreaTrigger->Type)
 	{

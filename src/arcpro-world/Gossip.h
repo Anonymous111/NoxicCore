@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -35,27 +35,27 @@ namespace Arcpro
 		enum Icons
 		{
 		    ICON_CHAT = 0,
-		    ICON_VENDOR = 1,
-		    ICON_FLIGHTMASTER = 2,
-		    ICON_TRAINER = 3, //book
-		    ICON_INTERACT_1 = 4, //interaction wheel
-		    ICON_INTERACT_2 = 5, //interaction wheel
-		    ICON_MONEY_BAG = 6, //brown bag with yellow dot
-		    ICON_TALK = 7, //white chat bubble with black dots
-		    ICON_TABARD = 8, //tabard
-		    ICON_BATTLE = 9, //two swords
-		    ICON_DOT = 10, //yellow dot
-		    ICON_CHAT_11 = 11, //This and below are most the same visual as GOSSIP_ICON_CHAT
-		    ICON_CHAT_12 = 12, //but are still used for unknown reasons.
-		    ICON_CHAT_13 = 13,
-		    ICON_CHAT_14 = 14, // probably invalid
-		    ICON_CHAT_15 = 15, // probably invalid
-		    ICON_CHAT_16 = 16,
-		    ICON_CHAT_17 = 17,
-		    ICON_CHAT_18 = 18,
-		    ICON_CHAT_19 = 19,
-		    ICON_CHAT_20 = 20,
-		    ICON_MAX = 21
+		    ICON_VENDOR,
+		    ICON_FLIGHTMASTER,
+		    ICON_TRAINER, //book
+		    ICON_INTERACT_1, //interaction wheel
+		    ICON_INTERACT_2, //interaction wheel
+		    ICON_MONEY_BAG, //brown bag with yellow dot
+		    ICON_TALK, //white chat bubble with black dots
+		    ICON_TABARD, //tabard
+		    ICON_BATTLE, //two swords
+		    ICON_DOT, //yellow dot
+		    ICON_CHAT_11, //This and below are most the same visual as GOSSIP_ICON_CHAT
+		    ICON_CHAT_12, //but are still used for unknown reasons.
+		    ICON_CHAT_13,
+		    ICON_CHAT_14, // probably invalid
+		    ICON_CHAT_15, // probably invalid
+		    ICON_CHAT_16,
+		    ICON_CHAT_17,
+		    ICON_CHAT_18,
+		    ICON_CHAT_19,
+		    ICON_CHAT_20,
+		    ICON_MAX
 		};
 
 		enum ws
@@ -246,7 +246,111 @@ namespace Arcpro
 				static Script* GetInterface(::Item*);
 				static Script* GetInterface(GameObject*);
 		};
+		//Spirit Healer Dialog.
+		class SERVER_DECL SpiritHealer : public Script
+		{
+			public:
+				SpiritHealer() {}
+				virtual ~SpiritHealer() {}
+				void OnHello(Object* pObject, Player* Plr);
+		};
 
+		class SERVER_DECL Vendor : public Script
+		{
+			public:
+				Vendor() {}
+				virtual ~Vendor() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL Trainer : public Script
+		{
+			public:
+				Trainer() {}
+				virtual ~Trainer() {}
+				virtual void OnHello(Object* pObject, Player* Plr);
+				virtual void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL ClassTrainer : public Script
+		{
+			public:
+				ClassTrainer() {}
+				virtual ~ClassTrainer() {}
+				virtual void OnHello(Object* pObject, Player* Plr);
+				virtual void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL PetTrainer : public Script
+		{
+			public:
+				PetTrainer() {}
+				virtual ~PetTrainer() {}
+				virtual void OnHello(Object* pObject, Player* Plr);
+				virtual void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL FlightMaster : public Script
+		{
+			public:
+				FlightMaster() {}
+				virtual ~FlightMaster() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL Auctioneer: public Script
+		{
+			public:
+				Auctioneer() {}
+				virtual ~Auctioneer() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL InnKeeper : public Script
+		{
+			public:
+				InnKeeper() {}
+				virtual ~InnKeeper() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL BattleMaster : public Script
+		{
+			public:
+				BattleMaster() {}
+				virtual ~BattleMaster() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL Banker : public Script
+		{
+			public:
+				Banker() {}
+				virtual ~Banker() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL CharterGiver : public Script
+		{
+			public:
+				CharterGiver() {}
+				virtual ~CharterGiver() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL TabardDesigner : public Script
+		{
+			public:
+				TabardDesigner() {}
+				virtual ~TabardDesigner() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
+		class SERVER_DECL StableMaster : public Script
+		{
+			public:
+				StableMaster() {}
+				virtual ~StableMaster() {}
+				void OnHello(Object* pObject, Player* Plr);
+				void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode);
+		};
 		class SERVER_DECL Generic : public Script
 		{
 			public:

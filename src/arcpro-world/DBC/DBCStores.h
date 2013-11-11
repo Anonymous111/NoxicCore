@@ -1640,21 +1640,6 @@ struct VehicleSeatEntry{
 	}
 };
 
-struct SoundEntriesEntry
-{
-	uint32 Id; // 0 m_ID
-	//uint32 Type; // 1 m_soundType
-	//char* InternalName; // 2 m_name
-	//char* FileName[10]; // 3-12 m_File[10]
-	//uint32 Unk13[10]; // 13-22 m_Freq[10]
-	//char* Path; // 23 m_DirectoryBase
-		// 24 m_volumeFloat
-		// 25 m_flags
-		// 26 m_minDistance
-		// 27 m_distanceCutoff
-		// 28 m_EAXDef
-		// 29 new in 3.1
-};
 
 #pragma pack(pop)
 
@@ -2016,7 +2001,6 @@ extern SERVER_DECL DBCStorage<CharClassEntry> dbcCharClass;
 extern SERVER_DECL DBCStorage<CharRaceEntry> dbcCharRace;
 extern SERVER_DECL DBCStorage<MapEntry> dbcMap;
 extern SERVER_DECL DBCStorage<SpellRuneCostEntry> dbcSpellRuneCost;
-extern SERVER_DECL DBCStorage<SoundEntriesEntry> dbcSound;
 extern SERVER_DECL DBCStorage<ItemExtendedCostEntry> dbcItemExtendedCost;
 extern SERVER_DECL DBCStorage<ItemRandomSuffixEntry> dbcItemRandomSuffix;
 extern SERVER_DECL DBCStorage<CombatRatingDBC> dbcCombatRating;
@@ -2038,14 +2022,14 @@ extern SERVER_DECL DBCStorage<AreaTriggerEntry> dbcAreaTrigger;
 extern SERVER_DECL DBCStorage<ScalingStatDistributionEntry> dbcScalingStatDistribution;
 extern SERVER_DECL DBCStorage<ScalingStatValuesEntry> dbcScalingStatValues;
 extern SERVER_DECL DBCStorage<ItemLimitCategoryEntry> dbcItemLimitCategory;
-extern SERVER_DECL DBCStorage<QuestXP> dbcQuestXP;
+extern SERVER_DECL DBCStorage< QuestXP > dbcQuestXP;
 extern SERVER_DECL DBCStorage<MailTemplateEntry> dbcMailTemplateEntry;
 extern SERVER_DECL DBCStorage<WMOAreaTableEntry> dbcWMOAreaTable;
-extern SERVER_DECL DBCStorage<SummonPropertiesEntry> dbcSummonProperties;
-extern SERVER_DECL DBCStorage<NameGenEntry> dbcNameGen;
-extern SERVER_DECL DBCStorage<LFGDungeonEntry> dbcLFGDungeon;
-extern SERVER_DECL DBCStorage<VehicleEntry> dbcVehicle;
-extern SERVER_DECL DBCStorage<VehicleSeatEntry> dbcVehicleSeat;
+extern SERVER_DECL DBCStorage< SummonPropertiesEntry > dbcSummonProperties;
+extern SERVER_DECL DBCStorage< NameGenEntry > dbcNameGen;
+extern SERVER_DECL DBCStorage< LFGDungeonEntry > dbcLFGDungeon;
+extern SERVER_DECL DBCStorage< VehicleEntry > dbcVehicle;
+extern SERVER_DECL DBCStorage< VehicleSeatEntry > dbcVehicleSeat;
 
 bool LoadDBCs();
 

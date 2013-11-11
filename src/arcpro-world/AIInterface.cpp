@@ -158,7 +158,6 @@ AIInterface::~AIInterface()
 {
 	for(list<AI_Spell*>::iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
 		delete(*itr);
-
 	m_spells.clear();
 
 	deleteWaypoints();
@@ -184,8 +183,7 @@ void AIInterface::Init(Unit* un, AIType at, MovementType mt, Unit* owner)
 
 void AIInterface::HandleEvent(uint32 event, Unit* pUnit, uint32 misc1)
 {
-	if(m_Unit == NULL)
-		return;
+	if(m_Unit == NULL) return;
 
 	// Passive NPCs (like target dummies) shouldn't do anything.
 	if(m_AIType == AITYPE_PASSIVE)
@@ -207,8 +205,9 @@ void AIInterface::Update(uint32 p_time)
 	_UpdateTimer(p_time);
 	_UpdateTargets();
 
-	if(m_Unit->isAlive() && m_AIState != STATE_IDLE && m_AIState != STATE_FOLLOWING && m_AIState != STATE_FEAR
-			&& m_AIState != STATE_WANDER && m_AIState != STATE_SCRIPTMOVE)
+	if(m_Unit->isAlive() && m_AIState != STATE_IDLE
+	        && m_AIState != STATE_FOLLOWING && m_AIState != STATE_FEAR
+	        && m_AIState != STATE_WANDER && m_AIState != STATE_SCRIPTMOVE)
 	{
 		if(m_AIType == AITYPE_PET)
 		{
@@ -217,9 +216,12 @@ void AIInterface::Update(uint32 p_time)
 				Pet* pPet = TO< Pet* >(m_Unit);
 
 				if(pPet->GetPetAction() == PET_ACTION_ATTACK || pPet->GetPetState() != PET_STATE_PASSIVE)
+				{
 					_UpdateCombat(p_time);
+				}
 			}
-			else if(!m_Unit->IsPet()) // we just use any creature as a pet guardian
+			//we just use any creature as a pet guardian
+			else if(!m_Unit->IsPet())
 			{
 				_UpdateCombat(p_time);
 			}
@@ -252,7 +254,10 @@ void AIInterface::Update(uint32 p_time)
 			{
 				// return to the home
 				if(m_returnX == 0.0f && m_returnY == 0.0f)
+				{
 					SetReturnPosition();
+
+				}
 
 				MoveEvadeReturn();
 			}
@@ -322,7 +327,9 @@ void AIInterface::Update(uint32 p_time)
 void AIInterface::_UpdateTimer(uint32 p_time)
 {
 	if(m_updateAssistTimer > p_time)
+	{
 		m_updateAssistTimer -= p_time;
+	}
 	else
 	{
 		m_updateAssist = true;
@@ -330,7 +337,9 @@ void AIInterface::_UpdateTimer(uint32 p_time)
 	}
 
 	if(m_updateTargetsTimer > p_time)
+	{
 		m_updateTargetsTimer -= p_time;
+	}
 	else
 	{
 		m_updateTargets = true;
@@ -342,7 +351,6 @@ void AIInterface::_UpdateTargets()
 {
 	if(m_Unit->IsPlayer() || (m_AIType != AITYPE_PET && disable_targeting))
 		return;
-
 	if(TO_CREATURE(m_Unit)->GetCreatureInfo()->Type == UNIT_TYPE_CRITTER && TO_CREATURE(m_Unit)->GetType() != CREATURE_TYPE_GUARDIAN)
 		return;
 
@@ -354,9 +362,13 @@ void AIInterface::_UpdateTargets()
 
 	// Find new Assist Targets and remove old ones
 	if(m_AIState == STATE_FLEEING)
+	{
 		FindFriends(100.0f/*10.0*/);
+	}
 	else if(m_AIState != STATE_IDLE && m_AIState != STATE_SCRIPTIDLE)
+	{
 		FindFriends(64.0f/*8.0f*/);
+	}
 
 	if(m_updateAssist)
 	{
@@ -411,7 +423,9 @@ void AIInterface::_UpdateTargets()
 
 			Unit* ai_t = m_Unit->GetMapMgr()->GetUnit(it2->first);
 			if(ai_t == NULL)
+			{
 				m_aiTargets.erase(it2);
+			}
 			else
 			{
 				bool instance = false;
@@ -428,7 +442,9 @@ void AIInterface::_UpdateTargets()
 				}
 
 				if(ai_t->event_GetCurrentInstanceId() != m_Unit->event_GetCurrentInstanceId() || !ai_t->isAlive() || ((!instance && m_Unit->GetDistanceSq(ai_t) >= 6400.0f) || !(ai_t->m_phase & m_Unit->m_phase)))
+				{
 					m_aiTargets.erase(it2);
+				}
 			}
 		}
 
@@ -467,7 +483,9 @@ void AIInterface::_UpdateTargets()
 		{
 			Unit* target = FindTarget();
 			if(target)
+			{
 				AttackReaction(target, 1, 0);
+			}
 		}
 	}
 	// Find new Targets when we are ooc
@@ -475,7 +493,9 @@ void AIInterface::_UpdateTargets()
 	{
 		Unit* target = FindTarget();
 		if(target)
+		{
 			AttackReaction(target, 1, 0);
+		}
 	}
 }
 
@@ -515,7 +535,9 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 			setNextTarget(GetMostHated());
 
 		if(getNextTarget() == NULL)
+		{
 			HandleEvent(EVENT_LEAVECOMBAT, m_Unit, 0);
+		}
 	}
 	else if(nextTarget != NULL && !(nextTarget->m_phase & m_Unit->m_phase))     // the target or we changed phase, stop attacking
 	{
@@ -523,13 +545,15 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 			setNextTarget(FindTarget());
 		else
 			setNextTarget(GetMostHated());
-
 		if(getNextTarget() == NULL)
+		{
 			HandleEvent(EVENT_LEAVECOMBAT, m_Unit, 0);
+		}
 	}
 
 	if(sWorld.Collision)
 	{
+
 		if(m_Unit->GetMapMgr() != NULL && getNextTarget() != NULL)
 		{
 			if(!Flying())
@@ -599,12 +623,18 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 			else if(m_nextSpell)
 			{
 				if(m_nextSpell->agent != AGENT_NULL)
+				{
 					agent = m_nextSpell->agent;
+				}
 				else
+				{
 					agent = AGENT_MELEE;
+				}
 			}
 			else
+			{
 				agent = AGENT_MELEE;
+			}
 		}
 		if(agent == AGENT_RANGED || agent == AGENT_MELEE)
 		{
@@ -1151,7 +1181,9 @@ Unit* AIInterface::FindTarget()
 	//target is immune to all form of attacks, cant attack either.
 	// not attackable creatures sometimes fight enemies in scripted fights though
 	if(m_Unit->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NOT_ATTACKABLE_2))
+	{
 		return NULL;
+	}
 
 	// Start of neutralguard snippet
 	if(m_isNeutralGuard)
@@ -1182,7 +1214,6 @@ Unit* AIInterface::FindTarget()
 
 			if(dist > 2500.0f)
 				continue;
-
 			if(distance > dist)
 			{
 				if(sWorld.Collision)
@@ -1300,7 +1331,9 @@ Unit* AIInterface::FindTarget()
 	}
 
 	if(!target)
+	{
 		target = critterTarget;
+	}
 
 	if(target)
 	{
@@ -1353,8 +1386,9 @@ Unit* AIInterface::FindTargetForSpell(AI_Spell* sp)
 			for(AssistTargetSet::iterator i = m_assistTargets.begin(); i != m_assistTargets.end(); i++)
 			{
 				if(!(*i)->isAlive())
+				{
 					continue;
-
+				}
 				if((*i)->GetHealthPct() / 100.0f <= sp->floatMisc1) // Heal ourselves cause we got too low HP
 				{
 					m_Unit->SetTargetGUID((*i)->GetGUID());
@@ -1451,19 +1485,15 @@ bool AIInterface::FindFriends(float dist)
 		else
 			zoneSpawn = ZoneGuardStorage.LookupEntry(at->AreaId);
 
-		if(!zoneSpawn)
-			return result;
+		if(!zoneSpawn) return result;
 
 		uint32 team = 1; // horde default
 		if(isAlliance(m_Unit))
 			team = 0;
 
 		uint32 guardid = zoneSpawn->AllianceEntry;
-		if(team == 1)
-			guardid = zoneSpawn->HordeEntry;
-
-		if(!guardid)
-			return result;
+		if(team == 1) guardid = zoneSpawn->HordeEntry;
+		if(!guardid) return result;
 
 		CreatureInfo* ci = CreatureNameStorage.LookupEntry(guardid);
 		if(!ci)
@@ -1478,8 +1508,7 @@ bool AIInterface::FindFriends(float dist)
 
 
 		CreatureProto* cp = CreatureProtoStorage.LookupEntry(guardid);
-		if(!cp)
-			return result;
+		if(!cp) return result;
 
 		uint8 spawned = 0;
 
@@ -1857,7 +1886,6 @@ bool AIInterface::IsFlying()
 		return true;
 	if(m_Unit->IsPlayer())
 		return TO_PLAYER(m_Unit)->FlyCheat;
-
 	return false;
 }
 
@@ -1935,11 +1963,8 @@ bool AIInterface::setInFront(Unit* target) // not the best way to do it, though
 	//angle the object has to face
 	float angle = m_Unit->calcAngle(m_Unit->GetPositionX(), m_Unit->GetPositionY(), target->GetPositionX(), target->GetPositionY());
 	//Change angle slowly 2000ms to turn 180 deg around
-	if(angle > 180)
-		angle += 90;
-	else
-		angle -= 90; //angle < 180
-
+	if(angle > 180) angle += 90;
+	else angle -= 90; //angle < 180
 	m_Unit->getEasyAngle(angle);
 	//Convert from degrees to radians (180 deg = PI rad)
 	float orientation = angle / (180 / M_PI_FLOAT);
@@ -4344,7 +4369,9 @@ void AIInterface::EventUnitDied(Unit* pUnit, uint32 misc1)
 					pInstance->m_persistent = true;
 					pInstance->SaveToDB();
 					for(PlayerStorageMap::iterator itr = m_Unit->GetMapMgr()->m_PlayerStorage.begin(); itr != m_Unit->GetMapMgr()->m_PlayerStorage.end(); ++itr)
+					{
 						(*itr).second->SetPersistentInstanceId(pInstance);
+					}
 				}
 			}
 		}
@@ -4362,9 +4389,12 @@ void AIInterface::EventUnitDied(Unit* pUnit, uint32 misc1)
 		if(m_Unit->IsCreature())
 		{
 			if(TO< Creature* >(m_Unit)->GetCreatureInfo()->Rank == 3)
+			{
 				m_Unit->GetMapMgr()->RemoveCombatInProgress(m_Unit->GetGUID());
+			}
 		}
 	}
+
 
 	//remove negative auras
 	//if( m_Unit->IsCreature() )
@@ -4478,7 +4508,6 @@ void AIInterface::SetReturnPosition()
 {
 	if(m_returnX != 0.0f && m_returnY != 0.0f && m_returnZ != 0.0f)  //already returning somewhere
 		return;
-
 	m_returnX = m_Unit->GetSpawnX();
 	m_returnY = m_Unit->GetSpawnY();
 	m_returnZ = m_Unit->GetSpawnZ();

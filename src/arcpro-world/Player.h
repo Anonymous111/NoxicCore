@@ -799,6 +799,7 @@ class SERVER_DECL Player : public Unit
 		~Player();
 
 		PlayerCache* m_cache;
+
 		virtual bool IsMage() { return false; }
 		virtual bool IsDeathKnight() { return false; }
 		virtual bool IsPriest() { return false; }

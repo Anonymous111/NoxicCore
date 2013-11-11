@@ -20,8 +20,6 @@
  */
 
 #include "StdAfx.h"
-#pragma warning(disable:4355)
-
 UpdateMask Player::m_visibleUpdateMask;
 #define COLLISION_INDOOR_CHECK_INTERVAL 1000
 #define CANNON 24933 //39692, 34154
@@ -726,7 +724,31 @@ bool Player::Create(WorldPacket & data)
 
 	// Set Starting stats for char
 	//SetScale(  ((race==RACE_TAUREN)?1.3f:1.0f));
-	SetTalentPointsForAllSpec(class_ == DEATHKNIGHT ? sWorld.DKStartTalentPoints : 0); // Default is 0 in case you do not want to modify it
+	SetScale(1.0f);
+	SetHealth(info->health);
+	SetPower(POWER_TYPE_MANA, info->mana);
+	SetPower(POWER_TYPE_RAGE, 0);
+	SetPower(POWER_TYPE_FOCUS, info->focus); // focus
+	SetPower(POWER_TYPE_ENERGY, info->energy);
+	SetPower(POWER_TYPE_RUNES, 8);
+
+	SetMaxHealth(info->health);
+	SetMaxPower(POWER_TYPE_MANA, info->mana);
+	SetMaxPower(POWER_TYPE_RAGE, info->rage);
+	SetMaxPower(POWER_TYPE_FOCUS, info->focus);
+	SetMaxPower(POWER_TYPE_ENERGY, info->energy);
+	SetMaxPower(POWER_TYPE_RUNES, 8);
+	SetMaxPower(POWER_TYPE_RUNIC_POWER, 1000);
+
+	//THIS IS NEEDED
+	SetBaseHealth(info->health);
+	SetBaseMana(info->mana);
+	SetFaction(info->factiontemplate);
+
+	if(class_ == DEATHKNIGHT)
+		SetTalentPointsForAllSpec(sWorld.DKStartTalentPoints); // Default is 0 in case you do not want to modify it
+	else
+		SetTalentPointsForAllSpec(0);
 	if(class_ != DEATHKNIGHT || sWorld.StartingLevel > 55)
 	{
 		setLevel(sWorld.StartingLevel);
@@ -734,24 +756,30 @@ bool Player::Create(WorldPacket & data)
 			SetTalentPointsForAllSpec(sWorld.StartingLevel - 9);
 	}
 	else
+	{
 		setLevel(55);
+		SetNextLevelXp(148200);
+	}
+	UpdateGlyphs();
 
-	SetScale(1.0f);
+	SetPrimaryProfessionPoints(sWorld.MaxProfs);
+
 	setRace(race);
 	setClass(class_);
 	setGender(gender);
 	SetPowerType(powertype);
 
-	LevelInfo* Info = objmgr.GetLevelInfo(race, class_, getLevel());
-	ApplyLevelInfo(Info, getLevel());
-
-	SetPrimaryProfessionPoints(sWorld.MaxProfs);
 	SetUInt32Value(UNIT_FIELD_BYTES_2, (U_FIELD_BYTES_FLAG_PVP << 8));
 
 	if(class_ == WARRIOR)
 		SetShapeShift(FORM_BATTLESTANCE);
 
 	SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+	SetStat(STAT_STRENGTH, info->strength);
+	SetStat(STAT_AGILITY, info->ability);
+	SetStat(STAT_STAMINA, info->stamina);
+	SetStat(STAT_INTELLECT, info->intellect);
+	SetStat(STAT_SPIRIT, info->spirit);
 	SetBoundingRadius(0.388999998569489f);
 	SetCombatReach(1.5f);
 	if(race != RACE_BLOODELF)
@@ -765,12 +793,16 @@ bool Player::Create(WorldPacket & data)
 		SetNativeDisplayId(info->displayId - gender);
 	}
 	EventModelChange();
+	//SetMinDamage(info->mindmg );
+	//SetMaxDamage(info->maxdmg );
+	SetAttackPower(info->attackpower);
 	SetUInt32Value(PLAYER_BYTES, ((skin) | (face << 8) | (hairStyle << 16) | (hairColor << 24)));
 	//PLAYER_BYTES_2							   GM ON/OFF	 BANKBAGSLOTS   RESTEDSTATE
 	SetUInt32Value(PLAYER_BYTES_2, (facialHair /*| (0xEE << 8)*/  | (0x02 << 24)));//no bank slot by default!
 
 	//PLAYER_BYTES_3						   DRUNKENSTATE				 PVPRANK
 	SetUInt32Value(PLAYER_BYTES_3, ((gender) | (0x00 << 8) | (0x00 << 16) | (GetPVPRank() << 24)));
+	SetNextLevelXp(400);
 	SetUInt32Value(PLAYER_FIELD_BYTES, 0x08);
 	SetCastSpeedMod(1.0f);
 	SetUInt32Value(PLAYER_FIELD_MAX_LEVEL, sWorld.m_levelCap);
@@ -791,6 +823,8 @@ bool Player::Create(WorldPacket & data)
 	{
 		mSpells.insert((*sp));
 	}
+
+	m_FirstLogin = true;
 
 	skilllineentry* se;
 	for(std::list<CreateInfo_SkillStruct>::iterator ss = info->skills.begin(); ss != info->skills.end(); ++ss)
@@ -834,15 +868,7 @@ bool Player::Create(WorldPacket & data)
 		}
 	}
 
-	SetHealth(GetMaxHealth() + (getLevel() > 1 ? (GetStat(STAT_STAMINA)*14) : GetStat(STAT_STAMINA)));
-	SetPower(POWER_TYPE_MANA, GetMaxPower(POWER_TYPE_MANA) + (getLevel() > 1 ? (GetStat(STAT_INTELLECT)*15) : GetStat(STAT_INTELLECT)));
-	SetPower(POWER_TYPE_RAGE, 0);
-	SetPower(POWER_TYPE_FOCUS, GetMaxPower(POWER_TYPE_FOCUS)); // focus
-	SetPower(POWER_TYPE_ENERGY, GetMaxPower(POWER_TYPE_ENERGY));
-	SetPower(POWER_TYPE_RUNES, 8);
-
 	sHookInterface.OnCharacterCreate(this);
-	m_FirstLogin = true;
 	load_health = GetHealth();
 	load_mana = GetPower(POWER_TYPE_MANA);
 	return true;
@@ -3657,7 +3683,13 @@ void Player::OnPushToWorld()
 
 	if(m_FirstLogin)
 	{
+		if(class_ == DEATHKNIGHT)
+			startlevel = static_cast<uint8>(max(55, sWorld.StartingLevel));
+		else startlevel = static_cast<uint8>(sWorld.StartingLevel);
+
 		sHookInterface.OnFirstEnterWorld(this);
+		LevelInfo* Info = objmgr.GetLevelInfo(getRace(), getClass(), startlevel);
+		ApplyLevelInfo(Info, startlevel);
 		m_FirstLogin = false;
 	}
 
@@ -8255,9 +8287,7 @@ void Player::ApplyLevelInfo(LevelInfo* Info, uint32 Level)
 	UpdateStats();
 	//UpdateChances();
 	UpdateGlyphs();
-
-	if(!m_FirstLogin)
-		m_playerInfo->lastLevel = Level;
+	m_playerInfo->lastLevel = Level;
 #ifdef ENABLE_ACHIEVEMENTS
 	GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_LEVEL);
 #endif

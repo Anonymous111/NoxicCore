@@ -25,13 +25,13 @@
 
 enum AreaTriggerType
 {
-    ATTYPE_NULL			= 0,
-    ATTYPE_INSTANCE		= 1,
-    ATTYPE_QUESTTRIGGER	= 2,
-    ATTYPE_INN			= 3,
-    ATTYPE_TELEPORT		= 4,
+    ATTYPE_NULL		 = 0,
+    ATTYPE_INSTANCE	 = 1,
+    ATTYPE_QUESTTRIGGER = 2,
+    ATTYPE_INN		  = 3,
+    ATTYPE_TELEPORT	 = 4,
     ATTYPE_SPELL		= 5,
-    ATTYPE_BATTLEGROUND	= 6,
+    ATTYPE_BATTLEGROUND = 6,
 };
 
 #pragma pack(push,1)
@@ -49,7 +49,8 @@ typedef struct AreaTrigger
 	uint32 required_honor_rank;
 	uint32 required_level;
 } AreaTrigger;
-
 #pragma pack(pop)
+
+
 
 #endif

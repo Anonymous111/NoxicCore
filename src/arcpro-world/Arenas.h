@@ -23,7 +23,7 @@ class ArenaTeam;
 
 class SERVER_DECL Arena : public CBattleground
 {
-	protected:
+protected:
 		set<GameObject*> m_gates;
 		GameObject* m_buffs[2];
 		ArenaTeam* m_teams[2];

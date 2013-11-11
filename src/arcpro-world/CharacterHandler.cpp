@@ -83,7 +83,7 @@ bool ChatHandler::HandleRenameAllCharacter(const char* args, WorldSession* m_ses
 
 			if(VerifyName(pName, szLen) != E_CHAR_NAME_SUCCESS)
 			{
-				LOG_DEBUG("Renaming character %s, %u", pName, uGuid);
+				LOG_DEBUG("renaming character %s, %u", pName, uGuid);
 				Player* pPlayer = objmgr.GetPlayer(uGuid);
 				if(pPlayer != NULL)
 				{
@@ -423,7 +423,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
 	}
 
 	//Check if player has a level 55 or higher character on this realm and allow him to create DK.
-	//This check can be turned off in optional.conf
+	//This check can be turned off in arcpro-optional.conf
 	if(Config.OptionalConfig.GetBoolDefault("ClassOptions" , "DeathKnightPreReq" , false) && !has_level_55_char
 	        && (class_ == DEATHKNIGHT))
 	{
@@ -644,7 +644,7 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
 	CHECK_PACKET_SIZE(recv_data, 8);
 	uint64 playerGuid = 0;
 
-	LOG_DEBUG("WORLD: Received Player Logon Message");
+	LOG_DEBUG("WORLD: Recvd Player Logon Message");
 
 	recv_data >> playerGuid; // this is the GUID selected by the player
 	if(objmgr.GetPlayer((uint32)playerGuid) != NULL || m_loggingInPlayer || _player)

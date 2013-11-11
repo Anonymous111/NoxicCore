@@ -2164,15 +2164,10 @@ void Object::SetZoneId(uint32 newZone)
 
 void Object::PlaySoundToSet(uint32 sound_entry)
 {
-	if(dbcSound.LookupEntryForced(sound_entry))
-	{
-		WorldPacket data(SMSG_PLAY_SOUND, 4);
-		data << sound_entry;
+	WorldPacket data(SMSG_PLAY_SOUND, 4);
+	data << sound_entry;
 
-		SendMessageToSet(&data, true);
-	}
-	else
-		sLog.Error("Object", "Object type %u tried to play invalid sound entry %u, ignoring", GetTypeId(), sound_entry);
+	SendMessageToSet(&data, true);
 }
 
 void Object::_SetExtension(const string & name, void* ptr)

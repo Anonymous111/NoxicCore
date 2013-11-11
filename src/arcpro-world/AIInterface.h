@@ -56,6 +56,7 @@ inline bool inRangeYZX(const float* v1, const float* v2, const float r, const fl
 	return (dx * dx + dz * dz) < r * r && fabsf(dy) < h;
 }
 
+
 class Object;
 class Creature;
 class Unit;
@@ -112,6 +113,7 @@ enum SplinePriority
     SPLINE_PRIORITY_REDIRECTION,
 };
 
+
 enum AIType
 {
     AITYPE_LONER,
@@ -134,11 +136,13 @@ enum MovementType
     MOVEMENTTYPE_FORWARDTHANSTOP = 11,
 };
 
+
 /*struct AI_Target
 {
 	Unit* target;
 	int32 threat;
 };*/
+
 
 enum AI_Agent
 {
@@ -208,6 +212,7 @@ enum CreatureState
     ATTACKING
 };
 
+
 struct SpellEntry;
 //enum MOD_TYPES;
 
@@ -244,7 +249,8 @@ struct SplinePoint
 	uint32 arrive; //mstime the npc reaches the destination
 };
 
-/*#if ENABLE_SHITTY_STL_HACKS == 1
+/*
+#if ENABLE_SHITTY_STL_HACKS == 1
 typedef HM_NAMESPACE::hash_map<Unit*, int32> TargetMap;
 #else
 namespace HM_NAMESPACE
@@ -665,5 +671,4 @@ class SERVER_DECL AIInterface
 		void MoveTeleport(float x, float y, float z, float o = 0);
 		bool MoveCharge(float x, float y, float z);
 };
-
 #endif

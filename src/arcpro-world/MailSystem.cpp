@@ -145,8 +145,10 @@ bool MailMessage::AddMessageDataToPacket(WorldPacket & data)
 		case AUCTION:
 		case GAMEOBJECT:
 		case ITEM:
+			data << uint32(Arcpro::Util::GUID_LOPART(sender_guid));
+			break;
 		case CREATURE:
-			data << uint32(sender_guid);
+			data << uint32( Arcpro::Util::GET_CREATURE_ENTRY_FROM_GUID(sender_guid));
 			break;
 	}
 

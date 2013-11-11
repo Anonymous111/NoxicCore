@@ -19,6 +19,10 @@
  *
  */
 
+//
+// WorldCreator.h
+//
+
 #ifndef __WORLDCREATOR_H
 #define __WORLDCREATOR_H
 

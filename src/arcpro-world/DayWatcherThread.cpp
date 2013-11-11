@@ -19,6 +19,10 @@
  *
  */
 
+/* Arena and Honor Point Calculation System
+ *    Copyright (c) 2007 Burlex
+ */
+
 #include "StdAfx.h"
 
 #define THREAD_LOOP_INTERVAL 120 // seconds

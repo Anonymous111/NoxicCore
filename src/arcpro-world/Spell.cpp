@@ -5890,7 +5890,7 @@ void Spell::HandleCastEffects(uint64 guid, uint32 i)
 			else
 				time = dist * 1000.0f / m_spellInfo->speed;
 
-			//TODO: ArcPro doesn't support reflected spells
+			//todo: ArcPro doesn't support reflected spells
 			//if (reflected)
 			//	time *= 1.25; //reflected projectiles move back 4x faster
 
@@ -5936,7 +5936,7 @@ void Spell::HandleModeratedTarget(uint64 guid)
 
 				destx = obj->GetPositionX();
 				desty = obj->GetPositionY();
-				//TODO: this should be destz = obj->GetPositionZ() + (obj->GetModelHighBoundZ() / 2 * obj->GetUInt32Value(OBJECT_FIELD_SCALE_X))
+				//todo: this should be destz = obj->GetPositionZ() + (obj->GetModelHighBoundZ() / 2 * obj->GetUInt32Value(OBJECT_FIELD_SCALE_X))
 				if(obj->IsUnit())
 					destz = obj->GetPositionZ() + TO_UNIT(obj)->GetModelHalfSize();
 				else
@@ -5954,7 +5954,7 @@ void Spell::HandleModeratedTarget(uint64 guid)
 		else
 		{
 			float time = dist * 1000.0f / m_spellInfo->speed;
-			//TODO: ArcPro doesn't support reflected spells
+			//todo: ArcPro doesn't support reflected spells
 			//if (reflected)
 			//	time *= 1.25; //reflected projectiles move back 4x faster
 			sEventMgr.AddEvent(this, &Spell::HandleModeratedEffects, guid, EVENT_SPELL_HIT, float2int32(time), 1, 0);

@@ -19,6 +19,10 @@
  *
  */
 
+//
+// MapMgr.cpp
+//
+
 #include "StdAfx.h"
 #include "CrashHandler.h"
 

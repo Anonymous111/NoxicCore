@@ -71,7 +71,6 @@ SERVER_DECL DBCStorage<SpellEntry> dbcSpell;
 SERVER_DECL DBCStorage<SpellRadius> dbcSpellRadius;
 SERVER_DECL DBCStorage<SpellRange> dbcSpellRange;
 SERVER_DECL DBCStorage<SpellRuneCostEntry> dbcSpellRuneCost;
-SERVER_DECL DBCStorage<SoundEntriesEntry> dbcSound;
 SERVER_DECL DBCStorage<TalentEntry> dbcTalent;
 SERVER_DECL DBCStorage<TalentTabEntry> dbcTalentTab;
 SERVER_DECL DBCStorage<WorldMapOverlay> dbcWorldMapOverlayStore;
@@ -89,11 +88,11 @@ SERVER_DECL DBCStorage<SpellShapeshiftForm> dbcSpellShapeshiftForm;
 SERVER_DECL DBCStorage<QuestXP> dbcQuestXP;
 SERVER_DECL DBCStorage<MailTemplateEntry> dbcMailTemplateEntry;
 SERVER_DECL DBCStorage<WMOAreaTableEntry> dbcWMOAreaTable;
-SERVER_DECL DBCStorage<SummonPropertiesEntry> dbcSummonProperties;
-SERVER_DECL DBCStorage<NameGenEntry> dbcNameGen;
-SERVER_DECL DBCStorage<LFGDungeonEntry> dbcLFGDungeon;
-SERVER_DECL DBCStorage<VehicleEntry> dbcVehicle;
-SERVER_DECL DBCStorage<VehicleSeatEntry> dbcVehicleSeat;
+SERVER_DECL DBCStorage< SummonPropertiesEntry > dbcSummonProperties;
+SERVER_DECL DBCStorage< NameGenEntry > dbcNameGen;
+SERVER_DECL DBCStorage< LFGDungeonEntry > dbcLFGDungeon;
+SERVER_DECL DBCStorage< VehicleEntry > dbcVehicle;
+SERVER_DECL DBCStorage< VehicleSeatEntry > dbcVehicleSeat;
 
 const char* WorldMapOverlayStoreFormat = "nxiiiixxxxxxxxxxx";
 const char* BarberShopStyleEntryFormat = "nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxi";
@@ -348,7 +347,6 @@ const char* wmoareaformat = "uiiixxxxxuuxxxxxxxxxxxxxxxxx";
 const char* summonpropertiesformat = "uuuuuu";
 const char* namegenentryformat = "usuu";
 const char* LFGDungeonEntryformat = "nxxxxxxxxxxxxxxxxxiiiiiiixixxixixxxxxxxxxxxxxxxxx";
-char const* SoundEntriesformat = "nxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
 template<class T>
 bool loader_stub(const char* filename, const char* format, bool ind, T & l, bool loadstrs)
@@ -391,7 +389,6 @@ bool LoadDBCs()
 	LOAD_DBC("DBC/SpellRuneCost.dbc", SpellRuneCostFormat, true, dbcSpellRuneCost, false);
 	LOAD_DBC("DBC/SpellDuration.dbc", spelldurationFormat, true, dbcSpellDuration, false);
 	LOAD_DBC("DBC/SpellShapeshiftForm.dbc", spellshapeshiftformformat, true, dbcSpellShapeshiftForm, false);
-	LOAD_DBC("DBC/SoundEntries.dbc", SoundEntriesformat, true, dbcSound, false);
 	LOAD_DBC("DBC/ItemRandomProperties.dbc", randompropsFormat, true, dbcRandomProps, false);
 	LOAD_DBC("DBC/AreaGroup.dbc", areagroupFormat, true, dbcAreaGroup, true);
 	LOAD_DBC("DBC/AreaTable.dbc", areatableFormat, true, dbcArea, true);
@@ -432,8 +429,8 @@ bool LoadDBCs()
 	LOAD_DBC("DBC/SummonProperties.dbc", summonpropertiesformat, true, dbcSummonProperties, false);
 	LOAD_DBC("DBC/NameGen.dbc", namegenentryformat, true, dbcNameGen, true);
 	LOAD_DBC("DBC/LFGDungeons.dbc", LFGDungeonEntryformat, true, dbcLFGDungeon, false);
-	LOAD_DBC("DBC/Vehicle.dbc", VehicleEntryfmt, true, dbcVehicle, true);
-	LOAD_DBC("DBC/VehicleSeat.dbc", VehicleSeatEntryfmt, true, dbcVehicleSeat, false);
+	LOAD_DBC( "DBC/Vehicle.dbc", VehicleEntryfmt, true, dbcVehicle, true );
+	LOAD_DBC( "DBC/VehicleSeat.dbc", VehicleSeatEntryfmt, true, dbcVehicleSeat, false );
 
 	return true;
 }

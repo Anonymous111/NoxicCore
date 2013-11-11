@@ -431,26 +431,16 @@ void CBattleground::DistributePacketToTeam(WorldPacket* packet, uint32 Team)
 
 void CBattleground::PlaySoundToAll(uint32 Sound)
 {
-	if(dbcSound.LookupEntryForced(Sound))
-	{
-		WorldPacket data(SMSG_PLAY_SOUND, 4);
-		data << Sound;
-		DistributePacketToAll(&data);
-	}
-	else
-		sLog.Error("CBattleground", "Tried to play invalid sound %u in %u map, ignoring",  Sound, GetMapMgr()->GetMapId());
+	WorldPacket data(SMSG_PLAY_SOUND, 4);
+	data << Sound;
+	DistributePacketToAll(&data);
 }
 
 void CBattleground::PlaySoundToTeam(uint32 Team, uint32 Sound)
 {
-	if(dbcSound.LookupEntryForced(Sound))
-	{
-		WorldPacket data(SMSG_PLAY_SOUND, 4);
-		data << Sound;
-		DistributePacketToTeam(&data, Team);
-	}
-	else
-		sLog.Error("CBattleground", "Tried to play invalid sound %u in %u map, ignoring",  Sound, GetMapMgr()->GetMapId());
+	WorldPacket data(SMSG_PLAY_SOUND, 4);
+	data << Sound;
+	DistributePacketToTeam(&data, Team);
 }
 
 void CBattleground::RemovePlayer(Player* plr, bool logout)

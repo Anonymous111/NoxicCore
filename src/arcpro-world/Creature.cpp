@@ -21,6 +21,151 @@
 
 #include "StdAfx.h"
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// float CalcHPCoefficient( MapInfo *mi, uint32 mode, bool boss )
+//  Returns the HP coefficient that is suited for the map, mode, and creature
+//
+// Parameters:
+//  MapInfo *mi		-		pointer to the mapinfo structure
+//	uint32  mode	-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc )
+//	bool	boss	-		true if the creature is a boss, false if not
+//
+// Return Values:
+//	Returns the hp coefficient in a float
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
+{
+	float coeff = 1.0f;
+
+	if(mi == NULL)
+		return 1.0f;
+
+	// This calculation is purely speculation as we have no way of finding out how Blizzard generates these values
+	// These cases are based on simple observation of trash/boss hp values for different modes
+	// If you know they are wrong AND you know a better calculation formula then DO change it.
+
+	// raid
+	if(mi->type == INSTANCE_RAID)
+	{
+		bool hasheroic = false;
+
+		// check if we have heroic mode avaiable
+		if(mi->HasFlag(WMI_INSTANCE_HAS_HEROIC_10MEN) && mi->HasFlag(WMI_INSTANCE_HAS_HEROIC_25MEN))
+			hasheroic = true;
+
+		// boss hp coeff calculations
+		if(boss == true)
+		{
+
+			switch(mode)
+			{
+				case MODE_NORMAL_10MEN:
+					coeff = 1.0f;
+					break;
+
+				case MODE_HEROIC_10MEN:
+					coeff = 1.25f;
+					break;
+
+				case MODE_NORMAL_25MEN:
+					if(hasheroic)
+						coeff = 5.0f;
+					else
+						coeff = 3.0f;
+					break;
+
+				case MODE_HEROIC_25MEN:
+					coeff = 5.0f * 1.25f;
+			}
+
+			// trash hp coeff calculation
+		}
+		else
+		{
+			switch(mode)
+			{
+				case MODE_NORMAL_10MEN:
+					coeff = 1.0f;
+					break;
+
+				case MODE_HEROIC_10MEN:
+					coeff = 1.5f;
+					break;
+
+				case MODE_NORMAL_25MEN:
+					coeff = 2.0f;
+					break;
+
+				case MODE_HEROIC_25MEN:
+					coeff = 2.5f;
+					break;
+			}
+		}
+	}
+
+	// heroic dungeon
+	if(mi->type == INSTANCE_MULTIMODE)
+	{
+
+		if(mode > 0)
+			coeff = 1.5f;
+		else
+			coeff = 1.0f;
+	}
+
+	return coeff;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// float CalcDMGCoefficient( MapInfo *mi, uint32 mode )
+//  Calculates the creature damage coefficient that is suitable for the map type and difficulty
+//
+// Parameters:
+//  MapInfo *mi		-		pointer to the MapInfo structure
+//  uint32 mode		-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc )
+//
+// Return Value:
+//  Returns the suitable damage coefficient in a float
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+float CalcDMGCoefficient(MapInfo* mi, uint32 mode)
+{
+
+	// This calculation is purely speculation as we have no way of finding out how Blizzard generates these values
+	// These cases are based on simple observation of trash/boss damage values for different modes
+	// If you know they are wrong AND you know a better calculation formula then DO change it.
+
+	if(mi == NULL)
+		return 1.0f;
+
+	switch(mode)
+	{
+		case MODE_NORMAL_10MEN:
+			return 1.0f;
+			break;
+
+		case MODE_NORMAL_25MEN:
+			if(mi->type == INSTANCE_MULTIMODE)
+				return 1.5f;
+			else
+				return 2.0;
+
+			break;
+
+		case MODE_HEROIC_10MEN:
+			return 1.5f;
+			break;
+
+		case MODE_HEROIC_25MEN:
+			return 2.5f;
+			break;
+	}
+
+	return 1.0f;
+}
+
 Creature::Creature(uint64 guid)
 {
 	m_valuesCount = UNIT_END;
@@ -1059,64 +1204,25 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 		SaveToDB();
 	}
 
-	if(proto->MaxLevel != getLevel())
-	{
-		uint8 levelDiff = proto->MaxLevel - getLevel();
-		uint32 health = getLevel() != proto->MaxLevel ? proto->MaxHealth : proto->MaxHealth;
-		if(levelDiff > 1) // If level difference is only 1 level, no need to calculate health
-			health += (proto->MaxHealth - proto->MinHealth)/levelDiff;
+	uint32 health = proto->MinHealth + RandomUInt(proto->MaxHealth - proto->MinHealth);
 
-		SetHealth(health);
-		SetMaxHealth(health);
-		SetBaseHealth(health);
-	}
-	else
-	{
-		SetHealth(proto->MaxHealth);
-		SetMaxHealth(proto->MaxHealth);
-		SetBaseHealth(proto->MaxHealth);
-	}
+	// difficutly coefficient
+	float diff_coeff = 1.0f;
 
-	SetPowerType(proto->uPowerType);
-	switch(proto->uPowerType)
-	{
-		case POWER_TYPE_MANA:
-		{
-			uint8 levelDiff = proto->MaxLevel - getLevel();
-			uint32 mana = getLevel() != proto->MaxLevel ? proto->MinPower : proto->MaxPower;
-			if(proto->MaxLevel != getLevel() && (proto->MaxLevel - getLevel()) > 1)
-				mana += (proto->MaxPower - proto->MinPower)/levelDiff;
+	if(creature_info->Rank == ELITE_WORLDBOSS)
+		diff_coeff = CalcHPCoefficient(info, mode, true);
+	else if(creature_info->Type != UNIT_TYPE_CRITTER)
+		diff_coeff = CalcHPCoefficient(info, mode, false);
 
-			SetMaxPower(POWER_TYPE_MANA, mana);
-			SetPower(POWER_TYPE_MANA, mana);
-		}break;
-		case POWER_TYPE_RAGE:
-		case POWER_TYPE_FOCUS:
-		case POWER_TYPE_RUNES:
-		case POWER_TYPE_RUNIC_POWER:
-		{
-			SetMaxPower(proto->uPowerType, 1000);
-			SetPower(proto->uPowerType, 0);
-		}break;
-		// Special vehicle power type cases
-		case POWER_TYPE_STEAM:
-		case POWER_TYPE_HEAT:
-		case POWER_TYPE_OOZE:
-		case POWER_TYPE_BLOOD:
-		case POWER_TYPE_WRATH:
-		{
-			SetPower(proto->uPowerType, 100);
-			SetMaxPower(proto->uPowerType, 100);
-		}break;
-		case POWER_TYPE_PYRITE:
-		{
-			SetMaxPower(proto->uPowerType, 50);
-		}break;
-		default:
-		{
-			sLog.outError("Creature %u has an unhandled powertype.", GetEntry());
-		}break;
-	}
+	health = static_cast< uint32 >(health * diff_coeff);
+
+	SetHealth(health);
+	SetMaxHealth(health);
+	SetBaseHealth(health);
+
+	SetMaxPower(POWER_TYPE_MANA, proto->Mana);
+	SetBaseMana(proto->Mana);
+	SetPower(POWER_TYPE_MANA, proto->Mana);
 
 	// Whee, thank you blizz, I love patch 2.2! Later on, we can randomize male/female mobs! xD
 	// Determine gender (for voices)
@@ -1143,8 +1249,10 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 
 	SetBaseAttackTime(MELEE, proto->AttackTime);
 
-	SetMinDamage(proto->MinDamage);
-	SetMaxDamage(proto->MaxDamage);
+	float dmg_coeff = CalcDMGCoefficient(info, mode);
+
+	SetMinDamage((mode ? proto->MinDamage * dmg_coeff  : proto->MinDamage));
+	SetMaxDamage((mode ? proto->MaxDamage * dmg_coeff  : proto->MaxDamage));
 
 	SetBaseAttackTime(RANGED, proto->RangedAttackTime);
 	SetMinRangedDamage(proto->RangedMinDamage);
@@ -1275,6 +1383,10 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	else if(spawn->CanFly == 2)
 		GetAIInterface()->onGameobject = true;
 	/* more hacks! */
+	if(proto->Mana != 0)
+		SetPowerType(POWER_TYPE_MANA);
+	else
+		SetPowerType(0);
 
 	if(proto->guardtype == GUARDTYPE_CITY)
 		m_aiInterface->m_isGuard = true;
@@ -1350,64 +1462,15 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	SetEntry(proto->Id);
 	SetScale(proto->Scale);
 
-	if(proto->MaxLevel != getLevel())
-	{
-		uint32 levelDiff = proto->MaxLevel - getLevel();
-		uint32 health = getLevel() != proto->MaxLevel ? proto->MinHealth : proto->MaxHealth;
-		if(levelDiff > 1) // If level difference is only 1 level, no need to calculate health
-			health += (proto->MaxHealth - proto->MinHealth)/levelDiff;
+	uint32 health = proto->MinHealth + RandomUInt(proto->MaxHealth - proto->MinHealth);
 
-		SetHealth(health);
-		SetMaxHealth(health);
-		SetBaseHealth(health);
-	}
-	else
-	{
-		SetHealth(proto->MaxHealth);
-		SetMaxHealth(proto->MaxHealth);
-		SetBaseHealth(proto->MaxHealth);
-	}
+	SetHealth(health);
+	SetMaxHealth(health);
+	SetBaseHealth(health);
 
-	SetPowerType(proto->uPowerType);
-	switch(proto->uPowerType)
-	{
-		case POWER_TYPE_MANA:
-		{
-			uint8 levelDiff = proto->MaxLevel - getLevel();
-			uint32 mana = getLevel() != proto->MaxLevel ? proto->MinPower : proto->MaxPower;
-			if(proto->MaxLevel != getLevel() && (proto->MaxLevel - getLevel()) > 1)
-				mana += (proto->MaxPower - proto->MinPower)/levelDiff;
-
-			SetMaxPower(POWER_TYPE_MANA, mana);
-			SetPower(POWER_TYPE_MANA, mana);
-		}break;
-		case POWER_TYPE_RAGE:
-		case POWER_TYPE_FOCUS:
-		case POWER_TYPE_RUNES:
-		case POWER_TYPE_RUNIC_POWER:
-		{
-			SetMaxPower(proto->uPowerType, 1000);
-			SetPower(proto->uPowerType, 0);
-		}break;
-		// Special vehicle power type cases
-		case POWER_TYPE_STEAM:
-		case POWER_TYPE_HEAT:
-		case POWER_TYPE_OOZE:
-		case POWER_TYPE_BLOOD:
-		case POWER_TYPE_WRATH:
-		{
-			SetPower(proto->uPowerType, 100);
-			SetMaxPower(proto->uPowerType, 100);
-		}break;
-		case POWER_TYPE_PYRITE:
-		{
-			SetMaxPower(proto->uPowerType, 50);
-		}break;
-		default:
-		{
-			sLog.outError("Creature %u has an unhandled powertype.", GetEntry());
-		}break;
-	}
+	SetMaxPower(POWER_TYPE_MANA, proto->Mana);
+	SetBaseMana(proto->Mana);
+	SetPower(POWER_TYPE_MANA, proto->Mana);
 
 	uint32 model = 0;
 	uint8 gender = creature_info->GenerateModelId(&model);
@@ -1523,6 +1586,8 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	{
 		m_useAI = false;
 	}
+
+	SetPowerType(POWER_TYPE_MANA);
 
 	if(proto->guardtype == GUARDTYPE_CITY)
 		m_aiInterface->m_isGuard = true;

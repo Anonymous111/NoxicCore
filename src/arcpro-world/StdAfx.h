@@ -242,5 +242,6 @@ extern SERVER_DECL SessionLogWriter* Player_Log;
 
 #endif
 
-#define RECRUITING "Info: |cff00FF7FArcPro is recruiting developers: http://forums.arcpro.info"
+#define RECRUITING "Info: |cff00FF7FArcPro is recruiting developers: https://forums.arcpro.info"
 #define BUGTRACKER "https://github.com/ArcPro/ArcPro/issues"
+

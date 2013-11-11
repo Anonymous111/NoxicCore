@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
@@ -274,7 +274,7 @@ class SERVER_DECL ScriptMgr : public Singleton<ScriptMgr>
 		Arcpro::Gossip::Script* get_item_gossip(uint32) const;
 
 		/*
-			Default Gossip Script Interfaces
+			Default Gossip Script Interfaces */
 		Arcpro::Gossip::Trainer trainerScript_;
 		Arcpro::Gossip::SpiritHealer spirithealerScript_;
 		Arcpro::Gossip::Banker bankerScript_;
@@ -287,7 +287,7 @@ class SERVER_DECL ScriptMgr : public Singleton<ScriptMgr>
 		Arcpro::Gossip::BattleMaster battlemasterScript_;
 		Arcpro::Gossip::CharterGiver chartergiverScript_;
 		Arcpro::Gossip::TabardDesigner tabardScript_;
-		Arcpro::Gossip::StableMaster stablemasterScript_;*/
+		Arcpro::Gossip::StableMaster stablemasterScript_;
 		Arcpro::Gossip::Generic genericScript_;
 
 	protected:
