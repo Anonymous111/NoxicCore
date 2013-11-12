@@ -24,7 +24,7 @@
 #define RS_TWILIGHT_CORPO 5050
 #define RS_PHYSIC_CORPO 5049
 
-enum rs_bosses
+/*enum rs_bosses
 {
 	// baltharus fight
 	CN_BALTHARUS		= 39751,
@@ -1192,12 +1192,12 @@ public:
 	{
 		pPlayer->RemoveAura(74807);
 	}
-};
+};*/
 
 void SetupTheRubySanctum(ScriptMgr* mgr)
 {
 	// Bosses
-	mgr->register_creature_script(CN_BALTHARUS, &BaltharusAI::Create);
+	/*mgr->register_creature_script(CN_BALTHARUS, &BaltharusAI::Create);
 	mgr->register_creature_script(CN_BALTHARUS_CLONE, &Baltharus_CloneAI::Create);
 	mgr->register_creature_script(CN_XERESTRASZA, &XerestraszaAI::Create);
 	mgr->register_creature_script(CN_ZARITHRIAN, &ZarithrianAI::Create);
@@ -1206,8 +1206,8 @@ void SetupTheRubySanctum(ScriptMgr* mgr)
 	mgr->register_creature_script(CN_HALION_TWILIGHT, &HalionTwilightAI::Create);
 	mgr->register_creature_script(CN_HALION_CONTROLLER, &HalionControllerAI::Create);
 	mgr->register_creature_script(CN_FLAMECALLER, &OnyxFlamecallerAI::Create);
-	mgr->register_gameobject_script(CN_PHYSICAL_REALM, &PhysicalRealmPort::Create);
+	mgr->register_gameobject_script(CN_PHYSICAL_REALM, &PhysicalRealmPort::Create);*/
 
     // Instance
-	mgr->register_instance_script(MAP_RS, &RubySanctumScript::Create);
+	//mgr->register_instance_script(MAP_RS, &RubySanctumScript::Create);
 };

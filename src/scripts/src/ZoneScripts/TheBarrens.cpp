@@ -38,11 +38,9 @@ public:
 		if(_unit->GetStandState() == STANDSTATE_SLEEP)
 			_unit->SetStandState(0);
 	}
-
-	static CreatureAIScript* Create(Creature* c) { return new SavannahProwler(c); }
 };
 
 void SetupZoneTheBarrens(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(3425, &SavannahProwler::Create);	// Savannah Prowler
+	mgr->register_creature_script(3425, &SavannahProwler::Create); // Savannah Prowler
 }

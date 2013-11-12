@@ -41,7 +41,7 @@ public:
 			Menu->AddItem(0, "I've lost my Master's Key.", 6);
 		if(Plr->HasFinishedQuest(10109) && !Plr->GetItemInterface()->GetItemCount(27808, true))
 			Menu->AddItem(0, "I've lost my Jump-a-tron 4000 Key.", 7);
-		if(sEAS.PlayerHasQuest(Plr, 13159) && !Plr->GetItemInterface()->GetItemCount(42482, true))
+		if(Plr->HasQuest(13159) && !Plr->GetItemInterface()->GetItemCount(42482, true))
 			Menu->AddItem(0, "I've lost my Violet Hold Key.", 8);
 
 		Menu->SendTo(Plr);

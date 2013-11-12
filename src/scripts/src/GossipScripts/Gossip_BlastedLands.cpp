@@ -19,14 +19,14 @@
 
 #include "Setup.h"
 
-class FallHero : public GossipScript
+class FallenHero : public GossipScript
 {
 public:
 	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
 	{
 		GossipMenu* Menu;
 		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1391, Plr);
-		if(sEAS.PlayerHasQuest(Plr, 2702))
+		if(Plr->HasQuest(2702))
 			Menu->AddItem(0, "I need to speak with Corporal.", 1);
 
 		Menu->SendTo(Plr);
@@ -37,8 +37,8 @@ public:
 		if(sEAS.GetNearestCreature(Plr, 7750) == NULL)
 			sEAS.SpawnCreature(Plr, 7750, -10630, -2986.98f, 28.9815f, 4.73538f, 600000);
 
-		if(sEAS.GetNearestGameObject(Plr, 141980) == NULL)
-			sEAS.SpawnGameobject(Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 600000, 1, 0, 0, 0, 0.695946f, -0.718095f);
+		/*if(sEAS.GetNearestGameObject(Plr, 141980) == NULL) // TODO: SpawnGameObject does not take 13 arguments
+			sEAS.SpawnGameobject(Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 600000, 1, 0, 0, 0, 0.695946f, -0.718095f);*/
 	}
 };
 

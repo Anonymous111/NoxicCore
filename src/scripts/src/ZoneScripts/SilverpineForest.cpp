@@ -19,7 +19,7 @@
 
 #include "Setup.h"
 
-class CorruptMinorManifestationWater : public CreatureAIScript
+/*class CorruptMinorManifestationWater : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
@@ -30,9 +30,9 @@ public:
 		LocationVector vect(_unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation());
 		sEAS.SpawnCreature(mKiller, 5895, vect, 1000);
 	}
-};
+};*/
 
 void SetupZoneSilverpineForest(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(5894, &CorruptMinorManifestationWater::Create); // Corrupt Minor Manifestation of Water
+	//mgr->register_creature_script(5894, &CorruptMinorManifestationWater::Create); // Corrupt Minor Manifestation of Water
 }

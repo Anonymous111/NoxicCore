@@ -24,12 +24,12 @@ class ScourgeGryphon : public GossipScript
 public:
 	void GossipHello(Object *pObject, Player *Plr, bool AutoSend)
 	{
-		if( sEAS.PlayerHasQuest( Plr, 12670 ) )
+		if(Plr->HasQuest(12670))
 		{
-			TaxiPath *path = NULL;
+			TaxiPath* path = NULL;
 			if( pObject->GetEntry() == 29488 )
 				path = sTaxiMgr.GetTaxiPath( 1053 );
-			else
+			else if( pObject->GetEntry() == 29501 )
 				path = sTaxiMgr.GetTaxiPath( 1054 );
 			Plr->TaxiStart( path, 26308, 0 );
 			Plr->RemoveAllAuraById( 51721 );
@@ -64,11 +64,11 @@ public:
 		float y = (Plr->GetPositionY() + pCreature->GetPositionY()*dist)/(1+dist) + sin(Plr->GetOrientation()+(float(M_PI)/2))*2;
 		float z = (Plr->GetPositionZ() + pCreature->GetPositionZ()*dist)/(1+dist);
 
-		//Create flag/arbiter
-		GameObject *Flag = sEAS.SpawnGameobject( Plr, 194306, x, y, z, pCreature->GetOrientation() );
+		//Create flag/arbiter // TODO: SpawnGameObject does not take 6 arguments
+		/*GameObject* Flag = sEAS.SpawnGameobject( Plr, 194306, x, y, z, pCreature->GetOrientation() );
 		Flag->SetUInt64Value(OBJECT_FIELD_CREATED_BY, Plr->GetGUID());
 
-		Plr->SetDuelArbiter( Flag->GetGUID() );
+		Plr->SetDuelArbiter( Flag->GetGUID() );*/
 
 		string say = "";
 		switch( RandomUInt(5) )
@@ -135,8 +135,8 @@ public:
 
 void SetupTheScarletEnclaveGossip(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(29488, ScourgeGryphon()); // Scourge Gryphon
-	mgr->register_gossip_script(29501, ScourgeGryphon()); // Scourge Gryphon
+	mgr->register_gossip_script(29488, new ScourgeGryphon()); // Scourge Gryphon
+	mgr->register_gossip_script(29501, new ScourgeGryphon()); // Scourge Gryphon
 	mgr->register_gossip_script(28406, new DKInitiate()); // Death Knight Initiate
 	mgr->register_gossip_script(28653, new Salanar()); // Salanar the Horseman
 }

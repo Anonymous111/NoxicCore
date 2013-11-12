@@ -30,7 +30,7 @@ public:
 	}
 };
 
-class CitizenAI : public CreatureAIScript
+/*class CitizenAI : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(CitizenAI)
@@ -146,7 +146,7 @@ public:
 		if(WPId == _unit->GetAIInterface()->GetWayPointsCount())
 			_unit->Despawn(0, 10000);
 	}
-};
+};*/
 
 class PeasantAI : public CreatureAIScript
 {
@@ -283,8 +283,8 @@ public:
 void SetupZoneTheScarletEnclave(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(28788, &SalanarTheHorseman::Create); // Salanar the Horseman
-	mgr->register_creature_script(28576, &CitizenAI::Create); // Citizen of Havenshire
-	mgr->register_creature_script(28577, &CitizenAI::Create); // Citizen of Havenshire
+	//mgr->register_creature_script(28576, &CitizenAI::Create); // Citizen of Havenshire
+	//mgr->register_creature_script(28577, &CitizenAI::Create); // Citizen of Havenshire
 	mgr->register_creature_script(28557, &PeasantAI::Create); // Scarlet Peasant
 	mgr->register_creature_script(28850, &CanonAI::Create); // Scarlet Land Cannon
 	mgr->register_creature_script(28822, &MinerAI::Create); // Scarlet Miner

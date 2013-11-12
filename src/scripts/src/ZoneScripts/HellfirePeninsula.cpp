@@ -19,7 +19,7 @@
 
 #include "Setup.h"
 
-class Aeranas : public CreatureAIScript
+/*class Aeranas : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(Aeranas, CreatureAIScript)
@@ -51,9 +51,9 @@ public:
 		}
 		ParentClass::AIUpdate();
 	}
-};
+};*/
 
 void SetupZoneHellfirePeninsula(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(17085, &Aeranas::Create);
+	//mgr->register_creature_script(17085, &Aeranas::Create);
 }

@@ -203,6 +203,22 @@ class SCRIPT_DECL EasyFunctions
 
 			return pC;
 		}
+
+		// Make the creature say something in the specified time (in milliseconds)
+		void EventSay(Unit *pCreature, string say, uint32 time)
+		{
+			PrintMessage("Function call: EventSay()");
+			if( pCreature != NULL )
+				pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, say.c_str(), time);
+		}
+
+		// Make the creature yell something in the specified time (in milliseconds)
+		void EventYell(Unit *pCreature, string say, uint32 time)
+		{
+			PrintMessage("Function call: EventYell()");
+			if( pCreature != NULL )
+				pCreature->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, say.c_str(), time);
+		}
 		
 		// Return the nearest creature with the specified id
 		Creature *GetNearestCreature(Object *pObj, uint32 npcid = 0)
