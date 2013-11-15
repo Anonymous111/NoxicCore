@@ -75,20 +75,20 @@ class SWHarborFlyAround : public Arcpro::Gossip::Script
 class IanDrake : public Arcpro::Gossip::Script
 {
 	public:
-		void OnHello(Object * pObject, Player* Plr)
+		void OnHello(Object* pObject, Player* Plr)
 		{
 			Arcpro::Gossip::Menu menu(pObject->GetGUID(), 13441);
 			menu.AddItem(Arcpro::Gossip::ICON_CHAT, "I would like to whisper my secret code to you to receive Tyrael's Hilt.", 1, 0, "", true);
 			menu.Send(Plr);
 		}
 
-		void OnSelectOption(Object * pObject, Player* Plr, uint32 Id, const char * Code)
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code)
 		{
 			Arcpro::Gossip::Menu::Complete(Plr);
 			if(Id == 1)
 			{
-				Plr->GetItemInterface()->CalculateFreeSlots(ItemPrototypeStorage.LookupEntry(39656));
-				Plr->GetItemInterface()->AddItemToFreeSlot(objmgr.CreateItem(39656, Plr)); // Tyrael's Hilt
+					Plr->GetItemInterface()->CalculateFreeSlots(ItemPrototypeStorage.LookupEntry(39656));
+					Plr->GetItemInterface()->AddItemToFreeSlot(objmgr.CreateItem(39656, Plr)); // Tyrael's Hilt
 			}
 		}
 };

@@ -1181,7 +1181,7 @@ public:
 			
 		int rndTimer;
 		rndTimer = rand() % 360 + 180; // Generate a random value between: 3-6mins
-		rndTimer = rndTimer * 1000; // Convert to milliseconds
+		rndTimer = rndTimer* 1000; // Convert to milliseconds
 		ModifyAIUpdateEvent(rndTimer); // Modify timer to new random value
 	}
 };
@@ -1189,17 +1189,17 @@ public:
 void SetupDarkmoonFaireGossip(ScriptMgr * mgr)
 {
 	#ifdef DMF_ACTIVE
-	GossipScript * ActiveCarniesGossip = (GossipScript*) new ActiveCarnies_Gossip;
+	GossipScript* ActiveCarniesGossip = (GossipScript*) new ActiveCarnies_Gossip;
 	#else
-	GossipScript * SetupCarniesGossip = (GossipScript*) new SetupCarnies_Gossip;
+	GossipScript* SetupCarniesGossip = (GossipScript*) new SetupCarnies_Gossip;
 	#endif
-	GossipScript * BurthGossip = (GossipScript*) new Burth_Gossip;
-	GossipScript * FliksFrogGossip = (GossipScript*) new FliksFrog_Gossip;
-	GossipScript * MaximaBlastenheimerGossip = (GossipScript*) new MaximaBlastenheimer_Gossip;
-	GossipScript * ProfessorThaddeusPaleoGossip = (GossipScript*) new ProfessorThaddeusPaleo_Gossip;
-	GossipScript * SaygeGossip = (GossipScript*) new Sayge_Gossip;
-	GossipScript * SelinaDourmanGossip = (GossipScript*) new SelinaDourman_Gossip;
-	GossipScript * SilasDarkmoonGossip = (GossipScript*) new SilasDarkmoon_Gossip;
+	GossipScript* BurthGossip = (GossipScript*) new Burth_Gossip;
+	GossipScript* FliksFrogGossip = (GossipScript*) new FliksFrog_Gossip;
+	GossipScript* MaximaBlastenheimerGossip = (GossipScript*) new MaximaBlastenheimer_Gossip;
+	GossipScript* ProfessorThaddeusPaleoGossip = (GossipScript*) new ProfessorThaddeusPaleo_Gossip;
+	GossipScript* SaygeGossip = (GossipScript*) new Sayge_Gossip;
+	GossipScript* SelinaDourmanGossip = (GossipScript*) new SelinaDourman_Gossip;
+	GossipScript* SilasDarkmoonGossip = (GossipScript*) new SilasDarkmoon_Gossip;
 	
 	#ifdef DMF_ACTIVE
 	mgr->register_gossip_script(14849, ActiveCarniesGossip); // Active Carine Gossip

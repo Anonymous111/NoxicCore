@@ -56,7 +56,9 @@ public:
 
 	void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 	{
-		Arcpro::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 1759, plr);
+		Arcpro::Gossip::Menu menu(pObject->GetGUID(), 0);
+		menu.setTextID(1759);
+		menu.Send(plr);
 	}
 
 	void Destroy() { delete this; }

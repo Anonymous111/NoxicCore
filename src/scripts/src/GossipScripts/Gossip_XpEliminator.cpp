@@ -20,6 +20,14 @@
 
 #include "Setup.h"
 
+/*	TODO:
+		Randomly emote these while just standing there:
+			Behsten plans a Stranglethorn Vale fishing trip.
+			Behsten realizes he needs some [Leggings of the Fang].
+			Behsten bemoans the loss of his [Nethercleft Leg Armor].
+			Behsten daydreams of [Lucky Fishing Hats].
+*/
+
 // XpEleminatorGossip
 //  GossipScript subclass for turning on/off Player experience gain
 class XpEliminatorGossip : public Arcpro::Gossip::Script

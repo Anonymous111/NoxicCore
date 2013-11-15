@@ -754,7 +754,7 @@ protected:
     uint32 timer;
 };*/
 
-void SetupL70etc(ScriptMgr * mgr)
+void SetupL70etc(ScriptMgr* mgr)
 {
     mgr->register_creature_script(SAMURO, &SamAI::Create);
     mgr->register_creature_script(BERGRISST, &BerAI::Create);
