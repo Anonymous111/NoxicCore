@@ -2025,10 +2025,9 @@ void WorldSession::HandleDismissCritter(WorldPacket & recv_data)
 	_player->SetSummonedCritterGUID(0);
 }
 
-void WorldSession::SendShowBank(uint64 guid) // Custom bank command
+void WorldSession::SendShowBank(uint64 guid)
 {
-	WorldPacket data(SMSG_SHOW_BANK, 8);
-	data << guid;
-	SendPacket(&data);
-	return;
+    WorldPacket data(SMSG_SHOW_BANK, 8);
+    data << guid;
+    SendPacket(&data);
 }

@@ -609,7 +609,7 @@ class SERVER_DECL ChatHandler : public Singleton<ChatHandler>
 		/* For skill related GM commands */
 		SkillNameMgr* SkillNameManager;
 
-		bool HandleShowBankCommand(const char* args, WorldSession* m_session);  // Custom bank command
+		bool HandleShowBankCommand(const char* args, WorldSession *m_session);  // Custom bank command
 		bool HandleFixScaleCommand(const char* args, WorldSession* m_session);
 		bool HandleAddTrainerSpellCommand(const char* args, WorldSession* m_session);
 #ifdef ENABLE_ACHIEVEMENTS

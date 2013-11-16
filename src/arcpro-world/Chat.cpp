@@ -763,7 +763,7 @@ void CommandTableStorage::Init()
 		{ "gotrig",          'v', &ChatHandler::HandleTriggerCommand,                       "Warps to areatrigger <id>",                                                                                                               NULL,                     0, 0, 0 },
 		{ "modperiod",       'm', &ChatHandler::HandleModPeriodCommand,                     "Changes period of current transporter.",                                                                                                  NULL,                     0, 0, 0 },
 		{ "logcomment",      '1', &ChatHandler::HandleGmLogCommentCommand,                  "Adds a comment to the GM log for the admins to read.",                                                                                    NULL,                     0, 0, 0 },
-		{ "removesickness",  'm', &ChatHandler::HandleRemoveRessurectionSickessAuraCommand, "Removes ressurrection sickness from the target",                                                                                          NULL,                     0, 0, 0 },
+		{ "removesickness",  'm', &ChatHandler::HandleRemoveRessurectionSickessAuraCommand, "Removes resurrection sickness from the target",                                                                                          NULL,                     0, 0, 0 },
 		{ "fixscale",        'm', &ChatHandler::HandleFixScaleCommand,                      "",                                                                                                                                        NULL,                     0, 0, 0 },
 		{ "addtrainerspell", 'm', &ChatHandler::HandleAddTrainerSpellCommand,               "",                                                                                                                                        NULL,                     0, 0, 0 },
 		{ "achieve",         '0', NULL,                                                     "",                                                                                                                                        achievementCommandTable,  0, 0, 0 },
@@ -1387,7 +1387,7 @@ bool ChatHandler::HandleGetPosCommand(const char* args, WorldSession* m_session)
 	return true;
 }
 
-bool ChatHandler::HandleShowBankCommand(const char* args, WorldSession* m_session) // custom bank command
+bool ChatHandler::HandleShowBankCommand(const char* args, WorldSession *m_session) // custom bank command
 {
 	m_session->SendShowBank(m_session->GetPlayer()->GetGUID());
 	return true;
