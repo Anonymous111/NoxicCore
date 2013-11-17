@@ -17,6 +17,7 @@ SET( sources
 	Durotar.cpp
 	HellfirePeninsula.cpp
 	Icecrown.cpp
+	Misc.cpp
 	Orgrimmar.cpp
     Setup.cpp
 	ShadowmoonValley.cpp

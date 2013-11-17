@@ -34,6 +34,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupZoneBoreanTundra(mgr);
 	SetupZoneDurotar(mgr);
 	SetupZoneHellfirePeninsula(mgr);
+	SetupZoneIcecrown(mgr);
 	SetupZoneMisc(mgr);
 	SetupZoneOrgrimmar(mgr);
 	SetupZoneShadowmoonValley(mgr);
@@ -42,7 +43,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupZoneTheBarrens(mgr);
 	SetupZoneTheScarletEnclave(mgr);
 	SetupZoneWesternPlaguelands(mgr);
-	SetupZoneIcecrown(mgr);
 }
 
 #ifdef WIN32

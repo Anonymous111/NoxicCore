@@ -141,11 +141,11 @@ public:
 #define BOLTSHINE 25103
 #define CUTPIPE 25101
 
-class Cloudkicker : public MoonScriptCreatureAI
+class Cloudkicker : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Cloudkicker, MoonScriptCreatureAI)
-	Cloudkicker(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	ADD_CREATURE_FACTORY_FUNCTION(Cloudkicker)
+	Cloudkicker(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
 		state = -1; // base state, means do nothing
 	}
@@ -228,11 +228,11 @@ private:
 	int32 timer;
 };
 
-class Coppernut : public MoonScriptCreatureAI
+class Coppernut : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Coppernut, MoonScriptCreatureAI)
-	Coppernut(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	ADD_CREATURE_FACTORY_FUNCTION(Coppernut)
+	Coppernut(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
 		state = 0;
 	}
@@ -351,11 +351,11 @@ private:
 	int32 turn_timer;
 };
 
-class Fairweather : public MoonScriptCreatureAI
+class Fairweather : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Fairweather, MoonScriptCreatureAI)
-	Fairweather(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+	ADD_CREATURE_FACTORY_FUNCTION(Fairweather)
+	Fairweather(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
 	{
@@ -373,11 +373,11 @@ public:
 	}
 };
 
-class Hatch : public MoonScriptCreatureAI
+class Hatch : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Hatch, MoonScriptCreatureAI)
-	Hatch(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	ADD_CREATURE_FACTORY_FUNCTION(Hatch)
+	Hatch(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
 		state = 0;
 	}
@@ -422,11 +422,11 @@ private:
 	int32 timer;
 };
 
-class Hammerflange : public MoonScriptCreatureAI
+class Hammerflange : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Hammerflange, MoonScriptCreatureAI)
-	Hammerflange(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+	ADD_CREATURE_FACTORY_FUNCTION(Hammerflange)
+	Hammerflange(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
 	{
@@ -439,11 +439,11 @@ public:
 	}
 };
 
-class Duuna : public MoonScriptCreatureAI
+class Duuna : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Duuna, MoonScriptCreatureAI)
-	Duuna(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+	ADD_CREATURE_FACTORY_FUNCTION(Duuna)
+	Duuna(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
 	{
@@ -464,11 +464,11 @@ public:
 };
 
 // this is simple worker AI
-class Zepp_Worker : public MoonScriptCreatureAI
+class Zepp_Worker : public CreatureAIScript
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(Zepp_Worker, MoonScriptCreatureAI)
-	Zepp_Worker(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	ADD_CREATURE_FACTORY_FUNCTION(Zepp_Worker)
+	Zepp_Worker(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
 		state = 0;
 		initiliaze_state = RandomUInt(1); // begin at random state

@@ -1,10 +1,10 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -326,11 +326,11 @@ class Stasis_Chamber_Alpha : public GameObjectAIScript
 /////// Bloodmaul Brutebane Stout Trigger
 #define CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER    21241
 
-class BrutebaneStoutTriggerAI : public MoonScriptCreatureAI
+class BrutebaneStoutTriggerAI : public CreatureAIScript
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BrutebaneStoutTriggerAI, MoonScriptCreatureAI);
-		BrutebaneStoutTriggerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTriggerAI);
+		BrutebaneStoutTriggerAI(Creature* pCreature) : CreatureAIScript(pCreature)
 		{
 			_unit->SetFaction(35);
 
@@ -391,6 +391,27 @@ class BrutebaneStoutTriggerAI : public MoonScriptCreatureAI
 		MoonScriptCreatureAI*	Ogre;
 };
 
+bool ProtectingOurOwn(uint32 i, Spell* pSpell)
+{
+	if(pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer())
+		return true;
+
+	Player* plr = TO_PLAYER(pSpell->u_caster);
+	QuestLogEntry* qle = plr->GetQuestLogForEntry(10488);
+
+	if(qle == NULL)
+		return true;
+
+	if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+	{
+		qle->GetMobCount(qle->GetMobCount(0) + 1);
+		qle->SendUpdateAddKill(0);
+		qle->UpdatePlayerFields();
+	}
+
+	return true;
+}
+
 void SetupBladeEdgeMountains(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_1, &BladespireQAI::Create);
@@ -413,7 +434,7 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_creature_script(22160, &BloodmaulQAI::Create);
 	mgr->register_creature_script(19994, &BloodmaulQAI::Create);
 	mgr->register_creature_script(22920, &Thuk_the_DefiantAI::Create);
-
+	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
 	mgr->register_creature_script(CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER, &BrutebaneStoutTriggerAI::Create);
 
 	mgr->register_quest_script(11000, new IntotheSoulgrinder());
@@ -426,7 +447,6 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_gameobject_script(185195, &LegionObelisk::Create);
 	mgr->register_gameobject_script(185193, &LegionObelisk::Create);
 	mgr->register_gameobject_script(185512, &Stasis_Chamber_Alpha::Create);
-
-	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
-
+	
+	mgr->register_dummy_spell(32578, &ProtectingOurOwn);
 }

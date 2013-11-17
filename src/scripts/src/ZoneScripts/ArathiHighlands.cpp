@@ -19,31 +19,7 @@
 
 #include "Setup.h"
 
-// TODO: Add the missing text!
-class ProfessorPhizzlethorpe : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(ProfessorPhizzlethorpe)
-	ProfessorPhizzlethorpe(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-	void OnReachWP(uint32 iWaypointId, bool bForwards)
-	{
-		if(iWaypointId == 15)
-		{
-			_unit->GetAIInterface()->deleteWaypoints();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched.");
-			_unit->Despawn(1000, 0);
-
-			if(_unit->m_escorter != NULL)
-			{
-				_unit->m_escorter->GetQuestLogForEntry(665)->SendQuestComplete();
-				_unit->m_escorter = NULL;
-			}
-		}
-	}
-};
-
 void SetupZoneArathiHighlands(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(2768, &ProfessorPhizzlethorpe::Create); // Professor Phizzlethorpe
+
 }

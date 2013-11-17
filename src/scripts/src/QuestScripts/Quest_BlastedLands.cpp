@@ -1,10 +1,10 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,8 +48,6 @@ class HeroesofOld : public QuestScript
 			}
 		}
 };
-
-
 
 class HeroesofOld1 : public GossipScript
 {
@@ -106,14 +104,10 @@ class HeroesofOld1 : public GossipScript
 					}
 			}
 		}
-
 };
 
 void SetupBlastedLands(ScriptMgr* mgr)
 {
-	QuestScript* HeroesoO = new HeroesofOld();
-	mgr->register_quest_script(2702, HeroesoO);
-
-	GossipScript* gossip1 = new HeroesofOld1();
-	mgr->register_gossip_script(7572, gossip1);
+	mgr->register_quest_script(2702, new HeroesofOld());
+	mgr->register_gossip_script(7572, new HeroesofOld1());
 }
