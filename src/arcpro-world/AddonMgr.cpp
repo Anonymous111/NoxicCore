@@ -37,9 +37,8 @@ AddonMgr::~AddonMgr()
 {
 	KnownAddonsItr itr;
 	for(itr = mKnownAddons.begin(); itr != mKnownAddons.end(); ++itr)
-	{
 		delete itr->second;
-	}
+
 	mKnownAddons.clear();
 }
 
@@ -115,9 +114,7 @@ void AddonMgr::SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession
 	uLongf rsize;
 
 	try
-	{
 		*source >> realsize;
-	}
 	catch(ByteBuffer::error &)
 	{
 		LOG_DEBUG("Warning: Incomplete auth session sent.");
