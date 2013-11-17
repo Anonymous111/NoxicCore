@@ -19,7 +19,7 @@
 
 #include "Setup.h"
 
-void GuardsOnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
+/*void GuardsOnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
 {
 	if(Emote == EMOTE_ONESHOT_KISS)
 		Emote = EMOTE_ONESHOT_BOW;
@@ -106,7 +106,7 @@ public:
 				break;
 		}
 	}
-};
+};*/
 
 /*************************************** Zeppelins *******************************************/
 
@@ -141,7 +141,7 @@ public:
 #define BOLTSHINE 25103
 #define CUTPIPE 25101
 
-class Cloudkicker : public CreatureAIScript
+/*class Cloudkicker : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(Cloudkicker)
@@ -556,7 +556,7 @@ void ZeppelinIronEagle(Transporter* pTransporter, bool delayed)
 
 	// zeppelin just docked
 	if(delayed)
-	{
+	{*/
 		// grom'gol - this one is not announcing it!
 		/*if(pTransporter->GetMapId() == 0)
 		{
@@ -568,7 +568,7 @@ void ZeppelinIronEagle(Transporter* pTransporter, bool delayed)
 		}
 		else*/
 		// orgrimmar
-		{
+		/*{
 			Creature* cr = pTransporter->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(x, y, z, SNURK);
 			if(!cr)
 				return;
@@ -587,12 +587,12 @@ void ZeppelinPurplePrincess(Transporter* pTransporter, bool delayed)
 	// zeppelin just docked
 	if(delayed)
 	{
-		// this one is not announcing on retail!
+		*/// this one is not announcing on retail!
 		/*Creature* cr = pTransporter->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(x, y, z, OVERSPECK);
 		if(cr)
 			cr->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_ORCISH, "The zeppelin to Undercity has just arrived! All aboard for Tirisfal Glades!");*/
 
-		Creature* cr2 = pTransporter->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(x, y, z, HINDENBURG);
+		/*Creature* cr2 = pTransporter->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(x, y, z, HINDENBURG);
 		if(cr2)
 			cr2->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_ORCISH, "The zeppelin to Grom'gol has just arrived! All aboard for Stranglethorn!");
 	}
@@ -615,11 +615,11 @@ void OnTransporterUpdate(Transporter* pTransporter, bool delayed)
 			ZeppelinPurplePrincess(pTransporter, delayed);
 		break;
 	}
-}
+}*/
 
 /* Zeppelin Masters */
 
-class OG_UC_Gossip : public GossipScript
+/*class OG_UC_Gossip : public GossipScript
 {
 public:
 	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
@@ -800,11 +800,11 @@ public:
 		if(Menu)
 			Menu->SendTo(Plr);
 	}
-};
+};*/
 
 void SetupZoneMisc(ScriptMgr* mgr)
 {
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&OnEmote);
+	/*mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&OnEmote);
 	mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create); // Army of the Dead Ghoul
 	mgr->register_creature_script(8506, &EranikusTheChained::Create); // Eranikus the Chained
 
@@ -839,5 +839,5 @@ void SetupZoneMisc(ScriptMgr* mgr)
 	mgr->register_gossip_script(SNURK, new OG_GG_Gossip());
 	mgr->register_gossip_script(NEZRAZ, new OG_GG_Gossip());
 	mgr->register_gossip_script(OVERSPECK, new UC_GG_Gossip());
-	mgr->register_gossip_script(HINDENBURG, new UC_GG_Gossip());
+	mgr->register_gossip_script(HINDENBURG, new UC_GG_Gossip());*/
 }
