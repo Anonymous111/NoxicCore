@@ -58,8 +58,6 @@
 //! ACHIEVEMENT_FACTION_FLAG_HORDE (1) : Horde-only achievement
 #define ACHIEVEMENT_FACTION_FLAG_HORDE 1
 
-
-
 /**
 	CriteriaProgress structure
 */
@@ -322,6 +320,4 @@ uint32 GetAchievementIDFromLink(const char* achievementlink);
 bool SendAchievementProgress(const CriteriaProgress* c);
 bool SaveAchievementProgressToDB(const CriteriaProgress* c);
 
-
 #endif
-
