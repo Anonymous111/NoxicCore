@@ -226,39 +226,35 @@ class LegionObelisk : public GameObjectAIScript
 			if(obelisk5 != NULL)
 				sEventMgr.AddEvent(TO_OBJECT(obelisk5), &Object::SetByte, (uint32)GAMEOBJECT_BYTES_1, (uint32)GAMEOBJECT_BYTES_STATE, (uint8)1, EVENT_UNK, 10000, 0, 1);
 		}
-
 };
 
 class BloodmaulQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BloodmaulQAI);
-		BloodmaulQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(BloodmaulQAI);
+	BloodmaulQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(!mKiller->IsPlayer())
+			return;
+
+		Player* pPlayer = TO_PLAYER(mKiller);
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(10502);
+		if(pQuest == NULL)
 		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			Player* pPlayer = TO_PLAYER(mKiller);
-			QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(10502);
+			pQuest = pPlayer->GetQuestLogForEntry(10505);
 			if(pQuest == NULL)
-			{
-				pQuest = pPlayer->GetQuestLogForEntry(10505);
-				if(pQuest == NULL)
-				{
-					return;
-				}
-			}
-
-			if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-			{
-				uint32 NewCount = pQuest->GetMobCount(0) + 1;
-				pQuest->SetMobCount(0, NewCount);
-				pQuest->SendUpdateAddKill(0);
-				pQuest->UpdatePlayerFields();
-			}
+				return;
 		}
+
+		if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
+		{
+			pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+			pQuest->SendUpdateAddKill(0);
+			pQuest->UpdatePlayerFields();
+		}
+	}
 };
 
 class Thuk_the_DefiantAI : public CreatureAIScript
@@ -326,7 +322,7 @@ class Stasis_Chamber_Alpha : public GameObjectAIScript
 /////// Bloodmaul Brutebane Stout Trigger
 #define CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER    21241
 
-class BrutebaneStoutTriggerAI : public CreatureAIScript
+/*class BrutebaneStoutTriggerAI : public CreatureAIScript
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTriggerAI);
@@ -367,10 +363,12 @@ class BrutebaneStoutTriggerAI : public CreatureAIScript
 				NdGo = GetNearestGameObject(184315);
 				if(NdGo == NULL)
 					return;
+
 				NdGo->Despawn(0, 0);
 				Ogre->Despawn(60 * 1000, 3 * 60 * 1000);
 				if(plr == NULL)
 					return;
+
 				QuestLogEntry* qle = plr->GetQuestLogForEntry(10512);
 
 				if(qle != NULL && qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
@@ -379,6 +377,7 @@ class BrutebaneStoutTriggerAI : public CreatureAIScript
 					qle->SendUpdateAddKill(0);
 					qle->UpdatePlayerFields();
 				}
+
 				Despawn(0, 0);
 				return;
 			}
@@ -389,7 +388,7 @@ class BrutebaneStoutTriggerAI : public CreatureAIScript
 		GameObject*				Keg;
 		GameObject*				NdGo;
 		MoonScriptCreatureAI*	Ogre;
-};
+};*/
 
 bool ProtectingOurOwn(uint32 i, Spell* pSpell)
 {
@@ -397,16 +396,16 @@ bool ProtectingOurOwn(uint32 i, Spell* pSpell)
 		return true;
 
 	Player* plr = TO_PLAYER(pSpell->u_caster);
-	QuestLogEntry* qle = plr->GetQuestLogForEntry(10488);
+	QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10488);
 
-	if(qle == NULL)
+	if(pQuest == NULL)
 		return true;
 
-	if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+	if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 	{
-		qle->GetMobCount(qle->GetMobCount(0) + 1);
-		qle->SendUpdateAddKill(0);
-		qle->UpdatePlayerFields();
+		pQuest->GetMobCount(0, pQuest->GetMobCount(0) + 1);
+		pQuest->SendUpdateAddKill(0);
+		pQuest->UpdatePlayerFields();
 	}
 
 	return true;
@@ -435,7 +434,7 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_creature_script(19994, &BloodmaulQAI::Create);
 	mgr->register_creature_script(22920, &Thuk_the_DefiantAI::Create);
 	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
-	mgr->register_creature_script(CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER, &BrutebaneStoutTriggerAI::Create);
+	//mgr->register_creature_script(CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER, &BrutebaneStoutTriggerAI::Create);
 
 	mgr->register_quest_script(11000, new IntotheSoulgrinder());
 

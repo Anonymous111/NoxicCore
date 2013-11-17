@@ -3,8 +3,8 @@
  * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@
  */
 
 #include "Setup.h"
-
-//#define BLIZZLIKE
 
 class DraeneiFishingNet : public GossipScript
 {
@@ -293,29 +291,47 @@ class TotemofVark : public QuestScript
 };
 
 // Chieftain Oomooroo
-
 class ChieftainOomoorooQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ChieftainOomoorooQAI);
-		ChieftainOomoorooQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ChieftainOomoorooQAI);
+	ChieftainOomoorooQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(9573);
+			if(pQuest != NULL && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 			{
-				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(9573);
-				if(pQuest != NULL && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
-				{
-					pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
-					pQuest->SendUpdateAddKill(1);
-					pQuest->UpdatePlayerFields();
-				}
+				pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
+				pQuest->SendUpdateAddKill(1);
+				pQuest->UpdatePlayerFields();
 			}
 		}
+	}
 };
 
+bool HealingTheLake(uint32 i, Spell* pSpell)
+{
+	if(pSpell == NULL || pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer())
+		return true;
 
+	Player* pPlayer = TO_PLAYER(pSpell->u_caster);
+
+	QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9294);
+	if(pQuest == NULL)
+		return true;
+
+	if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
+	{
+		pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+		pQuest->SendUpdateAddKill(0);
+		pQuest->UpdatePlayerFields();
+	}
+
+	return true;
+}
 
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
@@ -325,4 +341,5 @@ void SetupAzuremystIsle(ScriptMgr* mgr)
 	mgr->register_quest_script( 9541, new TotemofYor() );
 	mgr->register_quest_script( 9542, new TotemofVark() );*/
 	mgr->register_creature_script(17189, &ChieftainOomoorooQAI::Create);
+	mgr->register_dummy_spell(28700, &HealingTheLake);
 }
