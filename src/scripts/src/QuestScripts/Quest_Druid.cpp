@@ -314,21 +314,13 @@ class MoongladeQuest : public QuestScript
 		}
 };
 
-
-
 void SetupDruid(ScriptMgr* mgr)
 {
+	mgr->register_quest_script(5921, new MoongladeQuest());
+	mgr->register_quest_script(5922, new MoongladeQuest());
 
-	GossipScript* MoonkinGhostGossip = new MoonkinGhost_Gossip;
-	GossipScript* BearGhostGossip = new BearGhost_Gossip;
-	QuestScript* Moonglade = new MoongladeQuest();
-	mgr->register_quest_script(5921, Moonglade);
-	mgr->register_quest_script(5922, Moonglade);
 	mgr->register_creature_script(12138, &Lunaclaw::Create);
 
-	//Register gossip scripts
-	mgr->register_gossip_script(12144, MoonkinGhostGossip); // Ghost of Lunaclaw
-	mgr->register_gossip_script(11956, BearGhostGossip); // Great Bear Spirit
-
+	mgr->register_gossip_script(12144, new MoonkinGhost_Gossip); // Ghost of Lunaclaw
+	mgr->register_gossip_script(11956, new BearGhost_Gossip); // Great Bear Spirit
 }
-

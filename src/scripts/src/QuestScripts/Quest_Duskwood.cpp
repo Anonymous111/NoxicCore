@@ -85,7 +85,6 @@ class SummonElizaQuest : public QuestScript
 
 void SetupDuskwood(ScriptMgr* mgr)
 {
-	QuestScript* SummonEliza = new SummonElizaQuest();
-	mgr->register_quest_script(254, SummonEliza);
+	mgr->register_quest_script(254, new SummonElizaQuest());
 	mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
 }

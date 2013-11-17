@@ -390,27 +390,6 @@ class Stasis_Chamber_Alpha : public GameObjectAIScript
 		MoonScriptCreatureAI*	Ogre;
 };*/
 
-bool ProtectingOurOwn(uint32 i, Spell* pSpell)
-{
-	if(pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer())
-		return true;
-
-	Player* plr = TO_PLAYER(pSpell->u_caster);
-	QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10488);
-
-	if(pQuest == NULL)
-		return true;
-
-	if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-	{
-		pQuest->GetMobCount(0, pQuest->GetMobCount(0) + 1);
-		pQuest->SendUpdateAddKill(0);
-		pQuest->UpdatePlayerFields();
-	}
-
-	return true;
-}
-
 void SetupBladeEdgeMountains(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_1, &BladespireQAI::Create);
@@ -446,6 +425,4 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_gameobject_script(185195, &LegionObelisk::Create);
 	mgr->register_gameobject_script(185193, &LegionObelisk::Create);
 	mgr->register_gameobject_script(185512, &Stasis_Chamber_Alpha::Create);
-	
-	mgr->register_dummy_spell(32578, &ProtectingOurOwn);
 }

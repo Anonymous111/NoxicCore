@@ -312,27 +312,6 @@ public:
 	}
 };
 
-bool HealingTheLake(uint32 i, Spell* pSpell)
-{
-	if(pSpell == NULL || pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer())
-		return true;
-
-	Player* pPlayer = TO_PLAYER(pSpell->u_caster);
-
-	QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9294);
-	if(pQuest == NULL)
-		return true;
-
-	if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-	{
-		pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-		pQuest->SendUpdateAddKill(0);
-		pQuest->UpdatePlayerFields();
-	}
-
-	return true;
-}
-
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
 	//mgr->register_item_gossip_script( 23654, CREATE_GOSSIPSCRIPT( DraeneiFishingNet ) );
@@ -341,5 +320,4 @@ void SetupAzuremystIsle(ScriptMgr* mgr)
 	mgr->register_quest_script( 9541, new TotemofYor() );
 	mgr->register_quest_script( 9542, new TotemofVark() );*/
 	mgr->register_creature_script(17189, &ChieftainOomoorooQAI::Create);
-	mgr->register_dummy_spell(28700, &HealingTheLake);
 }

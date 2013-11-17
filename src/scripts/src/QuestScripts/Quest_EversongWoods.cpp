@@ -22,32 +22,8 @@
 
 #include "Setup.h"
 
-/*bool PoweringOurDefenses(uint32 i, Spell* pSpell)
-{
-	if(pSpell->u_caster->IsPlayer() == false)
-		return true;
-
-	Player * plr = (Player*)pSpell->u_caster;
-	if( plr == NULL )
-		return true;
-
-	QuestLogEntry *qle = plr->GetQuestLogForEntry( 8490 );
-	if( qle == NULL )
-		return true;
-
-	// Need to script the scourge attack
-
-	if( qle && qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0] )
-	{
-		qle->SetMobCount(0, qle->GetMobCount(0)+1);
-		qle->SendUpdateAddKill(0);
-		qle->UpdatePlayerFields();
-	}
-	return true;
-}
-
 // Whitebark's Memory Quest 10166
-bool Whitebark_Memory(uint32 i, Spell* pSpell)
+/*bool Whitebark_Memory(uint32 i, Spell* pSpell)
 {
 	Player *pPlayer = (Player*)pSpell->u_caster;
 	if(!pPlayer)
@@ -428,8 +404,7 @@ void SetupEversongWoods(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(15420, new ProspectorAnvilwardGossip);
 	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
-	/*mgr->register_dummy_spell(28247, &PoweringOurDefenses);
-	GossipScript * DwarvenSpyGossip = (GossipScript*) new DwarvenSpy();
+	/*GossipScript * DwarvenSpyGossip = (GossipScript*) new DwarvenSpy();
 	mgr->register_gossip_script(15420, DwarvenSpyGossip);
 	mgr->register_creature_script(15420, &DwarvenSpyState::Create);
 	mgr->register_dummy_spell(33980, &Whitebark_Memory);
