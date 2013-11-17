@@ -1572,7 +1572,7 @@ bool CenarionMoondust(uint32 i, Spell* pSpell) // Body And Heart (Alliance)
 	sEAS.CreateCustomWaypointMap(lunaclaw);
 
 	//Waypoints
-	sEAS.WaypointCreate(lunaclaw, 6348.3833f, 132.5197f, 21.6042f, 4.19f, 200, 256, lunaclaw->GetDisplayId(););
+	sEAS.WaypointCreate(lunaclaw, 6348.3833f, 132.5197f, 21.6042f, 4.19f, 200, 256, lunaclaw->GetDisplayId());
 	//make sure that player dont cheat speed or something
 	if(lunaclaw->GetDistance2dSq(p_caster) < 200)   // can be more? - he can speed hack or teleport hack
 	{
@@ -1580,11 +1580,11 @@ bool CenarionMoondust(uint32 i, Spell* pSpell) // Body And Heart (Alliance)
 		float y = p_caster->GetPositionY();
 		float z = p_caster->GetPositionZ();
 		float o = p_caster->GetOrientation() + 3;
-		sEAS.WaypointCreate(lunaclaw, x, y, z, o, 200, 256, lunaclaw->GetDisplayId(););
+		sEAS.WaypointCreate(lunaclaw, x, y, z, o, 200, 256, lunaclaw->GetDisplayId());
 	}
 	else
 
-		sEAS.WaypointCreate(lunaclaw, 5328.2148f, 94.5505f, 21.4547f, 4.2489f, 200, 256, lunaclaw->GetDisplayId(););
+		sEAS.WaypointCreate(lunaclaw, 5328.2148f, 94.5505f, 21.4547f, 4.2489f, 200, 256, lunaclaw->GetDisplayId());
 
 	sEAS.EnableWaypoints(lunaclaw);
 
@@ -1616,7 +1616,7 @@ bool CenarionLunardust(uint32 i, Spell* pSpell) // Body And Heart (Horde)
 	sEAS.CreateCustomWaypointMap(lunaclaw);
 
 	// Waypoints
-	sEAS.WaypointCreate(lunaclaw, -2448.2253f, -1625.0148f, 91.89f, 1.913f, 200, 256, lunaclaw->GetDisplayId();); //First
+	sEAS.WaypointCreate(lunaclaw, -2448.2253f, -1625.0148f, 91.89f, 1.913f, 200, 256, lunaclaw->GetDisplayId()); //First
 	//make sure that player dont cheat speed or something
 	if(lunaclaw->GetDistance2dSq(p_caster) < 200)   // can be more? - he can speed hack or teleport hack
 	{
@@ -1624,10 +1624,10 @@ bool CenarionLunardust(uint32 i, Spell* pSpell) // Body And Heart (Horde)
 		float y = p_caster->GetPositionY();
 		float z = p_caster->GetPositionZ();
 		float o = p_caster->GetOrientation() + 3;
-		sEAS.WaypointCreate(lunaclaw, x, y, z, o, 200, 256, lunaclaw->GetDisplayId(););
+		sEAS.WaypointCreate(lunaclaw, x, y, z, o, 200, 256, lunaclaw->GetDisplayId());
 	}
 	else
-		sEAS.WaypointCreate(lunaclaw, -2504.2641f, -1630.7354f, 91.93f, 3.2f, 200, 256, lunaclaw->GetDisplayId(););
+		sEAS.WaypointCreate(lunaclaw, -2504.2641f, -1630.7354f, 91.93f, 3.2f, 200, 256, lunaclaw->GetDisplayId());
 
 	sEAS.EnableWaypoints(lunaclaw);
 
@@ -1651,7 +1651,7 @@ bool CurativeAnimalSalve(uint32 i, Spell* pSpell) // Curing the Sick
 
 	Creature* target = TO_CREATURE(pSpell->GetUnitTarget());
 
-	if(target->GetEntry(); == 12296 || target->GetEntry(); == 12298)
+	if(target->GetEntry() == 12296 || target->GetEntry() == 12298)
 	{
 		QuestLogEntry* pQuest = caster->GetQuestLogForEntry(6129);
 		if(pQuest == NULL)
@@ -1664,7 +1664,7 @@ bool CurativeAnimalSalve(uint32 i, Spell* pSpell) // Curing the Sick
 		if(pQuest->GetQuest()->required_mobcount[0] == pQuest->GetMobCount(0))
 			return true;
 
-		if(target->GetEntry(); == 12298) // Sickly Deer
+		if(target->GetEntry() == 12298) // Sickly Deer
 			sEAS.SpawnCreature(caster, 12298, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation(), 2 * 60 * 1000); // Cured Deer
 		else // Sickly Gazelle
 			sEAS.SpawnCreature(caster, 12297, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation(), 2 * 60 * 1000); // Cured Gazelle
@@ -2129,7 +2129,7 @@ bool LayingWasteToTheUnwantedAlliance(uint32 i, Spell* pSpell)
 			}
 		}
 
-		// CpQuesttral Eastern Thrower
+		// Central Eastern Thrower
 		if(pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 		{
 			GameObject* pCentralEasternTower = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-152.0f, 2661.0f, 44.0f, 300152);
@@ -2147,11 +2147,11 @@ bool LayingWasteToTheUnwantedAlliance(uint32 i, Spell* pSpell)
 			}
 		}
 
-		// CpQuesttral Western Thrower
+		// Central Western Thrower
 		if(pQuest->GetMobCount(2) < pQuest->GetQuest()->required_mobcount[2])
 		{
-			GameObject* pCpQuesttralWesternTower = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-174.0f, 2772.0f, 32.0f, 300152);
-			if(pCpQuesttralWesternTower != NULL && pPlayer->CalcDistance(pPlayer, pCpQuesttralWesternTower) < 30)
+			GameObject* pCentralWesternTower = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-174.0f, 2772.0f, 32.0f, 300152);
+			if(pCentralWesternTower != NULL && pPlayer->CalcDistance(pPlayer, pCentralWesternTower) < 30)
 			{
 				pQuest->SetMobCount(2, pQuest->GetMobCount(2) + 1);
 				pQuest->SendUpdateAddKill(2);
@@ -3208,27 +3208,6 @@ bool ProtectingOurOwn(uint32 i, Spell* pSpell)
 	return true;
 }
 
-bool PreparationForBattle(uint32 i, Spell* pSpell)
-{
-	if(pSpell == NULL || pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer())
-		return true;
-
-	Player* pPlayer = TO_PLAYER(pSpell->u_caster);
-	QuestLogEntry* pQuest = pPlayer = pPlayer->GetQuestLogEntry(12842);
-	if(pQuest != NULL)
-	{
-		if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-		{
-			pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-			pQuest->SendUpdateAddKill(0);
-			pQuest->UpdatePlayerFields();
-			pQuest->SendQuestComplete();
-		}
-	}
-
-	return true;
-};
-
 void SetupQuestItems(ScriptMgr* mgr)
 {
 	mgr->register_dummy_spell(3607, &YennikuRelease);
@@ -3333,6 +3312,4 @@ void SetupQuestItems(ScriptMgr* mgr)
 	mgr->register_dummy_spell(17166, &ReleaseUmisYeti);
 	mgr->register_script_effect(28700, &HealingTheLake);
 	mgr->register_script_effect(32578, &ProtectingOurOwn);
-	mgr->register_dummy_spell(53341, &PreparationForBattle);
-	mgr->register_dummy_spell(53343, &PreparationForBattle);
 }
