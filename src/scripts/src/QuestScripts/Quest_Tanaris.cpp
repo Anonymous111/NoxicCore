@@ -69,12 +69,12 @@ class SpiritScreeches : public GossipScript
 
 				case 1:
 					{
-						QuestLogEntry* en = plr->GetQuestLogForEntry(3520);
-						if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(3520);
+						if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 						{
-							en->SetMobCount(0, en->GetMobCount(0) + 1);
-							en->SendUpdateAddKill(0);
-							en->UpdatePlayerFields();
+							pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+							pQuest->SendUpdateAddKill(0);
+							pQuest->UpdatePlayerFields();
 						}
 						if(!spirit)
 							return;

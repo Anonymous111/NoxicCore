@@ -34,13 +34,13 @@ class InfiltratingDragonmawFortressQAI : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* en = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10836);
-				if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10836);
+				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 				{
-					uint32 newcount = en->GetMobCount(0) + 1;
-					en->SetMobCount(0, newcount);
-					en->SendUpdateAddKill(0);
-					en->UpdatePlayerFields();
+					uint32 newcount = pQuest->GetMobCount(0) + 1;
+					pQuest->SetMobCount(0, newcount);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
@@ -57,23 +57,23 @@ class KneepadsQAI : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* en = NULL;
-				en = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10703);
-				if(en == NULL)
+				QuestLogEntry* pQuest = NULL;
+				pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10703);
+				if(pQuest == NULL)
 				{
-					en = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10702);
-					if(en == NULL)
+					pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10702);
+					if(pQuest == NULL)
 					{
 						return;
 					}
 				}
 
-				if(en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+				if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 				{
-					uint32 newcount = en->GetMobCount(0) + 1;
-					en->SetMobCount(0, newcount);
-					en->SendUpdateAddKill(0);
-					en->UpdatePlayerFields();
+					uint32 newcount = pQuest->GetMobCount(0) + 1;
+					pQuest->SetMobCount(0, newcount);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
 				}
 			}
 			return;

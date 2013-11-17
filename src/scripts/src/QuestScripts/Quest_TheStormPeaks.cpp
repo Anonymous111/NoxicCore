@@ -110,13 +110,13 @@ class SCRIPT_DECL MissingScout_Gossip : public GossipScript
 						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 13614, plr);
 						Menu->SendTo(plr);
 
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(12864);
-						if(qle == NULL || qle->GetMobCount(0) != 0)
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(12864);
+						if(pQuest == NULL || pQuest->GetMobCount(0) != 0)
 							return;
 
-						qle->SetMobCount(0, 1);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						pQuest->SetMobCount(0, 1);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 					}
 					break;
 			}

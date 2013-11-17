@@ -50,10 +50,7 @@ class Veronia : public GossipScript
 
 };
 
-
-
 void SetupNetherstorm(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(20162, new Veronia());
-
 }

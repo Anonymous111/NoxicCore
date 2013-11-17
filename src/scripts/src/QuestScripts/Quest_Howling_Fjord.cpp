@@ -33,15 +33,15 @@ class NorthFleet : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* qle = TO_PLAYER(mKiller)->GetQuestLogForEntry(11230);
-				if(qle != NULL)
+				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11230);
+				if(pQuest != NULL)
 				{
-					if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[ 0 ])
+					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 					{
-						uint32 newcount = qle->GetMobCount(0) + 1;
-						qle->SetMobCount(0, newcount);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						uint32 newcount = pQuest->GetMobCount(0) + 1;
+						pQuest->SetMobCount(0, newcount);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 						return;
 					}
 				}
@@ -58,15 +58,15 @@ class ChillmereScourge : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* qle = TO_PLAYER(mKiller)->GetQuestLogForEntry(11397);
-				if(qle != NULL)
+				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11397);
+				if(pQuest != NULL)
 				{
-					if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[ 0 ])
+					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 					{
-						uint32 newcount = qle->GetMobCount(0) + 1;
-						qle->SetMobCount(0, newcount);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						uint32 newcount = pQuest->GetMobCount(0) + 1;
+						pQuest->SetMobCount(0, newcount);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 						return;
 					}
 				}
@@ -83,15 +83,15 @@ class Baleheim : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* qle = TO_PLAYER(mKiller)->GetQuestLogForEntry(11283);
-				if(qle != NULL)
+				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11283);
+				if(pQuest != NULL)
 				{
-					if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[ 0 ])
+					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 					{
-						uint32 newcount = qle->GetMobCount(0) + 1;
-						qle->SetMobCount(0, newcount);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						uint32 newcount = pQuest->GetMobCount(0) + 1;
+						pQuest->SetMobCount(0, newcount);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 						return;
 					}
 				}
@@ -106,9 +106,9 @@ class Plaguethis_Gossip : public GossipScript
 		{
 			GossipMenu* Menu;
 			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 40002, plr);
-			Menu->AddItem(0, "Where would you like to fly too ?", 2);
+			Menu->AddItem(0, "Where would you like to fly too?", 2);
 			if(plr->GetQuestLogForEntry(11332) != NULL)
-				Menu->AddItem(0, "Greer, i need a gryphon to ride and some bombs to drop on New Agamand!", 1);
+				Menu->AddItem(0, "Greer, I need a gryphon to ride and some bombs to drop on New Agamand!", 1);
 
 
 			Menu->SendTo(plr);
@@ -161,8 +161,7 @@ class Plaguethis_Gossip : public GossipScript
 
 void SetupHowlingFjord(ScriptMgr* mgr)
 {
-	GossipScript* Plague = new Plaguethis_Gossip();  // thx  Dzjhenghiz
-	mgr->register_gossip_script(23859, Plague);
+	mgr->register_gossip_script(23859, new Plaguethis_Gossip()); // Thanks Dzjhenghiz
 
 	mgr->register_creature_script(23643, &ChillmereScourge::Create);
 	mgr->register_creature_script(23645, &ChillmereScourge::Create);

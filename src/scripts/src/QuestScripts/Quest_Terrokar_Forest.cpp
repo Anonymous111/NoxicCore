@@ -37,13 +37,13 @@ class ThreatFromAboveQAI : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* en = (TO_PLAYER(mKiller))->GetQuestLogForEntry(11096);
-				if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(11096);
+				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 				{
-					uint32 newcount = en->GetMobCount(0) + 1;
-					en->SetMobCount(0, newcount);
-					en->SendUpdateAddKill(0);
-					en->UpdatePlayerFields();
+					uint32 newcount = pQuest->GetMobCount(0) + 1;
+					pQuest->SetMobCount(0, newcount);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
@@ -152,16 +152,16 @@ class TakenInTheNight : public CreatureAIScript
 			creat->GetAIInterface()->m_canMove = false;
 			creat->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Finally! I'm free!");
 
-			QuestLogEntry* qle = plr->GetQuestLogForEntry(10873);
-			if(qle == NULL)
+			QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10873);
+			if(pQuest == NULL)
 				return;
 
-			if(qle->GetMobCount(0) == qle->GetQuest()->required_mobcount[0])
+			if(pQuest->GetMobCount(0) == pQuest->GetQuest()->required_mobcount[0])
 				return;
 
-			qle->SetMobCount(0, qle->GetMobCount(0) + 1);
-			qle->SendUpdateAddKill(0);
-			qle->UpdatePlayerFields();
+			pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+			pQuest->SendUpdateAddKill(0);
+			pQuest->UpdatePlayerFields();
 		}
 };
 
@@ -221,12 +221,12 @@ class TheMomentofTruth : public GossipScript
 				case 1:
 					{
 						plr->GetItemInterface()->RemoveItemAmt(2799, 1);
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(10201);
-						if(qle && qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10201);
+						if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 						{
-							qle->SetMobCount(0, qle->GetMobCount(0) + 1);
-							qle->SendUpdateAddKill(0);
-							qle->UpdatePlayerFields();
+							pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+							pQuest->SendUpdateAddKill(0);
+							pQuest->UpdatePlayerFields();
 						}
 					}
 					break;

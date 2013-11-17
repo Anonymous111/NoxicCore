@@ -59,17 +59,17 @@ class AncientMarks : public GossipScript
 		{
 			if(IntId == 1)
 			{
-				QuestLogEntry* en = plr->GetQuestLogForEntry(9785);
+				QuestLogEntry* pQuest = plr->GetQuestLogForEntry(9785);
 				Creature* casta = (TO_CREATURE(pObject));
 				switch(pObject->GetEntry())
 				{
 					case 17900:
 						{
-							if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+							if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 							{
-								en->SetMobCount(0, 1);
-								en->SendUpdateAddKill(0);
-								en->UpdatePlayerFields();
+								pQuest->SetMobCount(0, 1);
+								pQuest->SendUpdateAddKill(0);
+								pQuest->UpdatePlayerFields();
 							}
 
 							if(plr->GetStandingRank(942) == 4)
@@ -85,11 +85,11 @@ class AncientMarks : public GossipScript
 						break;
 					case 17901:
 						{
-							if(en && en->GetMobCount(1) < en->GetQuest()->required_mobcount[1])
+							if(pQuest && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 							{
-								en->SetMobCount(1, 1);
-								en->SendUpdateAddKill(1);
-								en->UpdatePlayerFields();
+								pQuest->SetMobCount(1, 1);
+								pQuest->SendUpdateAddKill(1);
+								pQuest->UpdatePlayerFields();
 							}
 
 							if(plr->GetStandingRank(942) == 4)

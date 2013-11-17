@@ -35,7 +35,6 @@
 #define H_RUNTOY -3508.48
 #define H_RUNTOZ 62.96
 
-
 const uint32 allianceSoldierId[3] =
 {
 	12938, // 12938 Injured Alliance Soldier
@@ -52,39 +51,36 @@ const uint32 hordeSoldierId[3] =
 
 class InjuredSoldier : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(InjuredSoldier);
-		InjuredSoldier(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(InjuredSoldier);
+	InjuredSoldier(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
+	void OnLoad()
+	{
+		_unit->SetUInt32Value(UNIT_FIELD_BYTES_0, 16777472);
+		_unit->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+		_unit->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_COMBAT);
+		_unit->SetUInt32Value(UNIT_FIELD_BYTES_1, 7);
+
+		uint32 sid = _unit->GetEntry();
+
+		switch(sid)
 		{
-			_unit->SetUInt32Value(UNIT_FIELD_BYTES_0, 16777472);
-			_unit->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-			_unit->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_COMBAT);
-			_unit->SetUInt32Value(UNIT_FIELD_BYTES_1, 7);
-
-			uint32 sid = _unit->GetEntry();
-
-			switch(sid)
-			{
-				case 12923:
-				case 12938:
-					_unit->SetHealthPct(75);
-					break;
-				case 12924:
-				case 12936:
-					_unit->SetHealthPct(50);
-					break;
-				case 12925:
-				case 12937:
-					_unit->SetHealthPct(25);
-					break;
-			}
-
+			case 12923:
+			case 12938:
+				_unit->SetHealthPct(75);
+				break;
+			case 12924:
+			case 12936:
+				_unit->SetHealthPct(50);
+				break;
+			case 12925:
+			case 12937:
+				_unit->SetHealthPct(25);
+				break;
 		}
+	}
 };
-
-
 
 void SetupFirstAid(ScriptMgr* mgr)
 {
@@ -94,5 +90,4 @@ void SetupFirstAid(ScriptMgr* mgr)
 	mgr->register_creature_script(12936, &InjuredSoldier::Create);
 	mgr->register_creature_script(12937, &InjuredSoldier::Create);
 	mgr->register_creature_script(12938, &InjuredSoldier::Create);
-
 }

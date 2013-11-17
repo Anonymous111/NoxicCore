@@ -81,5 +81,5 @@ class Miran : public CreatureAIScript
 void SetupLochModan(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(1379, &Miran::Create);
-	/*mgr->register_quest_script(309, new ProtectingtheShipment());*/
+	//mgr->register_quest_script(309, new ProtectingtheShipment());
 }

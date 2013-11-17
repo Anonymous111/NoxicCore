@@ -50,16 +50,16 @@ class BeatenCorpse : public GossipScript
 					{
 						SendQuickMenu(3558);
 
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(4921);
-						if(qle == NULL)
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(4921);
+						if(pQuest == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(pQuest->GetMobCount(0) != 0)
 							return;
 
-						qle->SetMobCount(0, 1);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						pQuest->SetMobCount(0, 1);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 					}
 					break;
 			}

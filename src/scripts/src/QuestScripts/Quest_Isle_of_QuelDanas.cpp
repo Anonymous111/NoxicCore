@@ -34,8 +34,8 @@ class ScryingOrb : public GameObjectAIScript
 
 		void OnActivate(Player* pPlayer)
 		{
-			QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(11490);
-			if(qle)
+			QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(11490);
+			if(pQuest)
 			{
 				float SSX = pPlayer->GetPositionX();
 				float SSY = pPlayer->GetPositionY();
@@ -45,9 +45,9 @@ class ScryingOrb : public GameObjectAIScript
 				if(pOrb)
 				{
 					pOrb->SetState(0);
-					qle->SetMobCount(0, 1);
-					qle->SendUpdateAddKill(0);
-					qle->UpdatePlayerFields();
+					pQuest->SetMobCount(0, 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
 				}
 				return;
 			}
@@ -155,20 +155,20 @@ class TheBattleForTheSunReachArmory : public CreatureAIScript
 		{
 			if(pKiller->IsPlayer())
 			{
-				QuestLogEntry* qle = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11537);
-				if(qle == NULL)
+				QuestLogEntry* pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11537);
+				if(pQuest == NULL)
 				{
-					qle = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11538);
-					if(qle == NULL)
+					pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11538);
+					if(pQuest == NULL)
 						return;
 				}
 
-				if(qle->GetMobCount(1) < qle->GetQuest()->required_mobcount[ 1 ])
+				if(pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[ 1 ])
 				{
-					uint32 newcount = qle->GetMobCount(1) + 1;
-					qle->SetMobCount(1, newcount);
-					qle->SendUpdateAddKill(1);
-					qle->UpdatePlayerFields();
+					uint32 newcount = pQuest->GetMobCount(1) + 1;
+					pQuest->SetMobCount(1, newcount);
+					pQuest->SendUpdateAddKill(1);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
@@ -181,15 +181,10 @@ void SetupIsleOfQuelDanas(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(187578, &ScryingOrb::Create);
 
-
-
 	mgr->register_creature_script(24999, &TheBattleForTheSunReachArmory::Create);
 	mgr->register_creature_script(25001, &TheBattleForTheSunReachArmory::Create);
 	mgr->register_creature_script(25002, &TheBattleForTheSunReachArmory::Create);
 
-	//GOSSIP
-	GossipScript* AyrenCloudbreakerGossip = new AyrenCloudbreaker_Gossip;
-	mgr->register_gossip_script(25059, AyrenCloudbreakerGossip);
-	GossipScript* UnrestrainedDragonhawkGossip = new UnrestrainedDragonhawk_Gossip;
-	mgr->register_gossip_script(25236, UnrestrainedDragonhawkGossip);
+	mgr->register_gossip_script(25059, new AyrenCloudbreaker_Gossip());
+	mgr->register_gossip_script(25236, new UnrestrainedDragonhawk_Gossip());
 }

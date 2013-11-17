@@ -30,11 +30,11 @@ class SCRIPT_DECL DearestNatalia1 : public GossipScript
 		void GossipHello(Object* pObject, Player* Plr)
 		{
 			GossipMenu* Menu;
-			QuestLogEntry* en = Plr->GetQuestLogForEntry(8304);
+			QuestLogEntry* pQuest = Plr->GetQuestLogForEntry(8304);
 
 			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 7736, Plr);
 
-			if(en && en->GetMobCount(1) < en->GetQuest()->required_mobcount[1])
+			if(pQuest && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 				Menu->AddItem(0, "Hello, Rutgar. The Commander has sent me here to gather some information about his missing wife.", 3);
 
 			Menu->SendTo(Plr);
@@ -99,12 +99,12 @@ class SCRIPT_DECL DearestNatalia1 : public GossipScript
 					break;
 				case 10:
 					{
-						QuestLogEntry* en = Plr->GetQuestLogForEntry(8304);
-						if(en && en->GetMobCount(1) < en->GetQuest()->required_mobcount[1])
+						QuestLogEntry* pQuest = Plr->GetQuestLogForEntry(8304);
+						if(pQuest && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 						{
-							en->SetMobCount(1, 1);
-							en->SendUpdateAddKill(1);
-							en->UpdatePlayerFields();
+							pQuest->SetMobCount(1, 1);
+							pQuest->SendUpdateAddKill(1);
+							pQuest->UpdatePlayerFields();
 						}
 					}
 					break;
@@ -118,12 +118,12 @@ class SCRIPT_DECL DearestNatalia2 : public GossipScript
 		void GossipHello(Object* pObject, Player* Plr)
 		{
 			GossipMenu* Menu;
-			QuestLogEntry* en = Plr->GetQuestLogForEntry(8304);
+			QuestLogEntry* pQuest = Plr->GetQuestLogForEntry(8304);
 
 			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 7735, Plr);
 
 			// you need to speak to Rutgar first !!
-			if(en && (en->GetMobCount(0) < en->GetQuest()->required_mobcount[0]) && (en->GetMobCount(1) == 1))
+			if(pQuest && (pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0]) && (pQuest->GetMobCount(1) == 1))
 				Menu->AddItem(0, "Hello, Frankal. I've heard that you might have some information as to the whereabouts of Mistress Natalia Mar'alith.", 3);
 
 			Menu->SendTo(Plr);
@@ -188,12 +188,12 @@ class SCRIPT_DECL DearestNatalia2 : public GossipScript
 					break;
 				case 10:
 					{
-						QuestLogEntry* en = Plr->GetQuestLogForEntry(8304);
-						if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+						QuestLogEntry* pQuest = Plr->GetQuestLogForEntry(8304);
+						if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 						{
-							en->SetMobCount(0, 1);
-							en->SendUpdateAddKill(0);
-							en->UpdatePlayerFields();
+							pQuest->SetMobCount(0, 1);
+							pQuest->SendUpdateAddKill(0);
+							pQuest->UpdatePlayerFields();
 						}
 					}
 					break;

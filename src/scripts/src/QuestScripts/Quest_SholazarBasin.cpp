@@ -48,11 +48,11 @@ class ChickenEscapee : public CreatureAIScript
 				if(Caster->IsPlayer())
 				{
 
-					QuestLogEntry* qle = TO_PLAYER(Caster)->GetQuestLogForEntry(12532);
-					if(qle == NULL)
-						qle = TO_PLAYER(Caster)->GetQuestLogForEntry(12702);
+					QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12532);
+					if(pQuest == NULL)
+						pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12702);
 
-					if(qle != NULL)
+					if(pQuest != NULL)
 					{
 						// casting the spell that will create the item for the player
 						_unit->CastSpell(Caster, 51037, true);
@@ -99,15 +99,15 @@ class SCRIPT_DECL HemetTasteTest : public GossipScript
 						string msg3 = "It's got my vote! That'll put hair on your chest like nothing else will.";
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg2.c_str(), 2000);
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg3.c_str(), 4000);
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(12645);
-						if(qle == NULL)
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(12645);
+						if(pQuest == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(pQuest->GetMobCount(0) != 0)
 							return;
-						qle->SetMobCount(0, 1);
-						qle->SendUpdateAddKill(0);
-						qle->UpdatePlayerFields();
+						pQuest->SetMobCount(0, 1);
+						pQuest->SendUpdateAddKill(0);
+						pQuest->UpdatePlayerFields();
 
 					}
 					break;
@@ -147,15 +147,15 @@ class SCRIPT_DECL HadriusTasteTest : public GossipScript
 						string msg3 = "Now, there's the kick I've come to expect from Grimbooze's drinks! I like it!";
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg2.c_str(), 2000);
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg3.c_str(), 4000);
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(12645);
-						if(qle == NULL)
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(12645);
+						if(pQuest == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(pQuest->GetMobCount(0) != 0)
 							return;
-						qle->SetMobCount(1, 1);
-						qle->SendUpdateAddKill(1);
-						qle->UpdatePlayerFields();
+						pQuest->SetMobCount(1, 1);
+						pQuest->SendUpdateAddKill(1);
+						pQuest->UpdatePlayerFields();
 					}
 					break;
 			}
@@ -194,15 +194,15 @@ class SCRIPT_DECL TamaraTasteTest : public GossipScript
 						string msg3 = "Tastes like I'm drinking... engine degreaser!";
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg2.c_str(), 2000);
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg3.c_str(), 4000);
-						QuestLogEntry* qle = plr->GetQuestLogForEntry(12645);
-						if(qle == NULL)
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(12645);
+						if(pQuest == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(pQuest->GetMobCount(0) != 0)
 							return;
-						qle->SetMobCount(2, 1);
-						qle->SendUpdateAddKill(2);
-						qle->UpdatePlayerFields();
+						pQuest->SetMobCount(2, 1);
+						pQuest->SendUpdateAddKill(2);
+						pQuest->UpdatePlayerFields();
 					}
 					break;
 			}
