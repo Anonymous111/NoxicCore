@@ -6651,6 +6651,35 @@ void ApplyNormalFixes()
 
 	// Insert Death Knight spells here ---- Made by Alice
 
+	//Runic Empowerment
+	sp = dbcSpell.LookupEntryForced(81229);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 81229;
+		sp->ProcOnNameHash[0] = SPELL_HASH_DEATH_STRIKE;
+		sp->ProcOnNameHash[1] = SPELL_HASH_FROST_STRIKE;
+		sp->ProcOnNameHash[2] = SPELL_HASH_DEATH_COIL;
+		sp->procChance = 45;
+	}
+	//Blood Rites
+	sp = dbcSpell.LookupEntryForced(50034);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 50031;  //!!! bulshit spell. Need real one
+		sp->ProcOnNameHash[0] = SPELL_HASH_DEATH_STRIKE;
+		sp->ProcOnNameHash[1] = SPELL_HASH_OBLITERATE;
+	}
+	//Conflagrate
+	sp = dbcSpell.LookupEntryForced(17962);
+	if(sp != NULL)
+	{
+		sp->EffectBasePoints[0] = sp->EffectBasePoints[1];
+		sp->EffectBasePoints[1] = sp->EffectBasePoints[2];
+	}
 	// Mark of Blood
 	// Necessary to proper create entry on m_chargeSpells
 	sp = CheckAndReturnSpellEntry(49005);
