@@ -6682,6 +6682,15 @@ void ApplyNormalFixes()
 	}
 
 	/**********************************************************
+	 *	Mind Freeze
+	 **********************************************************/
+	sp = dbcSpell.LookupEntryForced(47528);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_INTERRUPT_CAST;
+	}
+
+	/**********************************************************
 	 *	Blood Presence
 	 **********************************************************/
 	sp = CheckAndReturnSpellEntry(48266);
@@ -6734,6 +6743,34 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->Effect[0] = SPELL_EFFECT_DUMMY;
+	}
+
+	/**********************************************************
+	 *	Death And Decay
+	 **********************************************************/
+	sp = dbcSpell.LookupEntryForced(49937);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PERIODIC_DAMAGE;
+		sp->Effect[0] = SPELL_EFFECT_PERSISTENT_AREA_AURA;
+	}
+	sp = dbcSpell.LookupEntryForced(49936);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PERIODIC_DAMAGE;
+		sp->Effect[0] = SPELL_EFFECT_PERSISTENT_AREA_AURA;
+	}
+	sp = dbcSpell.LookupEntryForced(49938);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PERIODIC_DAMAGE;
+		sp->Effect[0] = SPELL_EFFECT_PERSISTENT_AREA_AURA;
+	}
+	sp = dbcSpell.LookupEntryForced(43265);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PERIODIC_DAMAGE;
+		sp->Effect[0] = SPELL_EFFECT_PERSISTENT_AREA_AURA;
 	}
 
 	/**********************************************************
