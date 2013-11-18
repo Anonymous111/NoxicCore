@@ -29,13 +29,17 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 	return SCRIPT_TYPE_MISC;
 }
 
-extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
+extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr) // Comment any script to disable it
 {
 	SetupWinterVeil(mgr);
 	SetupHalloween(mgr);
 	SetupDarkmoonFaireGossip(mgr);
 	SetupDarkmoonFaireBarker(mgr);
 	SetupDarkmoonFaireBuild(mgr);
+	SetupEventDarkPortal(mgr);
+	SetupL70ETC(mgr);
+	SetupEventMidsummerFireFestival(mgr);
+	SetupEventZombie(mgr);
 }
 
 #ifdef WIN32

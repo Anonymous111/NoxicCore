@@ -9,12 +9,17 @@ SET( prefix ${SCRIPTS_PATH}/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
-Setup.cpp
-DarkMoonFaireActivation.cpp
-Event_DarkmoonFaire.cpp
-Event_Halloween.cpp
-Event_WinterVeil.cpp
-../Common/Base.cpp )
+	DarkMoonFaireActivation.cpp
+	Event_DarkmoonFaire.cpp
+	Event_DarkPortal.cpp
+	Event_Halloween.cpp
+	Event_L70ETC.cpp
+	Event_MidsummerFireFestival.cpp
+	Event_WinterVeil.cpp
+	Event_Zombie.cpp
+	Setup.cpp
+	../Common/Base.cpp
+)
 
 SET( headers
 Setup.h

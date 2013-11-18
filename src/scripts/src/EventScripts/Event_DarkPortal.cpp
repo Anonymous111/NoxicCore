@@ -3983,7 +3983,7 @@ public:
     {
 		WPStarter++;
 
-        WayPoint * wp = _unit->CreateWaypointStruct();
+        WayPoint* wp = _unit->CreateWaypointStruct();
         wp->id = id;
 		wp->x = PitDemonPaths[WPStarter].x;
 		wp->y = PitDemonPaths[WPStarter].y;
@@ -4005,7 +4005,7 @@ protected:
 	uint32 WPStarter;
 };
 
-void SetupEventDarkPortal(ScriptMgr * mgr)
+void SetupEventDarkPortal(ScriptMgr* mgr)
 {
 	/* Event Trigger */
 	mgr->register_creature_script(CN_DARK_PORTAL_EVENT_TRIGGER, &DarkPortalEventTrigger::Create);

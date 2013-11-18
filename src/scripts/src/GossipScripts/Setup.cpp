@@ -46,8 +46,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupStormwindGossip(mgr);
 	SetupTheramoreGossip(mgr);
 	SetupTeldrassilGossip(mgr);
-	SetupDarkmoonFaireGossip(mgr);
-	SetupDarkmoonFaireBarker(mgr);
 	SetupBoreanTundraGossip(mgr);
 	SetupTheScarletEnclaveGossip(mgr);
 	SetupWyrmrestTempleGossip(mgr);

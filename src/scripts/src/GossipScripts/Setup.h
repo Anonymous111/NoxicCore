@@ -40,8 +40,6 @@ void SetupTanarisGossip(ScriptMgr* mgr);
 void SetupMoongladeGossip(ScriptMgr* mgr);
 void SetupStormwindGossip(ScriptMgr* mgr);
 void SetupTheramoreGossip(ScriptMgr* mgr);
-void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
-void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
 void SetupTeldrassilGossip(ScriptMgr* mgr);
 void SetupTheScarletEnclaveGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);

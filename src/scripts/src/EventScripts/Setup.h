@@ -33,5 +33,9 @@ void SetupHalloween(ScriptMgr* mgr);
 void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
 void SetupDarkmoonFaireBuild(ScriptMgr* mgr);
+void SetupEventDarkPortal(ScriptMgr* mgr);
+void SetupL70ETC(ScriptMgr* mgr);
+void SetupEventMidsummerFireFestival(ScriptMgr* mgr);
+void SetupEventZombie(ScriptMgr* mgr);
 
 #endif

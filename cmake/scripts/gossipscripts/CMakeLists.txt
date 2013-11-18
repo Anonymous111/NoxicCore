@@ -23,7 +23,6 @@ set( sources
 	Gossip_Tanaris.cpp
 	Gossip_Stormwind.cpp
 	Gossip_Moonglade.cpp
-	Gossip_DarkmoonFaire.cpp
 	Gossip_Theramore.cpp
 	Gossip_Teldrassil.cpp
 	Gossip_TheScarletEnclave.cpp
