@@ -114,7 +114,9 @@ void AddonMgr::SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession
 	uLongf rsize;
 
 	try
+	{
 		*source >> realsize;
+	}
 	catch(ByteBuffer::error &)
 	{
 		LOG_DEBUG("Warning: Incomplete auth session sent.");

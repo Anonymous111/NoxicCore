@@ -3266,7 +3266,7 @@ void AIInterface::EventChangeFaction(Unit* ForceAttackersToHateThisInstead)
 	{
 		for(set<Object*>::iterator itr = m_Unit->GetInRangeSetBegin(); itr != m_Unit->GetInRangeSetEnd(); ++itr)
 			if((*itr)->IsUnit() && TO<Unit*>(*itr)->GetAIInterface())
-				To<Unit*>(*itr)->GetAIInterface()->RemoveThreatByPtr(m_Unit);
+				TO<Unit*>(*itr)->GetAIInterface()->RemoveThreatByPtr(m_Unit);
 
 		resetNextTarget();
 	}
