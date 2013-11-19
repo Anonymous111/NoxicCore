@@ -21,4 +21,5 @@
 
 void SetupUndercityGameobjects(ScriptMgr* mgr)
 {
+
 }

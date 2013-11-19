@@ -22,17 +22,28 @@
 
 class OrbOfCommand : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(OrbOfCommand)
-		OrbOfCommand(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+public:
+	OrbOfCommand(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new OrbOfCommand(GO); }
 
-		void OnActivate(Player* pPlayer)
+	void OnActivate(Player* pPlayer)
+	{
+		if(pPlayer->HasFinishedQuest(7761) && pPlayer->getLevel() >= 58 && pPlayer->InGroup() == true)
 		{
 			pPlayer->SafeTeleport(469, 0, -7672.939941f, -1107.307617f, 396.649994f, 0.616532f);
 		}
+		else if(pPlayer->getLevel() <= 57 || pPlayer->HasFinishedQuest(7761) == false)
+		{
+			pPlayer->BroadcastMessage("You need to be level 58 and have completed the quest: Blackhand's Command");
+		}
+		else if(pPlayer->HasFinishedQuest(7761) == true && pPlayer->getLevel() >= 58 && pPlayer->InGroup() == false)
+		{
+			pPlayer->BroadcastMessage("You need to be in a raid group to be able to enter this instance.");
+		}
+	}
 };
 
 void SetupBlackrockMountainGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(179879, &OrbOfCommand::Create);	// Orb of Command
+	mgr->register_gameobject_script(179879, &OrbOfCommand::Create);
 }

@@ -21,4 +21,5 @@
 
 void SetupStormwindCityGameobjects(ScriptMgr* mgr)
 {
+
 }

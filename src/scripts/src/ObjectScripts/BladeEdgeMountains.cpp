@@ -22,74 +22,120 @@
 class Obsidias_Egg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(Obsidias_Egg)
 	Obsidias_Egg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new Obsidias_Egg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(11078))
-			sEAS.SpawnCreature(pPlayer, 23282, vect, 1000);
+		if(pPlayer->GetQuestLogForEntry(11078))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(23282, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
+		}
+		else
+				pPlayer->BroadcastMessage("Missing required quest : To Rule The Skies");
 	}
 };
 
 class Rivendarks_Egg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(Rivendarks_Egg)
 	Rivendarks_Egg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new Rivendarks_Egg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(11078))
-			sEAS.SpawnCreature(pPlayer, 23061, vect, 1000);
+		if(pPlayer->GetQuestLogForEntry(11078))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(23061, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
+		}
+		else
+			pPlayer->BroadcastMessage("Missing required quest : To Rule The Skies");
 	}
 };
 
 class Furywings_Egg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(Furywings_Egg)
 	Furywings_Egg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new Furywings_Egg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(11078))
-			sEAS.SpawnCreature(pPlayer, 23261, vect, 1000);
+		if(pPlayer->GetQuestLogForEntry(11078))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(23261, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
+		}
+		else
+			pPlayer->BroadcastMessage("Missing required quest : To Rule The Skies");
 	}
 };
 
 class Insidions_Egg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(Insidions_Egg)
 	Insidions_Egg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new Insidions_Egg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(11078))
-			sEAS.SpawnCreature(pPlayer, 23281, vect, 1000);
+		if(pPlayer->GetQuestLogForEntry(11078))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(23281, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
+		}
+		else
+			pPlayer->BroadcastMessage("Missing required quest: To Rule The Skies");
 	}
 };
 
 class TheThunderspike : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TheThunderspike)
-	TheThunderspike(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		TheThunderspike(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new TheThunderspike(GO); }
 
-	void OnActivate(Player* pPlayer)
-	{
-		GameObject* gobj = sEAS.GetNearestGameObject(pPlayer, 184729);
-		if(pPlayer->HasQuest(10526))
+		void OnActivate(Player* pPlayer)
 		{
-			_gameobject->Despawn(0, 1000);
-			sEAS.SpawnCreature(pPlayer, 21319, 1315.54f, 6688.33f, -18, 0.001f, 1000);
+			if(!pPlayer->GetQuestLogForEntry(10526))
+				return;
+
+			// Wth is that ? To remove ?
+			GameObject* gobj = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 184729);
+			if(!gobj)
+				return;
+
+			gobj->Despawn(6 * 60 * 1000, 0);
+
+			Creature* spike = sEAS.SpawnCreature(pPlayer, 21319, 1315.54f, 6688.33f, -18, 0.001f, 0);
+			spike->Despawn(5 * 60 * 1000, 0);
 		}
-	}
 };
 
 class PowerConverter : public GameObjectAIScript
@@ -186,11 +232,11 @@ public:
 
 void SetupBladeEdgeMountainsGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(185932, &Obsidias_Egg::Create); // Obsidia's Egg
-	mgr->register_gameobject_script(185936, &Rivendarks_Egg::Create); // Rivendark's Egg
-	mgr->register_gameobject_script(185937, &Furywings_Egg::Create); // Furywing's Egg
-	mgr->register_gameobject_script(185938, &Insidions_Egg::Create); // Insidion's Egg
-	mgr->register_gameobject_script(184729, &TheThunderspike::Create); // The Thunderspike
+	mgr->register_gameobject_script(185932, &Obsidias_Egg::Create);
+	mgr->register_gameobject_script(185936, &Rivendarks_Egg::Create);
+	mgr->register_gameobject_script(185937, &Furywings_Egg::Create);
+	mgr->register_gameobject_script(185938, &Insidions_Egg::Create);
+	mgr->register_gameobject_script(184729, &TheThunderspike::Create);
 	mgr->register_gameobject_script(184906, &PowerConverter::Create); // Power Converter
 	mgr->register_gameobject_script(184867, &NetherEgg::Create); // Nether Drake Egg
 	uint32 LegionObliskIds[] = { 185193, 185195, 185196, 185197, 185198, 0 };

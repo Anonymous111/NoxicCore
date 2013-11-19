@@ -18,7 +18,21 @@
  */
 
 #include "Setup.h"
+ 
+class DedicationOfHonorAI : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(DedicationOfHonorAI)
+		DedicationOfHonorAI(GameObject* go) : GameObjectAIScript(go){}
+		~DedicationOfHonorAI() {}
+
+		void OnActivate(Player* player)
+		{
+			Arcpro::Gossip::Menu::SendQuickMenu(_gameobject->GetGUID(), 15921, player, 1, Arcpro::Gossip::ICON_CHAT, "See the fall of the Lich King.");
+		}
+};
 
 void SetupDalaranGameobjects(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(202443, &DedicationOfHonorAI::Create);
 }

@@ -21,4 +21,5 @@
 
 void SetupSilithusGameobjects(ScriptMgr* mgr)
 {
+
 }

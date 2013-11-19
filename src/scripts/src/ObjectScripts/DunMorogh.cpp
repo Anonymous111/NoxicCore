@@ -21,4 +21,5 @@
 
 void SetupDunMoroghGameobjects(ScriptMgr* mgr)
 {
+
 }

@@ -22,31 +22,64 @@
 class SerpentStatue : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(SerpentStatue)
 	SerpentStatue(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new SerpentStatue(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(6027))
-			sEAS.SpawnCreature(pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, 1000);
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(6027);
+		if(qle == NULL)
+			return;
+
+		Creature* naga = sEAS.SpawnCreature(pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, 0);
+		if(naga != NULL)
+			naga->Despawn(6 * 60 * 1000, 0);
 	}
 };
 
 class HandofIruxos : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(HandofIruxos)
 	HandofIruxos(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new HandofIruxos(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(5381))
-			sEAS.SpawnCreature(pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, 1000);
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(5381);
+		if(qle == NULL)
+			return;
+
+		Creature* demon = sEAS.SpawnCreature(pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, 0);
+		if(demon != NULL)
+			demon->Despawn(6 * 60 * 1000, 0);
 	}
+};
+
+class LegionPortals : public GameObjectAIScript
+{
+	public:
+		LegionPortals(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new LegionPortals(GO); }
+
+		void OnActivate(Player* pPlayer)
+		{
+			QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(5581);
+			if(qle == NULL)
+				return;
+
+			if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+			{
+				qle->SetMobCount(0, qle->GetMobCount(0) + 1);
+				qle->SendUpdateAddKill(0);
+				qle->UpdatePlayerFields();
+			}
+			return;
+		}
 };
 
 void SetupDesolaceGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(177673, &SerpentStatue::Create); // Serpent Statue
-	mgr->register_gameobject_script(176581, &HandofIruxos::Create); // Hand of Iruxos Crystal
+	mgr->register_gameobject_script(177673, &SerpentStatue::Create);
+	mgr->register_gameobject_script(176581, &HandofIruxos::Create);
+	mgr->register_gameobject_script(177400, &LegionPortals::Create);
 }

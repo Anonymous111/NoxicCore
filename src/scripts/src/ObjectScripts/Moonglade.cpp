@@ -21,4 +21,5 @@
 
 void SetupMoongladeGameobjects(ScriptMgr* mgr)
 {
+
 }

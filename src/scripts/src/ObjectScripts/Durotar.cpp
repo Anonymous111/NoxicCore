@@ -21,4 +21,5 @@
 
 void SetupDurotarGameobjects(ScriptMgr* mgr)
 {
+
 }

@@ -21,4 +21,5 @@
 
 void SetupHillsbradFoothillsGameobjects(ScriptMgr* mgr)
 {
+
 }

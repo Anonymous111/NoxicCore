@@ -22,12 +22,16 @@
 class BringMetheEgg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(BringMetheEgg)
 	BringMetheEgg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new BringMetheEgg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(10111) && !pPlayer->HasAura(33382))
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(10111);
+		if(qle == NULL)
+			return;
+
+		if(!pPlayer->HasAura(33382))
 			pPlayer->CastSpell(pPlayer, 33382, true);
 	}
 };
@@ -35,19 +39,34 @@ public:
 class MysteriousEgg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(MysteriousEgg)
 	MysteriousEgg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new MysteriousEgg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(10111) && sEAS.GetNearestCreature(pPlayer, 19055))
-			sEAS.SpawnCreature(pPlayer, 19055, vect, 1000);
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(10111);
+		if(qle == NULL)
+			return;
+
+		if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+		{
+			qle->SetMobCount(0, qle->GetMobCount(0) + 1);
+			qle->SendUpdateAddKill(0);
+			qle->UpdatePlayerFields();
+		}
+
+		Creature* bird = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 19055);
+		if(bird)
+			return;
+
+		bird = sEAS.SpawnCreature(pPlayer, 19055, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(bird != NULL)
+			bird->Despawn(5*60*1000, 0);
 	}
 };
 
 void SetupNagrandGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(183146, &BringMetheEgg::Create); // Jump-a-tron 4000
-	mgr->register_gameobject_script(183147, &MysteriousEgg::Create); // Mysterious Egg
+	mgr->register_gameobject_script(183146, &BringMetheEgg::Create);
+	mgr->register_gameobject_script(183147, &MysteriousEgg::Create);
 }

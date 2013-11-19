@@ -21,4 +21,5 @@
 
 void SetupWestfallGameobjects(ScriptMgr* mgr)
 {
+
 }

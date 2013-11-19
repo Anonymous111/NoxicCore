@@ -21,4 +21,5 @@
 
 void SetupTheFallenKingdomGameobjects(ScriptMgr* mgr)
 {
+
 }

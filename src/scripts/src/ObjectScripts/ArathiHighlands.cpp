@@ -21,4 +21,5 @@
 
 void SetupArathiHighlandsGameobjects(ScriptMgr* mgr)
 {
+
 }

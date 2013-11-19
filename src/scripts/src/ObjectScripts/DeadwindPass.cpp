@@ -21,4 +21,5 @@
 
 void SetupDeadwindPassGameobjects(ScriptMgr* mgr)
 {
+
 }

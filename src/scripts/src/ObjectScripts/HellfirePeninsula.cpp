@@ -50,8 +50,34 @@ public:
 	}
 };
 
+class FalconTowerUpper : public GameObjectAIScript
+{
+public:
+	FalconTowerUpper(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new FalconTowerUpper(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 0, -588.9f, 4070.8f, 93.8f, 4.724170f);
+	}
+};
+
+class FalconTowerLower : public GameObjectAIScript
+{
+public:
+	FalconTowerLower(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new FalconTowerLower(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 0, -592.2f, 4070.2f, 143.3f, 4.724170f);
+	}
+};
+
 void SetupHellfirePeninsulaGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(181582, &KaliriNest::Create);
 	mgr->register_gameobject_script(181606, &HaaleshiAltar::Create);
+	mgr->register_gameobject_script(184500, &FalconTowerUpper::Create);
+	mgr->register_gameobject_script(184501, &FalconTowerLower::Create);
 }

@@ -23,22 +23,31 @@
 class VilebranchKidnapper : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(VilebranchKidnapper)
 	VilebranchKidnapper(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new VilebranchKidnapper(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		for(uint8 i = 0; i < 2; ++i)
-		{
-			vect.x += RandomFloat(2.0f);
-			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(pPlayer, 14748, vect.x, vect.y, vect.z, vect.o, 1000);
-		}
+		float SSX = pPlayer->GetPositionX();
+		float SSY = pPlayer->GetPositionY();
+		float SSZ = pPlayer->GetPositionZ();
+		float SSO = pPlayer->GetOrientation();
+
+		Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(14748, SSX + 1, SSY, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(600000, 0);
+
+		NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(14748, SSX, SSY, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(600000, 0);
+
+		NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(14748, SSX - 1, SSY, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(600000, 0);
 	}
 };
 
 void SetupTheHinterlandsGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(179910, &VilebranchKidnapper::Create); // Lard's Picnic Basket
+	mgr->register_gameobject_script(179910, &VilebranchKidnapper::Create);
 }

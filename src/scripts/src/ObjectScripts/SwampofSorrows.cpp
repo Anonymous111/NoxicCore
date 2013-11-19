@@ -21,4 +21,5 @@
 
 void SetupSwampofSorrowsGameobjects(ScriptMgr* mgr)
 {
+
 }

@@ -21,4 +21,5 @@
 
 void SetupBlastedLandsGameobjects(ScriptMgr* mgr)
 {
+
 }

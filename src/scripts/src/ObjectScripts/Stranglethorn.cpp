@@ -21,4 +21,5 @@
 
 void SetupStranglethornGameobjects(ScriptMgr* mgr)
 {
+
 }

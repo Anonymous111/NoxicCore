@@ -22,31 +22,47 @@
 class BrazierOfEverfount : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(BrazierOfEverfount)
-	BrazierOfEverfount(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	Corrupt_Minor_Manifestation_Water_Object(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new Corrupt_Minor_Manifestation_Water_Object(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(63))
-			sEAS.SpawnCreature(pPlayer, 5894, vect, 1000);
+		if(pPlayer->GetQuestLogForEntry(63))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(5894, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
+		}
+		else
+			pPlayer->BroadcastMessage("Missing required quest : Call of Water");
 	}
 };
 
 class DustySpellbooks : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(DustySpellbooks)
 	DustySpellbooks(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new DustySpellbooks(GO); }
 
 	void OnLootTaken(Player* pLooter, ItemPrototype* pItemInfo)
 	{
-		if(pLooter->HasQuest(422))
-		{
-			LocationVector vect(pLooter->GetPositionX()+RandomFloat(2.0f), pLooter->GetPositionY()+RandomFloat(2.0f), pLooter->GetPositionZ(), pLooter->GetOrientation());
-			Creature* NewCreature = sEAS.SpawnCreature(pLooter, 1770, vect, DESPAWN_TIME);
+		QuestLogEntry* en = pLooter->GetQuestLogForEntry(422);
+		if(!en)
+			return;
+
+		float SSX = pLooter->GetPositionX();
+		float SSY = pLooter->GetPositionY();
+		float SSZ = pLooter->GetPositionZ();
+		float SSO = pLooter->GetOrientation();
+
+		Creature* NewCreature = pLooter->GetMapMgr()->GetInterface()->SpawnCreature(1770, SSX, SSY, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
 			NewCreature->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The Sons of Arugal will rise against all who challenge the power of the Moonrage!");
-		}
 	}
 };
 

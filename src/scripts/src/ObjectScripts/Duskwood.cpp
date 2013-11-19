@@ -21,4 +21,5 @@
 
 void SetupDuskwoodGameobjects(ScriptMgr* mgr)
 {
+
 }

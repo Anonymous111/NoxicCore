@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ void SetupRedridgeMountainsGameobjects(ScriptMgr* mgr);
 void SetupSearingGorgeGameobjects(ScriptMgr* mgr);
 void SetupSilvermoonCityGameobjects(ScriptMgr* mgr);
 void SetupSilverpineForestGameobjects(ScriptMgr* mgr);
+void SetupStormPeaksGameobjects(ScriptMgr* mgr);
 void SetupStormwindCityGameobjects(ScriptMgr* mgr);
 void SetupStranglethornGameobjects(ScriptMgr* mgr);
 void SetupSwampofSorrowsGameobjects(ScriptMgr* mgr);

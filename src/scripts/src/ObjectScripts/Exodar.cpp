@@ -21,4 +21,5 @@
 
 void SetupExodarGameobjects(ScriptMgr* mgr)
 {
+
 }

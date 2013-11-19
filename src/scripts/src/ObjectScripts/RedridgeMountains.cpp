@@ -21,4 +21,5 @@
 
 void SetupRedridgeMountainsGameobjects(ScriptMgr* mgr)
 {
+
 }

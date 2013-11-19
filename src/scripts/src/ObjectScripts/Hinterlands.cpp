@@ -21,4 +21,5 @@
 
 void SetupHinterlandsGameobjects(ScriptMgr* mgr)
 {
+
 }

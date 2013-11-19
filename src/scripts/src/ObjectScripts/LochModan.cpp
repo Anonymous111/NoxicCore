@@ -21,4 +21,5 @@
 
 void SetupLochModanGameobjects(ScriptMgr* mgr)
 {
+
 }

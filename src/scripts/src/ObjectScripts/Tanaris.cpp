@@ -22,17 +22,42 @@
 class CuregosGold : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(CuregosGold)
 	CuregosGold(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new CuregosGold(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(2882))
-			pPlayer->CastSpell(pPlayer, 11462, true); // Cast spell: "Summon Pirate Treasure and Trigger Mob".
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(2882);
+		if(qle == NULL)
+			return;
+
+		pPlayer->CastSpell(pPlayer, 11462, true); // Cast spell: "Summon Pirate Treasure and Trigger Mob".
+		/*Creature* pirate = sEAS.SpawnCreature(pPlayer, 7899, pPlayer->GetPositionX() + RandomFloat(5.0f), pPlayer->GetPositionY() + RandomFloat(5.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(pirate != NULL)
+			pirate->Despawn(6 * 60 * 1000, 0);
+
+		pirate = sEAS.SpawnCreature(pPlayer, 7899, pPlayer->GetPositionX() - RandomFloat(5.0f), pPlayer->GetPositionY() + RandomFloat(5.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(pirate != NULL)
+			pirate->Despawn(6 * 60 * 1000, 0);
+
+		pirate = sEAS.SpawnCreature(pPlayer, 7901, pPlayer->GetPositionX() + RandomFloat(5.0f), pPlayer->GetPositionY() - RandomFloat(5.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(pirate != NULL)
+			pirate->Despawn(6 * 60 * 1000, 0);
+
+		pirate = sEAS.SpawnCreature(pPlayer, 7901, pPlayer->GetPositionX() + RandomFloat(5.0f), pPlayer->GetPositionY() + RandomFloat(5.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(pirate != NULL)
+			pirate->Despawn(6 * 60 * 1000, 0);
+
+		pirate = sEAS.SpawnCreature(pPlayer, 7902, pPlayer->GetPositionX() - RandomFloat(5.0f), pPlayer->GetPositionY() - RandomFloat(5.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(pirate != NULL)
+			pirate->Despawn(6 * 60 * 1000, 0);
+
+		GameObject* gobj = sEAS.SpawnGameobject(pPlayer, 142194, pPlayer->GetPositionX() + 5, pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 1, 0, 0, 0, 0);
+		sEAS.GameobjectDelete(gobj, 10 * 60 * 1000);*/
 	}
 };
 
 void SetupTanarisGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(142189, &CuregosGold::Create); // Inconspicuous Landmark
+	mgr->register_gameobject_script(142189, &CuregosGold::Create);
 }

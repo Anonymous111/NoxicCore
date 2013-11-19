@@ -21,4 +21,5 @@
 
 void SetupDustwallowMarshGameobjects(ScriptMgr* mgr)
 {
+
 }

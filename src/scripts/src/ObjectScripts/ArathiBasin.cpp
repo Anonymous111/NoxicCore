@@ -21,4 +21,5 @@
 
 void SetupArathiBasinGameobjects(ScriptMgr* mgr)
 {
+
 }

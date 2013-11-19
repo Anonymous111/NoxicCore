@@ -21,4 +21,5 @@
 
 void SetupWintergraspGameobjects(ScriptMgr* mgr)
 {
+
 }

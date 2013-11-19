@@ -21,4 +21,5 @@
 
 void SetupThunderBluffGameobjects(ScriptMgr* mgr)
 {
+
 }

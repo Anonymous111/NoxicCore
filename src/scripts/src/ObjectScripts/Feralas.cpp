@@ -21,4 +21,5 @@
 
 void SetupFeralasGameobjects(ScriptMgr* mgr)
 {
+
 }

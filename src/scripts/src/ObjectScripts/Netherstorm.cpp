@@ -23,31 +23,44 @@
 class EthereumTransponderZeta : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(EthereumTransponderZeta)
 	EthereumTransponderZeta(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new EthereumTransponderZeta(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(10339) && sEAS.GetNearestCreature(pPlayer, 20482) == NULL)
-			sEAS.SpawnCreature(pPlayer, 20482, 4017.96f, 2315.91f, 116.418f, pPlayer->GetOrientation()+3.14f, 1000);
+		Creature* commander = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 20482);
+		if(commander)
+			return;
+
+		if(pPlayer->GetQuestLogForEntry(10339))
+		{
+			float SSX = 4017.96f;
+			float SSY = 2315.91f;
+			float SSZ = 116.418f;
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(20482, SSX, SSY, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(1 * 60 * 1000, 0);
+		}
 	}
 };
 
 class TyraliusPrison : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(TyraliusPrison)
-		TyraliusPrison(GameObject* goinstance) : GameObjectAIScript(goinstance){}
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(TyraliusPrison)
+	TyraliusPrison(GameObject* goinstance) : GameObjectAIScript(goinstance){}
 
-		void OnActivate(Player* plr)
-		{
-			// Spawning Captain Tyralius
-			sEAS.SpawnCreature(plr, 20787, plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), plr->GetOrientation(), 2*60*1000);
-		}
+	void OnActivate(Player* pPlayer)
+	{
+		// Spawning Captain Tyralius
+		sEAS.SpawnCreature(pPlayer, 20787, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 2*60*1000);
+	}
 };
 
 void SetupNetherstormGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(184383, &EthereumTransponderZeta::Create); // Ethereum Transponder Zeta
+	mgr->register_gameobject_script(184383, &EthereumTransponderZeta::Create);
 	mgr->register_gameobject_script(184588, &TyraliusPrison::Create);
 }

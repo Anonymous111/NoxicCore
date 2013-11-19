@@ -22,20 +22,30 @@
 
 class CatFigurine : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(CatFigurine)
-		CatFigurine(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+public:
+	CatFigurine(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new CatFigurine(GO); }
 
-		void OnActivate(Player* pPlayer)
+	void OnActivate(Player* pPlayer)
+	{
+		uint32 Chance = RandomUInt(100);
+
+		if(Chance <= 10)
 		{
-			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-			if(RandomUInt(100) <= 10)
-				sEAS.SpawnCreature(pPlayer, 3619, vect.x, vect.y, vect.z, vect.o, 1000);
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(3619, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(600000, 0);
 		}
+	}
 };
 
 void SetupDarkshoreGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(13359, &CatFigurine::Create); // Cat Figurine
-	mgr->register_gameobject_script(13873, &CatFigurine::Create); // Cat Figurine
+	mgr->register_gameobject_script(13359, &CatFigurine::Create);
+	mgr->register_gameobject_script(13873, &CatFigurine::Create);
 }

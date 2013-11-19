@@ -21,4 +21,5 @@
 
 void SetupOrgrimmarGameobjects(ScriptMgr* mgr)
 {
+
 }

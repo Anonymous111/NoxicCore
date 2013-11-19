@@ -19,6 +19,32 @@
 
 #include "Setup.h"
 
+class OrbOfTransLocQuelTop : public GameObjectAIScript
+{
+public:
+	OrbOfTransLocQuelTop(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new OrbOfTransLocQuelTop(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 4080, 12782.415039f, -6879.196289f, 23.106073f, 2.222675f);		 // teleports to the lower level
+	}
+};
+
+class OrbOfTransLocQuelLower : public GameObjectAIScript
+{
+public:
+	OrbOfTransLocQuelLower(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new OrbOfTransLocQuelLower(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 4080, 12791.350586f, -6891.479004f, 31.322657f, 5.336779f);		 // teleports to the upper level
+	}
+};
+
 void SetupIsleofQuelDanasGameobjects(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(187431, &OrbOfTransLocQuelTop::Create);
+	mgr->register_gameobject_script(187428, &OrbOfTransLocQuelLower::Create);
 }

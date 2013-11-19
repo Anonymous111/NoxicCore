@@ -19,6 +19,47 @@
 
 #include "Setup.h"
 
+class ShrineOfDathRemar : public GameObjectAIScript
+{
+public:
+	ShrineOfDathRemar(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new ShrineOfDathRemar(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(8345);
+		if(qle)
+			qle->SendQuestComplete();
+	}
+};
+
+class duskwitherspirebottom : public GameObjectAIScript
+{
+public:
+	duskwitherspirebottom(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new duskwitherspirebottom(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 0, 9334.352f, -7880.743f, 74.910f, 4.724170f);
+	}
+};
+
+class duskwitherspiretop : public GameObjectAIScript
+{
+public:
+	duskwitherspiretop(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new duskwitherspiretop(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 0, 9291.155f, -7913.556f, 176.130f, 4.724170f);
+	}
+};
+
 void SetupEversongWoodsGameobjects(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(180516, &ShrineOfDathRemar::Create);
+	mgr->register_gameobject_script(180912, &duskwitherspirebottom::Create);
+	mgr->register_gameobject_script(180911, &duskwitherspiretop::Create);
 }

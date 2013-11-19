@@ -19,6 +19,19 @@
 
 #include "Setup.h"
 
+class AlterofTidalMastery : public GameObjectAIScript
+{
+	public:
+		AlterofTidalMastery(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new AlterofTidalMastery(GO); }
+
+		void OnActivate(Player* pPlayer)
+		{
+			pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(16292, 7934.343750f, -7637.020996f, 112.694130f, 3.098388f, true, false, 0, 0);
+		}
+};
+
 void SetupGhostlandsGameobjects(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(181157, &AlterofTidalMastery::Create);
 }

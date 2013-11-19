@@ -22,27 +22,40 @@
 class DreadmaulRock : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(DreadmaulRock)
 	DreadmaulRock(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new DreadmaulRock(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		if(pPlayer->HasQuest(3821) && sEAS.GetNearestCreature(pPlayer, 9136) == NULL)
-			sEAS.SpawnCreature(pPlayer, 9136, vect, 1000);
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(3821);
+		if(qle == NULL)
+			return;
+
+		Creature* shaghost = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 9136);
+		if(shaghost)
+				return;
+
+		Creature* shaghostspawn = sEAS.SpawnCreature(pPlayer, 9136, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(shaghostspawn != NULL)
+			shaghostspawn->Despawn(2 * 60 * 1000, 0);
 	}
 };
 
 class TabletoftheSeven : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TabletoftheSeven)
 	TabletoftheSeven(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new TabletoftheSeven(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(4296) && !pPlayer->GetItemInterface()->GetItemCount(11470, true))
-			_gameobject->CastSpell(pPlayer, 15065, true); // Cast spell: "Create Tablet Transcript".
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(4296);
+		if(qle == NULL)
+			return;
+
+		_gameobject->CastSpell(pPlayer, 15065, true); // Cast spell: "Create Tablet Transcript".
+		/*if(pPlayer->GetItemInterface()->GetItemCount(11470, 0) < 1)
+			sEAS.AddItem(11470, pPlayer);*/
 	}
 };
 

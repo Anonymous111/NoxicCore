@@ -21,4 +21,5 @@
 
 void SetupSilvermoonCityGameobjects(ScriptMgr* mgr)
 {
+
 }

@@ -21,4 +21,5 @@
 
 void SetupDeeprunTramGameobjects(ScriptMgr* mgr)
 {
+
 }

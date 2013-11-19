@@ -21,4 +21,5 @@
 
 void SetupSearingGorgeGameobjects(ScriptMgr* mgr)
 {
+
 }

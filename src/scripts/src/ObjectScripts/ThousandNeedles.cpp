@@ -23,34 +23,47 @@
 class TestofEndurance : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TestofEndurance)
 	TestofEndurance(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new TestofEndurance(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(!pPlayer->HasQuest(1150))
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(1150);
+		if(qle == NULL)
 			return;
 
-		LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-		Creature* grenka = sEAS.GetNearestCreature(pPlayer, 4490);
-		if(grenka != NULL)
-			return;
-		else
-			sEAS.SpawnCreature(pPlayer, 4490, vect, 1000);
+		Creature* grenka = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 4490);
+		if(grenka)
+		{
+			if(!grenka->isAlive())
+				grenka->Despawn(5000, 120000);
+			else
+				return;
+		}
+
+		Creature* grenkaspawn = sEAS.SpawnCreature(pPlayer, 4490, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		if(grenkaspawn != NULL)
+			grenkaspawn->Despawn(6 * 60 * 1000, 0);
 	}
 };
 
 class SacredFireofLife : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(SacredFireofLife)
-		SacredFireofLife(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+public:
+	SacredFireofLife(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new SacredFireofLife(GO); }
 
-		void OnActivate(Player* pPlayer)
-		{
-			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
-			sEAS.SpawnCreature(pPlayer, 10882, vect.x, vect.y, vect.z, vect.o, 1000);
-		}
+	void OnActivate(Player* pPlayer)
+	{
+		float SSX = pPlayer->GetPositionX();
+		float SSY = pPlayer->GetPositionY();
+		float SSZ = pPlayer->GetPositionZ();
+		float SSO = pPlayer->GetOrientation();
+
+		Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(10882, SSX, SSY, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(600000, 0);
+	}
 };
 
 void SetupThousandNeedlesGameobjects(ScriptMgr* mgr)
