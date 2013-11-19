@@ -27,8 +27,6 @@
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
 
-void SetupGoHandlers(ScriptMgr* mgr);
-void SetupQDGoHandlers(ScriptMgr* mgr);
 void SetupRandomScripts(ScriptMgr* mgr);
 void SetupMiscCreatures(ScriptMgr* mgr);
 void InitializeGameObjectTeleportTable(ScriptMgr* mgr);

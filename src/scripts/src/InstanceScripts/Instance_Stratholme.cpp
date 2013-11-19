@@ -22,30 +22,20 @@
  */
 
 #include "Setup.h"
-#define SKIP_ALLOCATOR_SHARING 1
-#include <ScriptSetup.h>
 
-extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
+class CrimsonHammersmith : public CreatureAIScript
 {
-	return SCRIPT_TYPE_MISC;
-}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(CrimsonHammersmith);
+		CrimsonHammersmith(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
+		void OnCombatStart(Unit* mTarget)
+		{
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who Dares Disturb Me?");
+		}
+};
+
+void SetupStratholme(ScriptMgr* mgr)
 {
-	SetupRandomScripts(mgr);
-	SetupMiscCreatures(mgr);
-
-	// Sets up gossip scripts for gameobjects in the (optional)
-	// gameobject_teleports table. If the table doesn't exist the
-	// initialization will quietly fail.
-	//InitializeGameObjectTeleportTable(mgr);
+	mgr->register_creature_script(11120, &CrimsonHammersmith::Create);
 }
-
-#ifdef WIN32
-
-BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
-{
-	return TRUE;
-}
-
-#endif

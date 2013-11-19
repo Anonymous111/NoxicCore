@@ -347,8 +347,24 @@ When she transforms into her spider form she will web everyone standing near her
 As soon as she webs everyone she will attack the person with the highest aggro that has not been webbed (usually a healer if they are out of range.)
 */
 
+class GongOfBethekk : public GameObjectAIScript
+{
+public:
+	GongOfBethekk(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new GongOfBethekk(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(14515, -11556.3f, -1628.32f, 41.299f, 4.1f, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(1200000, 0);
+	}
+};
+
 void SetupZulGurub(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_JEKLIK, &JeklikAI::Create);
 	mgr->register_creature_script(CN_VENOXIS, &VenoxisAI::Create);
+
+	mgr->register_gameobject_script(180526, &GongOfBethekk::Create);
 }

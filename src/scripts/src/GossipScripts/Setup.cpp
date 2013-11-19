@@ -32,13 +32,16 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 {
 	SetupArgentTournamentGossip(mgr);
+	SetupAzsharaGossip(mgr);
 	SetupAzuremystIsleGossip(mgr);
 	SetupBlastedLandsGossip(mgr);
+	SetupCrystalsongForestGossip(mgr);
 	SetupDalaranGossip(mgr);
 	SetupInnkeepers(mgr);
 	SetupGuardGossip(mgr);
 	SetupLocksmiths(mgr);
 	SetupTrainerScript(mgr);
+	SetupMiscGossip(mgr);
 	SetupMulgoreGossip(mgr);
 	SetupShattrathGossip(mgr);
 	SetupTanarisGossip(mgr);
@@ -50,6 +53,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupTheScarletEnclaveGossip(mgr);
 	SetupWyrmrestTempleGossip(mgr);
 	SetupXpEliminatorGossip(mgr);
+	SetupZangarmarshGossip(mgr);
 }
 
 #ifdef WIN32

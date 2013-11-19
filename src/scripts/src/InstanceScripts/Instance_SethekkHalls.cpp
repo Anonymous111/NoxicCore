@@ -2369,6 +2369,19 @@ class ANZUAI : public CreatureAIScript
 		int nrspells;
 };
 
+class TheRavensClaw : public GameObjectAIScript
+{
+	public:
+		TheRavensClaw(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new TheRavensClaw(GO); }
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(pPlayer->GetMapMgr()->iInstanceMode == MODE_HEROIC)
+				sEAS.SpawnCreature(pPlayer, 23035, -87.3546f, 288.006f, 26.4832f, 0, 0);
+		}
+};
+
 void SetupSethekkHalls(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_AVIAN_DARKHAWK, &AVIANDARKHAWKAI::Create);
@@ -2389,6 +2402,8 @@ void SetupSethekkHalls(ScriptMgr* mgr)
 	mgr->register_creature_script(CN_TALON_KING_IKISS, &TALONKINGIKISSAI::Create);
 	mgr->register_creature_script(CN_LAKKA, &LakkaAI::Create);
 	//mgr->register_creature_script(CN_ANZU, &ANZUAI::Create);
+
+	mgr->register_gameobject_script(185554, &TheRavensClaw::Create);
 }
 
 // Can't check Anzu, as I don't have it in DB right now. Add some spells (2?) and

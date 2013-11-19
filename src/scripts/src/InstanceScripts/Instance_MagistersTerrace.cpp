@@ -1410,46 +1410,60 @@ protected:
 	int nrspells;
 };*/
 
-void SetupMagistersTerrace(ScriptMgr* pScriptMgr)
+class OrbSunwell : public GameObjectAIScript
+{
+public:
+	OrbSunwell(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript *Create(GameObject *GO) { return new OrbSunwell(GO); }
+
+	void OnActivate(Player *pPlayer)
+	{
+		pPlayer->SafeTeleport(530, 4080, 12558.393555f, -6774.535645f, 15.027822f, 0.035100f);		 // Sunwell quit portal
+	}
+};
+
+void SetupMagistersTerrace(ScriptMgr* mgr)
 {
 	//Bosses
-	pScriptMgr->register_creature_script(BOSS_SelinFireheart, &SelinFireheartAI::Create);
-	pScriptMgr->register_creature_script(BOSS_VEXALLUS, &VexallusAI::Create);
-	pScriptMgr->register_creature_script(BOSS_Priestess_Delrissa, &Priestess_DelrissaAI::Create);
-	//pScriptMgr->register_creature_script(KAELTHAS, &KaelThasMTAI::Create);
+	mgr->register_creature_script(BOSS_SelinFireheart, &SelinFireheartAI::Create);
+	mgr->register_creature_script(BOSS_VEXALLUS, &VexallusAI::Create);
+	mgr->register_creature_script(BOSS_Priestess_Delrissa, &Priestess_DelrissaAI::Create);
+	//mgr->register_creature_script(KAELTHAS, &KaelThasMTAI::Create);
 	//Priestess Delrissa Encounter Creature AI
-	pScriptMgr->register_creature_script(CN_KaganiNightstrike, &Kagani_NightstrikeAI::Create);
-	pScriptMgr->register_creature_script(CN_EllrysDuskhallow, &Ellrys_DuskhallowAI::Create);
-	pScriptMgr->register_creature_script(CN_EramasBrightblaze, &Eramas_BrightblazeAI::Create);
-	pScriptMgr->register_creature_script(CN_YAZZAI, &YazzaiAI::Create);
-	pScriptMgr->register_creature_script(CN_WARLORD_SALARIS, &Warlord_SalarisAI::Create);
-	pScriptMgr->register_creature_script(CN_GARAXXAS, &GaraxxasAI::Create);
-	pScriptMgr->register_creature_script(CN_APOKO, &ApokoAI::Create);
-	pScriptMgr->register_creature_script(CN_ZELFAN, &ZelfanAI::Create);
+	mgr->register_creature_script(CN_KaganiNightstrike, &Kagani_NightstrikeAI::Create);
+	mgr->register_creature_script(CN_EllrysDuskhallow, &Ellrys_DuskhallowAI::Create);
+	mgr->register_creature_script(CN_EramasBrightblaze, &Eramas_BrightblazeAI::Create);
+	mgr->register_creature_script(CN_YAZZAI, &YazzaiAI::Create);
+	mgr->register_creature_script(CN_WARLORD_SALARIS, &Warlord_SalarisAI::Create);
+	mgr->register_creature_script(CN_GARAXXAS, &GaraxxasAI::Create);
+	mgr->register_creature_script(CN_APOKO, &ApokoAI::Create);
+	mgr->register_creature_script(CN_ZELFAN, &ZelfanAI::Create);
 
 	//Trash Mobs
-	//pScriptMgr->register_creature_script(CN_COILSKAR_WITCH, &CoilskarWitchAI::Create);
-	//pScriptMgr->register_creature_script(CN_SISTER_OF_TORMENT, &SisterOfTormentAI::Create);
-	//pScriptMgr->register_creature_script(CN_SB_IMP, &SunbladeImpAI::Create);
-	//pScriptMgr->register_creature_script(CN_SB_MAGE_GUARD, &SunbladeMageGuardAI::Create);
-	//pScriptMgr->register_creature_script(CN_SB_MAGISTER, &SunbladeMagisterAI::Create);
-	//pScriptMgr->register_creature_script(PURE_ENERGY, &PureEnergyAI::Create);
-	//pScriptMgr->register_creature_script(GL_BUBBLE, &GLBubbleAI::Create);
-	//pScriptMgr->register_creature_script(PHOENIX_EGG, &PhoenixEggAI::Create);
-	//pScriptMgr->register_creature_script(PHOENIX, &KaelPhoenixAI::Create);
-	//pScriptMgr->register_creature_script(KAEL_FLAMESTRIKE, &KaelFlamestrikeAI::Create);
-	//pScriptMgr->register_creature_script(WRETCHED_HUSK, &WretchedHuskAI::Create);
-	//pScriptMgr->register_creature_script(WRETCHED_SKULKER, &WretchedSkulkerAI::Create);
-	//pScriptMgr->register_creature_script(WRETCHED_BRUISER, &WretchedBruiserAI::Create);
-	//pScriptMgr->register_creature_script(SUNBLADE_WARLOCK, &SunbladeWarlockAI::Create);
-	//pScriptMgr->register_creature_script(SUNBLADE_PHYSICIAN, &SunbladePhysicianAI::Create);
-	//pScriptMgr->register_creature_script(SUNBLADE_KEEPER, &SunbladeKeeperAI::Create);
-	//pScriptMgr->register_creature_script(SUNBLADE_IMP, &SunbladeImpAI::Create);
-	//pScriptMgr->register_creature_script(SISTER_OF_TORMENT, &TormentSisterAI::Create);
-	//pScriptMgr->register_creature_script(FIZZLE, &FizzleAI::Create);
-	//pScriptMgr->register_creature_script(ETHEREUM_SMUGGLER, &EthereumSmugglerAI::Create);
-	//pScriptMgr->register_creature_script(COILSKAR_WITCH, &CoilskarWitchAI::Create);
-	//pScriptMgr->register_creature_script(SUNBLADE_BLOOD_KNIGHT, &SunbladeBloodKnightAI::Create);
-	//pScriptMgr->register_creature_script(BRIGHTSCALE_WYRM, &BrightscaleWyrmAI::Create);
-	//pScriptMgr->register_creature_script(FEL_CRYSTAL, &FelCrystalAI::Create);
+	//mgr->register_creature_script(CN_COILSKAR_WITCH, &CoilskarWitchAI::Create);
+	//mgr->register_creature_script(CN_SISTER_OF_TORMENT, &SisterOfTormentAI::Create);
+	//mgr->register_creature_script(CN_SB_IMP, &SunbladeImpAI::Create);
+	//mgr->register_creature_script(CN_SB_MAGE_GUARD, &SunbladeMageGuardAI::Create);
+	//mgr->register_creature_script(CN_SB_MAGISTER, &SunbladeMagisterAI::Create);
+	//mgr->register_creature_script(PURE_ENERGY, &PureEnergyAI::Create);
+	//mgr->register_creature_script(GL_BUBBLE, &GLBubbleAI::Create);
+	//mgr->register_creature_script(PHOENIX_EGG, &PhoenixEggAI::Create);
+	//mgr->register_creature_script(PHOENIX, &KaelPhoenixAI::Create);
+	//mgr->register_creature_script(KAEL_FLAMESTRIKE, &KaelFlamestrikeAI::Create);
+	//mgr->register_creature_script(WRETCHED_HUSK, &WretchedHuskAI::Create);
+	//mgr->register_creature_script(WRETCHED_SKULKER, &WretchedSkulkerAI::Create);
+	//mgr->register_creature_script(WRETCHED_BRUISER, &WretchedBruiserAI::Create);
+	//mgr->register_creature_script(SUNBLADE_WARLOCK, &SunbladeWarlockAI::Create);
+	//mgr->register_creature_script(SUNBLADE_PHYSICIAN, &SunbladePhysicianAI::Create);
+	//mgr->register_creature_script(SUNBLADE_KEEPER, &SunbladeKeeperAI::Create);
+	//mgr->register_creature_script(SUNBLADE_IMP, &SunbladeImpAI::Create);
+	//mgr->register_creature_script(SISTER_OF_TORMENT, &TormentSisterAI::Create);
+	//mgr->register_creature_script(FIZZLE, &FizzleAI::Create);
+	//mgr->register_creature_script(ETHEREUM_SMUGGLER, &EthereumSmugglerAI::Create);
+	//mgr->register_creature_script(COILSKAR_WITCH, &CoilskarWitchAI::Create);
+	//mgr->register_creature_script(SUNBLADE_BLOOD_KNIGHT, &SunbladeBloodKnightAI::Create);
+	//mgr->register_creature_script(BRIGHTSCALE_WYRM, &BrightscaleWyrmAI::Create);
+	//mgr->register_creature_script(FEL_CRYSTAL, &FelCrystalAI::Create);
+
+	mgr->register_gameobject_script(188173, &OrbSunwell::Create);
 }

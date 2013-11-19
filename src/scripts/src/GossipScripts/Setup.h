@@ -27,13 +27,16 @@
 #include "../Common/EasyFunctions.h"
 
 void SetupArgentTournamentGossip(ScriptMgr* mgr);
+void SetupAzsharaGossip(ScriptMgr* mgr);
 void SetupAzuremystIsleGossip(ScriptMgr* mgr);
 void SetupBlastedLandsGossip(ScriptMgr* mgr);
+void SetupCrystalsongForestGossip(ScriptMgr* mgr);
 void SetupDalaranGossip(ScriptMgr* mgr);
 void SetupInnkeepers(ScriptMgr* mgr);
 void SetupGuardGossip(ScriptMgr* mgr);
 void SetupLocksmiths(ScriptMgr* mgr);
 void SetupTrainerScript(ScriptMgr* mgr);
+void SetupMiscGossip(ScriptMgr* mgr);
 void SetupMulgoreGossip(ScriptMgr* mgr);
 void SetupShattrathGossip(ScriptMgr* mgr);
 void SetupTanarisGossip(ScriptMgr* mgr);
@@ -45,5 +48,6 @@ void SetupTheScarletEnclaveGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
 void SetupWyrmrestTempleGossip(ScriptMgr* mgr);
 void SetupXpEliminatorGossip(ScriptMgr* mgr);
+void SetupZangarmarshGossip(ScriptMgr* mgr);
 
 #endif

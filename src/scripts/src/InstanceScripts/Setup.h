@@ -58,6 +58,7 @@ void SetupScholomance(ScriptMgr* mgr);
 void SetupSethekkHalls(ScriptMgr* mgr);
 void SetupShadowfangKeep(ScriptMgr* mgr);
 void SetupShadowLabyrinth(ScriptMgr* mgr);
+void SetupStratholme(ScriptMgr* mgr);
 void SetupTheMechanar(ScriptMgr* mgr);
 void SetupTheShatteredHalls(ScriptMgr* mgr);
 void SetupTheSlavePens(ScriptMgr* mgr);

@@ -368,10 +368,35 @@ class antusulAI : public CreatureAIScript
 		SpellEntry* earthgrab_ward;
 };
 
+class GongOfZulFarrak : public GameObjectAIScript
+{
+public:
+	GongOfZulFarrak(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new GongOfZulFarrak(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(pPlayer->GetItemInterface()->GetItemCount(9240, 1))
+		{
+			float SSX = pPlayer->GetPositionX();
+			float SSY = pPlayer->GetPositionY();
+			float SSZ = pPlayer->GetPositionZ();
+			float SSO = pPlayer->GetOrientation();
+
+			Creature* NewCreature = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(7273, SSX + 1, SSY, SSZ, SSO, true, false, 0, 0);
+			if(NewCreature != NULL)
+				NewCreature->Despawn(1800000, 0);
+		}
+		else
+			pPlayer->BroadcastMessage("Missing required item : Mallet of Zul'Farrak");
+	}
+};
 
 void SetupZulFarrak(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(8127, &antusulAI::Create);
 	mgr->register_creature_script(7272, &thekaAI::Create);
 	mgr->register_creature_script(133337, &antusulTriggerAI::Create);
+
+	mgr->register_gameobject_script(141832, &GongOfZulFarrak::Create);
 }

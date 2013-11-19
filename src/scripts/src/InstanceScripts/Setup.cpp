@@ -61,6 +61,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupSethekkHalls(mgr);
 	SetupShadowfangKeep(mgr);
 	SetupShadowLabyrinth(mgr);
+	SetupStratholme(mgr);
 	SetupTheMechanar(mgr);
 	SetupTheShatteredHalls(mgr);
 	SetupTheSlavePens(mgr);

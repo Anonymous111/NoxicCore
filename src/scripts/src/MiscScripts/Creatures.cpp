@@ -23,123 +23,88 @@
 
 #include "Setup.h"
 
-//Crimson Hammersmith
-class CrimsonHammersmith : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CrimsonHammersmith);
-		CrimsonHammersmith(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who Dares Disturb Me");
-		}
-};
-
-//Corrupt Minor Manifestation Water Dead
-class Corrupt_Minor_Manifestation_Water_Dead : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Corrupt_Minor_Manifestation_Water_Dead);
-		Corrupt_Minor_Manifestation_Water_Dead(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnDied(Unit* mKiller)
-		{
-			float SSX = _unit->GetPositionX();
-			float SSY = _unit->GetPositionY();
-			float SSZ = _unit->GetPositionZ();
-			float SSO = _unit->GetOrientation();
-
-			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(5895, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(600000, 0);
-		}
-};
-
 class AllianceGryphon : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AllianceGryphon);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(AllianceGryphon);
+	AllianceGryphon(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		AllianceGryphon(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	void OnCombatStart(Unit* mTarget)
+	{
+		if(!mTarget->IsPlayer())
+			return;
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			if(!mTarget->IsPlayer())
-				return;
+		Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9526, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
 
-			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9526, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-
-			NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9526, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-		}
+		NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9526, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
+	}
 };
 
 class AllianceHippogryph : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AllianceHippogryph);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(AllianceHippogryph);
+	AllianceHippogryph(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		AllianceHippogryph(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	void OnCombatStart(Unit* mTarget)
+	{
+		if(!mTarget->IsPlayer())
+			return;
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			if(!mTarget->IsPlayer())
-				return;
+		Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9527, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
 
-			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9527, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-
-			NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9527, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-		}
+		NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9527, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
+	}
 };
 
 class HordeWyvern : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HordeWyvern);
-		HordeWyvern(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(HordeWyvern);
+	HordeWyvern(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			if(!mTarget->IsPlayer())
-				return;
+	void OnCombatStart(Unit* mTarget)
+	{
+		if(!mTarget->IsPlayer())
+			return;
 
-			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9297, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
+		Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9297, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
 
-			NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9297, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-		}
+		NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9297, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
+	}
 };
 
 class HordeBat : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HordeBat);
-		HordeBat(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(HordeBat);
+	HordeBat(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			if(!mTarget->IsPlayer())
-				return;
+	void OnCombatStart(Unit* mTarget)
+	{
+		if(!mTarget->IsPlayer())
+			return;
 
-			Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9521, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
+		Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9521, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
 
-			_unit->GetMapMgr()->GetInterface()->SpawnCreature(9521, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(NewCreature != NULL)
-				NewCreature->Despawn(360000, 0);
-		}
+		NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(9521, _unit->GetPositionX() - RandomFloat(5.0f), _unit->GetPositionY() - RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(360000, 0);
+	}
 };
 
 class DragonhawkMasters : public CreatureAIScript
@@ -182,78 +147,6 @@ public:
 	}
 };
 
-class TyrandeWhisperwind : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TyrandeWhisperwind);
-		TyrandeWhisperwind(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(5885);
-		}
-};
-
-class ProphetVelen : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ProphetVelen);
-		ProphetVelen(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(10155);
-		}
-};
-
-class KingMagniBronzebeard : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KingMagniBronzebeard);
-		KingMagniBronzebeard(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(5896);
-		}
-};
-
-class Thrall : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Thrall);
-		Thrall(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(5880);
-		}
-};
-
-class CairneBloodhoof : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CairneBloodhoof);
-		CairneBloodhoof(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(5884);
-		}
-};
-
-class LadySylvanasWindrunner : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LadySylvanasWindrunner);
-		LadySylvanasWindrunner(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->PlaySoundToSet(5886);
-		}
-};
-
 ///////////////////////////////////////////////////////////
 //D.I.S.C.O AI Script ( entry 27989 )
 //"Dancer's Integrated Sonic Celebration Oscillator"
@@ -273,16 +166,13 @@ class DISCO : public CreatureAIScript
 
 		void OnLoad()
 		{
-			_unit->CastSpell(_unit, 50487, false);   // summon disco dancefloor
-			_unit->CastSpell(_unit, 50314, false);   // play the music
+			_unit->CastSpell(_unit, 50487, false); // summon disco dancefloor
+			_unit->CastSpell(_unit, 50314, false); // play the music
 		}
 };
 
 void SetupMiscCreatures(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(11120, &CrimsonHammersmith::Create);
-	mgr->register_creature_script(5894, &Corrupt_Minor_Manifestation_Water_Dead::Create);
-
 	// Gryphon Master
 	uint32 GryphonMasterIds[] = { 352, 523, 931, 1571, 1572, 1573, 2299, 2409, 2432, 2835, 2859,
 	2941, 4321, 7823, 8018, 8609, 12596, 12617, 16822, 17209, 18809, 18931, 18939, 19181, 20234,
@@ -315,13 +205,6 @@ void SetupMiscCreatures(ScriptMgr* mgr)
 	28574, 28615, 28618, 28621, 28623, 28624, 28674, 29137, 29721, 29749, 29750, 29757, 29950,
 	29951, 29952, 30314, 30433, 30569, 30869, 30870, 31069, 31078, 32571, 33849, 37888, 0 };
 	mgr->register_creature_script(NeutralMasterIds, &NeutralMasters::Create);
-
-	mgr->register_creature_script(7999, &TyrandeWhisperwind::Create);
-	mgr->register_creature_script(17468, &ProphetVelen::Create);
-	mgr->register_creature_script(2784, &KingMagniBronzebeard::Create);
-	mgr->register_creature_script(4949, &Thrall::Create);
-	mgr->register_creature_script(3057, &CairneBloodhoof::Create);
-	mgr->register_creature_script(10181, &LadySylvanasWindrunner::Create);
 
 	mgr->register_creature_script(27989, &DISCO::Create);
 }
