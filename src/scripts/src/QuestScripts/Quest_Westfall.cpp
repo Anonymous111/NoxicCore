@@ -68,30 +68,7 @@ class TheDefiasBrotherhood : public QuestScript
 		}
 };
 
-class The_Defias_Traitor : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(The_Defias_Traitor);
-		The_Defias_Traitor(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			if(iWaypointId == 19)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tell your master that this is where Van Cleef is hiding. I'm outta here!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(155)->SendQuestComplete();
-			}
-		}
-};
-
 void SetupWestfall(ScriptMgr* mgr)
 {
-	/*mgr->register_quest_script(155, new TheDefiasBrotherhood());*/
-	mgr->register_creature_script(467, &The_Defias_Traitor::Create);
+	//mgr->register_quest_script(155, new TheDefiasBrotherhood());
 }

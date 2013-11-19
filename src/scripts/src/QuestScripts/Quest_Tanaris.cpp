@@ -88,29 +88,6 @@ class SpiritScreeches : public GossipScript
 
 };
 
-class ScreecherSpirit : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ScreecherSpirit);
-
-		ScreecherSpirit(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			if(!_unit)
-				return;
-
-			Creature* cialo = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 5307);
-			if(!cialo)
-				return;
-
-			if(!cialo->isAlive())
-				cialo->Despawn(1, 6 * 60 * 1000);
-
-			_unit->Despawn(60 * 1000, 0);
-		}
-};
-
 class StewardOfTime : public GossipScript
 {
 	public:
@@ -140,11 +117,6 @@ class StewardOfTime : public GossipScript
 
 void SetupTanaris(ScriptMgr* mgr)
 {
-	GossipScript* Screeches = new SpiritScreeches();
-	mgr->register_gossip_script(8612, Screeches);
-
-	mgr->register_creature_script(8612, &ScreecherSpirit::Create);
-
-	GossipScript* StewardOfTimeGossip = new StewardOfTime();
-	mgr->register_gossip_script(20142, StewardOfTimeGossip);
+	mgr->register_gossip_script(8612, new SpiritScreeches());
+	mgr->register_gossip_script(20142, new StewardOfTime());
 }

@@ -98,10 +98,33 @@ class Nightlash : public CreatureAIScript
 		}
 };
 
+class ProveYourWorthQAI : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ProveYourWorthQAI);
+	ProveYourWorthQAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
+		{
+			QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(421);
+			if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
+			{
+				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+				pQuest->SendUpdateAddKill(0);
+				pQuest->UpdatePlayerFields();
+				return;
+			}
+		}
+	}
+};
+
 void SetupSilverpineForest(ScriptMgr* mgr)
 {
-	/*mgr->register_quest_script(435, new EscortingErland());*/
+	//mgr->register_quest_script(435, new EscortingErland());
 	mgr->register_creature_script(1978, &Deathstalker_Erland::Create);
 	mgr->register_creature_script(1773, &Nightlash::Create);
 	mgr->register_creature_script(1772, &Nightlash::Create);
+	mgr->register_creature_script(1769, &ProveYourWorthQAI::Create);
 }

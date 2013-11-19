@@ -42,6 +42,5 @@ class Zenn_Foulhoof : public QuestScript
 
 void SetupTeldrassil(ScriptMgr* mgr)
 {
-	QuestScript* Zenn_FoulhoofQuest = new Zenn_Foulhoof();
-	mgr->register_quest_script(489, Zenn_FoulhoofQuest);
+	mgr->register_quest_script(489, new Zenn_Foulhoof());
 }

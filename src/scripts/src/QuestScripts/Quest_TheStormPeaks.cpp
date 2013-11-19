@@ -23,49 +23,6 @@
 
 #include "Setup.h"
 
-// The Gifts of Loken
-class LokensFury : public GameObjectAIScript
-{
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(LokensFury);
-		LokensFury(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
-
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 12965))
-				sEAS.KillMobForQuest(pPlayer, 12965, 0);
-		};
-
-};
-
-class LokensPower : public GameObjectAIScript
-{
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(LokensPower);
-		LokensPower(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
-
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 12965))
-				sEAS.KillMobForQuest(pPlayer, 12965, 1);
-		};
-
-};
-
-class LokensFavor : public GameObjectAIScript
-{
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(LokensFavor);
-		LokensFavor(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
-
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 12965))
-				sEAS.KillMobForQuest(pPlayer, 12965, 2);
-		};
-
-};
-
 #define GOSSIP_SCOUTMENU1 "Are you okay? I've come to take you back to Frosthold if you can stand."
 #define GOSSIP_SCOUTMENU2 "I'm sorry that I didn't get here sooner. What happened?"
 #define GOSSIP_SCOUTMENU3 "I'll go get some help. Hang in there."
@@ -126,10 +83,5 @@ class SCRIPT_DECL MissingScout_Gossip : public GossipScript
 
 void SetupTheStormPeaks(ScriptMgr* mgr)
 {
-	// The Gifts of Loken
-	mgr->register_gameobject_script(192120, &LokensFury::Create);
-	mgr->register_gameobject_script(192121, &LokensPower::Create);
-	mgr->register_gameobject_script(192122, &LokensFavor::Create);
-	GossipScript* MissingScoutGossip = new MissingScout_Gossip;
-	mgr->register_gossip_script(29811, MissingScoutGossip);
+	mgr->register_gossip_script(29811, new MissingScout_Gossip());
 }

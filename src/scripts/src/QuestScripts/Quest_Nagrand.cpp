@@ -353,13 +353,13 @@ class LumpGossipScript : public GossipScript
 				case 1:
 					if(plr->GetQuestLogForEntry(9918))
 					{
-						QuestLogEntry* en = plr->GetQuestLogForEntry(9918);
-						if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+						QuestLogEntry* pQuest = plr->GetQuestLogForEntry(9918);
+						if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 						{
-							uint32 newcount = en->GetMobCount(0) + 1;
-							en->SetMobCount(0, newcount);
-							en->SendUpdateAddKill(0);
-							en->UpdatePlayerFields();
+							uint32 newcount = pQuest->GetMobCount(0) + 1;
+							pQuest->SetMobCount(0, newcount);
+							pQuest->SendUpdateAddKill(0);
+							pQuest->UpdatePlayerFields();
 						}
 					}
 					break;
@@ -368,44 +368,41 @@ class LumpGossipScript : public GossipScript
 
 };
 
-// Gisela The Crone quest
-/*class GiseldaTheCroneQAI : public CreatureAIScript
+class GiseldaTheCroneQAI : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(GiseldaTheCroneQAI);
 	GiseldaTheCroneQAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit * mKiller)
+	void OnDied(Unit* mKiller)
 	{
 		if(mKiller->IsPlayer())
 		{
-			if(((Player*)mKiller)->GetTeam() == 0)
+			if((TO_PLAYER(mKiller))->GetTeam() == 0)
 			{
-				QuestLogEntry *en = ((Player*)mKiller)->GetQuestLogForEntry(9936);
-				if(en && en->GetMobCount(1) < en->GetQuest()->required_mobcount[1])
+				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(9936);
+				if(pQuest && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 				{
-					uint32 newcount = en->GetMobCount(1) + 1;
-					en->SetMobCount(1, newcount);
-					en->SendUpdateAddKill(1);
-					en->UpdatePlayerFields();
+					pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
+					pQuest->SendUpdateAddKill(1);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
 			else
 			{
-				QuestLogEntry *en = ((Player*)mKiller)->GetQuestLogForEntry(9935);
-				if(en && en->GetMobCount(1) < en->GetQuest()->required_mobcount[1])
+				QuestLogEntry *pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(9935);
+				if(pQuest && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
 				{
-					uint32 newcount = en->GetMobCount(1) + 1;
-					en->SetMobCount(1, newcount);
-					en->SendUpdateAddKill(1);
-					en->UpdatePlayerFields();
+					pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
+					pQuest->SendUpdateAddKill(1);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
 		}
 	}
-}*/
+};
 
 void SetupNagrand(ScriptMgr* mgr)
 {
@@ -419,12 +416,11 @@ void SetupNagrand(ScriptMgr* mgr)
 	mgr->register_quest_script(9967, new Quest_The_Ring_of_Blood_The_Blue_Brothers());
 	mgr->register_quest_script(9962, new Quest_The_Ring_of_Blood_Brokentoe());
 
-	GossipScript* LumpGossip = new LumpGossipScript;
-	mgr->register_gossip_script(18351, LumpGossip);
+	mgr->register_gossip_script(18351, new LumpGossipScript());
 
-	/*mgr->register_creature_script(17147, &GiseldaTheCroneQAI::Create);
+	mgr->register_creature_script(17147, &GiseldaTheCroneQAI::Create);
 	mgr->register_creature_script(17148, &GiseldaTheCroneQAI::Create);
 	mgr->register_creature_script(18397, &GiseldaTheCroneQAI::Create);
 	mgr->register_creature_script(18658, &GiseldaTheCroneQAI::Create);
-	mgr->register_creature_script(17146, &GiseldaTheCroneQAI::Create);*/
+	mgr->register_creature_script(17146, &GiseldaTheCroneQAI::Create);
 }

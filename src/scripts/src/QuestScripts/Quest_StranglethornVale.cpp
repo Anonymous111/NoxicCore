@@ -309,8 +309,7 @@ class NegolashAI : public CreatureAIScript
 
 void SetupStranglethornVale(ScriptMgr* mgr)
 {
-	GossipScript* gossip1 = new StrFever();
-	mgr->register_gossip_script(1449, gossip1);
+	mgr->register_gossip_script(1449, new StrFever());
 
 	mgr->register_creature_script(1511, &Beka::Create);
 

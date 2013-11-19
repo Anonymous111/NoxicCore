@@ -34,51 +34,6 @@ class TheDormantShade : public QuestScript
 		}
 };
 
-class CalvinMontague : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CalvinMontague);
-		CalvinMontague(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->SetFaction(68);
-			_unit->SetStandState(STANDSTATE_STAND);
-		}
-
-		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
-		{
-			if(_unit->GetHealthPct() < 10)
-			{
-				if(mAttacker->IsPlayer())
-				{
-					_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-					RegisterAIUpdateEvent(1000);
-					QuestLogEntry* pQuest = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(590);
-					if(!pQuest)
-						return;
-					pQuest->SendQuestComplete();
-				}
-			}
-		}
-
-		void AIUpdate()
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Okay, okay! Enough fighting.");
-			_unit->RemoveNegativeAuras();
-			_unit->SetFaction(68);
-			_unit->SetStandState(STANDSTATE_SIT);
-			_unit->CastSpell(_unit, dbcSpell.LookupEntry(433), true);
-			sEventMgr.AddEvent(TO_UNIT(_unit), &Unit::SetStandState, (uint8)STANDSTATE_STAND, EVENT_CREATURE_UPDATE, 18000, 0, 1);
-			_unit->GetAIInterface()->WipeTargetList();
-			_unit->GetAIInterface()->WipeHateList();
-			_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
-			_unit->GetAIInterface()->disable_melee = true;
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, 0);
-		}
-};
-
 class ARoguesDeal  : public QuestScript
 {
 	public:
@@ -135,34 +90,10 @@ class FieldsofGrief : public QuestScript
 		}
 };
 
-class Zealot : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Zealot);
-		Zealot(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			if(!_unit->HasAura(3287))
-				return;
-			if(iWaypointId == 2)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My mind. . .me flesh. . .I'm. . .rotting. . . .!");
-			}
-
-			if(iWaypointId == 7)
-			{
-				_unit->CastSpell(_unit, dbcSpell.LookupEntry(5), true);
-			}
-		}
-};
-
 
 void SetupTirisfalGlades(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(410, new TheDormantShade());
-	mgr->register_creature_script(6784, &CalvinMontague::Create);
 	mgr->register_quest_script(590, new ARoguesDeal());
-	/*mgr->register_quest_script(407, new FieldsofGrief());*/
-	mgr->register_creature_script(1931, &Zealot::Create);
+	//mgr->register_quest_script(407, new FieldsofGrief());
 }

@@ -120,29 +120,6 @@ class HomewardBound : public QuestScript
 		}
 };
 
-class Paoka_Swiftmountain : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Paoka_Swiftmountain);
-		Paoka_Swiftmountain(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			if(iWaypointId == 72)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I appreciate the help you have shown Pao'ka. I hope this covers any misfortunes this deed has cost you.");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				if(plr->GetQuestLogForEntry(4770))
-					plr->GetQuestLogForEntry(4770)->SendQuestComplete();
-			}
-		}
-};
-
 class RumorsforKravel : public QuestScript
 {
 	public:
@@ -167,7 +144,6 @@ class RumorsforKravel : public QuestScript
 
 void SetupThousandNeedles(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(10427, &Paoka_Swiftmountain::Create);
-	/*mgr->register_quest_script(4770, new HomewardBound());*/
+	//mgr->register_quest_script(4770, new HomewardBound());
 	mgr->register_quest_script(1117, new RumorsforKravel());
 }

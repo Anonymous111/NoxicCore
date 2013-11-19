@@ -29,16 +29,16 @@
 #include "../Common/Instance_Base.h"
 #include "../Common/Base.h"
 
-//	###		Classes Quests	###
+// Classes Quests
 void SetupDruid(ScriptMgr* mgr);
 void SetupMage(ScriptMgr* mgr);
 void SetupPaladin(ScriptMgr* mgr);
 void SetupWarrior(ScriptMgr* mgr);
 
-//	###		Proffessions Quests	###
+// Proffessions Quests
 void SetupFirstAid(ScriptMgr* mgr);
 
-//	###		Zones Quests	###
+// Zones Quests
 void SetupArathiHighlands(ScriptMgr* mgr);
 void SetupAzshara(ScriptMgr* mgr);
 void SetupAzuremystIsle(ScriptMgr* mgr);
@@ -46,7 +46,7 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr);
 void SetupBlastedLands(ScriptMgr* mgr);
 void SetupBloodmystIsle(ScriptMgr* mgr);
 void SetupBurningSteppes(ScriptMgr* mgr);
-//void SetupDarkshore(ScriptMgr * mgr)
+void SetupDarkshore(ScriptMgr * mgr);
 void SetupDeathKnight(ScriptMgr* mgr);
 void SetupDesolace(ScriptMgr* mgr);
 void SetupDragonblight(ScriptMgr* mgr);
@@ -86,7 +86,7 @@ void SetupBarrens(ScriptMgr* mgr);
 void SetupBoreanTundra(ScriptMgr* mgr);
 void SetupSholazarBasin(ScriptMgr* mgr);
 
-//	###		Misc	###
+// Misc
 void SetupQuestGossip(ScriptMgr* mgr);
 void SetupQuestHooks(ScriptMgr* mgr);
 void SetupUnsorted(ScriptMgr* mgr);

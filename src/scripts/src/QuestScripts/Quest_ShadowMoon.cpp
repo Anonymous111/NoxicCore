@@ -456,9 +456,6 @@ void SetupShadowmoon(ScriptMgr* mgr)
 
 	mgr->register_gameobject_script(185156, &KarynakuChains::Create);
 
-	GossipScript* NeltharakusTaleGossip = new NeltharakusTale_Gossip;
-	mgr->register_gossip_script(21657, NeltharakusTaleGossip);
-
-	GossipScript* FlanisSwiftwingGossip = new FlanisSwiftwing_Gossip;
-	mgr->register_gossip_script(21727, FlanisSwiftwingGossip); //Add Flanis' Pack
+	mgr->register_gossip_script(21657, new NeltharakusTale_Gossip());
+	mgr->register_gossip_script(21727, new FlanisSwiftwing_Gossip()); //Add Flanis' Pack
 }

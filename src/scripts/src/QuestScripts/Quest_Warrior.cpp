@@ -130,9 +130,73 @@ class BeatBartleby : public QuestScript
 		}
 };
 
+class Summoning : public GossipScript
+{
+public:
+	void GossipHello(Object* pObject, Player* pPlayer, bool AutoSend)
+	{
+		if(!pPlayer)
+			return;
+
+		GossipMenu* Menu;
+		Creature* windwatcher = TO_CREATURE(pObject);
+		if(windwatcher == NULL)
+			return;
+
+		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, pPlayer);
+		if(pPlayer->GetQuestLogForEntry(1713))
+			Menu->AddItem( 0, "I'm ready, Summon Him!", 1);
+
+		if(AutoSend)
+			Menu->SendTo(pPlayer);
+	}
+
+	void GossipSelectOption(Object* pObject, Player* pPlayer, uint32 Id, uint32 IntId, const char* EnteredCode)
+	{
+		if(!pPlayer)
+			return;
+
+		Creature* windwatcher = TO_CREATURE(pObject);
+		if(windwatcher == NULL)
+			return;
+
+		switch(IntId)
+		{
+			case 0:
+				GossipHello(pObject, pPlayer, true);
+				break;
+			case 1:
+			{
+				if(pPlayer == NULL || pPlayer->GetMapMgr() == NULL || pPlayer->GetMapMgr()->GetInterface() == NULL)
+					return;
+
+				Creature* whirlwind = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 6239);
+				if(whirlwind != NULL)
+				{
+					if(!whirlwind->isAlive())
+						whirlwind->Delete();
+					else
+						return;
+				}
+
+				whirlwind = sEAS.SpawnCreature(pPlayer, 6239, pPlayer->GetPositionX()+7, pPlayer->GetPositionY()+7, pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+				whirlwind->Despawn(5*60*1000, 0);
+			}break;
+		}
+	}
+
+	void Destroy()
+	{
+		delete this;
+	}
+};
+
 void SetupWarrior(ScriptMgr* mgr)
 {
-	mgr->register_quest_script(1713, new TheSummoning());
+	mgr->register_gossip_script(6176, new Summoning());
+
 	mgr->register_creature_script(6090, &Bartleby::Create);
+
+	mgr->register_quest_script(1713, new TheSummoning());
 	mgr->register_quest_script(1640, new BeatBartleby());
 }

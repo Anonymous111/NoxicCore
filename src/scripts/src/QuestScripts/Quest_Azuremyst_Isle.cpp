@@ -290,28 +290,6 @@ class TotemofVark : public QuestScript
 		Creature*  Yor;
 };
 
-// Chieftain Oomooroo
-class ChieftainOomoorooQAI : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(ChieftainOomoorooQAI);
-	ChieftainOomoorooQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-	void OnDied(Unit* mKiller)
-	{
-		if(mKiller->IsPlayer())
-		{
-			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(9573);
-			if(pQuest != NULL && pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[1])
-			{
-				pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
-				pQuest->SendUpdateAddKill(1);
-				pQuest->UpdatePlayerFields();
-			}
-		}
-	}
-};
-
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
 	//mgr->register_item_gossip_script( 23654, CREATE_GOSSIPSCRIPT( DraeneiFishingNet ) );
@@ -319,5 +297,4 @@ void SetupAzuremystIsle(ScriptMgr* mgr)
 	mgr->register_quest_script( 9540, new TotemofTikti());
 	mgr->register_quest_script( 9541, new TotemofYor() );
 	mgr->register_quest_script( 9542, new TotemofVark() );*/
-	mgr->register_creature_script(17189, &ChieftainOomoorooQAI::Create);
 }

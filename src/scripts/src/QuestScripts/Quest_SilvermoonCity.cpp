@@ -23,6 +23,26 @@
 
 #include "Setup.h"
 
+class ThePathoftheAdept : public GameObjectAIScript
+{
+public:
+	ThePathoftheAdept(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new ThePathoftheAdept(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(!pPlayer)
+			return;
+
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9692);
+		if(pQuest == NULL)
+			return;
+
+		Creature* zelemar = sEAS.SpawnCreature(pPlayer, 17830, pPlayer->GetPositionX()+5, pPlayer->GetPositionY()+5, pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 0);
+		zelemar->Despawn(6*60*1000, 0);
+	}
+};
+
 class PathoftheAdept : public GossipScript
 {
 	public:
@@ -88,8 +108,9 @@ class LordDawnstar : public CreatureAIScript
 
 void SetupSilvermoonCity(ScriptMgr* mgr)
 {
-	GossipScript* LordGossip = new PathoftheAdept();
-	mgr->register_gossip_script(17832, LordGossip);
+	mgr->register_gameobject_script(182024, &ThePathoftheAdept::Create);
+
+	mgr->register_gossip_script(17832, new PathoftheAdept());
 
 	mgr->register_creature_script(17832, &LordDawnstar::Create);
 }

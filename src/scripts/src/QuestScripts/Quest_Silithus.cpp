@@ -317,10 +317,8 @@ class Thunderan : public QuestScript
 
 void SetupSilithus(ScriptMgr* mgr)
 {
-	GossipScript* dearestNatalia1 = new DearestNatalia1();
-	GossipScript* dearestNatalia2 = new DearestNatalia2();
-	mgr->register_gossip_script(15170, dearestNatalia1);
-	mgr->register_gossip_script(15171, dearestNatalia2);
+	mgr->register_gossip_script(15170, new DearestNatalia1());
+	mgr->register_gossip_script(15171, new DearestNatalia2());
 	mgr->register_creature_gossip(14347, new highlord_demitrianGossip);
 	mgr->register_quest_script(7786, new Thunderan);
 }

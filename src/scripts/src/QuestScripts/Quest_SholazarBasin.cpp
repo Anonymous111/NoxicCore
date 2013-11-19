@@ -211,12 +211,9 @@ class SCRIPT_DECL TamaraTasteTest : public GossipScript
 
 void SetupSholazarBasin(ScriptMgr* mgr)
 {
-	GossipScript* gossip1 = new HemetTasteTest();
-	mgr->register_gossip_script(HEMET, gossip1);
-	GossipScript* gossip2 = new HadriusTasteTest();
-	mgr->register_gossip_script(HADRIUS, gossip2);
-	GossipScript* gossip3 = new TamaraTasteTest();
-	mgr->register_gossip_script(TAMARA, gossip3);
+	mgr->register_gossip_script(HEMET, new HemetTasteTest());
+	mgr->register_gossip_script(HADRIUS, new HadriusTasteTest());
+	mgr->register_gossip_script(TAMARA, new TamaraTasteTest());
 
 	mgr->register_creature_script(28161, &ChickenEscapee::Create);
 }

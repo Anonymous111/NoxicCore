@@ -1,10 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
- * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
- * Copyright (c) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
- * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,3 +18,8 @@
  */
 
 #include "Setup.h"
+
+void SetupDarkshore(ScriptMgr* mgr)
+{
+
+}
