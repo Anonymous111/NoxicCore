@@ -26,13 +26,14 @@
 //Black Cat
 class BlackCat : public CreatureAIScript
 {
+public:
 	ADD_CREATURE_FACTORY_FUNCTION(BlackCat);
 	BlackCat(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnDied(Unit* pKiller)
 	{
 		pKiller->CastSpell(pKiller, 39477, true);
-		ParentClass::OnDied(pKiller);
+		//ParentClass::OnDied(pKiller);
 	}
 };
 
@@ -79,6 +80,7 @@ static LocationExtra WaypointGoldshire[] =
 
 class HeadlessHorsemanAI : public CreatureAIScript
 {
+public:
 	ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanAI);
 	HeadlessHorsemanAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
@@ -91,6 +93,7 @@ class HeadlessHorsemanAI : public CreatureAIScript
 
 class HeadlessHorsemanFireAI : public CreatureAIScript
 {
+public:
 	ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanFireAI);
 	HeadlessHorsemanFireAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
@@ -111,17 +114,18 @@ class HeadlessHorsemanFireAI : public CreatureAIScript
  */
 class ShadeOfTheHorsemanAI : public CreatureAIScript
 {
+public:
 	ADD_CREATURE_FACTORY_FUNCTION(ShadeOfTheHorsemanAI);
 	ShadeOfTheHorsemanAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		SetCanEnterCombat(false);
+		//SetCanEnterCombat(false);
 		_unit->SetMount(22653);
 		//Spells
-		mSummon = AddSpell(SHADE_OF_THE_HORSEMAN_SUMMON, Target_Self, 0, 0, 0);
+		//mSummon = AddSpell(SHADE_OF_THE_HORSEMAN_SUMMON, Target_Self, 0, 0, 0);
 
 		//Emotes
-		AddEmote(Event_OnDied, "So eager you are, for my blood to spill. Yet to vanquish me, 'tis my head you must kill!", Text_Yell, 11969);
-		Emote("Prepare yourselves, the bells have tolled! Shelter your weak, your young, and your old! Each of you shall pay the final sum. Cry for mercy, the reckoning has come!", Text_Yell, 11966);	//On Spawn?
+		//AddEmote(Event_OnDied, "So eager you are, for my blood to spill. Yet to vanquish me, 'tis my head you must kill!", Text_Yell, 11969);
+		//Emote("Prepare yourselves, the bells have tolled! Shelter your weak, your young, and your old! Each of you shall pay the final sum. Cry for mercy, the reckoning has come!", Text_Yell, 11966);	//On Spawn?
 
 		switch(_unit->GetMapMgr()->GetAreaID(_unit->GetPositionX(), _unit->GetPositionY()))
 		{
@@ -132,16 +136,16 @@ class ShadeOfTheHorsemanAI : public CreatureAIScript
 			}break;
 		}
 
-		for(int i = 1 ; i <= WPCount ; ++i)
-			AddWaypoint(CreateWaypoint(i, 0, WayPoints[i].addition, WayPoints[i]));
+		/*for(int i = 1 ; i <= WPCount ; ++i)
+			AddWaypoint(CreateWaypoint(i, 0, WayPoints[i].addition, WayPoints[i]));*/
 	}
 
 	void OnReachWP(uint32 iWaypointId, bool bForwards)
 	{
 		if(iWaypointId == uint32(WPCount)) // Reached end
 		{
-			StopWaypointMovement();
-			if(GetNearestCreature(CN_HEADLESS_HORSEMAN_FIRE) == NULL) // CASE players win
+			//StopWaypointMovement();
+			/*if(GetNearestCreature(CN_HEADLESS_HORSEMAN_FIRE) == NULL) // CASE players win
 			{
 				Emote("My flames have died, left not a spark! I shall send you now to the lifeless dark!", Text_Yell, 11968);
 				Despawn(30000, 0); //Despawn after 30 secs
@@ -150,7 +154,7 @@ class ShadeOfTheHorsemanAI : public CreatureAIScript
 			{
 				Emote("Fire consumes! You've tried and failed. Let there be no doubt, justice prevailed!", Text_Yell, 11967);
 				Despawn(12000, 0); //Despawn after 12 secs
-			}
+			}*/
 		}
 		else
 		{
@@ -163,7 +167,7 @@ class ShadeOfTheHorsemanAI : public CreatureAIScript
 				}break;
 			}
 		}
-		ParentClass::OnReachWP(iWaypointId, bForwards);
+		//ParentClass::OnReachWP(iWaypointId, bForwards);
 	}
 
 	void OnDied(Unit* pKiller)
@@ -172,7 +176,7 @@ class ShadeOfTheHorsemanAI : public CreatureAIScript
 		if(Pumpkin != NULL)
 			_unit->CastSpell(Pumpkin->GetGUID(), 42277, true);
 
-		ParentClass::OnDied(pKiller);
+		//ParentClass::OnDied(pKiller);
 	}
 
 	int8 WPCount;
@@ -185,6 +189,7 @@ class ShadeOfTheHorsemanAI : public CreatureAIScript
 
 class HeadlessHorsemanWispInvisAI : public CreatureAIScript
 {
+public:
 	ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI);
 	HeadlessHorsemanWispInvisAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
@@ -196,14 +201,14 @@ class HeadlessHorsemanWispInvisAI : public CreatureAIScript
 		tmPtr = localtime(&tiempo);
 		if(tmPtr->tm_min == 0 && (tmPtr->tm_hour % 4) == 0) // All check for the time
 		{
-			mHeadlessHorseman = GetNearestCreature(CN_SHADE_OF_THE_HORSEMAN);
+			/*mHeadlessHorseman = GetNearestCreature(CN_SHADE_OF_THE_HORSEMAN);
 			if(mHeadlessHorseman == NULL)
 			{
 				SpawnCreature(CN_SHADE_OF_THE_HORSEMAN, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 				SetAIUpdateFreq(4 * 60 * 1000);
-			}
+			}*/
 		}
-		ParentClass::AIUpdate();
+		//ParentClass::AIUpdate();
 	}
 
 	CreatureAIScript* mHeadlessHorseman;

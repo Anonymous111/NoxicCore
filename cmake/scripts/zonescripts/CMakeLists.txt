@@ -10,13 +10,17 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 #sources -contains source files for our library.
 SET( sources
 	ArathiHighlands.cpp
+	AzuremystIsle.cpp
 	BladeEdgeMountains.cpp
 	BlastedLands.cpp
 	BloodmystIsle.cpp
 	BoreanTundra.cpp
+	Darnassus.cpp
 	Durotar.cpp
+	Exodar.cpp
 	HellfirePeninsula.cpp
 	Icecrown.cpp
+	Ironforge.cpp
 	Misc.cpp
 	Orgrimmar.cpp
     Setup.cpp
@@ -25,12 +29,19 @@ SET( sources
 	Tanaris.cpp
 	TheBarrens.cpp
 	TheScarletEnclave.cpp
+	ThousandNeedles.cpp
+	ThunderBluff.cpp
+	TirisfalGlades.cpp
+	Undercity.cpp
+	UnGoroCrater.cpp
 	WesternPlaguelands.cpp
- )
+	Westfall.cpp
+)
 
 SET( headers
     Setup.h
- )
+	../Common/EasyFunctions.h
+)
  
 foreach(src IN ITEMS ${sources} )
   SET( SRCS ${SRCS} ${prefix}/${src} )

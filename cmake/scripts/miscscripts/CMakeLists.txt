@@ -9,16 +9,16 @@ SET( prefix ${SCRIPTS_PATH}/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
-Creatures.cpp
-DarkmoonFaireObjects.cpp
-GameObjects.cpp
-GameObjectTeleportTable.cpp
-RandomScripts.cpp
-Setup.cpp )
+	Creatures.cpp
+	GameObjectTeleportTable.cpp
+	RandomScripts.cpp
+	Setup.cpp
+)
 
 SET( headers
-Setup.h
-../Common/EasyFunctions.h )
+	Setup.h
+	../Common/EasyFunctions.h
+)
 
 foreach(src IN ITEMS ${sources} )
   SET( SRCS ${SRCS} ${prefix}/${src} )

@@ -32,7 +32,7 @@ public:
     }
 };
 
-class SCRIPT_DECL ArgentHealerAI : public CreatureAIScript
+/*class SCRIPT_DECL ArgentHealerAI : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(ArgentHealerAI);
@@ -70,7 +70,7 @@ public:
 		// Now cast Holy Nova for the fancy-looking Argent Healer effect
 		_unit->CastSpell(_unit, 15237, true);
 	}
-};
+};*/
 
 void SetupEventZombie(ScriptMgr* mgr)
 { // Uncomment the following for the infection to begin

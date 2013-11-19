@@ -52,7 +52,7 @@
 //Consecration
 #define SINGERSLIGHT42510
 
-class SamAI : public CreatureAIScript
+/*class SamAI : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(SamAI);
@@ -970,7 +970,7 @@ protected:
 
 void SetupL70ETC(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(SAMURO, &SamAI::Create);
+	/*mgr->register_creature_script(SAMURO, &SamAI::Create);
 	mgr->register_creature_script(BERGRISST, &BerAI::Create);
 	mgr->register_creature_script(MAIKYL, &MaiAI::Create);
 	mgr->register_creature_script(SIGNICIOUS, &SigAI::Create);
@@ -978,7 +978,7 @@ void SetupL70ETC(ScriptMgr* mgr)
 	mgr->register_creature_script(UNDEAD, &UndeadAI::Create);
 	mgr->register_creature_script(UNDEAD2, &Undead2AI::Create);
 	mgr->register_creature_script(UNDEAD3, &Undead3AI::Create);
-	mgr->register_creature_script(TRIGGER, &TriggerAI::Create);
+	mgr->register_creature_script(TRIGGER, &TriggerAI::Create);*/
 	//mgr->register_creature_script(TARGETGROUND, &Effectsground::Create);
 	//mgr->register_creature_script(TARGETAIR, &Effectsair::Create);
 }

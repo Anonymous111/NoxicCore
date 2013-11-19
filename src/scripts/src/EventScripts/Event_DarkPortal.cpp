@@ -417,7 +417,7 @@ struct SCoords AHSPoints[]=
 #define SUMMON_INFERNALS	33393
 #define SUMMON_INFERNALS2	33240
 
-class DarkPortalEventTrigger : public CreatureAIScript
+/*class DarkPortalEventTrigger : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(DarkPortalEventTrigger);
@@ -1570,9 +1570,9 @@ public:
 	{
 		if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
-			std::vector<Unit*> TargetTable;		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
+			std::vector<Unit*> TargetTable;	*/	/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
 												/* If anyone wants to use this function, then leave this note!										 */
-			for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
+			/*for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
 			{ 
 				if(((spells[i].targettype == TARGET_RANDOM_FRIEND && isFriendly(_unit, (*itr))) || (spells[i].targettype != TARGET_RANDOM_FRIEND && isHostile(_unit, (*itr)) && (*itr) != _unit)) && ((*itr)->GetTypeId()== TYPEID_UNIT || (*itr)->GetTypeId() == TYPEID_PLAYER) && (*itr)->GetInstanceID() == _unit->GetInstanceID()) // isAttackable(_unit, (*itr)) && 
 				{
@@ -1998,9 +1998,9 @@ public:
 	{
 		if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
-			std::vector<Unit*> TargetTable;		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
+			std::vector<Unit*> TargetTable;	*/	/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
 												/* If anyone wants to use this function, then leave this note!										 */
-			for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
+			/*for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
 			{ 
 				if(((spells[i].targettype == TARGET_RANDOM_FRIEND && isFriendly(_unit, (*itr))) || (spells[i].targettype != TARGET_RANDOM_FRIEND && isHostile(_unit, (*itr)) && (*itr) != _unit)) && ((*itr)->GetTypeId()== TYPEID_UNIT || (*itr)->GetTypeId() == TYPEID_PLAYER) && (*itr)->GetInstanceID() == _unit->GetInstanceID()) // isAttackable(_unit, (*itr)) && 
 				{
@@ -2656,9 +2656,9 @@ public:
 	{
 		if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
-			std::vector<Unit*> TargetTable;		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
+			std::vector<Unit*> TargetTable;*/		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
 												/* If anyone wants to use this function, then leave this note!										 */
-			for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
+			/*for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
 			{ 
 				if(((spells[i].targettype == TARGET_RANDOM_FRIEND && isFriendly(_unit, (*itr))) || (spells[i].targettype != TARGET_RANDOM_FRIEND && isHostile(_unit, (*itr)) && (*itr) != _unit)) && ((*itr)->GetTypeId()== TYPEID_UNIT || (*itr)->GetTypeId() == TYPEID_PLAYER) && (*itr)->GetInstanceID() == _unit->GetInstanceID()) // isAttackable(_unit, (*itr)) && 
 				{
@@ -3082,9 +3082,9 @@ public:
 	{
 		if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
-			std::vector<Unit*> TargetTable;		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
+			std::vector<Unit*> TargetTable;*/		/* From M4ksiu - Big THX to Capt who helped me with std stuff to make it simple and fully working <3 */
 												/* If anyone wants to use this function, then leave this note!										 */
-			for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
+			/*for(set<Object*>::iterator itr = _unit->GetInRangeSetBegin(); itr != _unit->GetInRangeSetEnd(); ++itr) 
 			{ 
 				if(((spells[i].targettype == TARGET_RANDOM_FRIEND && isFriendly(_unit, (*itr))) || (spells[i].targettype != TARGET_RANDOM_FRIEND && isHostile(_unit, (*itr)) && (*itr) != _unit)) && ((*itr)->GetTypeId()== TYPEID_UNIT || (*itr)->GetTypeId() == TYPEID_PLAYER) && (*itr)->GetInstanceID() == _unit->GetInstanceID()) // isAttackable(_unit, (*itr)) && 
 				{
@@ -3685,11 +3685,8 @@ public:
     }
 
 protected:
-
 	int nrspells;
 };
-
-// Infernal Siegebreaker AI
 
 class InfernalSiegebreakerAI : public CreatureAIScript
 {
@@ -3719,11 +3716,8 @@ public:
     }
 };
 
-// Fel Soldier AI
-
 #define CUTDOWN 32009
 #define CLEAVE 15496
-
 class FelSoldierAI : public CreatureAIScript
 {
 public:
@@ -3884,7 +3878,6 @@ protected:
 	int nrspells;
 };
 
-// Wrath Master AI
 class WrathMasterAI : public CreatureAIScript
 {
 public:
@@ -3980,30 +3973,30 @@ public:
 protected:
 	uint32 LastWP;
 	uint32 WPStarter;
-};
+};*/
 
 void SetupEventDarkPortal(ScriptMgr* mgr)
 {
 	/* Event Trigger */
-	mgr->register_creature_script(CN_DARK_PORTAL_EVENT_TRIGGER, &DarkPortalEventTrigger::Create);
+	//mgr->register_creature_script(CN_DARK_PORTAL_EVENT_TRIGGER, &DarkPortalEventTrigger::Create);
 
 	/* Horde Units */
-	mgr->register_creature_script(MELGROMM_HIGHMOUNTAIN, &MelGrommHighmountainAI::Create);
+	/*mgr->register_creature_script(MELGROMM_HIGHMOUNTAIN, &MelGrommHighmountainAI::Create);
 	mgr->register_creature_script(ORGRIMMAR_GRUNT, &OrgrimmarGruntAI::Create);
 	mgr->register_creature_script(ORGRIMMAR_SHAMAN, &OrgrimmarShamanAI::Create);
 	mgr->register_creature_script(DARKSPEAR_AXE_THROWER, &DarkspearAxeThrowerAI::Create);
-	mgr->register_creature_script(UNDERCITY_MAGE, &UndercityMageAI::Create);
+	mgr->register_creature_script(UNDERCITY_MAGE, &UndercityMageAI::Create);*/
 
 	/* Alliance Units */
-	mgr->register_creature_script(JUSTINIUS_THE_HARBINGER, &JustiniusTheHarbingerAI::Create);
+	/*mgr->register_creature_script(JUSTINIUS_THE_HARBINGER, &JustiniusTheHarbingerAI::Create);
 	mgr->register_creature_script(STORMWIND_SOLDIER, &StormwindSoldierAI::Create);
 	mgr->register_creature_script(IRONFORGE_PALADIN, &IronforgePaladinAI::Create);
 	mgr->register_creature_script(DARNASSIAN_ARCHER, &DarnassianArcherAI::Create);
-	mgr->register_creature_script(STORMWIND_MAGE, &StormwindMageAI::Create);
+	mgr->register_creature_script(STORMWIND_MAGE, &StormwindMageAI::Create);*/
 
 	/* Demon Units */
-	mgr->register_creature_script(PIT_COMMANDER, &PitCommanderAI::Create);
+	/*mgr->register_creature_script(PIT_COMMANDER, &PitCommanderAI::Create);
 	mgr->register_creature_script(INFERNAL_SIEGEBREAKER, &InfernalSiegebreakerAI::Create);
 	mgr->register_creature_script(FEL_SOLDIER, &FelSoldierAI::Create);
-	mgr->register_creature_script(WRATH_MASTER, &WrathMasterAI::Create);
+	mgr->register_creature_script(WRATH_MASTER, &WrathMasterAI::Create);*/
 }

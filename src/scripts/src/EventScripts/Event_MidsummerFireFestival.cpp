@@ -23,7 +23,7 @@ class MidsummerRibbonPoleAI : public GameObjectAIScript
 {
 public:
 	MidsummerRibbonPoleAI(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-	void OnActivate(Player* pPlayer)
+	/*void OnActivate(Player* pPlayer)
 	{
 		SpellCastTargets ct;
 		Spell* pSpell;
@@ -35,7 +35,7 @@ public:
 		ct.m_targetMask = TARGET_FLAG_OBJECT;
 		pSpell = (new Spell(pPlayer, sp, false, NULLAURA));
 		pSpell->prepare(&ct);
-	}
+	}*/
 };
 
 bool TestRibbonPoleChannel(uint32 i, Aura* pAura, bool apply)
@@ -55,7 +55,7 @@ bool TestRibbonPoleChannel(uint32 i, Aura* pAura, bool apply)
 	return true;
 }
 
-bool TriggerRibbonDance(uint32 i, Spell* pSpell)
+/*bool TriggerRibbonDance(uint32 i, Spell* pSpell)
 {
 	if(pSpell->u_caster != NULL && i == 0)
 	{
@@ -81,13 +81,13 @@ bool TriggerRibbonDance(uint32 i, Spell* pSpell)
 	}
 
 	return true;
-}
+}*/
 
 void SetupEventMidsummerFireFestival(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(181605, &MidsummerRibbonPoleAI::Create);
+	//mgr->register_gameobject_script(181605, &MidsummerRibbonPoleAI::Create);
 	mgr->register_dummy_aura(29727, &TestRibbonPoleChannel);
-	mgr->register_dummy_spell(29715, &TriggerRibbonDance);
+	//mgr->register_dummy_spell(29715, &TriggerRibbonDance);
 
 	// hackfix this
 	SpellEntry* sp = dbcSpell.LookupEntryForced(29715);

@@ -11,29 +11,34 @@ SET( prefix ${SCRIPTS_PATH}/GossipScripts )
 
 set( sources
 	Gossip_ArgentTournament.cpp
+	Gossip_Azshara.cpp
 	Gossip_AzuremystIsle.cpp
 	Gossip_BlastedLands.cpp
+	Gossip_BoreanTundra.cpp
+	Gossip_CrystalsongForest.cpp
 	Gossip_Dalaran.cpp
-	Gossip_Innkeepers.cpp
 	Gossip_Guard.cpp
+	Gossip_Innkeepers.cpp
 	Gossip_Locksmiths.cpp
-	Gossip_Trainer.cpp
+	Gossip_Misc.cpp
+	Gossip_Moonglade.cpp
 	Gossip_Mulgore.cpp
 	Gossip_Shattrath.cpp
-	Gossip_Tanaris.cpp
 	Gossip_Stormwind.cpp
-	Gossip_Moonglade.cpp
-	Gossip_Theramore.cpp
+	Gossip_Tanaris.cpp
 	Gossip_Teldrassil.cpp
+	Gossip_Theramore.cpp
 	Gossip_TheScarletEnclave.cpp
-	Gossip_BoreanTundra.cpp
+	Gossip_Trainer.cpp
 	Gossip_WyrmrestTemple.cpp
 	Gossip_XpEliminator.cpp
+	Gossip_Zangarmarsh.cpp
 	Setup.cpp
 )
 
 SET( headers
-Setup.h )
+	Setup.h
+)
 
 foreach(src IN ITEMS ${sources} )
   SET( SRCS ${SRCS} ${prefix}/${src} )

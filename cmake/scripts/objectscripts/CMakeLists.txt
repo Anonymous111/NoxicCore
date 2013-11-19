@@ -15,7 +15,6 @@ SET( sources
 	Ashenvale.cpp
 	Azshara.cpp
 	AzuremystIsle.cpp
-	Barrens.cpp
 	BlackrockMountain.cpp
 	BladeEdgeMountains.cpp
 	BlastedLands.cpp
@@ -67,9 +66,11 @@ SET( sources
 	Tanaris.cpp
 	Teldrassil.cpp
 	TerokkarForest.cpp
+	TheBarrens.cpp
 	TheFallenKingdom.cpp
 	TheHinterlands.cpp
 	TheScarletEnclave.cpp
+	TheStormPeaks.cpp
 	ThousandNeedles.cpp
 	ThunderBluff.cpp
 	TirisfalGlades.cpp
