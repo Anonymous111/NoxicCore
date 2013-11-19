@@ -28,7 +28,7 @@ public:
     void OnDied(Unit* mKiller)
     {
 		// You're infected now!
-        mKiller->CastSpell( mKiller, 43958, true );
+        mKiller->CastSpell(mKiller, 43958, true);
     }
 };
 
@@ -38,7 +38,7 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(ArgentHealerAI);
 	ArgentHealerAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		RegisterAIUpdateEvent( 15000 );
+		RegisterAIUpdateEvent(15000);
 	}
 
 	void OnDied(Unit* mKiller)
@@ -52,31 +52,30 @@ public:
 		unordered_set<Player*>::iterator itr = _unit->GetInRangePlayerSetBegin();
 		for(; itr != _unit->GetInRangePlayerSetEnd(); ++itr)
 		{
-			Player* plr = (*itr);
+			Player* pPlayer = (*itr);
 			// We've got some plagues to cure, then?
-			if( plr && plr->HasActiveAura( 43958 ) )
+			if(pPlayer && pPlayer->HasActiveAura(43958))
 			{
-				plr->RemoveNegativeAura( 43958 );
+				pPlayer->RemoveNegativeAura(43958);
 				continue;
 			}
 
-			if( plr && plr->GetShapeShift() == FORM_ZOMBIE )
+			if(pPlayer && pPlayer->GetShapeShift() == FORM_ZOMBIE)
 			{
-				plr->RemoveNegativeAura( 43869 );
+				pPlayer->RemoveNegativeAura(43869);
 				continue;
 			}
 		}
 
 		// Now cast Holy Nova for the fancy-looking Argent Healer effect
-		_unit->CastSpell( _unit, 15237, true );
+		_unit->CastSpell(_unit, 15237, true);
 	}
 };
 
 void SetupEventZombie(ScriptMgr* mgr)
-{
-	mgr->register_creature_script( 27845, &PlaguedCritterAI::Create); // Plagued Roach
-	mgr->register_creature_script( 27855, &PlaguedCritterAI::Create); // Plagued Vermin
-
-	mgr->register_creature_script( 27305, &ArgentHealerAI::Create); // Argent Healer (Alliance)
-	mgr->register_creature_script( 31282, &ArgentHealerAI::Create); // Argent Healer (Horde)
+{ // Uncomment the following for the infection to begin
+	/*mgr->register_creature_script(27845, &PlaguedCritterAI::Create); // Plagued Roach
+	mgr->register_creature_script(27855, &PlaguedCritterAI::Create); // Plagued Vermin
+	mgr->register_creature_script(27305, &ArgentHealerAI::Create); // Argent Healer (Alliance)
+	mgr->register_creature_script(31282, &ArgentHealerAI::Create); // Argent Healer (Horde)*/
 }

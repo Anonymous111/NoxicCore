@@ -22,22 +22,20 @@
 class MidsummerRibbonPoleAI : public GameObjectAIScript
 {
 public:
-	MidsummerRibbonPoleAI(GameObject* obj) : GameObjectAIScript(obj) {}
-	void OnActivate(Player*  pPlayer)
+	MidsummerRibbonPoleAI(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	void OnActivate(Player* pPlayer)
 	{
 		SpellCastTargets ct;
-		Spell* ps;
-		SpellEntry *spe = dbcSpell.LookupEntryForced(29727);
-		if( spe == NULL )
+		Spell* pSpell;
+		SpellEntry* sp = dbcSpell.LookupEntryForced(29727);
+		if(sp == NULL)
 			return;
 
 		ct.m_unitTarget = _gameobject->GetGUID();
 		ct.m_targetMask = TARGET_FLAG_OBJECT;
-		ps = (new Spell(pPlayer, spe, false, NULLAURA));
-		ps->prepare(&ct);
+		pSpell = (new Spell(pPlayer, sp, false, NULLAURA));
+		pSpell->prepare(&ct);
 	}
-
-	static GameObjectAIScript *Create(GameObject* obj) { return new MidsummerRibbonPoleAI(obj); }
 };
 
 bool TestRibbonPoleChannel(uint32 i, Aura* pAura, bool apply)
@@ -45,9 +43,9 @@ bool TestRibbonPoleChannel(uint32 i, Aura* pAura, bool apply)
 	if(i == 0)
 	{
 		Unit* pTarget = (Unit*)pAura->GetTarget();
-		if( pTarget != NULL )
+		if(pTarget != NULL)
 		{
-			if( apply )
+			if(apply)
 				pTarget->CastSpell(pTarget, 45406, true);
 			else
 				pTarget->RemoveAura(45406);
@@ -59,17 +57,17 @@ bool TestRibbonPoleChannel(uint32 i, Aura* pAura, bool apply)
 
 bool TriggerRibbonDance(uint32 i, Spell* pSpell)
 {
-	if( pSpell->u_caster != NULL && i == 0 )
+	if(pSpell->u_caster != NULL && i == 0)
 	{
 		Aura* pAura = pSpell->u_caster->FindAura(29175);
-		if( pAura != NULL )
+		if(pAura != NULL)
 		{
 			// increase duration by 3 minutes, capping at 60 minutes
 			uint32 dur = pAura->GetDuration() / 1000;
-			if( dur < (TIME_MINUTE * 60) )
+			if(dur < (TIME_MINUTE * 60))
 			{
 				dur += (TIME_MINUTE * 3);
-				if( dur >= (TIME_MINUTE * 60) )
+				if(dur >= (TIME_MINUTE * 60))
 					dur = (TIME_MINUTE * 60);
 
 				pAura->SetTimeLeft(dur * 1000);
@@ -93,7 +91,7 @@ void SetupEventMidsummerFireFestival(ScriptMgr* mgr)
 
 	// hackfix this
 	SpellEntry* sp = dbcSpell.LookupEntryForced(29715);
-	if(sp != NULL )
+	if(sp != NULL)
 	{
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->EffectImplicitTargetA[1] = 0;

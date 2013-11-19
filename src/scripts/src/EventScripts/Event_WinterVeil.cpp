@@ -25,26 +25,26 @@
 
 class PX238WinterWondervolt : public GameObjectAIScript
 {
-	public:
-		PX238WinterWondervolt(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
+public:
+	PX238WinterWondervolt(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
 
-		void OnSpawn()
+	void OnSpawn()
+	{
+		RegisterAIUpdateEvent(1);
+	}
+
+	void AIUpdate()
+	{
+		Player* pPlayer = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
+		if(!pPlayer)
+			return;
+
+		if(_gameobject->CalcDistance(_gameobject, pPlayer) <= 1.050000f && !pPlayer->HasAura(26274)) // aura given by the PX-238 Winter Wondervolt
 		{
-			RegisterAIUpdateEvent(1);
+			pPlayer->CastSpell(pPlayer, 26275 , true); // Spell that change into random gnome dispalyid (respect male & female)
 		}
-
-		void AIUpdate()
-		{
-			Player* plr = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
-			if(!plr)
-				return;
-
-			if(_gameobject->CalcDistance(_gameobject, plr) <= 1.050000f && !plr->HasAura(26274))       // aura given by the PX-238 Winter Wondervolt
-			{
-				plr->CastSpell(plr, 26275 , true);   // Spell that change into random gnome dispalyid (respect male & female)
-			}
-		}
+	}
 };
 
 void WinterReveler(Player* pPlayer, Unit* pUnit)
@@ -99,9 +99,9 @@ void WinterReveler(Player* pPlayer, Unit* pUnit)
 		}
 		else
 		{
-			Item* itm = objmgr.CreateItem(Winteritem, pPlayer);
-			itm->SetStackCount(5);
-			pPlayer->GetItemInterface()->SafeAddItem(itm, slotresult.ContainerSlot, slotresult.Slot);
+			Item* pItem = objmgr.CreateItem(Winteritem, pPlayer);
+			pItem->SetStackCount(5);
+			pPlayer->GetItemInterface()->SafeAddItem(pItem, slotresult.ContainerSlot, slotresult.Slot);
 			pUnit->CastSpell(pPlayer, 26218, true);
 		}
 	}

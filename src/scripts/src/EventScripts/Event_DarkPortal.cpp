@@ -416,6 +416,7 @@ struct SCoords AHSPoints[]=
 #define CN_DARK_PORTAL_EVENT_TRIGGER 18625
 #define SUMMON_INFERNALS	33393
 #define SUMMON_INFERNALS2	33240
+
 class DarkPortalEventTrigger : public CreatureAIScript
 {
 public:
@@ -617,7 +618,7 @@ public:
 		// After 3 seconds of casting spells to summon infernals we spawn them manually
 		if(InfernalSpawn == SUMMON_INFERNAL_TIME-3 && _Infernals)
 		{
-			Creature *pInfernal;
+			Creature* pInfernal;
 			pInfernal = _unit->GetMapMgr()->GetInterface()->SpawnCreature(INFERNAL_SIEGEBREAKER, Infernals[LastInfernal].x, Infernals[LastInfernal].y, Infernals[LastInfernal].z, Infernals[LastInfernal].o, true, false, 0, 0);
 			InfernalTable.push_back(pInfernal);
 
@@ -659,7 +660,7 @@ public:
 	void AHSpecialUnitChecks()
 	{
 		// We get Commander unit
-		Unit *pCommander = NULL;
+		Unit* pCommander = NULL;
 		pCommander = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(AHChecks[0].x, AHChecks[0].y, AHChecks[0].z, COMMANDER_DURON);
 
 		// We check if Commander is in world, is alive, is in combat and if Justinius isn't already spawned
@@ -673,7 +674,7 @@ public:
 		}
 
 		// We get Lieutenant unit
-		Unit *pLieutenant = NULL;
+		Unit* pLieutenant = NULL;
 		pLieutenant = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(AHChecks[1].x, AHChecks[1].y, AHChecks[1].z, LIEUTENANT_GENERAL_ORION);	
 
 		// We check if Lieutenant is in world, is alive, is in combat and if Melgromm isn't already spawned
@@ -1382,12 +1383,11 @@ protected:
 	bool Ressed;
 	bool Ress;
 
-	Unit *pAlliance;
-	Unit *pHorde;
-	Unit *pJusti;
-	Unit *pMelgr;
+	Unit* pAlliance;
+	Unit* pHorde;
+	Unit* pJusti;
+	Unit* pMelgr;
 };
-
 
 //=====================================================================================//
 //===================================Horde Units=======================================//
@@ -1413,7 +1413,7 @@ public:
     MelGrommHighmountainAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 5;
-		for(int i=0;i<nrspells;i++)
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
 
 		spells[0].info = dbcSpell.LookupEntry(EARTH_SHOCK);
@@ -1487,7 +1487,7 @@ public:
 		// Can't find his OnCombatStart sound id - _unit->PlaySoundToSet(?); 
 	}
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -1497,7 +1497,7 @@ public:
         OCStop++;
 		if(OCStop >= 2 && RandomUInt(2) == 1)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The attackers shall not succeed!  Strength and honor to the Horde!");
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The attackers shall not succeed! Strength and honor to the Horde!");
 
 			OCStop = 0;
 		}
@@ -1509,7 +1509,7 @@ public:
 			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
 		RemoveAIUpdateEvent();
     }
@@ -1525,8 +1525,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -1594,7 +1594,7 @@ public:
 
 			size_t RandTarget = rand()%TargetTable.size();
 
-			Unit * RTarget = TargetTable[RandTarget];
+			Unit* RTarget = TargetTable[RandTarget];
 
 			if(!RTarget)
 				return;
@@ -1650,7 +1650,8 @@ public:
 			wp->o = HWP[id].o;
 		}
 
-		if(id == 10) waittime = 3000;
+		if(id == 10)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -1664,7 +1665,6 @@ public:
     }
 
 protected:
-
 	uint32 LastWP;
 	uint32 OCStop;
 	int nrspells;
@@ -1684,10 +1684,8 @@ public:
     OrgrimmarGruntAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 1;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(IRON_BITE);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -1715,9 +1713,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 12; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -1727,7 +1723,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -1737,10 +1733,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 10)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -1759,8 +1756,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -1801,12 +1798,12 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 10:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
-			break;
-		case 11:
-			_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 375);
-			break;
+			case 10:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
+				break;
+			case 11:
+				_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 375);
+				break;
 		}
 	}
 
@@ -1829,7 +1826,8 @@ public:
 			wp->o = HWP[id].o;
 		}
 
-		if(id == 10) waittime = 3000;
+		if(id == 10)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -1843,7 +1841,6 @@ public:
     }
 
 protected:
-
 	uint32 LastWP;
 	uint32 FormationWP;
 	int nrspells;
@@ -1866,10 +1863,8 @@ public:
     OrgrimmarShamanAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 4;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(OS_FLAME_SHOCK);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -1918,9 +1913,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 12; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -1930,7 +1923,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -1940,10 +1933,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 10)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -1959,8 +1953,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -2014,9 +2008,7 @@ public:
 					RandomTarget = (Unit*)(*itr);
 
 					if(RandomTarget->isAlive() && _unit->GetDistance2dSq(RandomTarget) <= distance*distance && ((RandomTarget->GetHealthPct() <= health && spells[i].targettype == TARGET_RANDOM_FRIEND) || (_unit->GetAIInterface()->getThreatByPtr(RandomTarget) > 0 && isHostile(_unit, RandomTarget))))
-					{
 						TargetTable.push_back(RandomTarget);
-					} 
 				} 
 			}
 
@@ -2028,20 +2020,20 @@ public:
 
 			size_t RandTarget = rand()%TargetTable.size();
 
-			Unit * RTarget = TargetTable[RandTarget];
+			Unit* RTarget = TargetTable[RandTarget];
 
 			if(!RTarget)
 				return;
 
 			switch (spells[i].targettype)
 			{
-			case TARGET_RANDOM_FRIEND:
-			case TARGET_RANDOM_SINGLE:
-				_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
-							break;
-			case TARGET_RANDOM_DESTINATION:
-				_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+				case TARGET_RANDOM_FRIEND:
+				case TARGET_RANDOM_SINGLE:
+					_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
+				break;
+				case TARGET_RANDOM_DESTINATION:
+					_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
+				break;
 			}
 
 			TargetTable.clear();
@@ -2054,11 +2046,11 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 10:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 10:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
-		case 11:
-			_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
+			case 11:
+				_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
 			break;
 		}
 	}
@@ -2082,7 +2074,8 @@ public:
 			wp->o = HWP[id].o;
 		}
 
-		if(id == 10) waittime = 3000;
+		if(id == 10)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -2116,10 +2109,8 @@ public:
     DarkspearAxeThrowerAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 1;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(THROW);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -2146,9 +2137,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 12; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -2164,7 +2153,7 @@ public:
 		RegisterAIUpdateEvent(1500);
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -2174,10 +2163,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 10)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -2204,8 +2194,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -2218,13 +2208,13 @@ public:
 						case TARGET_SELF:
 						case TARGET_VARIOUS:
 							_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_ATTACKING:
 							_unit->CastSpell(target, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_DESTINATION:
 							_unit->CastSpellAoF(target->GetPositionX(),target->GetPositionY(),target->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+						break;
 					}
 					m_spellcheck[i] = false;
 					return;
@@ -2246,8 +2236,8 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 10:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 10:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
 		}
 	}
@@ -2271,7 +2261,8 @@ public:
 			wp->o = HWP[id].o;
 		}
 
-		if(id == 10) waittime = 3000;
+		if(id == 10)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -2307,10 +2298,8 @@ public:
     UndercityMageAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 3;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(ICEBOLT);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -2349,9 +2338,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 12; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -2367,7 +2354,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -2377,10 +2364,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 10)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -2407,8 +2395,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -2449,11 +2437,11 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 10:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 10:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
-		case 11:
-			_unit->SetFacing(HCWP[FormationWP].o);
+			case 11:
+				_unit->SetFacing(HCWP[FormationWP].o);
 			break;
 		}
 	}
@@ -2477,7 +2465,8 @@ public:
 			wp->o = HWP[id].o;
 		}
 
-		if(id == 10) waittime = 3000;
+		if(id == 10)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -2519,10 +2508,8 @@ public:
     JustiniusTheHarbingerAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 5;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(FLASH_OF_LIGHT);
 		spells[0].targettype = TARGET_RANDOM_FRIEND;
@@ -2586,7 +2573,7 @@ public:
 		_unit->PlaySoundToSet(9705); 
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -2604,10 +2591,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 9)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -2623,8 +2611,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -2637,18 +2625,18 @@ public:
 						case TARGET_SELF:
 						case TARGET_VARIOUS:
 							_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_ATTACKING:
 							_unit->CastSpell(target, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_DESTINATION:
 							_unit->CastSpellAoF(target->GetPositionX(),target->GetPositionY(),target->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_RANDOM_FRIEND:
 						case TARGET_RANDOM_SINGLE:
 						case TARGET_RANDOM_DESTINATION:
 							CastSpellOnRandomTarget(i, spells[i].maxdist2cast, spells[i].minhp2cast);
-							break;
+						break;
 					}
 					m_spellcheck[i] = false;
 					return;
@@ -2692,20 +2680,20 @@ public:
 
 			size_t RandTarget = rand()%TargetTable.size();
 
-			Unit * RTarget = TargetTable[RandTarget];
+			Unit* RTarget = TargetTable[RandTarget];
 
 			if(!RTarget)
 				return;
 
 			switch (spells[i].targettype)
 			{
-			case TARGET_RANDOM_FRIEND:
-			case TARGET_RANDOM_SINGLE:
-				_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
-							break;
-			case TARGET_RANDOM_DESTINATION:
-				_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+				case TARGET_RANDOM_FRIEND:
+				case TARGET_RANDOM_SINGLE:
+					_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
+				break;
+				case TARGET_RANDOM_DESTINATION:
+					_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
+				break;
 			}
 
 			TargetTable.clear();
@@ -2717,11 +2705,11 @@ public:
 		LastWP = iWaypointId;
 		switch (iWaypointId)
 		{
-		case 9:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 9:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
-		case 10:
-			_unit->SetFacing(SWP[0].o);	// bugs pos a bit
+			case 10:
+				_unit->SetFacing(SWP[0].o);	// bugs pos a bit
 			break;
 		}
 	}
@@ -2747,7 +2735,8 @@ public:
 			wp->o = AWP[id].o;
 		}
 
-		if(id == 9) waittime = 3000;
+		if(id == 9)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -2782,10 +2771,8 @@ public:
     StormwindSoldierAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 2;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(STRIKE);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -2818,9 +2805,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 11; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -2830,7 +2815,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -2840,10 +2825,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 9)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -2859,8 +2845,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -2873,13 +2859,13 @@ public:
 						case TARGET_SELF:
 						case TARGET_VARIOUS:
 							_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_ATTACKING:
 							_unit->CastSpell(target, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_DESTINATION:
 							_unit->CastSpellAoF(target->GetPositionX(),target->GetPositionY(),target->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+						break;
 					}
 					m_spellcheck[i] = false;
 					return;
@@ -2901,11 +2887,11 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 9:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 9:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
-		case 10:
-			_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
+			case 10:
+				_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
 			break;
 		}
 	}
@@ -2930,7 +2916,8 @@ public:
 			wp->o = AWP[id].o;
 		}
 
-		if(id == 9) waittime = 3000;
+		if(id == 9)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -2966,10 +2953,8 @@ public:
     IronforgePaladinAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 3;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(SEAL_OF_SACRIFICE);
 		spells[0].targettype = TARGET_RANDOM_FRIEND;
@@ -3012,9 +2997,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 11; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -3024,7 +3007,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3034,10 +3017,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 9)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -3053,8 +3037,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -3067,18 +3051,18 @@ public:
 						case TARGET_SELF:
 						case TARGET_VARIOUS:
 							_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_ATTACKING:
 							_unit->CastSpell(target, spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_DESTINATION:
 							_unit->CastSpellAoF(target->GetPositionX(),target->GetPositionY(),target->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+						break;
 						case TARGET_RANDOM_FRIEND:
 						case TARGET_RANDOM_SINGLE:
 						case TARGET_RANDOM_DESTINATION:
 							CastSpellOnRandomTarget(i, spells[i].maxdist2cast, spells[i].minhp2cast);
-							break;
+						break;
 					}
 					m_spellcheck[i] = false;
 					return;
@@ -3122,20 +3106,20 @@ public:
 
 			size_t RandTarget = rand()%TargetTable.size();
 
-			Unit * RTarget = TargetTable[RandTarget];
+			Unit* RTarget = TargetTable[RandTarget];
 
 			if(!RTarget)
 				return;
 
 			switch (spells[i].targettype)
 			{
-			case TARGET_RANDOM_FRIEND:
-			case TARGET_RANDOM_SINGLE:
-				_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
-							break;
-			case TARGET_RANDOM_DESTINATION:
-				_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
-							break;
+				case TARGET_RANDOM_FRIEND:
+				case TARGET_RANDOM_SINGLE:
+					_unit->CastSpell(RTarget, spells[i].info, spells[i].instant);
+				break;
+				case TARGET_RANDOM_DESTINATION:
+					_unit->CastSpellAoF(RTarget->GetPositionX(), RTarget->GetPositionY(), RTarget->GetPositionZ(), spells[i].info, spells[i].instant);
+				break;
 			}
 
 			TargetTable.clear();
@@ -3148,11 +3132,11 @@ public:
 
 		switch (iWaypointId)
 		{
-		case 9:
-			_unit->Emote(EMOTE_ONESHOT_SALUTE);
+			case 9:
+				_unit->Emote(EMOTE_ONESHOT_SALUTE);
 			break;
-		case 10:
-			_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
+			case 10:
+				_unit->SetUInt32Value(UNIT_NPC_EMOTESTATE, 45);
 			break;
 		}
 	}
@@ -3175,7 +3159,9 @@ public:
 			wp->z = AWP[id].z;
 			wp->o = AWP[id].o;
 		}
-		if(id == 9) waittime = 3000;
+
+		if(id == 9)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -3189,7 +3175,6 @@ public:
     }
 
 protected:
-
 	uint32 LastWP;
 	uint32 FormationWP;
 	int nrspells;
@@ -3209,10 +3194,8 @@ public:
     DarnassianArcherAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 1;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(SHOOT);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -3239,9 +3222,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 11; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -3257,7 +3238,7 @@ public:
 		RegisterAIUpdateEvent(1500);
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3267,10 +3248,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 9)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -3297,8 +3279,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -3365,7 +3347,8 @@ public:
 			wp->o = AWP[id].o;
 		}
 
-		if(id == 9) waittime = 3000;
+		if(id == 9)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -3401,10 +3384,8 @@ public:
     StormwindMageAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 3;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(SM_FIREBALL);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -3443,9 +3424,7 @@ public:
 				FormationWP = i;
 
 				for(uint32 x = 1; x < 11; x++)
-				{
 					_unit->GetAIInterface()->addWayPoint(CreateWaypoint(x, 0, RUN));
-				}
 			}
 		}
     }
@@ -3461,7 +3440,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3471,10 +3450,11 @@ public:
 		_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
 		if(LastWP < 9)
 			_unit->GetAIInterface()->setWaypointToMove(LastWP+1);
-		else _unit->GetAIInterface()->setWaypointToMove(LastWP);
+		else
+			_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -3501,8 +3481,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -3571,7 +3551,8 @@ public:
 			wp->o = AWP[id].o;
 		}
 	
-		if(id == 9) waittime = 3000;
+		if(id == 9)
+			waittime = 3000;
 
         wp->waittime = waittime;
         wp->flags = flags;
@@ -3611,10 +3592,8 @@ public:
     PitCommanderAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 3;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(RAIN_OF_FIRE);
 		spells[0].targettype = TARGET_DESTINATION;
@@ -3642,7 +3621,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3650,7 +3629,7 @@ public:
         RemoveAIUpdateEvent();
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -3669,8 +3648,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -3731,7 +3710,7 @@ public:
 		}
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
 		_unit->GetAIInterface()->MoveTo(_unit->GetPositionX(), _unit->GetPositionY() + 3.0f, _unit->GetPositionZ(), _unit->GetOrientation());
 
@@ -3755,10 +3734,8 @@ public:
     FelSoldierAI(Creature* pCreature) : CreatureAIScript(pCreature)
     {
 		nrspells = 2;
-		for(int i=0;i<nrspells;i++)
-		{
+		for(int i = 0; i < nrspells; i++)
 			m_spellcheck[i] = false;
-		}
 
 		spells[0].info = dbcSpell.LookupEntry(CUTDOWN);
 		spells[0].targettype = TARGET_ATTACKING;
@@ -3798,7 +3775,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3811,7 +3788,7 @@ public:
 		_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
@@ -3830,8 +3807,8 @@ public:
         if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->GetNextTarget())
         {
 			float comulativeperc = 0;
-		    Unit *target = NULL;
-			for(int i=0;i<nrspells;i++)
+		    Unit* target = NULL;
+			for(int i = 0; i < nrspells; i++)
 			{
 				if(!spells[i].perctrigger)
 					continue;
@@ -3941,7 +3918,7 @@ public:
 		RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
     }
 
-    void OnCombatStop(Unit *mTarget)
+    void OnCombatStop(Unit* mTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
@@ -3954,7 +3931,7 @@ public:
 		_unit->GetAIInterface()->setWaypointToMove(LastWP);
     }
 
-    void OnDied(Unit * mKiller)
+    void OnDied(Unit* mKiller)
     {
        RemoveAIUpdateEvent();
     }
