@@ -19,32 +19,42 @@
 
 #include "Setup.h"
 
-/*void GuardsOnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
+class Kaliri : public CreatureAIScript
 {
-	if(Emote == EMOTE_ONESHOT_KISS)
-		Emote = EMOTE_ONESHOT_BOW;
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Kaliri);
+		Kaliri(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-	if(RandomUInt(100) <= 33 && pPlayer->GetStandingRank(pUnit->m_factionDBC->ID) >= STANDING_FRIENDLY)
-		pUnit->Emote(static_cast<EmoteType>(Emote));
-}
+		void OnLoad()
+		{
+			_unit->SetFaction(35);
+		}
+};
 
-void OnEmote(Player* pPlayer, Unit* pUnit, uint32 Emote)
+#define QUEST_CLUCK		 3861
+#define ITEM_CHICKEN_FEED   11109
+
+class Chicken : public CreatureAIScript
 {
-	if(!pUnit || pUnit->IsDead() || pUnit->CombatStatus.IsInCombat() || !pUnit->GetAIInterface())
-		return;
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Chicken);
+		Chicken(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-	switch(Emote)
-	{
-		case EMOTE_ONESHOT_SALUTE:
-		case EMOTE_ONESHOT_WAVE:
-		case EMOTE_ONESHOT_KISS:
-			if(pUnit->GetAIInterface()->m_isGuard)
-				GuardsOnEmote(pPlayer, pUnit, Emote);
-			break;
-	}
-}
+		void OnLoad()
+		{
+			_unit->SetFaction(12);
+			_unit->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+			RegisterAIUpdateEvent(120000);
+		}
 
-class ArmyofDeadGhoul : public CreatureAIScript
+		void AIUpdate()
+		{
+			if(_unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
+				OnLoad();
+		}
+};
+
+/*class ArmyofDeadGhoul : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(ArmyofDeadGhoul)
@@ -617,199 +627,15 @@ void OnTransporterUpdate(Transporter* pTransporter, bool delayed)
 	}
 }*/
 
-/* Zeppelin Masters */
-
-/*class OG_UC_Gossip : public GossipScript
-{
-public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
-	{
-		GossipMenu* Menu;
-
-		uint32 textid = 1;
-		switch(pObject->GetEntry())
-		{
-			case ZAPETTA: textid = 2644; break;
-			case FREZZA: textid = 2642; break;
-			case KRAXX: textid = 11234; break;
-			case KRIXX: textid = 11189; break;
-		}
-
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, Plr);
-		Menu->AddItem(0, "Where is the zeppelin now?", 1);
-		Menu->SendTo(Plr);
-	}
-
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char *EnteredCode)
-	{
-		Transporter* pTransporter = objmgr.GetTransporterByEntry(THUNDERCALLER);
-		if(!pTransporter)
-			return;
-
-		GossipMenu* Menu = NULL;
-
-		uint32 mapid = pTransporter->GetMapId();
-
-		switch(pTransporter->state)
-		{
-			case TRANSPORTER_STATE_JUST_CHANGED_MAP:
-			{
-				if(mapid == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11170, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11182, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_ARRIVED_TO_DOCKING:
-			{
-				if(mapid == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11173, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11169, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_DEPARTED_FROM_DOCKING:
-			{
-				if(mapid == 1) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11170, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11182, Plr);
-			}break;
-		}
-
-		if(Menu)
-			Menu->SendTo(Plr);
-	}
-};
-
-class OG_GG_Gossip : public GossipScript
-{
-public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
-	{
-		GossipMenu* Menu;
-
-		uint32 textid = 1;
-		switch(pObject->GetEntry())
-		{
-			case SNURK: textid = 4693; break;
-			case NEZRAZ: textid = 2644; break;
-		}
-
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, Plr);
-		Menu->AddItem(0, "Where is the zeppelin now?", 1);
-		Menu->SendTo(Plr);
-	}
-
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-	{
-		Transporter* pTransporter = objmgr.GetTransporterByEntry(IRONEAGLE);
-		if(!pTransporter)
-			return;
-
-		GossipMenu* Menu = NULL;
-
-		uint32 mapid = pTransporter->GetMapId();
-
-		switch(pTransporter->state)
-		{
-			case TRANSPORTER_STATE_JUST_CHANGED_MAP:
-			{
-				if(mapid == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11170, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11172, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_ARRIVED_TO_DOCKING:
-			{
-				if(mapid == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11167, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11169, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_DEPARTED_FROM_DOCKING:
-			{
-				if(mapid == 1) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11170, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11172, Plr);
-			}break;
-		}
-
-		if(Menu)
-			Menu->SendTo(Plr);
-	}
-};
-
-class UC_GG_Gossip : public GossipScript
-{
-public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
-	{
-		GossipMenu* Menu;
-
-		uint32 textid = 1;
-		switch(pObject->GetEntry())
-		{
-			case OVERSPECK: textid = 2642; break;
-			case HINDENBURG: textid = 2753; break;
-		}
-
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, Plr);
-		Menu->AddItem(0, "Where is the zeppelin now?", 1);
-		Menu->SendTo(Plr);
-	}
-
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-	{
-		Transporter* pTransporter = objmgr.GetTransporterByEntry(PURPLEPRINCESS);
-		if(!pTransporter)
-			return;
-
-		GossipMenu* Menu = NULL;
-
-		// special case, this transporter is still on 1 map, so we must check by position
-		float x = pTransporter->GetPositionX();
-		float y = pTransporter->GetPositionY();
-		float z = pTransporter->GetPositionZ();
-
-		switch(pTransporter->state)
-		{
-			
-			case TRANSPORTER_STATE_JUST_CHANGED_MAP:
-			{
-				if(0 == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11175, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11181, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_ARRIVED_TO_DOCKING:
-			{
-				if(0 == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11180, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11179, Plr);
-			}break;
-			case TRANSPORTER_STATE_JUST_DEPARTED_FROM_DOCKING:
-			{
-				if(0 == 0) 
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11181, Plr);
-				else
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11175, Plr);
-			}break;
-		}
-
-		if(Menu)
-			Menu->SendTo(Plr);
-	}
-};*/
-
 void SetupZoneMisc(ScriptMgr* mgr)
 {
-	/*mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&OnEmote);
-	mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create); // Army of the Dead Ghoul
-	mgr->register_creature_script(8506, &EranikusTheChained::Create); // Eranikus the Chained
-
 	// Main script used for Zeppelin Masters
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_TRANSPORTER_UPDATE, (void*)&OnTransporterUpdate);
+	//mgr->register_hook(SERVER_HOOK_EVENT_ON_TRANSPORTER_UPDATE, (void*)&OnTransporterUpdate);
+
+	mgr->register_creature_script(21468, &Kaliri::Create);
+	mgr->register_creature_script(620, &Chicken::Create);
+	/*mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create); // Army of the Dead Ghoul
+	mgr->register_creature_script(8506, &EranikusTheChained::Create); // Eranikus the Chained
 
 	// Zeppelin Thundercaller
 	mgr->register_creature_script(CLOUDKICKER, &Cloudkicker::Create);
@@ -829,15 +655,5 @@ void SetupZoneMisc(ScriptMgr* mgr)
 	// Zeppelin the Iron Eagle
 	mgr->register_creature_script(FASTWRENCH, &Zepp_Worker::Create);
 	mgr->register_creature_script(GAZZLEGEAR, &Zepp_Worker::Create);
-	mgr->register_creature_script(CROSSWIRE, &Zepp_Worker::Create);
-
-	// Zepplin Masters
-	mgr->register_gossip_script(ZAPETTA, new OG_UC_Gossip());
-	mgr->register_gossip_script(FREZZA, new OG_UC_Gossip());
-	mgr->register_gossip_script(KRIXX, new OG_UC_Gossip());
-	mgr->register_gossip_script(KRAXX, new OG_UC_Gossip());
-	mgr->register_gossip_script(SNURK, new OG_GG_Gossip());
-	mgr->register_gossip_script(NEZRAZ, new OG_GG_Gossip());
-	mgr->register_gossip_script(OVERSPECK, new UC_GG_Gossip());
-	mgr->register_gossip_script(HINDENBURG, new UC_GG_Gossip());*/
+	mgr->register_creature_script(CROSSWIRE, &Zepp_Worker::Create);*/
 }

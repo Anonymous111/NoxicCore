@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,29 +19,30 @@
 
 #include "Setup.h"
 
-class Professor_Phizzlethorpe : public CreatureAIScript
+class Paoka_Swiftmountain : public CreatureAIScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe);
-		Professor_Phizzlethorpe(Creature* pCreature) : CreatureAIScript(pCreature) {}
+		ADD_CREATURE_FACTORY_FUNCTION(Paoka_Swiftmountain);
+		Paoka_Swiftmountain(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
-			if(iWaypointId == 15)
+			if(iWaypointId == 72)
 			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched");
+				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I appreciate the help you have shown Pao'ka. I hope this covers any misfortunes this deed has cost you.");
 				_unit->Despawn(5000, 1000);
 				sEAS.DeleteWaypoints(_unit);
 				if(_unit->m_escorter == NULL)
 					return;
 				Player* plr = _unit->m_escorter;
 				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(665)->SendQuestComplete();
+				if(plr->GetQuestLogForEntry(4770))
+					plr->GetQuestLogForEntry(4770)->SendQuestComplete();
 			}
 		}
 };
 
-void SetupZoneArathiHighlands(ScriptMgr* mgr)
+void SetupZoneThousandNeedles(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(2768, &Professor_Phizzlethorpe::Create);
+	mgr->register_creature_script(10427, &Paoka_Swiftmountain::Create);
 }

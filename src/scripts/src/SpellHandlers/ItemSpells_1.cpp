@@ -951,6 +951,101 @@ bool X53Mount( uint32 i, Aura *a, bool apply ){
 	return true;
 }
 
+bool WinterWondervoltAura(uint32 i, Aura* pAura, bool apply)
+{
+        Unit* u_caster = pAura->GetUnitCaster();
+
+        if(!u_caster || !u_caster->IsPlayer())
+			return true;
+
+        if(apply)
+        {
+                uint32 displayId;
+                uint32 chance = RandomUInt(7);
+
+                if(u_caster->getGender() == 1)
+					displayId = 15795 + chance; // female 0-7
+                else if(chance == 0)
+					displayId = 15687; // male   0
+                else
+					displayId = 15802 + chance; // male   1-7
+
+                u_caster->SetUInt32Value(UNIT_FIELD_DISPLAYID, displayId);
+        }
+        else
+                u_caster->SetUInt32Value(UNIT_FIELD_DISPLAYID, u_caster->GetUInt32Value(UNIT_FIELD_NATIVEDISPLAYID));
+
+        return true;
+}
+
+bool DeadlyThrowDummyEffect(uint32 i, Spell* pSpell)
+{
+        Unit* target = pSpell->GetUnitTarget();
+        if(!target) return true;
+
+        if(pSpell->m_caster->IsPlayer() && TO_PLAYER(pSpell->m_caster)->HasAura(32748))
+                pSpell->SpellEffectInterruptCast(i);
+
+        return true;
+}
+
+bool SummonCritterDummy(uint32 i, Spell* pSpell)
+{
+        // the reason these spells have to be scripted is because they require a
+        // reagent to summon the critter pet, but don't require one to dismiss it
+
+        if(!pSpell->p_caster)
+			return true;
+
+        uint32 currentCritterID = 0;
+/*
+        if(pSpell->p_caster->critterPet && pSpell->p_caster->critterPet->GetCreatureName())
+                currentCritterID = pSpell->p_caster->critterPet->GetCreatureName()->Id;
+
+        uint32 newspell = 0;
+
+        switch(pSpell->m_spellInfo->Id)
+        {
+                case 26469: // Snowman Kit
+                {
+                        if(currentCritterID == 15710) // do we already have this critter summoned?
+                                newspell = 26468; // if so, dismiss it
+                        else
+                                newspell = 26045; // otherwise summon it
+                }       break;
+
+                case 26528: // Jingling Bell
+                {
+                        if(currentCritterID == 15706) // do we already have this critter summoned?
+                                newspell = 26530; // if so, dismiss it
+                        else
+                                newspell = 26529; // otherwise summon it
+                }       break;
+
+                case 26532: // Green Helper Box
+                {
+                        if(currentCritterID == 15698) // do we already have this critter summoned?
+                                newspell = 26534; // if so, dismiss it
+                        else
+                                newspell = 26533; // otherwise summon it
+                }       break;
+
+                case 26541: // Red Helper Box
+                {
+                        if(currentCritterID == 15705) // do we already have this critter summoned?
+                                newspell = 26537; // if so, dismiss it
+                        else
+                                newspell = 26536; // otherwise summon it
+                }       break;
+        }
+
+        SpellEntry* spInfo = dbcSpell.LookupEntry(newspell);
+        if(!spInfo) return true;
+
+        pSpell->p_caster->CastSpell(pSpell->p_caster, spInfo, false); // these spells have to check items, so "triggeredspell" must be false*/
+        return true;
+}
+
 // ADD NEW FUNCTIONS ABOVE THIS LINE
 // *****************************************************************************
 
@@ -1034,7 +1129,12 @@ void SetupItemSpells_1(ScriptMgr* mgr)
 	};
 	mgr->register_dummy_aura(DrinkDummySpellIDs, &DrinkDummyAura);
 	mgr->register_dummy_aura(75973, &X53Mount);
-
+	mgr->register_dummy_aura(26274, &WinterWondervoltAura); // PX-238 Winter Wondervolt Transform Aura
+	mgr->register_dummy_spell(26679, &DeadlyThrowDummyEffect);
+	mgr->register_dummy_spell(26469, &SummonCritterDummy); // Snowman Kit
+	mgr->register_dummy_spell(26528, &SummonCritterDummy); // Jingling Bell
+	mgr->register_dummy_spell(26532, &SummonCritterDummy); // Green Helper Box
+	mgr->register_dummy_spell(26541, &SummonCritterDummy); // Red Helper Box
 
 // REGISTER NEW DUMMY SPELLS ABOVE THIS LINE
 // *****************************************************************************

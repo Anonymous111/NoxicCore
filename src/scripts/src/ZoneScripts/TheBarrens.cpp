@@ -22,7 +22,7 @@
 class SavannahProwler : public CreatureAIScript
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(SavannahProwler)
+	ADD_CREATURE_FACTORY_FUNCTION(SavannahProwler);
 	SavannahProwler(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnLoad()
@@ -30,7 +30,7 @@ public:
 		uint8 chance = RandomUInt(3);
 
 		if(chance == 1)
-			_unit->SetStandState(STANDSTATE_SLEEP);
+			_unit->SetStandState(STANDSTATE_SLEEP); 
 	}
 
 	void OnCombatStart(Unit* pTarget)
@@ -38,9 +38,90 @@ public:
 		if(_unit->GetStandState() == STANDSTATE_SLEEP)
 			_unit->SetStandState(0);
 	}
+
+	void Destroy()
+	{
+		delete this;
+	}
+
+	//static CreatureAIScript* Create(Creature* pCreature) { return new SavannahProwler(pCreature); }
+};
+
+class Gilthares_Firebough : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Gilthares_Firebough);
+	Gilthares_Firebough(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 100)
+		{
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Finally, I am rescued");
+			_unit->Despawn(5000,1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
+			Player* plr = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			plr->GetQuestLogForEntry(898)->SendQuestComplete();
+		}
+	}
+};
+
+class Wizzlecranks_Shredder : public CreatureAIScript
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Wizzlecranks_Shredder);
+		Wizzlecranks_Shredder(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+		void OnReachWP(uint32 iWaypointId, bool bForwards)
+		{
+			if(iWaypointId == 195)
+			{
+				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thank you Young warior!");
+				_unit->Despawn(5000, 1000);
+				sEAS.DeleteWaypoints(_unit);
+				if(_unit->m_escorter == NULL)
+					return;
+				Player* plr = _unit->m_escorter;
+				_unit->m_escorter = NULL;
+				plr->GetQuestLogForEntry(863)->SendQuestComplete();
+			}
+		}
+};
+
+int kolkarskilled = 0;
+class VerogtheDervish : public CreatureAIScript
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(VerogtheDervish);
+		VerogtheDervish(Creature* pCreature) : CreatureAIScript(pCreature) {}
+		void OnDied(Unit* mKiller)
+		{
+			kolkarskilled++;
+			if(mKiller->IsPlayer())
+			{
+				Player* mPlayer = TO_PLAYER(mKiller);
+
+				if(kolkarskilled > 8 && mPlayer->GetQuestLogForEntry(851))
+				{
+					_unit->GetMapMgr()->GetInterface()->SpawnCreature(3395, -1209.8f, -2729.84f, 106.33f, 4.8f, true, false, 0, 0)->Despawn(600000, 0);
+					kolkarskilled = 0;
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am slain! Summon Verog!");
+				}
+			}
+		}
+
 };
 
 void SetupZoneTheBarrens(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(3425, &SavannahProwler::Create); // Savannah Prowler
+	mgr->register_creature_script(3425, &SavannahProwler::Create);
+	mgr->register_creature_script(3465, &Gilthares_Firebough::Create);
+	mgr->register_creature_script(3275, &VerogtheDervish::Create);
+	mgr->register_creature_script(3274, &VerogtheDervish::Create);
+	mgr->register_creature_script(3397, &VerogtheDervish::Create);
+	mgr->register_creature_script(4316, &VerogtheDervish::Create);
+	mgr->register_creature_script(3439, &Wizzlecranks_Shredder::Create);
 }

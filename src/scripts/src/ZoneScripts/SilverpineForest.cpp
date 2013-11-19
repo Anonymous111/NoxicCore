@@ -19,20 +19,26 @@
 
 #include "Setup.h"
 
-/*class CorruptMinorManifestationWater : public CreatureAIScript
+class CorruptMinorManifestationWater : public CreatureAIScript
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
+	ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater);
 	CorruptMinorManifestationWater(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnDied(Unit* mKiller)
 	{
-		LocationVector vect(_unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation());
-		sEAS.SpawnCreature(mKiller, 5895, vect, 1000);
+		float SSX = _unit->GetPositionX();
+		float SSY = _unit->GetPositionY();
+		float SSZ = _unit->GetPositionZ();
+		float SSO = _unit->GetOrientation();
+
+		Creature* NewCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(5895, SSX, SSY + 1, SSZ, SSO, true, false, 0, 0);
+		if(NewCreature != NULL)
+			NewCreature->Despawn(600000, 0);
 	}
-};*/
+};
 
 void SetupZoneSilverpineForest(ScriptMgr* mgr)
 {
-	//mgr->register_creature_script(5894, &CorruptMinorManifestationWater::Create); // Corrupt Minor Manifestation of Water
+	mgr->register_creature_script(5894, &CorruptMinorManifestationWater::Create);
 }

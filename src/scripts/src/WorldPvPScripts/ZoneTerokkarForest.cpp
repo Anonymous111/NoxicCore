@@ -502,5 +502,3 @@ void SetupPvPTerokkarForest(ScriptMgr* mgr)
 	TFg_towerOwners[TOWER_4] = atoi(Tower4.c_str());
 	TFg_towerOwners[TOWER_5] = atoi(Tower5.c_str());
 }
-
-

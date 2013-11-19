@@ -714,5 +714,3 @@ void SetupPvPZangarmarsh(ScriptMgr* mgr)
 	mgr->register_hook(SERVER_HOOK_EVENT_ON_CONTINENT_CREATE, (void*)&ZMSpawnObjects);
 	mgr->register_hook(SERVER_HOOK_EVENT_ON_CONTINENT_CREATE, (void*)&SetGrave);
 }
-
-

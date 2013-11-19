@@ -517,5 +517,3 @@ void SetupPvPHellfirePeninsula(ScriptMgr* mgr)
 	g_towerOwners[TOWER_OVERLOOK] = atoi(toverlook.c_str());
 	g_towerOwners[TOWER_BROKENHILL] = atoi(tbrokenhill.c_str());
 }
-
-

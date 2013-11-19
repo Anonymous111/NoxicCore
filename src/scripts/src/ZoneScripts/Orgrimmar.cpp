@@ -31,7 +31,20 @@ public:
 	}
 };
 
+class Thrall : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Thrall);
+	Thrall(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnCombatStart(Unit* mTarget)
+	{
+		_unit->PlaySoundToSet(5880);
+	}
+};
+
 void SetupZoneOrgrimmar(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(23090, &TrollRoofStalker::Create);	// Troll Roof Stalker
+	mgr->register_creature_script(23090, &TrollRoofStalker::Create);
+	mgr->register_creature_script(4949, &Thrall::Create);
 }

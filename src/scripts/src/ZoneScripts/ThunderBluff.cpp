@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,19 @@
 
 #include "Setup.h"
 
-class KiriththeDamnedAI : public CreatureAIScript
+class CairneBloodhoof : public CreatureAIScript
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(KiriththeDamnedAI)
-	KiriththeDamnedAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	ADD_CREATURE_FACTORY_FUNCTION(CairneBloodhoof);
+	CairneBloodhoof(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit* mKiller)
+	void OnCombatStart(Unit* mTarget)
 	{
-		if(mKiller->IsPlayer())
-		{
-			_unit->CastSpell(_unit, 10853, true);
-		}
+		_unit->PlaySoundToSet(5884);
 	}
 };
 
-void SetupZoneBlastedLands(ScriptMgr* mgr)
+void SetupZoneThunderBluff(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(7728, &KiriththeDamnedAI::Create);
+	mgr->register_creature_script(3057, &CairneBloodhoof::Create);
 }

@@ -2273,7 +2273,6 @@ bool TheSeersRelic(uint32 i, Spell* pSpell)
 	return true;
 }
 
-// Disrupt Their Reinforcements
 bool DisruptTheirReinforcements(uint32 i, Spell* pSpell)
 {
 	if(pSpell->p_caster == NULL)
@@ -2355,7 +2354,6 @@ bool DisruptTheirReinforcements(uint32 i, Spell* pSpell)
 	return true;
 }
 
-//Arzeth's Demise
 bool FuryOfTheDreghoodElders(uint32 i, Spell* pSpell)
 {
 	if(pSpell->p_caster == NULL)
@@ -2374,7 +2372,6 @@ bool FuryOfTheDreghoodElders(uint32 i, Spell* pSpell)
 	return true;
 }
 
-// War is Hell
 bool WarIsHell(uint32 i, Spell* pSpell)
 {
 	if(pSpell->p_caster == NULL)
@@ -2402,7 +2399,6 @@ bool WarIsHell(uint32 i, Spell* pSpell)
 	return true;
 }
 
-// A Lesson in Fear
 bool PlantForsakenBanner(uint32 i, Spell* pSpell)
 {
 	if(pSpell->p_caster == NULL)
@@ -2435,7 +2431,6 @@ bool PlantForsakenBanner(uint32 i, Spell* pSpell)
 	return true;
 }
 
-// Erratic Behavior
 bool ConvertingSentry(uint32 i, Spell* pSpell)
 {
 	Player* pCaster = pSpell->p_caster;
@@ -3208,6 +3203,71 @@ bool ProtectingOurOwn(uint32 i, Spell* pSpell)
 	return true;
 }
 
+bool AnAmbitiousPlan(uint32 i, Spell* pSpell)
+{
+	if(pSpell->p_caster == NULL)
+		return true;
+
+	Player* pPlayer = pSpell->p_caster;
+	QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9383);
+	if(pQuest == NULL)
+		return true;
+
+	Creature* pTarget = pPlayer->GetMapMgr()->GetCreature(GET_LOWGUID_PART(pPlayer->GetSelection()));
+	if(pTarget == NULL || pTarget->GetEntry() != 16975)
+		return true;
+
+	pTarget->GetAIInterface()->SetAllowedToEnterCombat(false);
+	pTarget->GetAIInterface()->StopMovement(0);
+	pTarget->GetAIInterface()->setCurrentAgent(AGENT_NULL);
+	pTarget->GetAIInterface()->SetAIState(STATE_IDLE);
+	pTarget->Despawn(0, 0);
+
+	GameObject* pGameobject = sEAS.SpawnGameobject(pPlayer, 183816, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, 1, 0, 0, 0, 0);
+	if(pGameobject != NULL)
+	{
+		sEAS.GameobjectDelete(pGameobject, 1 * 60 * 1000);
+		pPlayer->UpdateNearbyGameObjects();
+	}
+
+	return true;
+}
+
+bool ASpiritGuide(uint32 i, Spell* pSpell)
+{
+	if(pSpell->p_caster == NULL)
+		return true;
+
+	Player* pPlayer = pSpell->p_caster;
+	QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9410);
+	if(pQuest == NULL)
+		return true;
+
+	Creature* pSpiritWolf = pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(17077, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), true, false, NULL, NULL);
+	if(pSpiritWolf == NULL)
+		return true;
+
+	pSpiritWolf->Despawn(10 * 1000, 0);
+	pPlayer->CastSpell(pPlayer, 29938, false);
+	return true;
+}
+
+#define SPELL_BENDINGSHINBONE 8856
+#define ITEM_STURDYSHINBONE 7134
+#define ITEM_BROKENSHINBONE 7135
+
+bool BendingShinbone(uint32 i, Spell *pSpell)
+{
+	if(pSpell->p_caster)
+	{
+		if(RandomUInt(100) < 17) // 17% chance
+			pSpell->p_caster->GetItemInterface()->AddItemById(ITEM_STURDYSHINBONE, 1, 0); // Sturdy Dragon
+		else
+			pSpell->p_caster->GetItemInterface()->AddItemById(ITEM_BROKENSHINBONE, 1, 0);
+	}
+	return true;
+}
+
 void SetupQuestItems(ScriptMgr* mgr)
 {
 	mgr->register_dummy_spell(3607, &YennikuRelease);
@@ -3312,4 +3372,7 @@ void SetupQuestItems(ScriptMgr* mgr)
 	mgr->register_dummy_spell(17166, &ReleaseUmisYeti);
 	mgr->register_script_effect(28700, &HealingTheLake);
 	mgr->register_script_effect(32578, &ProtectingOurOwn);
+	mgr->register_dummy_spell(29364, &AnAmbitiousPlan);
+	mgr->register_dummy_spell(29731, &ASpiritGuide);
+	mgr->register_script_effect(SPELL_BENDINGSHINBONE, &BendingShinbone);
 }

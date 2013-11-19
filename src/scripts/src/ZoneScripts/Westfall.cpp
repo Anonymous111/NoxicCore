@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,29 +19,29 @@
 
 #include "Setup.h"
 
-class Professor_Phizzlethorpe : public CreatureAIScript
+class The_Defias_Traitor : public CreatureAIScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe);
-		Professor_Phizzlethorpe(Creature* pCreature) : CreatureAIScript(pCreature) {}
+		ADD_CREATURE_FACTORY_FUNCTION(The_Defias_Traitor);
+		The_Defias_Traitor(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
-			if(iWaypointId == 15)
+			if(iWaypointId == 19)
 			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched");
+				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tell your master that this is where Van Cleef is hiding. I'm outta here!");
 				_unit->Despawn(5000, 1000);
 				sEAS.DeleteWaypoints(_unit);
 				if(_unit->m_escorter == NULL)
 					return;
 				Player* plr = _unit->m_escorter;
 				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(665)->SendQuestComplete();
+				plr->GetQuestLogForEntry(155)->SendQuestComplete();
 			}
 		}
 };
 
-void SetupZoneArathiHighlands(ScriptMgr* mgr)
+void SetupZoneWestfall(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(2768, &Professor_Phizzlethorpe::Create);
+	mgr->register_creature_script(467, &The_Defias_Traitor::Create);
 }

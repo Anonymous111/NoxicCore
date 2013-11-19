@@ -30,12 +30,12 @@ public:
 
 	void AIUpdate()
 	{
-		_unit->CastSpell(_unit, 17743, true);
+		_unit->CastSpell(_unit, 18795, true); // Or? 17743
 		RemoveAIUpdateEvent();
 	}
 };
 
 void SetupZoneDurotar(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(10556, &PeonSleepingAI::Create); // Lazy Peon
+	mgr->register_creature_script(10556, &PeonSleepingAI::Create);
 }

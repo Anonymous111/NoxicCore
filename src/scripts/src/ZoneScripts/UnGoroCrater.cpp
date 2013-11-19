@@ -1,6 +1,6 @@
 /*
  * ArcPro MMORPG Server
- * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2011-2013 ArcPro Speculation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,29 +19,44 @@
 
 #include "Setup.h"
 
-class Professor_Phizzlethorpe : public CreatureAIScript
+class A_Me01  : public CreatureAIScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe);
-		Professor_Phizzlethorpe(Creature* pCreature) : CreatureAIScript(pCreature) {}
+		ADD_CREATURE_FACTORY_FUNCTION(A_Me01);
+		A_Me01(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
-			if(iWaypointId == 15)
+			if(iWaypointId == 28)
 			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched");
+				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tr..........");
 				_unit->Despawn(5000, 1000);
 				sEAS.DeleteWaypoints(_unit);
 				if(_unit->m_escorter == NULL)
 					return;
 				Player* plr = _unit->m_escorter;
 				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(665)->SendQuestComplete();
+				plr->GetQuestLogForEntry(4245)->SendQuestComplete();
 			}
 		}
 };
 
-void SetupZoneArathiHighlands(ScriptMgr* mgr)
+class RingoDeadNPC : public CreatureAIScript
 {
-	mgr->register_creature_script(2768, &Professor_Phizzlethorpe::Create);
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(RingoDeadNPC);
+		RingoDeadNPC(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+		void OnLoad()
+		{
+			_unit->SetStandState(7);
+			_unit->setDeathState(CORPSE);
+			_unit->GetAIInterface()->m_canMove = false;
+		}
+};
+
+void SetupZoneUnGoroCrater(ScriptMgr* mgr)
+{
+	mgr->register_creature_script(9623, &A_Me01::Create);
+	mgr->register_creature_script(9999, &RingoDeadNPC::Create);
 }
