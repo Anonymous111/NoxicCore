@@ -10,6 +10,7 @@ SET( prefix ${SCRIPTS_PATH}/${PROJECT_NAME} )
 #sources -contains source files for our library.
 SET( sources
 	DarkMoonFaireActivation.cpp
+	DarkmoonFaireObjects.cpp
 	Event_DarkmoonFaire.cpp
 	Event_DarkPortal.cpp
 	Event_Halloween.cpp

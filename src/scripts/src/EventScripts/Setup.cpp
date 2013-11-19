@@ -36,6 +36,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr) // Comment any 
 	SetupDarkmoonFaireGossip(mgr);
 	SetupDarkmoonFaireBarker(mgr);
 	SetupDarkmoonFaireBuild(mgr);
+	SetupDarkmoonFaireObjects(mgr);
 	SetupEventDarkPortal(mgr);
 	SetupL70ETC(mgr);
 	SetupEventMidsummerFireFestival(mgr);

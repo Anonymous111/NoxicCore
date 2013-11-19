@@ -35,7 +35,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupGoHandlers(mgr);
 	SetupRandomScripts(mgr);
 	SetupMiscCreatures(mgr);
-	SetupDarkmoonFaireObjects(mgr);
 
 	// Sets up gossip scripts for gameobjects in the (optional)
 	// gameobject_teleports table. If the table doesn't exist the
