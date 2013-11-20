@@ -25,6 +25,7 @@ SET( sources
 	Orgrimmar.cpp
     Setup.cpp
 	ShadowmoonValley.cpp
+	SilvermoonCity.cpp
 	SilverpineForest.cpp
 	Tanaris.cpp
 	TheBarrens.cpp

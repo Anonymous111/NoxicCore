@@ -31,6 +31,7 @@ void SetupZoneBoreanTundra(ScriptMgr* mgr);
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
 void SetupZoneBlastedLands(ScriptMgr* mgr);
 void SetupZoneIronforge(ScriptMgr* mgr);
+void SetupZoneSilvermoonCity(ScriptMgr* mgr);
 void SetupZoneSilverpineForest(ScriptMgr* mgr);
 void SetupZoneTheScarletEnclave(ScriptMgr* mgr);
 void SetupZoneTirisfalGlades(ScriptMgr* mgr);

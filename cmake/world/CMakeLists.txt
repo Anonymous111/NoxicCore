@@ -1,7 +1,7 @@
 PROJECT(world)
 SET( prefix ${ROOT_PATH}/src/arcpro-world )
 SET(sources
-  DBC/DBCStores.cpp
+	DBC/DBCStores.cpp
 	AchievementMgr.cpp 
 	CollideInterface.cpp  
 	VoiceChatHandler.cpp 
@@ -123,7 +123,8 @@ SET(sources
 	CConsole.cpp 
 	ConsoleCommands.cpp 
 	ConsoleListener.cpp 
-	WUtil.cpp 
+	WUtil.cpp
+	SpellTransform.cpp
 	SpellProc.cpp
 	SpellProc_DeathKnight.cpp
 	SpellProc_Druid.cpp
