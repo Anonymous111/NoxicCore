@@ -3066,9 +3066,9 @@ bool ChatHandler::HandleLookupItemCommand(const char* args, WorldSession* m_sess
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 
@@ -3175,9 +3175,9 @@ bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 
@@ -3227,9 +3227,9 @@ bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_ses
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 
@@ -3283,9 +3283,9 @@ bool ChatHandler::HandleLookupSkillCommand(const char* args, WorldSession* m_ses
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 
@@ -3320,9 +3320,9 @@ bool ChatHandler::HandleLookupFactionCommand(const char* args, WorldSession* m_s
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 

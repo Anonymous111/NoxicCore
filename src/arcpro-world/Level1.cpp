@@ -1173,9 +1173,9 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 	{
 		x = string(args);
 	}
-	if(x.length() < 4)
+	if(x.length() < 2)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 4 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
 		return true;
 	}
 	arcpro_TOLOWER(x);
