@@ -39,6 +39,15 @@ void Aura::SpellAuraTransform(bool apply)
 	// SetPositive();
 	switch(GetSpellProto()->Id)
 	{
+		case 30403: // Arcane Infusion
+			m_target->SetDisplayId(apply ? 19416 : m_target->GetNativeDisplayId());
+		break;
+		case 34204: // Arcane Form
+			m_target->SetDisplayId(apply ? 19031 : m_target->GetNativeDisplayId());
+		break;
+		case 45033: // Abyssal Transformation
+			m_target->SetDisplayId(apply ? 22810 : m_target->GetNativeDisplayId());
+		break;
 		case 20584: // Wisp
 			m_target->SetDisplayId(apply ? 10045 : m_target->GetNativeDisplayId());
 		break;

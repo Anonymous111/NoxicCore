@@ -1160,7 +1160,8 @@ void Spell::SpellEffectApplyAura(uint32 i)  // Apply Aura
 
 void Spell::SpellEffectEnvironmentalDamage(uint32 i)
 {
-	if(!playerTarget) return;
+	if(!playerTarget)
+		return;
 
 	if(playerTarget->SchoolImmunityList[GetProto()->School])
 	{
