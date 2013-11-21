@@ -339,7 +339,7 @@ bool ChatHandler::HandleGMListCommand(const char* args, WorldSession* m_session)
 			if(isGM || !sWorld.gamemaster_listOnlyActiveGMs || (sWorld.gamemaster_listOnlyActiveGMs && itr->second->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_GM)))
 			{
 				if(first)
-					GreenSystemMessage(m_session, "There are following active GMs on this server:");
+					GreenSystemMessage(m_session, "These are the following active GMs on this server:");
 
 				if(sWorld.gamemaster_hidePermissions && !isGM)
 					SystemMessage(m_session, " - %s", itr->second->GetName());

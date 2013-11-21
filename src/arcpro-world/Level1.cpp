@@ -57,9 +57,9 @@ uint16 GetItemIDFromLink(const char* itemlink, uint32* itemid)
 
 bool ChatHandler::HandleAnnounceCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args || strlen(args) < 4 || strchr(args, '%'))
+	if(!*args || strlen(args) < 3 || strchr(args, '%'))
 	{
-		m_session->SystemMessage("Announces cannot contain the %% character and must be at least 4 characters.");
+		m_session->SystemMessage("Announces cannot contain the %% character and must be at least 3 characters.");
 		return true;
 	}
 
@@ -72,8 +72,10 @@ bool ChatHandler::HandleAnnounceCommand(const char* args, WorldSession* m_sessio
 	input2 += sWorld.ann_gmtagcolor;
 	if(sWorld.GMAdminTag)
 	{
-		if(m_session->CanUseCommand('z')) input2 += "<Admin>";
-		else if(m_session->GetPermissionCount()) input2 += "<GM>";
+		if(m_session->CanUseCommand('z'))
+			input2 += "<Admin>";
+		else if(m_session->GetPermissionCount())
+			input2 += "<GM>";
 	}
 	if(sWorld.NameinAnnounce)
 	{
@@ -186,11 +188,15 @@ bool ChatHandler::HandleDeveloperCommand(const char* args, WorldSession* m_sessi
 	Player* _player = m_session->GetPlayer();
 
 	if(_player->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_DEVELOPER))
+	{
 		_player->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAG_DEVELOPER);
+		BlueSystemMessage(m_session, "Developer flag set.");
+	}
 	else
+	{
 		_player->SetFlag(PLAYER_FLAGS, PLAYER_FLAG_DEVELOPER);
-
-	BlueSystemMessage(m_session, "Developer flag toggled.");
+		BlueSystemMessage(m_session, "Developer flag removed.");
+	}
 
 	return true;
 }
@@ -371,12 +377,12 @@ bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 	{
 		if(m_session->GetPlayer()->IsSummonDisabled())
 		{
-			BlueSystemMessage(m_session, "Summon blocking is already enabled");
+			BlueSystemMessage(m_session, "Summon blocking is already enabled.");
 		}
 		else
 		{
 			m_session->GetPlayer()->DisableSummon(true);
-			GreenSystemMessage(m_session, "Summon blocking is now enabled");
+			GreenSystemMessage(m_session, "Summon blocking is now enabled.");
 		}
 		return true;
 	}
@@ -385,11 +391,11 @@ bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 		if(m_session->GetPlayer()->IsSummonDisabled())
 		{
 			m_session->GetPlayer()->DisableSummon(false);
-			GreenSystemMessage(m_session, "Summon blocking is now disabled");
+			GreenSystemMessage(m_session, "Summon blocking is now disabled.");
 		}
 		else
 		{
-			BlueSystemMessage(m_session, "Summon blocking is already disabled");
+			BlueSystemMessage(m_session, "Summon blocking is already disabled.");
 		}
 		return true;
 	}
@@ -478,12 +484,12 @@ bool ChatHandler::HandleAppearCommand(const char* args, WorldSession* m_session)
 	{
 		if(m_session->GetPlayer()->IsAppearDisabled())
 		{
-			BlueSystemMessage(m_session, "Appear blocking is already enabled");
+			BlueSystemMessage(m_session, "Appear blocking is already enabled.");
 		}
 		else
 		{
 			m_session->GetPlayer()->DisableAppear(true);
-			GreenSystemMessage(m_session, "Appear blocking is now enabled");
+			GreenSystemMessage(m_session, "Appear blocking is now enabled.");
 		}
 		return true;
 	}
@@ -492,11 +498,11 @@ bool ChatHandler::HandleAppearCommand(const char* args, WorldSession* m_session)
 		if(m_session->GetPlayer()->IsAppearDisabled())
 		{
 			m_session->GetPlayer()->DisableAppear(false);
-			GreenSystemMessage(m_session, "Appear blocking is now disabled");
+			GreenSystemMessage(m_session, "Appear blocking is now disabled.");
 		}
 		else
 		{
-			BlueSystemMessage(m_session, "Appear blocking is already disabled");
+			BlueSystemMessage(m_session, "Appear blocking is already disabled.");
 		}
 		return true;
 	}
@@ -1173,9 +1179,9 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 	{
 		x = string(args);
 	}
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 	arcpro_TOLOWER(x);

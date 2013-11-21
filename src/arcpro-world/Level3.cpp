@@ -3066,9 +3066,9 @@ bool ChatHandler::HandleLookupItemCommand(const char* args, WorldSession* m_sess
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 
@@ -3100,7 +3100,7 @@ bool ChatHandler::HandleLookupItemCommand(const char* args, WorldSession* m_sess
 			++count;
 			if(count == 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
@@ -3154,7 +3154,7 @@ bool ChatHandler::HandleLookupObjectCommand(const char* args, WorldSession* m_se
 			++count;
 			if(count == 25 || count > 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
@@ -3175,9 +3175,9 @@ bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 
@@ -3208,7 +3208,7 @@ bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_
 			++count;
 			if(count == 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
@@ -3227,9 +3227,9 @@ bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_ses
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 
@@ -3267,7 +3267,7 @@ bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_ses
 			++count;
 			if(count == 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
@@ -3283,9 +3283,9 @@ bool ChatHandler::HandleLookupSkillCommand(const char* args, WorldSession* m_ses
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 
@@ -3304,7 +3304,7 @@ bool ChatHandler::HandleLookupSkillCommand(const char* args, WorldSession* m_ses
 			++count;
 			if(count == 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
@@ -3320,9 +3320,9 @@ bool ChatHandler::HandleLookupFactionCommand(const char* args, WorldSession* m_s
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
-	if(x.length() < 2)
+	if(x.length() < 3)
 	{
-		RedSystemMessage(m_session, "Your search string must be at least 2 characters long.");
+		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
 		return true;
 	}
 
@@ -3341,7 +3341,7 @@ bool ChatHandler::HandleLookupFactionCommand(const char* args, WorldSession* m_s
 			++count;
 			if(count == 25)
 			{
-				RedSystemMessage(m_session, "More than 25 results returned. aborting.");
+				RedSystemMessage(m_session, "More than 25 results returned. Aborting.");
 				break;
 			}
 		}
