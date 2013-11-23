@@ -17,19 +17,16 @@ SET( sources
 	BoreanTundra.cpp
 	Darnassus.cpp
 	Durotar.cpp
-	ElwynnForest.cpp
 	Exodar.cpp
 	HellfirePeninsula.cpp
 	Icecrown.cpp
 	Ironforge.cpp
 	Misc.cpp
-	Nagrand.cpp
 	Orgrimmar.cpp
     Setup.cpp
 	ShadowmoonValley.cpp
 	SilvermoonCity.cpp
 	SilverpineForest.cpp
-	Stranglethorn.cpp
 	Tanaris.cpp
 	TheBarrens.cpp
 	TheScarletEnclave.cpp

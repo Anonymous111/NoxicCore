@@ -73,7 +73,6 @@ void SetupStranglethornVale(ScriptMgr* mgr);
 void SetupTanaris(ScriptMgr* mgr);
 void SetupTeldrassil(ScriptMgr* mgr);
 void SetupTerrokarForest(ScriptMgr* mgr);
-void SetupTheScarletEnclave(ScriptMgr* mgr);
 void SetupTheStormPeaks(ScriptMgr* mgr);
 void SetupThousandNeedles(ScriptMgr* mgr);
 void SetupTirisfalGlades(ScriptMgr* mgr);

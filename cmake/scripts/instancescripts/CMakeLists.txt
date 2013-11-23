@@ -21,7 +21,6 @@ set(sources
 	Instance_Deadmines.cpp
 	Instance_DireMaul.cpp
 	Instance_DrakTharonKeep.cpp
-	Instance_ForgeOfSouls.cpp
 	Instance_Gundrak.cpp
 	Instance_HallsOfLightning.cpp
 	Instance_HellfireRamparts.cpp
@@ -46,7 +45,6 @@ set(sources
 	Instance_TheUnderbog.cpp
 	Instance_Uldaman.cpp
 	Instance_UtgardeKeep.cpp
-	Instance_UtgardePinnacle.cpp
 	Instance_WailingCaverns.cpp
 	Instance_TheStockade.cpp
 	Instance_ZulFarrak.cpp
@@ -66,7 +64,6 @@ set(sources
 	Raid_Magtheridons_Lair.cpp
 	SUNWELL_PLAT/Raid_SunwellPlateau.cpp
 	Raid_RubySanctum.cpp
-	Raid_VaultOfArchavon.cpp
 	Raid_WorldBosses.cpp
 	Raid_ZulAman.cpp
 	../Common/Instance_Base.cpp

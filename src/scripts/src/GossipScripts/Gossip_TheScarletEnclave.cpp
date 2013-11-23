@@ -19,30 +19,22 @@
 
 #include "Setup.h"
 
-class ScourgeGryphonOne : public GossipScript
+class ScourgeGryphon : public GossipScript
 {
-	public:
-		void GossipHello(Object* pObject, Player* plr)
+public:
+	void GossipHello(Object *pObject, Player *Plr, bool AutoSend)
+	{
+		if(Plr->HasQuest(12670))
 		{
-			if(Plr->HasQuest(12670))
-			{
-				TaxiPath* path = sTaxiMgr.GetTaxiPath(1053);
-				plr->TaxiStart(path, 26308, 0);
-			}
+			TaxiPath* path = NULL;
+			if( pObject->GetEntry() == 29488 )
+				path = sTaxiMgr.GetTaxiPath( 1053 );
+			else if( pObject->GetEntry() == 29501 )
+				path = sTaxiMgr.GetTaxiPath( 1054 );
+			Plr->TaxiStart( path, 26308, 0 );
+			Plr->RemoveAllAuraById( 51721 );
 		}
-};
-
-class ScourgeGryphonTwo : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			if(Plr->HasQuest(12670))
-			{
-				TaxiPath* path = sTaxiMgr.GetTaxiPath(1054);
-				plr->TaxiStart(path, 26308, 0);
-			}
-		}
+	}
 };
 
 class DKInitiate : public GossipScript
@@ -143,8 +135,8 @@ public:
 
 void SetupTheScarletEnclaveGossip(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(29488, new ScourgeGryphonOne());
-	mgr->register_gossip_script(29501, new ScourgeGryphonTwo());
+	mgr->register_gossip_script(29488, new ScourgeGryphon()); // Scourge Gryphon
+	mgr->register_gossip_script(29501, new ScourgeGryphon()); // Scourge Gryphon
 	mgr->register_gossip_script(28406, new DKInitiate()); // Death Knight Initiate
 	mgr->register_gossip_script(28653, new Salanar()); // Salanar the Horseman
 }

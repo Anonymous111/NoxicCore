@@ -35,21 +35,7 @@ class CrimsonHammersmith : public CreatureAIScript
 		}
 };
 
-class Aurius : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Aurius);
-	Aurius(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-	void OnDied(Unit* mKiller)
-	{
-		Player* pPlayer = TO_PLAYER(mKiller);
-		pPlayer->GetQuestLogForEntry(9737)->SendQuestComplete();
-	}
-};
-
 void SetupStratholme(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(11120, &CrimsonHammersmith::Create);
-	mgr->register_creature_script(10917, &Aurius::Create);
 }
