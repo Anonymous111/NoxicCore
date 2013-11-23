@@ -14,6 +14,7 @@ set( sources
 	Gossip_Azshara.cpp
 	Gossip_AzuremystIsle.cpp
 	Gossip_BlastedLands.cpp
+	Gossip_BloodmystIsle.cpp
 	Gossip_BoreanTundra.cpp
 	Gossip_CrystalsongForest.cpp
 	Gossip_Dalaran.cpp

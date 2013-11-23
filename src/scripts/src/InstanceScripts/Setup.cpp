@@ -44,6 +44,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBotanica(mgr);
 	SetupCullingOfStratholme(mgr);
 	SetupDrakTharonKeep(mgr);
+	SetupForgeOfSouls(mgr);
 	SetupDeadmines(mgr);
 	SetupDireMaul(mgr);
 	SetupGundrak(mgr);
@@ -69,6 +70,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheUnderbog(mgr);
 	SetupUldaman(mgr);
 	SetupUtgardeKeep(mgr);
+	SetupUtgardePinnacle(mgr);
 	SetupTheStockade(mgr);
 	SetupWailingCaverns(mgr);
 	SetupMagistersTerrace(mgr);
@@ -90,6 +92,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupMagtheridonsLair(mgr);
 	SetupSunwellPlateau(mgr);
 	SetupTheRubySanctum(mgr);
+	SetupVaultOfArchavon(mgr);
 	SetupWorldBosses(mgr);
 	SetupZulAman(mgr);
 	//Other

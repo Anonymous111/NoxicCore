@@ -76,6 +76,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupTanaris(mgr);
 	SetupTeldrassil(mgr);
 	SetupTerrokarForest(mgr);
+	SetupTheScarletEnclave(mgr);
 	SetupTheStormPeaks(mgr);
 	SetupThousandNeedles(mgr);
 	SetupTirisfalGlades(mgr);

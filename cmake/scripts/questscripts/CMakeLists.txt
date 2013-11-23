@@ -52,7 +52,8 @@ Quest_StranglethornVale.cpp
 Quest_Tanaris.cpp
 Quest_Teldrassil.cpp
 Quest_Terrokar_Forest.cpp
-Quest_The_Barrens.cpp
+Quest_TheBarrens.cpp
+Quest_TheScarletEnclave.cpp
 Quest_TheStormPeaks.cpp
 Quest_ThousandNeedles.cpp
 Quest_TirisfalGlades.cpp

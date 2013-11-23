@@ -36,60 +36,141 @@ class TiareGossipScript : public GossipScript
 		void Destroy() { delete this; }
 };
 
+enum eFizzcrank
+{
+    NPC_FIZZCRANK               = 25590,
+
+    GOSSIP_TEXTID_FIZZCRANK1    = 12456,
+    GOSSIP_TEXTID_FIZZCRANK2    = 12457,
+    GOSSIP_TEXTID_FIZZCRANK3    = 12458,
+    GOSSIP_TEXTID_FIZZCRANK4    = 12459,
+    GOSSIP_TEXTID_FIZZCRANK5    = 12460,
+    GOSSIP_TEXTID_FIZZCRANK6    = 12461,
+    GOSSIP_TEXTID_FIZZCRANK7    = 12462,
+    GOSSIP_TEXTID_FIZZCRANK8    = 12463,
+    GOSSIP_TEXTID_FIZZCRANK9    = 12464,
+
+    QUEST_THE_MECHAGNOMES       = 11708
+};
+
+#define GOSSIP_ITEM_GO_ON   "Go on."
+#define GOSSIP_ITEM_TELL_ME "Tell me what's going on out here, Fizzcrank."
+
 class FizzcrankGossip : public GossipScript
 {
-public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
-	{
-		GossipMenu* Menu;
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12435, Plr);
-		if(Plr->HasQuest(11708))
-			Menu->AddItem(0, "Tell me what's going on out here, Fizzcrank.", 1);
+	public:
+		void GossipHello(Object* pObject, Player* pPlayer)
+		{
+			GossipMenu* Menu;
 
-		Menu->SendTo(Plr);
-	}
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, pPlayer);
 
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-	{
-		GossipMenu* Menu;
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12455+IntId, Plr);
-		if(IntId != 9)
-			Menu->AddItem(0, "Go on.", ++IntId);
+			if(sEAS.GetQuest(pPlayer, QUEST_THE_MECHAGNOMES))
+				Menu->AddItem(0, GOSSIP_ITEM_TELL_ME, 1);
 
-		Menu->SendTo(Plr);
-	}
+			Menu->SendTo(pPlayer);
+		}
+
+		void GossipSelectOption(Object* pObject, Player*  pPlayer, uint32 Id, uint32 IntId, const char* Code)
+		{
+			GossipMenu* Menu;
+			switch(IntId)
+			{
+				case 1:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK1, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 2);
+					Menu->SendTo(pPlayer);
+					break;
+				case 2:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK2, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 3);
+					Menu->SendTo(pPlayer);
+					break;
+				case 3:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK3, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 4);
+					Menu->SendTo(pPlayer);
+					break;
+				case 4:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK4, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 5);
+					Menu->SendTo(pPlayer);
+					break;
+				case 5:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK5, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 6);
+					Menu->SendTo(pPlayer);
+					break;
+				case 6:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK6, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 7);
+					Menu->SendTo(pPlayer);
+					break;
+				case 7:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK7, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 8);
+					Menu->SendTo(pPlayer);
+					break;
+				case 8:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK8, pPlayer);
+					Menu->AddItem(0, GOSSIP_ITEM_GO_ON, 9);
+					Menu->SendTo(pPlayer);
+					break;
+				case 9:
+					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), GOSSIP_TEXTID_FIZZCRANK9, pPlayer);
+					Menu->SendTo(pPlayer);
+					break;
+			}
+		}
+
+};
+
+#define GOSSIP_ITEM_FREE_FLIGHT "I'd like passage to the Transitus Shield."
+#define GOSSIP_ITEM_FLIGHT      "May I use a drake to fly elsewhere?"
+
+enum eSurristrasz
+{
+    NPC_SURRISTRASZ             = 24795,
+
+    SPELL_ABMER_TO_COLDARRA     = 46064
 };
 
 class SurristraszGossip : public GossipScript
 {
-public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
-	{
-		GossipMenu* Menu;
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 12730, Plr);
-		Menu->AddItem(0, "I'd like passage to the Transitus Shield.", 1); 
-		Menu->AddItem(3, "May I use a drake to fly elsewhere?", 2);
-
-		Menu->SendTo( Plr );
-	};
-
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-	{
-		Creature* pCreature = TO_CREATURE(pObject);
-
-		if(IntId == 1)
+	public:
+		void GossipHello(Object* pObject, Player* pPlayer)
 		{
-			Plr->Gossip_Complete();
-			pCreature->CastSpell(Plr, 46064, true);
-		}
-		else
-			Plr->GetSession()->SendTaxiList(pCreature);
-	}
+			GossipMenu* Menu;
+
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, pPlayer);
+
+			Menu->AddItem(0, GOSSIP_ITEM_FREE_FLIGHT, 1);
+			Menu->AddItem(3, GOSSIP_ITEM_FLIGHT, 2);
+
+			Menu->SendTo(pPlayer);
+		};
+
+		void GossipSelectOption(Object* pObject, Player*  pPlayer, uint32 Id, uint32 IntId, const char* Code)
+		{
+			if(!pObject->IsCreature())
+				return;
+
+			switch(IntId)
+			{
+				case 1:
+					pPlayer->Gossip_Complete();
+					pPlayer->CastSpell(pPlayer, SPELL_ABMER_TO_COLDARRA, true);
+					break;
+				case 2:
+					pPlayer->GetSession()->SendTaxiList(TO_CREATURE(pObject));
+					break;
+			};
+		};
 };
 
 void SetupBoreanTundraGossip(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(30051, new TiareGossipScript); // Librarian Tiare
-	mgr->register_gossip_script(25590, new FizzcrankGossip); // Fizzcrank Fullthrottle
-	mgr->register_gossip_script(24795, new SurristraszGossip); // Surristrasz
+	mgr->register_creature_gossip(30051, new TiareGossipScript);
+	mgr->register_gossip_script(NPC_FIZZCRANK, new FizzcrankGossip());
+	mgr->register_gossip_script(NPC_SURRISTRASZ, new SurristraszGossip());
 }

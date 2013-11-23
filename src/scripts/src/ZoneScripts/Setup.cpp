@@ -28,22 +28,25 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 {
 	SetupZoneArathiHighlands(mgr);
-	SetupAzuremystIsle(mgr);
+	SetupZoneAzuremystIsle(mgr);
 	SetupZoneBladeEdgeMountains(mgr);
 	SetupZoneBlastedLands(mgr);
 	SetupZoneBloodmystIsle(mgr);
 	SetupZoneBoreanTundra(mgr);
 	SetupZoneDarnassus(mgr);
 	SetupZoneDurotar(mgr);
+	SetupZoneElwynnForest(mgr);
 	SetupZoneExodar(mgr);
 	SetupZoneHellfirePeninsula(mgr);
 	SetupZoneIcecrown(mgr);
 	SetupZoneIronforge(mgr);
 	SetupZoneMisc(mgr);
+	SetupZoneNagrand(mgr);
 	SetupZoneOrgrimmar(mgr);
 	SetupZoneShadowmoonValley(mgr);
 	SetupZoneSilvermoonCity(mgr);
 	SetupZoneSilverpineForest(mgr);
+	SetupZoneStranglethorn(mgr);
 	SetupZoneTanaris(mgr);
 	SetupZoneTheBarrens(mgr);
 	SetupZoneThousandNeedles(mgr);

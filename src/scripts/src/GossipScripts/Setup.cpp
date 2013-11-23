@@ -35,6 +35,8 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupAzsharaGossip(mgr);
 	SetupAzuremystIsleGossip(mgr);
 	SetupBlastedLandsGossip(mgr);
+	SetupBloodmystIsleGossip(mgr);
+	SetupBoreanTundraGossip(mgr);
 	SetupCrystalsongForestGossip(mgr);
 	SetupDalaranGossip(mgr);
 	SetupInnkeepers(mgr);
@@ -49,7 +51,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupStormwindGossip(mgr);
 	SetupTheramoreGossip(mgr);
 	SetupTeldrassilGossip(mgr);
-	SetupBoreanTundraGossip(mgr);
 	SetupTheScarletEnclaveGossip(mgr);
 	SetupWyrmrestTempleGossip(mgr);
 	SetupXpEliminatorGossip(mgr);

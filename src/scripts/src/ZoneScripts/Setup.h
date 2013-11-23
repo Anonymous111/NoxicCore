@@ -30,9 +30,11 @@ void SetupZoneBoreanTundra(ScriptMgr* mgr);
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
 void SetupZoneBlastedLands(ScriptMgr* mgr);
+void SetupZoneElwynnForest(ScriptMgr* mgr);
 void SetupZoneIronforge(ScriptMgr* mgr);
 void SetupZoneSilvermoonCity(ScriptMgr* mgr);
 void SetupZoneSilverpineForest(ScriptMgr* mgr);
+void SetupZoneStranglethorn(ScriptMgr* mgr);
 void SetupZoneTheScarletEnclave(ScriptMgr* mgr);
 void SetupZoneTirisfalGlades(ScriptMgr* mgr);
 void SetupZoneUndercity(ScriptMgr* mgr);
@@ -52,9 +54,10 @@ void SetupZoneThunderBluff(ScriptMgr* mgr);
 void SetupZoneUnGoroCrater(ScriptMgr* mgr);
 
 // Outland
-void SetupAzuremystIsle(ScriptMgr* mgr);
+void SetupZoneAzuremystIsle(ScriptMgr* mgr);
 void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);
 void SetupZoneHellfirePeninsula(ScriptMgr* mgr);
+void SetupZoneNagrand(ScriptMgr* mgr);
 void SetupZoneShadowmoonValley(ScriptMgr* mgr);
 
 // Other
