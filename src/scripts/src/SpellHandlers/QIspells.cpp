@@ -3268,6 +3268,102 @@ bool BendingShinbone(uint32 i, Spell *pSpell)
 	return true;
 }
 
+bool SiphonofAcherus(uint32 i, Spell* pSpell)
+{
+	if(pSpell->p_caster == NULL)
+		return true;
+
+	Player* pPlayer = pSpell->p_caster;
+	QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(12641);
+
+	if(qle == NULL)
+		return true;
+
+	uint32 Marks[] = { 28525, 28543, 28542, 28544 };
+	Object* Mark = NULL;
+
+	for(uint32 i = 0; i < sizeof(Marks) / sizeof(uint32); i++)
+	{
+		Mark = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), Marks[i]);
+		if(Mark != NULL && qle->GetMobCount(i) < qle->GetQuest()->required_mobcount[i])
+		{
+			qle->SetMobCount(i,  qle->GetMobCount(i) + 1);
+			qle->SendUpdateAddKill(i);
+			qle->UpdatePlayerFields();
+
+			break;
+		}
+	}
+
+	return true;
+};
+
+bool EyeOfAcherus(uint32 i, Spell * pSpell)
+{
+	if( i |= 1 )
+	{
+		Player * p_caster = pSpell->p_caster;
+		CreatureProto * proto = CreatureProtoStorage.LookupEntry(28511);
+		if( !proto )
+			return true;
+
+		uint32 summonpropid = pSpell->m_spellInfo->EffectMiscValue[ i ];
+		SummonPropertiesEntry * spe = dbcSummonProperties.LookupEntry( summonpropid );
+		if( !spe )
+			return true;
+
+		p_caster->DismissActivePets();
+		p_caster->RemoveFieldSummon();
+
+		Summon * s = p_caster->GetMapMgr()->CreateSummon(proto->Id, SUMMONTYPE_POSSESSED);
+		if(s == NULL)
+			return true;
+
+		LocationVector v(2362.81f, -5659.71f, 502.31f, 3.776f);
+		
+		s->Load(proto, p_caster, v, pSpell->m_spellInfo->Id, spe->Slot - 1);
+		s->SetCreatedBySpell(pSpell->m_spellInfo->Id);
+		//s->SetFlag(UNIT_DYNAMIC_FLAGS, U_DYN_FLAG_TAPPED_BY_PLAYER);
+		s->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+		s->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0x08);
+		s->PushToWorld(p_caster->GetMapMgr());
+		s->Root();
+		s->Phase(PHASE_SET, 2);
+
+		p_caster->Possess(s->GetGUID(), 1000);
+
+		if(p_caster->RemoveAllAuraById(51852) || p_caster->RemoveAllAuraById(2479))
+			return true;
+		
+		s->OnPreRemoveFromWorld();
+		// Something missing
+		p_caster->UnPossess();
+		uint32 Flags = p_caster->GetUInt32Value(UNIT_DYNAMIC_FLAGS);
+		Flags |= U_DYN_FLAG_TAPPED_BY_PLAYER;
+	}
+	return true;
+};
+
+bool PreparationForBattle(uint32 i, Spell* pSpell)
+{
+	if ( pSpell == NULL || pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer() )
+	return true;
+
+	Player* pPlayer = TO_PLAYER( pSpell->u_caster );
+	QuestLogEntry *pQuest = pPlayer->GetQuestLogForEntry( 12842 );
+	if ( pQuest != NULL )
+	{
+		if ( pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0] )
+		{
+			pQuest->SetMobCount( 0, pQuest->GetMobCount( 0 ) + 1 );
+			pQuest->SendUpdateAddKill( 0 );
+			pQuest->UpdatePlayerFields();
+			pQuest->SendQuestComplete();
+		}
+	}
+	return true;
+};
+
 void SetupQuestItems(ScriptMgr* mgr)
 {
 	mgr->register_dummy_spell(3607, &YennikuRelease);
@@ -3375,4 +3471,8 @@ void SetupQuestItems(ScriptMgr* mgr)
 	mgr->register_dummy_spell(29364, &AnAmbitiousPlan);
 	mgr->register_dummy_spell(29731, &ASpiritGuide);
 	mgr->register_script_effect(SPELL_BENDINGSHINBONE, &BendingShinbone);
+	mgr->register_dummy_spell(51858, &SiphonofAcherus);
+	mgr->register_dummy_spell(51852, &EyeOfAcherus);
+	mgr->register_dummy_spell(53341, &PreparationForBattle);
+	mgr->register_dummy_spell(53343, &PreparationForBattle);
 }
