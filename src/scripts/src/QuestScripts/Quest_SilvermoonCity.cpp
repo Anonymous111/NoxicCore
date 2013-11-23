@@ -46,9 +46,9 @@ public:
 class PathoftheAdept : public GossipScript
 {
 	public:
-		void GossipHello(Object* pObject, Player* plr)
+		void GossipHello(Object* pObject, Player* pPlayer)
 		{
-			if(!plr)
+			if(!pPlayer)
 				return;
 
 			GossipMenu* Menu;
@@ -56,16 +56,16 @@ class PathoftheAdept : public GossipScript
 			if(lord == NULL)
 				return;
 
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, plr);
-			if(plr->GetQuestLogForEntry(9692))
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, pPlayer);
+			if(pPlayer->GetQuestLogForEntry(9692))
 				Menu->AddItem(0, "Take Insignia", 1);
 
-			Menu->SendTo(plr);
+			Menu->SendTo(pPlayer);
 		}
 
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
+		void GossipSelectOption(Object* pObject, Player* pPlayer, uint32 Id, uint32 IntId, const char* EnteredCode)
 		{
-			if(!plr)
+			if(!pPlayer)
 				return;
 
 			Creature* lord = TO_CREATURE(pObject);
@@ -75,20 +75,18 @@ class PathoftheAdept : public GossipScript
 			switch(IntId)
 			{
 				case 0:
-					GossipHello(pObject, plr);
-					break;
-
+					GossipHello(pObject, pPlayer);
+				break;
 				case 1:
-					{
-						sEAS.AddItem(24226, plr);
-						return;
-					}
-					break;
+				{
+					sEAS.AddItem(24226, pPlayer);
+					return;
+				}
+				break;
 			}
 		}
 
 };
-
 
 class LordDawnstar : public CreatureAIScript
 {
@@ -104,7 +102,6 @@ class LordDawnstar : public CreatureAIScript
 			_unit->GetAIInterface()->m_canMove = false;
 		}
 };
-
 
 void SetupSilvermoonCity(ScriptMgr* mgr)
 {

@@ -116,31 +116,31 @@ bool RockbiterWeapon(uint32 i, Spell* pSpell)
 	{
 		case 1:
 			enchantment_entry = 3021;
-			break;
+		break;
 		case 2:
 			enchantment_entry = 3024;
-			break;
+		break;
 		case 3:
 			enchantment_entry = 3027;
-			break;
+		break;
 		case 4:
 			enchantment_entry = 3030;
-			break;
+		break;
 		case 5:
 			enchantment_entry = 3033;
-			break;
+		break;
 		case 6:
 			enchantment_entry = 3036;
-			break;
+		break;
 		case 7:
 			enchantment_entry = 3039;
-			break;
+		break;
 		case 8:
 			enchantment_entry = 3042;
-			break;
+		break;
 		case 9:
 			enchantment_entry = 3018;
-			break;
+		break;
 	}
 
 	if(!enchantment_entry || !pSpell->p_caster)
@@ -173,31 +173,11 @@ void SetupShamanSpells(ScriptMgr* mgr)
 {
 	uint32 FlametongueWeaponPassiveIds[] = { 10400, 15567, 15568, 15569, 16311, 16312, 16313, 58784, 58791, 58792, 0 };
 	mgr->register_dummy_aura(FlametongueWeaponPassiveIds, &FlametongueWeaponPassive);
-
 	mgr->register_dummy_spell(38443, &SkyShatterRegalia);
-
 	mgr->register_dummy_spell(39610, &ManaTide);
-
-	uint32 earthshielddummyauraids[] =
-	{
-		974,
-		32593,
-		32594,
-		49283,
-		49284,
-		0
-	};
+	uint32 earthshielddummyauraids[] = { 974, 32593, 32594, 49283, 49284, 0 };
 	mgr->register_dummy_aura(earthshielddummyauraids, &EarthShieldDummyAura);
-
 	mgr->register_dummy_aura(20608, &Reincarnation);
-
-	mgr->register_dummy_spell(8017, &RockbiterWeapon); // rank 1
-	mgr->register_dummy_spell(8018, &RockbiterWeapon); // rank 2
-	mgr->register_dummy_spell(8019, &RockbiterWeapon); // rank 3
-	mgr->register_dummy_spell(10399, &RockbiterWeapon); // rank 4
-	mgr->register_dummy_spell(16314, &RockbiterWeapon); // rank 5
-	mgr->register_dummy_spell(16315, &RockbiterWeapon); // rank 6
-	mgr->register_dummy_spell(16316, &RockbiterWeapon); // rank 7
-	mgr->register_dummy_spell(25479, &RockbiterWeapon); // rank 8
-	mgr->register_dummy_spell(25485, &RockbiterWeapon); // rank 9
+	uint32 rockbiterweaponspellids[] = { 8017, 8018, 8019, 10399, 16314, 16315, 16316, 25479, 25485, 0 };
+	mgr->register_dummy_spell(rockbiterweaponspellids, &RockbiterWeapon);
 }

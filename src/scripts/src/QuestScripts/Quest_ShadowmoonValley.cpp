@@ -37,8 +37,7 @@ class InfiltratingDragonmawFortressQAI : public CreatureAIScript
 				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10836);
 				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 				{
-					uint32 newcount = pQuest->GetMobCount(0) + 1;
-					pQuest->SetMobCount(0, newcount);
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
 					pQuest->SendUpdateAddKill(0);
 					pQuest->UpdatePlayerFields();
 					return;

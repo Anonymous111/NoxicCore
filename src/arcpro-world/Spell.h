@@ -664,7 +664,7 @@ enum SpellGoFlags
     SPELL_GO_FLAGS_UNK400000		= 0x400000, //seems to make server send an uint32 after m_targets.write
 };
 
-/*enum School //moved to Unit.hack for headers dependencies.
+/*enum School //moved to Unit.h for headers dependencies.
 {
 	SCHOOL_NORMAL = 0,
 	SCHOOL_HOLY   = 1,

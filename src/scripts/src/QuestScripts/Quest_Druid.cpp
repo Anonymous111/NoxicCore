@@ -26,66 +26,6 @@ Edits by : FenixGman
 **********************/
 #include "Setup.h"
 
-/*bool CenarionMoondust(uint32 i, Spell* pSpell) // Body And Heart (Alliance)
-{
-	const float pos[] = {6348.540039f, 128.124176f, 22.024008f, 4.172032f}; // x, y, z, o
-	PlayerPointer p_caster = pSpell->p_caster;
-		if(!pSpell->p_caster)
-			return true;
-
-	CreaturePointer lunaclaw = p_caster->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pos[0], pos[1], pos[2], 12138);
-	if(lunaclaw != NULL)
-		if!pSpell->p_caster->IsInWorld())
-			return true;
-
-	const float pos[] = {6335.2329f, 144.0811f, 24.0068f, 5.701f}; // x, y, z, o
-	Player * p_caster = pSpell->p_caster;
-
-	// Moonkin Stone Aura
-	GameObject * Msa = sEAS.SpawnGameobject(p_caster, 177644, 6331.01, 88.245, 22.6522, 2.01455, 1.0, 0.0, 0.0, 0.0, 0.0);
-
-	// It don't delete lunaclaw if he is here
-	Creature * lunaclaw; //p_caster->GetMapMgr()->GetInterface()->GetCreatureNearestCoords([pos[0], pos[1], pos[2], 12138);
-	//if(lunaclaw != NULL)
-	//{
-		//if(!lunaclaw->isAlive())
-			//lunaclaw->Delete;
-		//else
-			//return true;
-	//}
-
-	lunaclaw = sEAS.SpawnCreature(p_caster, 12138, pos[0], pos[1], pos[2], pos[3], 0);
-	//lunaclaw->GetAIInterface()->SetNextTarget(p_caster);
-
-	sEAS.CreatureCustomWaypointMap(lunaclaw);
-	uint32 md = lunaclaw->GetUInt32Value(UNIT_FIELD_DISPLAYID);
-
-	// Waypoints
-	sEAS.WaypointCreate(lunaclaw, 6348.3833, 132.5197, 21.6042, 4.19, 200, 256, md);
-	// Make sure that player don't cheat speed or something
-	if(lunaclaw->GetDistance2dSq(p_caster) < 200) // Can be more? - he can speed hack or teleport hack
-	{
-		float x = p_caster->GetPositionX();
-		float y = p_caster->GetPositionY();
-		float z = p_caster->GetPositionZ();
-		float o = p_caster->GetOrientation();
-		sEAS.WaypointCreate(lunaclaw, x, y, z, o, 200, 256, md);
-	}
-	else
-	{
-		sEAS.WaypointCreate(lunaclaw, 5328.2148, 94.5505, 21.4547, 4.2489, 200, 256, md);
-	}
-
-	// Make sure that creature will attack player
-	if(!lunaclaw->CombatStatus.IsInCombat())
-	{
-		lunaclaw->GetAIInterface()->SetNextTarget(p_caster);
-		sEAS.MoveToPlayer(p_caster, lunaclaw);
-	}
-
-	return true;
-}*/
-
 class Lunaclaw : public CreatureAIScript
 {
 	public:

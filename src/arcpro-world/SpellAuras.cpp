@@ -664,7 +664,6 @@ const char* SpellAuraNames[TOTAL_SPELL_AURAS] =
 	""													// 316
 };
 
-
 Player* Aura::GetPlayerCaster()
 {
 	//caster and target are the same
@@ -1459,7 +1458,7 @@ void Aura::EventUpdateAA(float r)
 	uint32 AAEffectId = m_spellProto->GetAAEffectId();
 	if(AAEffectId == 0)
 	{
-		LOG_ERROR("Spell %u ( %s ) has tried to update Area Aura targets but Spell has no Area Aura effect.", m_spellProto->Id, m_spellProto->Name);
+		LOG_ERROR("Spell %u (%s) has tried to update Area Aura targets but Spell has no Area Aura effect.", m_spellProto->Id, m_spellProto->Name);
 		ARCPRO_ASSERT(false);
 	}
 
@@ -1924,7 +1923,7 @@ void Aura::SpellAuraDummy(bool apply)
 	if(sScriptMgr.CallScriptedDummyAura(GetSpellId(), mod->i, this, apply))
 		return;
 
-	LOG_ERROR("Spell %u ( %s ) has an apply dummy aura effect, but no handler for it. ", m_spellProto->Id, m_spellProto->Name);
+	LOG_ERROR("Spell %u (%s) has an apply dummy aura effect, but no handler for it. ", m_spellProto->Id, m_spellProto->Name);
 }
 
 void Aura::SpellAuraModConfuse(bool apply)

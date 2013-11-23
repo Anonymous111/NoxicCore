@@ -92,9 +92,8 @@ class ArajTheSummoner : public CreatureAIScript
 
 void SetupEasternPlaguelands(ScriptMgr* mgr)
 {
-	GossipScript* gs = new Darrowshire_Spirit();
+	mgr->register_gossip_script(11064, new Darrowshire_Spirit());
 
-	mgr->register_gossip_script(11064, gs);
 	mgr->register_creature_script(8532, &Flayer::Create);
 	mgr->register_creature_script(8531, &Flayer::Create);
 	mgr->register_creature_script(8530, &Flayer::Create);
