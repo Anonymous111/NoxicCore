@@ -25,4 +25,5 @@
 
 void SetupAzshara(ScriptMgr* mgr)
 {
+
 }

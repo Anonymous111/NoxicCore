@@ -22,91 +22,50 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
-class ScourgeGryphonOne : public GossipScript
+class IntoTheRealmOfShadows : public QuestScript
 {
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			TaxiPath* path = sTaxiMgr.GetTaxiPath(1053);
-			plr->TaxiStart(path, 26308, 0);
-		}
+public:
+	void OnQuestStart(Player * mTarget, QuestLogEntry * qLogEntry)
+	{
+		mTarget->CastSpell(mTarget, 52693, false); // i am unsure if its not the: 52275 but i think no
+	}
+	void OnQuestComplete(Player * mTarget, QuestLogEntry * qLogEntry)
+	{
+		mTarget->PlaySound(12985);
+	}
 };
 
-class ScourgeGryphonTwo : public GossipScript
+class InServiceOfLichKing : public QuestScript
 {
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			TaxiPath* path = sTaxiMgr.GetTaxiPath(1054);
-			plr->TaxiStart(path, 26308, 0);
-		}
+public:
+	void OnQuestStart(Player * mTarget, QuestLogEntry * qLogEntry)
+	{
+		mTarget->PlaySound(14734);
+		sEventMgr.AddEvent(mTarget, &Player::PlaySound, (uint32)14735, EVENT_UNK, 23000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
+		sEventMgr.AddEvent(mTarget, &Player::PlaySound, (uint32)14736, EVENT_UNK, 49000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
+	}
 };
 
-#define CN_INITIATE_1				29519
-#define CN_INITIATE_2				29565
-#define CN_INITIATE_3				29567
-#define CN_INITIATE_4				29520
-
-class AcherusSoulPrison : GameObjectAIScript
+void DeathsChallenge(Player * Winner, Player * Looser)
 {
-	public:
-		AcherusSoulPrison(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO)
+	QuestLogEntry * pQuest = Winner->GetQuestLogForEntry( 12733 );
+	if(	pQuest )
+	{
+		if( pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0] )
 		{
-			return new AcherusSoulPrison(GO);
+			pQuest->SetMobCount( 0, pQuest->GetMobCount( 0 ) + 1 );
+			pQuest->SendUpdateAddKill( 0 );
+			pQuest->UpdatePlayerFields();
 		}
-
-		void OnActivate(Player* pPlayer)
-		{
-			QuestLogEntry* en = pPlayer->GetQuestLogForEntry(12848);
-			if(!en)
-				return;
-
-			float SSX = pPlayer->GetPositionX();
-			float SSY = pPlayer->GetPositionY();
-			float SSZ = pPlayer->GetPositionZ();
-
-			Creature* pCreature = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ);
-
-			if(!pCreature || !pCreature->isAlive())
-				return;
-
-			if(pCreature->GetEntry() == CN_INITIATE_1 || pCreature->GetEntry() == CN_INITIATE_2 || pCreature->GetEntry() == CN_INITIATE_3 || pCreature->GetEntry() == CN_INITIATE_4)
-			{
-				pPlayer->SendChatMessage(CHAT_MSG_SAY, LANG_UNIVERSAL, "I give you the key to your salvation");
-				pCreature->SetUInt64Value(UNIT_FIELD_FLAGS, 0);
-				pCreature->GetAIInterface()->setNextTarget(pPlayer);
-				pCreature->GetAIInterface()->AttackReaction(pPlayer, 1, 0);
-				pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You have committed a big mistake, demon");
-
-				if(en->GetMobCount(0) != 0)
-					return;
-
-				en->SetMobCount(0, 1);
-				en->SendUpdateAddKill(0);
-				en->UpdatePlayerFields();
-			}
-
-		}
-};
+	}
+	return;
+}
 
 void SetupDeathKnight(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(29488, new ScourgeGryphonOne());
-	mgr->register_gossip_script(29501, new ScourgeGryphonTwo());
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_DUEL_FINISHED, (void*)&DeathsChallenge);
 
-	mgr->register_gameobject_script(191588, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191577, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191580, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191581, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191582, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191583, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191584, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191585, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191586, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191587, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191589, &AcherusSoulPrison::Create);
-	mgr->register_gameobject_script(191590, &AcherusSoulPrison::Create);
+	mgr->register_quest_script(12687, CREATE_QUESTSCRIPT(IntoTheRealmOfShadows));
+	mgr->register_quest_script(12593, CREATE_QUESTSCRIPT(InServiceOfLichKing));
 }

@@ -49,65 +49,7 @@ class HeroesofOld : public QuestScript
 		}
 };
 
-class HeroesofOld1 : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			if(!plr)
-				return;
-
-			GossipMenu* Menu;
-			Creature* general = TO_CREATURE(pObject);
-			if(general == NULL)
-				return;
-
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, plr);
-			if(plr->GetQuestLogForEntry(2702) || plr->HasFinishedQuest(2702))
-				Menu->AddItem(0, "I need to speak with Corporal.", 1);
-
-			Menu->SendTo(plr);
-		}
-
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-		{
-			if(!plr)
-				return;
-
-			Creature* general = TO_CREATURE(pObject);
-			if(general == NULL)
-				return;
-
-			switch(IntId)
-			{
-				case 0:
-					GossipHello(pObject, plr);
-					break;
-
-				case 1:
-					{
-						Creature* spawncheckcr = plr->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 7750);
-
-						if(!spawncheckcr)
-						{
-							general = sEAS.SpawnCreature(plr, 7750, -10619, -2997, 28.8f, 4, 0);
-							general->Despawn(3 * 60 * 1000, 0);
-						}
-
-						GameObject* spawncheckgobj = plr->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 141980);
-
-						if(!spawncheckgobj)
-						{
-							GameObject* generalsbox = sEAS.SpawnGameobject(plr, 141980, -10622, -2994, 28.6f, 4, 4, 0, 0, 0, 0);
-							sEAS.GameobjectDelete(generalsbox, 3 * 60 * 1000);
-						}
-					}
-			}
-		}
-};
-
 void SetupBlastedLands(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(2702, new HeroesofOld());
-	mgr->register_gossip_script(7572, new HeroesofOld1());
 }
