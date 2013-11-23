@@ -174,49 +174,6 @@ class MagnetoAura : public CreatureAIScript
 		}
 };
 
-class FunnyDragon : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FunnyDragon);
-		FunnyDragon(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			RegisterAIUpdateEvent(5000);
-			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->disable_melee = true;
-			_unit->SetEmoteState(0);
-			_unit->GetAIInterface()->m_canMove = false;
-			i = 1;
-		}
-
-		void AIUpdate()
-		{
-			switch(i)
-			{
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Muahahahahaha! You fool! you've released me from my banishment in the interstices between space and time!");
-					break;
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "All of Draenor shall quake beneath my feet! i Will destroy this world and reshape it in my immage!");
-					break;
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Where shall i Begin? i cannot bother myself with a worm such as yourself. Theres a World to be Conquered!");
-					break;
-				case 4:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "No doubt the fools that banished me are long dead. i shall take the wing and survey my new demense, Pray to whatever gods you hold dear that we do not meet again.");
-					_unit->Despawn(5000, 0);
-					break;
-			}
-
-			++i;
-		}
-
-		uint32 i;
-};
-
 class BloodmaulQAI : public CreatureAIScript
 {
 public:
@@ -244,29 +201,6 @@ public:
 			pQuest->UpdatePlayerFields();
 		}
 	}
-};
-
-class Thuk_the_DefiantAI : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Thuk_the_DefiantAI);
-
-		Thuk_the_DefiantAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-		}
-		void OnLoad()
-		{
-			_unit->SetFloatValue(OBJECT_FIELD_SCALE_X, 0.4f);
-		}
-		void OnDied(Unit* mKiller)
-		{
-			RemoveAIUpdateEvent();
-		}
-		void OnTargetDied(Unit* mTarget)
-		{
-			_unit->SetFaction(35);
-			_unit->SetFloatValue(OBJECT_FIELD_SCALE_X, 0.4f);
-		}
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -349,16 +283,15 @@ class Thuk_the_DefiantAI : public CreatureAIScript
 
 void SetupZoneBladeEdgeMountains(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(21823, &NihilTheBanished::Create); // Nihil the Banished
-	mgr->register_creature_script(22920, &ThukTheDefiant::Create); // Thuk the Defiant
-	mgr->register_creature_script(21241, &BrutebaneStoutTrigger::Create); // Bloodmaul Brutebane Stout Trigger
+	mgr->register_creature_script(21823, &NihilTheBanished::Create);
+	mgr->register_creature_script(22920, &ThukTheDefiant::Create);
+	mgr->register_creature_script(21241, &BrutebaneStoutTrigger::Create);
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_1, &BladespireQAI::Create);
 	mgr->register_creature_script(21296, &BladespireQAI::Create);
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_3, &BladespireQAI::Create);
 	mgr->register_creature_script(20766, &BladespireQAI::Create);
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_2, &BladespireQAI::Create);
 	mgr->register_creature_script(21731, &MagnetoAura::Create);
-	mgr->register_creature_script(21823, &FunnyDragon::Create);
 	mgr->register_creature_script(19957, &BloodmaulQAI::Create);
 	mgr->register_creature_script(19991, &BloodmaulQAI::Create);
 	mgr->register_creature_script(21238, &BloodmaulQAI::Create);
@@ -371,7 +304,6 @@ void SetupZoneBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_creature_script(22384, &BloodmaulQAI::Create);
 	mgr->register_creature_script(22160, &BloodmaulQAI::Create);
 	mgr->register_creature_script(19994, &BloodmaulQAI::Create);
-	mgr->register_creature_script(22920, &Thuk_the_DefiantAI::Create);
 	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
 	//mgr->register_creature_script(CN_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER, &BrutebaneStoutTriggerAI::Create);
 }
