@@ -35,7 +35,33 @@ public:
 	}
 };
 
+class LieutenantBenedict : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(LieutenantBenedict);
+	LieutenantBenedict(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnDied(Unit* mKiller)
+	{
+		if(!mKiller)
+			return;
+
+		if(mKiller->IsPlayer())
+		{
+			Player* pPlayer = TO_PLAYER(mKiller);
+			QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(784);
+			if(pQuest == NULL)
+				return;
+
+			pQuest->SetMobCount(2, 1);
+			pQuest->SendUpdateAddKill(2);
+			pQuest->UpdatedPlayerFields();
+		}
+	}
+};
+
 void SetupZoneDurotar(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(10556, &PeonSleepingAI::Create);
+	mgr->register_creature_script(3192, &LieutenantBenedict::Create);
 }
