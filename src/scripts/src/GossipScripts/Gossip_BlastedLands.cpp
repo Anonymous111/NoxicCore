@@ -32,17 +32,41 @@ public:
 		Menu->SendTo(Plr);
 	}
 
-	void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
+	void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
 	{
-		if(sEAS.GetNearestCreature(Plr, 7750) == NULL)
-			sEAS.SpawnCreature(Plr, 7750, -10630, -2986.98f, 28.9815f, 4.73538f, 600000);
+		if(!plr)
+			return;
 
-		/*if(sEAS.GetNearestGameObject(Plr, 141980) == NULL) // TODO: SpawnGameObject does not take 13 arguments
-			sEAS.SpawnGameobject(Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 600000, 1, 0, 0, 0, 0.695946f, -0.718095f);*/
+		Creature* general = TO_CREATURE(pObject);
+		if(general == NULL)
+			return;
+
+		switch(IntId)
+		{
+			case 0:
+				GossipHello(pObject, plr);
+			break;
+			case 1:
+			{
+				Creature* spawncheckcr = plr->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 7750);
+				if(!spawncheckcr)
+				{
+					general = sEAS.SpawnCreature(plr, 7750, -10619, -2997, 28.8f, 4, 0);
+					general->Despawn(3 * 60 * 1000, 0);
+				}
+
+				GameObject* spawncheckgobj = plr->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 141980);
+				if(!spawncheckgobj)
+				{
+					GameObject* generalsbox = sEAS.SpawnGameobject(plr, 141980, -10622, -2994, 28.6f, 4, 4, 0, 0, 0, 0);
+					sEAS.GameobjectDelete(generalsbox, 3 * 60 * 1000);
+				}
+			}break;
+		}
 	}
 };
 
 void SetupBlastedLandsGossip(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(7572, new FallenHero()); // Fallen Hero of the Horde
+	mgr->register_gossip_script(7572, new FallenHero());
 }
