@@ -24,7 +24,7 @@ class ScourgeGryphonOne : public GossipScript
 	public:
 		void GossipHello(Object* pObject, Player* plr)
 		{
-			if(Plr->HasQuest(12670))
+			if(plr->HasQuest(12670))
 			{
 				TaxiPath* path = sTaxiMgr.GetTaxiPath(1053);
 				plr->TaxiStart(path, 26308, 0);
@@ -37,7 +37,7 @@ class ScourgeGryphonTwo : public GossipScript
 	public:
 		void GossipHello(Object* pObject, Player* plr)
 		{
-			if(Plr->HasQuest(12670))
+			if(plr->HasQuest(12670))
 			{
 				TaxiPath* path = sTaxiMgr.GetTaxiPath(1054);
 				plr->TaxiStart(path, 26308, 0);

@@ -68,7 +68,7 @@ public:
 			ParentClass::AIUpdate();
 		}
 	}
-}
+};
 
 class DevourerOfSoulsAI : public MoonScriptBossAI
 {

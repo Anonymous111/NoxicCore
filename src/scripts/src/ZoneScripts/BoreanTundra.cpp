@@ -27,9 +27,9 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(PurifyingTotem)
 	PurifyingTotem(Creature* pCreature ) : CreatureAIScript(pCreature)
 	{
-		SetCanEnterCombat(false);
-		SetCanMove(false);
-		Despawn(8000, 0);
+		//SetCanEnterCombat(false);
+		_unit->GetAIInterface()->m_canMove = false;
+		//Despawn(8000, 0);
 	}
 };
 
@@ -39,8 +39,8 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(SeaforiumDepthCharge)
 	SeaforiumDepthCharge(Creature* pCreature) : CreatureAIScript(pCreature)
 	{
-		SetCanMove(false);
-		SetCanEnterCombat(false);
+		_unit->GetAIInterface()->m_canMove = false;
+		//SetCanEnterCombat(false);
 		_unit->SetFaction(21);
 	}
 	

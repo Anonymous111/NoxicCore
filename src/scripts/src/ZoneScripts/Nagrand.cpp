@@ -27,8 +27,8 @@ public:
 
 	void OnLoad()
 	{
-		_unit->SetCanEnterCombat(false);
-		_unit->SetCanMove(false);
+		//SetCanEnterCombat(false);
+		_unit->GetAIInterface()->m_canMove = false;
 	}
 };
 

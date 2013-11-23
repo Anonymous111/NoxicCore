@@ -66,6 +66,6 @@ void SetupDeathKnight(ScriptMgr* mgr)
 {
 	mgr->register_hook(SERVER_HOOK_EVENT_ON_DUEL_FINISHED, (void*)&DeathsChallenge);
 
-	mgr->register_quest_script(12687, CREATE_QUESTSCRIPT(IntoTheRealmOfShadows));
-	mgr->register_quest_script(12593, CREATE_QUESTSCRIPT(InServiceOfLichKing));
+	mgr->register_quest_script(12687, new IntoTheRealmOfShadows());
+	mgr->register_quest_script(12593, new InServiceOfLichKing());
 }

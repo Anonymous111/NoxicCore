@@ -19,26 +19,26 @@
 
 #include "Setup.h"
 
-class DefiasBandit: public MoonScriptCreatureAI
+/*class DefiasBandit: public CreatureAIScript
 {
-	MOONSCRIPT_FACTORY_FUNCTION(DefiasBandit, MoonScriptCreatureAI);
-    DefiasBandit(Creature* pCreature) : MoonScriptCreatureAI(pCreature) 
+	ADD_CREATURE_FACTORY_FUNCTION(DefiasBandit);
+    DefiasBandit(Creature* pCreature) : CreatureAIScript(pCreature) 
 	{
 		AddSpell(8646, Target_Current, 20, 0, 4);
 	}
-	/*Bandit says: Give me all your gold!
-    Bandit says: No one here gets out alive!
-    Bandit says: You're in the wrong place at the wrong time, missy!
-    Bandit says: You're in the wrong place at the wrong time, pal!*/
+	//Bandit says: Give me all your gold!
+    //Bandit says: No one here gets out alive!
+    //Bandit says: You're in the wrong place at the wrong time, missy!
+    //Bandit says: You're in the wrong place at the wrong time, pal!
 	void OnCombatStop(Unit* pTarget)
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
 		ParentClass::OnCombatStop(pTarget);
     }
-};
+};*/
 
 void SetupZoneElwynnForest(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(116, &DefiasBandit::Create);
+	//mgr->register_creature_script(116, &DefiasBandit::Create);
 }

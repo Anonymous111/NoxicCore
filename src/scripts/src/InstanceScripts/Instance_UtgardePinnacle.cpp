@@ -67,7 +67,7 @@
 
 #define FORCED_CELLS 4
 
-void SummonSvalaSorrowGrave(Player* plr)
+/*void SummonSvalaSorrowGrave(Player* plr)
 {
 	Creature* Svala = plr->GetCreatureNearestCoords(296.6319f, -346.0750f, 90.6306f, CN_SVALA);
 	if(Svala == NULL)
@@ -728,11 +728,11 @@ public:
 		for(i = 0; i < FORCED_CELLS; i++)
 			mapMgr->LoadForcedCell(forcedList[i].x, forcedList[i].y);
 	}
-};
+};*/
 
 void SetupUtgardePinnacle(ScriptMgr* mgr)
 {
-	mgr->register_instance_script(575, &UtgardePinnacle::Create);
+	/*mgr->register_instance_script(575, &UtgardePinnacle::Create);
 
 	mgr->register_creature_script(CN_KING_YMIRON, &KingYmiron::Create);
 	mgr->register_creature_script(29281, &Svala::Create);
@@ -748,5 +748,5 @@ void SetupUtgardePinnacle(ScriptMgr* mgr)
 	mgr->register_spell_script(45465, new MageHunterChannel);
 	mgr->register_spell_script(SPELL_DARK_SLASH, new DarkSlash);
 	
-	mgr->register_gameobject_script(188593, &StasisGenerator::Create);
+	mgr->register_gameobject_script(188593, &StasisGenerator::Create);*/
 }

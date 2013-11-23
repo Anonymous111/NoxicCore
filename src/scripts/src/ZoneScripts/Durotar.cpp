@@ -55,7 +55,7 @@ public:
 
 			pQuest->SetMobCount(2, 1);
 			pQuest->SendUpdateAddKill(2);
-			pQuest->UpdatedPlayerFields();
+			pQuest->UpdatePlayerFields();
 		}
 	}
 };

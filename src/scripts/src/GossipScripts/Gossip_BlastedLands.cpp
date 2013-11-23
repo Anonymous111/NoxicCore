@@ -19,17 +19,17 @@
 
 #include "Setup.h"
 
-class FallenHero : public GossipScript
+/*class FallenHero : public GossipScript
 {
 public:
-	void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
+	void GossipHello(Object* pObject, Player* plr, bool AutoSend)
 	{
 		GossipMenu* Menu;
-		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1391, Plr);
-		if(Plr->HasQuest(2702))
+		objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1391, plr);
+		if(plr->HasQuest(2702))
 			Menu->AddItem(0, "I need to speak with Corporal.", 1);
 
-		Menu->SendTo(Plr);
+		Menu->SendTo(plr);
 	}
 
 	void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
@@ -64,9 +64,9 @@ public:
 			}break;
 		}
 	}
-};
+};*/
 
 void SetupBlastedLandsGossip(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(7572, new FallenHero());
+	//mgr->register_gossip_script(7572, new FallenHero());
 }

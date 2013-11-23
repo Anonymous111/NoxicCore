@@ -3344,26 +3344,6 @@ bool EyeOfAcherus(uint32 i, Spell * pSpell)
 	return true;
 };
 
-bool PreparationForBattle(uint32 i, Spell* pSpell)
-{
-	if ( pSpell == NULL || pSpell->u_caster == NULL || !pSpell->u_caster->IsPlayer() )
-	return true;
-
-	Player* pPlayer = TO_PLAYER( pSpell->u_caster );
-	QuestLogEntry *pQuest = pPlayer->GetQuestLogForEntry( 12842 );
-	if ( pQuest != NULL )
-	{
-		if ( pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0] )
-		{
-			pQuest->SetMobCount( 0, pQuest->GetMobCount( 0 ) + 1 );
-			pQuest->SendUpdateAddKill( 0 );
-			pQuest->UpdatePlayerFields();
-			pQuest->SendQuestComplete();
-		}
-	}
-	return true;
-};
-
 void SetupQuestItems(ScriptMgr* mgr)
 {
 	mgr->register_dummy_spell(3607, &YennikuRelease);
@@ -3473,6 +3453,4 @@ void SetupQuestItems(ScriptMgr* mgr)
 	mgr->register_script_effect(SPELL_BENDINGSHINBONE, &BendingShinbone);
 	mgr->register_dummy_spell(51858, &SiphonofAcherus);
 	mgr->register_dummy_spell(51852, &EyeOfAcherus);
-	mgr->register_dummy_spell(53341, &PreparationForBattle);
-	mgr->register_dummy_spell(53343, &PreparationForBattle);
 }
