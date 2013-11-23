@@ -19,6 +19,78 @@
 
 #include "Setup.h"
 
+// Call to Arms!
+class BellRope : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BellRope);
+		BellRope(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(sEAS.GetQuest(pPlayer, 11965))
+				sEAS.KillMobForQuest(pPlayer, 11965, 0);
+		};
+
+};
+
+// Reading the Meters
+class ColdarraGeoMonitorNexus : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNexus);
+		ColdarraGeoMonitorNexus(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(sEAS.GetQuest(pPlayer, 11900))
+				sEAS.KillMobForQuest(pPlayer, 11900, 0);
+		};
+
+};
+
+class ColdarraGeoMonitorSouth : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorSouth);
+		ColdarraGeoMonitorSouth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(sEAS.GetQuest(pPlayer, 11900))
+				sEAS.KillMobForQuest(pPlayer, 11900, 1);
+		};
+
+};
+
+class ColdarraGeoMonitorNorth : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNorth);
+		ColdarraGeoMonitorNorth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(sEAS.GetQuest(pPlayer, 11900))
+				sEAS.KillMobForQuest(pPlayer, 11900, 2);
+		};
+
+};
+
+class ColdarraGeoMonitorWest : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorWest);
+		ColdarraGeoMonitorWest(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(sEAS.GetQuest(pPlayer, 11900))
+				sEAS.KillMobForQuest(pPlayer, 11900, 3);
+		};
+
+};
+
 class NerubarEggSac : public GameObjectAIScript
 {
 public:
@@ -27,25 +99,42 @@ public:
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(!pPlayer->HasQuest(11602))
+		if(sEAS.GetQuest(pPlayer, 11602))
 			return;
 
-		switch(rand()%3)
-		{
-			case 0:
-				break; // 33% of chance get nothing...
-			case 1:
-				sEAS.SpawnCreature(pPlayer, 24562, _gameobject->GetPositionNC(), 1000); // 33% to spawn a Nerub'ar Invader...
-			case 2:
-				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000); // and 33% to spawn 3 Nerub'ar Scarab
-				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000);
-				sEAS.SpawnCreature(pPlayer, 25652, _gameobject->GetPositionNC(), 1000);
-		}
+		sEAS.KillMobForQuest(pPlayer, 11602, 0);
+		_gameobject->SetState(1);
+		_gameobject->SetState(0);
 		_gameobject->Despawn(500, 60000);
-	}
+	};
+};
+
+// Hatching a Plan
+class BlueDragonEgg : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BlueDragonEgg);
+		BlueDragonEgg(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+
+		void OnActivate(Player* pPlayer)
+		{
+			if(!sEAS.GetQuest(pPlayer, 11936))
+				return;
+
+			sEAS.KillMobForQuest(pPlayer, 11936, 0);
+			_gameobject->SetState(1);
+			_gameobject->SetState(0);
+			_gameobject->Despawn(500, 60000);
+		}
 };
 
 void SetupBoreanTundraGameobjects(ScriptMgr* mgr)
 {
-	mgr->register_gameobject_script(187655, &NerubarEggSac::Create); // Nerub'ar Egg Sac
+	mgr->register_gameobject_script(188163, &BellRope::Create);
+	mgr->register_gameobject_script(188100, &ColdarraGeoMonitorNexus::Create);
+	mgr->register_gameobject_script(188101, &ColdarraGeoMonitorSouth::Create);
+	mgr->register_gameobject_script(188102, &ColdarraGeoMonitorNorth::Create);
+	mgr->register_gameobject_script(188103, &ColdarraGeoMonitorWest::Create);
+	mgr->register_gameobject_script(187655, &NerubarEggSac::Create);
+	mgr->register_gameobject_script(188133, &BlueDragonEgg::Create);
 }
