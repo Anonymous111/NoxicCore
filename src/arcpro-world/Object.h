@@ -107,13 +107,8 @@ enum PHASECOMMANDS
     PHASE_SET = 0, //overwrites the phase value with the supplied one
     PHASE_ADD = 1, //adds the new bits to the current phase value
     PHASE_DEL = 2, //removes the given bits from the current phase value
-    PHASE_RESET = 3 //sets the default phase of 1, same as PHASE_SET with 1 as the new value
-};
-
-enum PhaseMasks // From TrinityCore
-{
-    PHASEMASK_NORMAL = 0x00000001,
-    PHASEMASK_ANYWHERE = 0xFFFFFFFF
+    PHASE_RESET = 3, //sets the default phase of 1, same as PHASE_SET with 1 as the new value
+    PHASE_ANYWHERE = 4294967295 // Thanks to TrinityCore
 };
 
 typedef struct
@@ -121,7 +116,7 @@ typedef struct
 	uint32 school_type;
 	int32 full_damage;
 	uint32 resisted_damage;
-} dealdamage;
+}dealdamage;
 
 struct TransporterInfo{
 	uint64 guid;

@@ -153,8 +153,12 @@ bool ChatHandler::HandleGMOnCommand(const char* args, WorldSession* m_session)
 		_player->RemovePvPFlag();
 
 		char* sPhase = strtok((char*)args, " ");
+		if(!sPhase)
+			return false;
+
 		uint32 newphase = atoi(sPhase);
-		_player->Phase(PHASEMASK_ANYWHERE, newphase);
+		_player->Phase(PHASE_ANYWHERE, newphase);
+
 		BlueSystemMessage(m_session, "GM flag set. It will now appear above your name and in chat messages until you use .gm off.");
 
 		_player->UpdateVisibility();
@@ -167,6 +171,7 @@ bool ChatHandler::HandleGMOnCommand(const char* args, WorldSession* m_session)
 bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 {
 	Player* _player = m_session->GetPlayer();
+
 	if(_player->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_GM))
 	{
 
@@ -176,8 +181,12 @@ bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 		_player->UpdatePvPArea();
 
 		char* sPhase = strtok((char*)args, " ");
+		if(!sPhase)
+			return false;
+
 		uint32 newphase = atoi(sPhase);
 		_player->Phase(PHASE_RESET, newphase);
+
 		BlueSystemMessage(m_session, "GM Flag Removed. <GM> Will no longer show in chat messages or above your name.");
 
 		_player->UpdateVisibility();

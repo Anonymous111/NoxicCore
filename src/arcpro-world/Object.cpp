@@ -2192,32 +2192,22 @@ bool Object::IsInBg()
 
 uint32 Object::GetTeam()
 {
-
 	switch(m_factionDBC->ID)
 	{
-			// Human
-		case 1:
-			// Dwarf
-		case 3:
-			// Nightelf
-		case 4:
-			// Gnome
-		case 8:
-			// Draenei
-		case 927:
+		case 1: // Human
+		case 3: // Dwarf
+		case 4: // Nightelf
+		case 8: // Gnome
+		case 927: // Draenei
 			return TEAM_ALLIANCE;
-
-			// Orc
-		case 2:
-			// Undead
-		case 5:
-			// Tauren
-		case 6:
-			// Troll
-		case 9:
-			// Bloodelf
-		case 914:
+		break;
+		case 2: // Orc
+		case 5: // Undead
+		case 6: // Tauren
+		case 9: // Troll
+		case 914: // Bloodelf
 			return TEAM_HORDE;
+		break;
 	}
 
 	return static_cast< uint32 >(-1);
@@ -2230,16 +2220,19 @@ void Object::Phase(uint8 command, uint32 newphase)
 	{
 		case PHASE_SET:
 			m_phase = newphase;
-			break;
+		break;
 		case PHASE_ADD:
 			m_phase |= newphase;
-			break;
+		break;
 		case PHASE_DEL:
 			m_phase &= ~newphase;
-			break;
+		break;
 		case PHASE_RESET:
 			m_phase = 1;
-			break;
+		break;
+		case PHASE_ANYWHERE:
+			m_phase = 4294967295;
+		break;
 		default:
 			ARCPRO_ASSERT(false);
 	}
