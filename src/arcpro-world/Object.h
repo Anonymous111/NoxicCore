@@ -110,6 +110,12 @@ enum PHASECOMMANDS
     PHASE_RESET = 3 //sets the default phase of 1, same as PHASE_SET with 1 as the new value
 };
 
+enum PhaseMasks // From TrinityCore
+{
+    PHASEMASK_NORMAL = 0x00000001,
+    PHASEMASK_ANYWHERE = 0xFFFFFFFF
+};
+
 typedef struct
 {
 	uint32 school_type;
