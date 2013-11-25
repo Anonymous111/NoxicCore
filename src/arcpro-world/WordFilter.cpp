@@ -11,17 +11,18 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #include "StdAfx.h"
-extern "C" {
-#include <pcre.h>
+extern "C"
+{
+	#include <pcre.h>
 };
 
 #define REPLACE_FILTER 1
@@ -125,6 +126,7 @@ void WordFilter::Load(const char* szTableName)
 			free(pMatch->szMatch);
 			if(pMatch->szIgnoreMatch)
 				free(pMatch->szIgnoreMatch);
+
 			delete pMatch;
 			continue;
 		}
@@ -136,6 +138,7 @@ void WordFilter::Load(const char* szTableName)
 				free(pMatch->szMatch);
 				if(pMatch->szIgnoreMatch)
 					free(pMatch->szIgnoreMatch);
+
 				delete pMatch;
 				continue;
 			}
@@ -178,8 +181,8 @@ bool WordFilter::Parse(string & sMessage, bool bAllowReplace /* = true */)
 	for(i = 0; i < m_filterCount; ++i)
 	{
 		pFilter = m_filters[i];
-		if((n = pcre_exec((const pcre*)pFilter->pCompiledExpression,
-		                  (const pcre_extra*)pFilter->pCompiledExpressionOptions, szInput, (int)iLen, 0, 0, ovec, NC)) < 0)
+		if((n = pcre_exec((const pcre*)pFilter->pCompiledExpression, (const pcre_extra*)pFilter->pCompiledExpressionOptions, 
+						  szInput, (int)iLen, 0, 0, ovec, NC)) < 0)
 		{
 			if(n == PCRE_ERROR_NOMATCH)
 				continue;
@@ -193,8 +196,8 @@ bool WordFilter::Parse(string & sMessage, bool bAllowReplace /* = true */)
 			if(pFilter->szIgnoreMatch)
 			{
 				// ignore case
-				if((n = pcre_exec((const pcre*)pFilter->pCompiledIgnoreExpression,
-				                  (const pcre_extra*)pFilter->pCompiledIgnoreExpressionOptions, szInput, (int)iLen, 0, 0, ovec, NC)) < 0)
+				if((n = pcre_exec((const pcre*)pFilter->pCompiledIgnoreExpression, 
+								(const pcre_extra*)pFilter->pCompiledIgnoreExpressionOptions, szInput, (int)iLen, 0, 0, ovec, NC)) < 0)
 				{
 					// our string didn't match any of the excludes, so it passes
 					if(n == PCRE_ERROR_NOMATCH)
@@ -284,44 +287,48 @@ bool WordFilter::ParseEscapeCodes(char* sMsg, bool bAllowLinks)
 				i = sMsg + j + 10;
 				if(strncmp(i, "|H", 2) == 0 && bAllowLinks)
 					continue;
+
 				newstr = ((string)sMsg).replace(j, 10, "");
 				strcpy(sMsg, newstr.c_str());
 				j = 0;
-				break;
+			break;
 			case char('r'):
 				i = (sMsg + j) - 2;
 				if(strncmp(i, "|h", 2) == 0 && bAllowLinks)
-				{
 					continue;
-				}
+
 				newstr = ((string)sMsg).replace(j, 2, "");
 				strcpy(sMsg, newstr.c_str());
 				j = 0;
-				break;
+			break;
 			case char('H'):
 				//abc  |Hitem:111:2:3:4:5:6:7:8:9|h[Tough Jerky]|h|r
 				//    ^=j                         ^=i-sMsg  (approx)
 				i = strstr(sMsg, "|h");
 				if(bAllowLinks && i)
 					continue;
+
 				if(i)
 					newstr = ((string)sMsg).replace(j, ((size_t)(i - sMsg)) - (j), "");
 				else
 					newstr = ((string)sMsg).replace(j, strlen(sMsg) - j, "");
+
 				strcpy(sMsg, newstr.c_str());
 
 				j = 0;
-				break;
+			break;
 			case char('h'):
 				if(bAllowLinks)
 					continue;
+
 				if(((string)sMsg).at(j - 1) == char(']'))
 					newstr = ((string)sMsg).replace(j - 1, 3, "");
 				else
 					newstr = ((string)sMsg).replace(j, 2, "");
+
 				strcpy(sMsg, newstr.c_str());
 				j = 0;
-				break;
+			break;
 		}
 	}
 	return true;

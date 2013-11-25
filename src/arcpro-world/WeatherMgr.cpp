@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,26 +24,26 @@
 /// Weather defines
 enum WeatherTypes
 {
-    WEATHER_TYPE_NORMAL            = 0, // NORMAL
-    WEATHER_TYPE_FOG               = 1, // FOG --> current value irrelevant
-    WEATHER_TYPE_RAIN              = 2, // RAIN
-    WEATHER_TYPE_HEAVY_RAIN        = 4, // HEAVY_RAIN
-    WEATHER_TYPE_SNOW              = 8, // SNOW
-    WEATHER_TYPE_SANDSTORM         = 16 // SANDSTORM
+    WEATHER_TYPE_NORMAL		= 0, // NORMAL
+    WEATHER_TYPE_FOG		= 1, // FOG --> current value irrelevant
+    WEATHER_TYPE_RAIN		= 2, // RAIN
+    WEATHER_TYPE_HEAVY_RAIN	= 4, // HEAVY_RAIN
+    WEATHER_TYPE_SNOW		= 8, // SNOW
+    WEATHER_TYPE_SANDSTORM	= 16 // SANDSTORM
 };
 
 enum WeatherSounds
 {
-    WEATHER_NOSOUND                = 0,
-    WEATHER_RAINLIGHT              = 8533,
-    WEATHER_RAINMEDIUM             = 8534,
-    WEATHER_RAINHEAVY              = 8535,
-    WEATHER_SNOWLIGHT              = 8536,
-    WEATHER_SNOWMEDIUM             = 8537,
-    WEATHER_SNOWHEAVY              = 8538,
-    WEATHER_SANDSTORMLIGHT         = 8556,
-    WEATHER_SANDSTORMMEDIUM        = 8557,
-    WEATHER_SANDSTORMHEAVY         = 8558
+    WEATHER_NOSOUND			= 0,
+    WEATHER_RAINLIGHT		= 8533,
+    WEATHER_RAINMEDIUM 		= 8534,
+    WEATHER_RAINHEAVY		= 8535,
+    WEATHER_SNOWLIGHT		= 8536,
+    WEATHER_SNOWMEDIUM		= 8537,
+    WEATHER_SNOWHEAVY		= 8538,
+    WEATHER_SANDSTORMLIGHT	= 8556,
+    WEATHER_SANDSTORMMEDIUM	= 8557,
+    WEATHER_SANDSTORMHEAVY	= 8558
 };
 
 initialiseSingleton(WeatherMgr);
@@ -68,49 +68,48 @@ uint32 GetSound(uint32 Effect, float Density)
 
 	switch(Effect)
 	{
-		case 2:                                             //rain
-		case 4:
+		case WEATHER_TYPE_RAIN:
+		case WEATHER_TYPE_HEAVY_RAIN:
 			if(Density  < 0.40f)
 				sound = WEATHER_RAINLIGHT;
 			else if(Density  < 0.70f)
 				sound = WEATHER_RAINMEDIUM;
 			else
 				sound = WEATHER_RAINHEAVY;
-			break;
-		case 8:                                             //snow
+		break;
+		case WEATHER_TYPE_SNOW:
 			if(Density  < 0.40f)
 				sound = WEATHER_SNOWLIGHT;
 			else if(Density  < 0.70f)
 				sound = WEATHER_SNOWMEDIUM;
 			else
 				sound = WEATHER_SNOWHEAVY;
-			break;
-		case 16:                                             //storm
+		break;
+		case WEATHER_TYPE_SANDSTORM:
 			if(Density  < 0.40f)
 				sound = WEATHER_SANDSTORMLIGHT;
 			else if(Density  < 0.70f)
 				sound = WEATHER_SANDSTORMMEDIUM;
 			else
 				sound = WEATHER_SANDSTORMHEAVY;
-			break;
-		default:											//no sound
+		break;
+		default:
 			sound = WEATHER_NOSOUND;
-			break;
+		break;
 	}
 	return sound;
 }
 
 WeatherMgr::WeatherMgr()
 {
+
 }
 
 WeatherMgr::~WeatherMgr()
 {
 	std::map<uint32, WeatherInfo*>::iterator itr;
 	for(itr = m_zoneWeathers.begin(); itr != m_zoneWeathers.end(); itr++)
-	{
 		delete itr->second;
-	}
 
 	m_zoneWeathers.clear();
 }
@@ -159,9 +158,7 @@ void WeatherMgr::SendWeather(Player* plr)  //Update weather when player has chan
 		return;
 	}
 	else
-	{
 		itr->second->SendUpdate(plr);
-	}
 }
 
 WeatherInfo::WeatherInfo()
@@ -196,17 +193,13 @@ void WeatherInfo::_GenerateWeather()
 	std::map<uint32, uint32>::iterator itr;
 
 	if(rv <= m_effectValues[4])  // %chance on changing weather from sunny to m_effectValues[5]
-	{
 		m_currentEffect = m_effectValues[5];
-	}
+
 	else if(rv <= m_effectValues[2])  // %chance on changing weather from sunny to m_effectValues[3]
-	{
 		m_currentEffect = m_effectValues[3];
-	}
+
 	else if(rv <= m_effectValues[0])  // %chance on changing weather from sunny to m_effectValues[1]
-	{
 		m_currentEffect = m_effectValues[1];
-	}
 
 	SendUpdate();
 

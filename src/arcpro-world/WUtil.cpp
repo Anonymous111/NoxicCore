@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,14 +24,14 @@
 
 uint32 Arcpro::Util::GUID_HIPART(uint64 GUID)
 {
-	uint32 higuid = *(reinterpret_cast< const uint32* >(&GUID) + 1);
+	uint32 higuid = *(reinterpret_cast<const uint32*>(&GUID) + 1);
 
 	return higuid;
 }
 
 uint32 Arcpro::Util::GUID_LOPART(uint64 GUID)
 {
-	uint32 loguid = *(reinterpret_cast< const uint32* >(&GUID));
+	uint32 loguid = *(reinterpret_cast<const uint32*>(&GUID));
 
 	return loguid;
 }
@@ -63,21 +63,22 @@ uint64 Arcpro::Util::MAKE_ITEM_GUID(uint32 lowguid)
 {
 	uint64 GUID = 0;
 
-	uint32* u = reinterpret_cast< uint32* >(&GUID);
+	uint32* u = reinterpret_cast<uint32*>(&GUID);
 
-	u[ 0 ] = lowguid;
-	u[ 1 ] = HIGHGUID_TYPE_ITEM;
+	u[0] = lowguid;
+	u[1] = HIGHGUID_TYPE_ITEM;
 
 	return GUID;
 }
 
 uint32 Arcpro::Util::GET_CREATURE_ENTRY_FROM_GUID(uint64 guid)
 {
-	return ( guid >> 24) & 0x0FFFFFFF;
+	return (guid >> 24) & 0x0FFFFFFF;
 }
 
-uint32 Arcpro::Util::MAKE_UNIT_ACTION_BUTTON( uint32 spell, uint32 unk ){
-	return ( uint32( spell ) | ( uint32( unk ) << 24 ) );
+uint32 Arcpro::Util::MAKE_UNIT_ACTION_BUTTON(uint32 spell, uint32 unk)
+{
+	return (uint32(spell) | (uint32(unk) << 24));
 }
 
 /* Some minor documentation about the time field

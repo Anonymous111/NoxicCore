@@ -11,16 +11,16 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #include "StdAfx.h"
-#include <CrashHandler.h>
+#include < CrashHandler.h >
 
 initialiseSingleton(World);
 
@@ -91,9 +91,7 @@ void World::LogoutPlayers()
 {
 	Log.Notice("World", "Logging out players...");
 	for(SessionMap::iterator i = m_sessions.begin(); i != m_sessions.end(); i++)
-	{
 		(i->second)->LogoutPlayer(true);
-	}
 
 	Log.Notice("World", "Deleting sessions...");
 	WorldSession* p;
@@ -152,9 +150,7 @@ World::~World()
 	CleanupRandomNumberGenerators();
 
 	for(AreaTriggerMap::iterator i = m_AreaTrigger.begin(); i != m_AreaTrigger.end(); ++ i)
-	{
 		delete i->second;
-	}
 
 	Log.Notice("SpellProcMgr", "~SpellProcMgr()");
 	delete SpellProcMgr::getSingletonPtr();
@@ -166,10 +162,9 @@ World::~World()
 	delete eventholder;
 
 	Storage_Cleanup();
-	for(list<SpellEntry*>::iterator itr = dummyspells.begin(); itr != dummyspells.end(); ++itr)
+	for(list< SpellEntry* >::iterator itr = dummyspells.begin(); itr != dummyspells.end(); ++itr)
 		delete *itr;
 }
-
 
 WorldSession* World::FindSession(uint32 id)
 {
@@ -243,15 +238,13 @@ bool BasicTaskExecutor::run()
 	{
 		case BTE_PRIORITY_LOW:
 			::SetThreadPriority(::GetCurrentThread(), THREAD_PRIORITY_LOWEST);
-			break;
-
+		break;
 		case BTW_PRIORITY_HIGH:
 			::SetThreadPriority(::GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
-			break;
-
-		default:		// BTW_PRIORITY_MED
+		break;
+		default: // BTW_PRIORITY_MED
 			::SetThreadPriority(::GetCurrentThread(), THREAD_PRIORITY_NORMAL);
-			break;
+		break;
 	}
 #else
 	struct sched_param param;
@@ -259,15 +252,13 @@ bool BasicTaskExecutor::run()
 	{
 		case BTE_PRIORITY_LOW:
 			param.sched_priority = 0;
-			break;
-
+		break;
 		case BTW_PRIORITY_HIGH:
 			param.sched_priority = 10;
-			break;
-
-		default:		// BTW_PRIORITY_MED
+		break;
+		default: // BTW_PRIORITY_MED
 			param.sched_priority = 5;
-			break;
+		break;
 	}
 	pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
 #endif
@@ -291,7 +282,7 @@ bool World::SetInitialWorldSettings()
 	Player::InitVisibleUpdateBits();
 
 	CharacterDatabase.WaitExecute("UPDATE characters SET online = 0 WHERE online = 1");
-	CharacterDatabase.WaitExecute("UPDATE characters SET banned= 0,banReason='' WHERE banned > 100 AND banned < %u", UNIXTIME);
+	CharacterDatabase.WaitExecute("UPDATE characters SET banned = 0, banReason='' WHERE banned > 100 AND banned < %u", UNIXTIME);
 
 	// TODO: clean this
 	// fill in emotes table
@@ -328,7 +319,6 @@ bool World::SetInitialWorldSettings()
 	mPrices[60] = 72000;
 
 	// Start
-
 	uint32 start_time = getMSTime();
 
 	Log.Success("World", "Loading DBC files...");
@@ -339,7 +329,7 @@ bool World::SetInitialWorldSettings()
 	}
 
 	/* Convert area table ids/flags */
-	for(DBCStorage<AreaTable>::iterator itr = dbcArea.begin(); itr != dbcArea.end(); ++itr)
+	for(DBCStorage< AreaTable >::iterator itr = dbcArea.begin(); itr != dbcArea.end(); ++itr)
 	{
 		AreaTable* at = *itr;
 
@@ -350,17 +340,14 @@ bool World::SetInitialWorldSettings()
 		mAreaIDToTable[flag_] = at;
 		if(mZoneIDToTable.find(zone_) != mZoneIDToTable.end())
 		{
-			if(mZoneIDToTable[zone_]->AreaFlags != 312 &&
-			        mAreaIDToTable[flag_]->AreaFlags == 312)
+			if(mZoneIDToTable[zone_]->AreaFlags != 312 && mAreaIDToTable[flag_]->AreaFlags == 312)
 			{
 				// over ride.
 				mZoneIDToTable[zone_] = mAreaIDToTable[flag_];
 			}
 		}
 		else
-		{
 			mZoneIDToTable[zone_] = mAreaIDToTable[flag_];
-		}
 	}
 
 	new ObjectMgr;
@@ -378,7 +365,7 @@ bool World::SetInitialWorldSettings()
 
 	new SpellFactoryMgr;
 
-#define MAKE_TASK(sp, ptr) tl.AddTask(new Task(new CallbackP0<sp>(sp::getSingletonPtr(), &sp::ptr)))
+#define MAKE_TASK(sp, ptr) tl.AddTask(new Task(new CallbackP0< sp >(sp::getSingletonPtr(), &sp::ptr)))
 	// Fill the task list with jobs to do.
 	TaskList tl;
 	Storage_FillTaskList(tl);
@@ -395,34 +382,34 @@ bool World::SetInitialWorldSettings()
 	MAKE_TASK(ObjectMgr, LoadPlayersInfo);
 	tl.wait();
 
-	MAKE_TASK(ObjectMgr,  LoadInstanceBossInfos);
-	MAKE_TASK(ObjectMgr,  LoadCreatureWaypoints);
-	MAKE_TASK(ObjectMgr,  LoadCreatureTimedEmotes);
-	MAKE_TASK(ObjectMgr,  LoadTrainers);
-	MAKE_TASK(ObjectMgr,  LoadSpellSkills);
-	MAKE_TASK(ObjectMgr,  LoadSpellOverride);
-	MAKE_TASK(ObjectMgr,  LoadVendors);
-	MAKE_TASK(ObjectMgr,  LoadAIThreatToSpellId);
-	MAKE_TASK(ObjectMgr,  LoadSpellProcs);
-	MAKE_TASK(ObjectMgr,  LoadSpellEffectsOverride);
-	MAKE_TASK(ObjectMgr,  LoadSpellTargetConstraints);
-	MAKE_TASK(ObjectMgr,  LoadDefaultPetSpells);
-	MAKE_TASK(ObjectMgr,  LoadPetSpellCooldowns);
-	MAKE_TASK(ObjectMgr,  LoadGuildCharters);
-	MAKE_TASK(ObjectMgr,  LoadGMTickets);
-	MAKE_TASK(AddonMgr,   LoadFromDB);
-	MAKE_TASK(ObjectMgr,  SetHighestGuids);
-	MAKE_TASK(ObjectMgr,  LoadReputationModifiers);
-	MAKE_TASK(ObjectMgr,  LoadMonsterSay);
+	MAKE_TASK(ObjectMgr, LoadInstanceBossInfos);
+	MAKE_TASK(ObjectMgr, LoadCreatureWaypoints);
+	MAKE_TASK(ObjectMgr, LoadCreatureTimedEmotes);
+	MAKE_TASK(ObjectMgr, LoadTrainers);
+	MAKE_TASK(ObjectMgr, LoadSpellSkills);
+	MAKE_TASK(ObjectMgr, LoadSpellOverride);
+	MAKE_TASK(ObjectMgr, LoadVendors);
+	MAKE_TASK(ObjectMgr, LoadAIThreatToSpellId);
+	MAKE_TASK(ObjectMgr, LoadSpellProcs);
+	MAKE_TASK(ObjectMgr, LoadSpellEffectsOverride);
+	MAKE_TASK(ObjectMgr, LoadSpellTargetConstraints);
+	MAKE_TASK(ObjectMgr, LoadDefaultPetSpells);
+	MAKE_TASK(ObjectMgr, LoadPetSpellCooldowns);
+	MAKE_TASK(ObjectMgr, LoadGuildCharters);
+	MAKE_TASK(ObjectMgr, LoadGMTickets);
+	MAKE_TASK(AddonMgr, LoadFromDB);
+	MAKE_TASK(ObjectMgr, SetHighestGuids);
+	MAKE_TASK(ObjectMgr, LoadReputationModifiers);
+	MAKE_TASK(ObjectMgr, LoadMonsterSay);
 	MAKE_TASK(WeatherMgr, LoadFromDB);
-	MAKE_TASK(ObjectMgr,  LoadGroups);
+	MAKE_TASK(ObjectMgr, LoadGroups);
 	//LoadMonsterSay() must have finished before calling LoadExtraCreatureProtoStuff()
 	tl.wait();
 
 	MAKE_TASK(ObjectMgr, LoadExtraCreatureProtoStuff);
 	MAKE_TASK(ObjectMgr, LoadExtraItemStuff);
 	MAKE_TASK(ObjectMgr, LoadExtraGameObjectStuff);
-	MAKE_TASK(QuestMgr,  LoadExtraQuestStuff);
+	MAKE_TASK(QuestMgr, LoadExtraQuestStuff);
 	MAKE_TASK(ObjectMgr, LoadArenaTeams);
 	MAKE_TASK(ObjectMgr, LoadProfessionDiscoveries);
 	MAKE_TASK(ObjectMgr, StoreBroadCastGroupKey);
@@ -430,7 +417,6 @@ bool World::SetInitialWorldSettings()
 	MAKE_TASK(ObjectMgr, LoadWorldStateTemplates);
 
 #undef MAKE_TASK
-
 	// wait for all loading to complete.
 	tl.wait();
 	sLocalizationMgr.Reload(false);
@@ -448,9 +434,7 @@ bool World::SetInitialWorldSettings()
 	Log.Success("World", "Database loaded in %ums.", getMSTime() - start_time);
 
 	if(Collision)
-	{
 		CollideInterface.Init();
-	}
 
 	// calling this puts all maps into our task list.
 	sInstanceMgr.Load(&tl);
@@ -493,8 +477,7 @@ bool World::SetInitialWorldSettings()
 		Log.Notice("World", "Backgrounding loot loading...");
 
 		// loot background loading in a lower priority thread.
-		ThreadPool.ExecuteTask(new BasicTaskExecutor(new CallbackP0<LootMgr>(LootMgr::getSingletonPtr(), &LootMgr::LoadLoot),
-		                       BTE_PRIORITY_LOW));
+		ThreadPool.ExecuteTask(new BasicTaskExecutor(new CallbackP0< LootMgr >(LootMgr::getSingletonPtr(), &LootMgr::LoadLoot), BTE_PRIORITY_LOW));
 	}
 	else
 	{
@@ -513,7 +496,6 @@ bool World::SetInitialWorldSettings()
 	cs = new CommonScheduleThread();
 	ThreadPool.ExecuteTask(cs);
 
-
 	ThreadPool.ExecuteTask(new CharacterLoaderThread());
 
 #ifdef ENABLE_COMPRESSED_MOVEMENT
@@ -522,7 +504,6 @@ bool World::SetInitialWorldSettings()
 #endif
 
 	// Preload and compile talent and talent tab data to speed up talent inspect
-
 	uint32 talent_max_rank;
 	uint32 talent_pos;
 	uint32 talent_class;
@@ -570,7 +551,7 @@ bool World::SetInitialWorldSettings()
 
 		InspectTalentTabPages[talent_class + 1][tab_info->TabPage] = tab_info->TalentTabID;
 
-		for(std::map< uint32, uint32 >::iterator itr = InspectTalentTabBit.begin(); itr != InspectTalentTabBit.end(); ++itr)
+		for(std::map<uint32, uint32>::iterator itr = InspectTalentTabBit.begin(); itr != InspectTalentTabBit.end(); ++itr)
 		{
 			uint32 talent_id = itr->first & 0xFFFF;
 			TalentEntry const* talent_info = dbcTalent.LookupEntryForced(talent_id);
@@ -600,7 +581,6 @@ void World::Update(time_t diff)
 #endif
 }
 
-
 void World::SendGlobalMessage(WorldPacket* packet, WorldSession* self)
 {
 	m_sessionlock.AcquireReadLock();
@@ -608,12 +588,8 @@ void World::SendGlobalMessage(WorldPacket* packet, WorldSession* self)
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld()
-		        && itr->second != self)  // don't send to self!
-		{
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld() && itr->second != self) // don't send to self!
 			itr->second->SendPacket(packet);
-		}
 	}
 
 	m_sessionlock.ReleaseReadLock();
@@ -638,7 +614,6 @@ void World::PlaySoundToAll(uint32 soundid)
 	m_sessionlock.ReleaseWriteLock();
 }
 
-
 void World::SendFactionMessage(WorldPacket* packet, uint8 teamId)
 {
 	m_sessionlock.AcquireReadLock();
@@ -662,9 +637,7 @@ void World::SendGamemasterMessage(WorldPacket* packet, WorldSession* self)
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld()
-		        && itr->second != self)  // don't send to self!
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld() && itr->second != self) // don't send to self!
 		{
 			if(itr->second->CanUseCommand('u'))
 				itr->second->SendPacket(packet);
@@ -680,9 +653,7 @@ void World::SendZoneMessage(WorldPacket* packet, uint32 zoneid, WorldSession* se
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld()
-		        && itr->second != self)  // don't send to self!
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld() && itr->second != self) // don't send to self!
 		{
 			if(itr->second->GetPlayer()->GetZoneId() == zoneid)
 				itr->second->SendPacket(packet);
@@ -699,9 +670,7 @@ void World::SendInstanceMessage(WorldPacket* packet, uint32 instanceid, WorldSes
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld()
-		        && itr->second != self)  // don't send to self!
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld() && itr->second != self) // don't send to self!
 		{
 			if(itr->second->GetPlayer()->GetInstanceID() == (int32)instanceid)
 				itr->second->SendPacket(packet);
@@ -732,9 +701,7 @@ void World::SendWorldText(const char* text, WorldSession* self)
 	SendGlobalMessage(&data, self);
 
 	if(announce_output)
-	{
-		sLog.outString("> %s", text);
-	}
+		sLog.outString(" > %s", text);
 }
 
 void World::SendGMWorldText(const char* text, WorldSession* self)
@@ -786,8 +753,7 @@ void World::UpdateSessions(uint32 diff)
 	WorldSession* session;
 	int result;
 
-
-	std::list< WorldSession* > ErasableSessions;
+	std::list<WorldSession*> ErasableSessions;
 
 	SessionsMutex.Acquire();
 
@@ -837,11 +803,11 @@ void World::DeleteSession(WorldSession* session)
 	delete session;
 }
 
-void World::DeleteSessions(std::list< WorldSession* > &slist)
+void World::DeleteSessions(std::list<WorldSession*> &slist)
 {
 	m_sessionlock.AcquireWriteLock();
 
-	for(std::list< WorldSession* >::iterator itr = slist.begin(); itr != slist.end(); ++itr)
+	for(std::list<WorldSession*>::iterator itr = slist.begin(); itr != slist.end(); ++itr)
 	{
 		WorldSession* s = *itr;
 		m_sessions.erase(s->GetAccountId());
@@ -849,7 +815,7 @@ void World::DeleteSessions(std::list< WorldSession* > &slist)
 
 	m_sessionlock.ReleaseWriteLock();
 
-	for(std::list< WorldSession* >::iterator itr = slist.begin(); itr != slist.end(); ++itr)
+	for(std::list<WorldSession*>::iterator itr = slist.begin(); itr != slist.end(); ++itr)
 	{
 		WorldSession* s = *itr;
 		delete s;
@@ -986,9 +952,7 @@ void World::UpdateQueuedSessions(uint32 diff)
 		queueMutex.Release();
 	}
 	else
-	{
 		m_queueUpdateTimer -= diff;
-	}
 }
 
 void World::SaveAllPlayers()
@@ -1117,8 +1081,10 @@ void TaskList::spawn()
 		long affmask;
 		sched_getaffinity(0, 4, (cpu_set_t*)&affmask);
 		threadcount = (BitCount8(affmask)) * 2;
-		if(threadcount > 8) threadcount = 8;
-		else if(threadcount <= 0) threadcount = 1;
+		if(threadcount > 8)
+			threadcount = 8;
+		else if(threadcount <= 0)
+			threadcount = 1;
 #endif
 #else
 		threadcount = 2;
@@ -1236,7 +1202,7 @@ void World::Rehash(bool load)
 	setRate(RATE_POWER3, Config.MainConfig.GetFloatDefault("Rates", "Power3", 1)); // focus
 	setRate(RATE_POWER4, Config.MainConfig.GetFloatDefault("Rates", "Power4", 1)); // energy
 	setRate(RATE_POWER7, Config.MainConfig.GetFloatDefault("Rates", "Power7", 1)); // runic power (rate unused)
-	setRate( RATE_VEHICLES_POWER_REGEN, Config.MainConfig.GetFloatDefault( "Rates", "VehiclePower", 1.0f ) ); // Vehicle power regeneration
+	setRate(RATE_VEHICLES_POWER_REGEN, Config.MainConfig.GetFloatDefault("Rates", "VehiclePower", 1.0f)); // Vehicle power regeneration
 	setRate(RATE_DROP0, Config.MainConfig.GetFloatDefault("Rates", "DropGrey", 1));
 	setRate(RATE_DROP1, Config.MainConfig.GetFloatDefault("Rates", "DropWhite", 1));
 	setRate(RATE_DROP2, Config.MainConfig.GetFloatDefault("Rates", "DropGreen", 1));
@@ -1319,9 +1285,7 @@ void World::Rehash(bool load)
 #endif
 
 	if(!Config.MainConfig.GetString("GMClient", "GmClientChannel", &GmClientChannel))
-	{
 		GmClientChannel = "";
-	}
 
 	m_reqGmForCommands = !Config.MainConfig.GetBoolDefault("Server", "AllowPlayerCommands", false);
 	m_lfgForNonLfg = Config.MainConfig.GetBoolDefault("Server", "EnableLFGJoin", false);
@@ -1364,13 +1328,13 @@ void World::Rehash(bool load)
 	gamemaster_listOnlyActiveGMs = Config.OptionalConfig.GetBoolDefault("GameMaster", "ListOnlyActiveGMs", false);
 	gamemaster_hidePermissions = Config.OptionalConfig.GetBoolDefault("GameMaster", "HidePermissions", false);
 	gamemaster_startonGMIsland = Config.MainConfig.GetBoolDefault("GameMaster", "StartOnGMIsland", true);
-	gamemaster_disableachievements = Config.MainConfig.GetBoolDefault( "GameMaster", "DisableAchievements", false );
+	gamemaster_disableachievements = Config.MainConfig.GetBoolDefault("GameMaster", "DisableAchievements", false);
 	
 	m_levelCap = Config.OptionalConfig.GetIntDefault("Optional", "LevelCap", PLAYER_LEVEL_CAP);
 	m_genLevelCap = Config.OptionalConfig.GetIntDefault("Optional", "GenLevelCap", PLAYER_LEVEL_CAP);
 	StartingLevel = Config.OptionalConfig.GetIntDefault("Optional", "StartingLevel", 1);
-	if( StartingLevel > static_cast< int32 >( m_levelCap ) )
-		StartingLevel = static_cast< int32 >( m_levelCap );
+	if(StartingLevel > static_cast<int32>(m_levelCap))
+		StartingLevel = static_cast<int32>(m_levelCap);
 
 	antiMasterLootNinja = Config.OptionalConfig.GetBoolDefault("Optional", "AntiMasterLootNinja", false);
 	realmAllowTBCcharacters = Config.OptionalConfig.GetBoolDefault("Optional", "AllowTBC", true);
@@ -1395,13 +1359,20 @@ void World::Rehash(bool load)
 	BCSystemEnable = Config.OptionalConfig.GetBoolDefault("CommonSchedule", "AutoBroadCast", false);
 	BCOrderMode = Config.OptionalConfig.GetIntDefault("CommonSchedule", "BroadCastOrderMode", 0);
 
-	if(BCInterval < 10) BCInterval = 10;
-	else if(BCInterval > 1440) BCInterval = 1440;
-	if(BCTriggerPercentCap >= 99) BCTriggerPercentCap = 98;
-	else if(BCTriggerPercentCap <= 1) BCTriggerPercentCap = 0;
-	if(BCOrderMode < 0) BCOrderMode = 0;
-	else if(BCOrderMode > 1) BCOrderMode = 1;
+	if(BCInterval < 10)
+		BCInterval = 10;
+	else if(BCInterval > 1440)
+		BCInterval = 1440;
 
+	if(BCTriggerPercentCap >= 99)
+		BCTriggerPercentCap = 98;
+	else if(BCTriggerPercentCap <= 1)
+		BCTriggerPercentCap = 0;
+
+	if(BCOrderMode < 0)
+		BCOrderMode = 0;
+	else if(BCOrderMode > 1)
+		BCOrderMode = 1;
 
 	if(!flood_lines || !flood_seconds)
 		flood_lines = flood_seconds = 0;
@@ -1493,7 +1464,7 @@ void World::Rehash(bool load)
 	m_movementCompressThresholdCreatures *= m_movementCompressThresholdCreatures;
 
 	m_movementCompressThreshold = Config.MainConfig.GetFloatDefault("Movement", "CompressThreshold", 25.0f);
-	m_movementCompressThreshold *= m_movementCompressThreshold;		// square it to avoid sqrt() on checks
+	m_movementCompressThreshold *= m_movementCompressThreshold; // square it to avoid sqrt() on checks
 	// ======================================
 
 	if(m_banTable != NULL)
@@ -1537,133 +1508,133 @@ void World::AnnounceColorChooser(int tagcolor, int gmtagcolor, int namecolor, in
 	{
 		case 1:
 			ann_tagcolor = "|cffff6060"; //lightred
-			break;
+		break;
 		case 2:
 			ann_tagcolor = "|cff00ccff"; //lightblue
-			break;
+		break;
 		case 3:
 			ann_tagcolor = "|cff0000ff"; //blue
-			break;
+		break;
 		case 4:
 			ann_tagcolor = "|cff00ff00"; //green
-			break;
+		break;
 		case 5:
 			ann_tagcolor = "|cffff0000"; //red
-			break;
+		break;
 		case 6:
 			ann_tagcolor = "|cffffcc00"; //gold
-			break;
+		break;
 		case 7:
 			ann_tagcolor = "|cff888888"; //grey
-			break;
+		break;
 		case 8:
 			ann_tagcolor = "|cffffffff"; //white
-			break;
+		break;
 		case 9:
 			ann_tagcolor = "|cffff00ff"; //magenta
-			break;
+		break;
 		case 10:
 			ann_tagcolor = "|cffffff00"; //yellow
-			break;
+		break;
 	}
 	switch(gmtagcolor)
 	{
 		case 1:
 			ann_gmtagcolor = "|cffff6060"; //lightred
-			break;
+		break;
 		case 2:
 			ann_gmtagcolor = "|cff00ccff"; //lightblue
-			break;
+		break;
 		case 3:
 			ann_gmtagcolor = "|cff0000ff"; //blue
 			break;
 		case 4:
 			ann_gmtagcolor = "|cff00ff00"; //green
-			break;
+		break;
 		case 5:
 			ann_gmtagcolor = "|cffff0000"; //red
-			break;
+		break;
 		case 6:
 			ann_gmtagcolor = "|cffffcc00"; //gold
-			break;
+		break;
 		case 7:
 			ann_gmtagcolor = "|cff888888"; //grey
-			break;
+		break;
 		case 8:
 			ann_gmtagcolor = "|cffffffff"; //white
-			break;
+		break;
 		case 9:
 			ann_gmtagcolor = "|cffff00ff"; //magenta
-			break;
+		break;
 		case 10:
 			ann_gmtagcolor = "|cffffff00"; //yellow
-			break;
+		break;
 	}
 	switch(namecolor)
 	{
 		case 1:
 			ann_namecolor = "|cffff6060"; //lightred
-			break;
+		break;
 		case 2:
 			ann_namecolor = "|cff00ccff"; //lightblue
-			break;
+		break;
 		case 3:
 			ann_namecolor = "|cff0000ff"; //blue
-			break;
+		break;
 		case 4:
 			ann_namecolor = "|cff00ff00"; //green
-			break;
+		break;
 		case 5:
 			ann_namecolor = "|cffff0000"; //red
-			break;
+		break;
 		case 6:
 			ann_namecolor = "|cffffcc00"; //gold
-			break;
+		break;
 		case 7:
 			ann_namecolor = "|cff888888"; //grey
-			break;
+		break;
 		case 8:
 			ann_namecolor = "|cffffffff"; //white
-			break;
+		break;
 		case 9:
 			ann_namecolor = "|cffff00ff"; //magenta
-			break;
+		break;
 		case 10:
 			ann_namecolor = "|cffffff00"; //yellow
-			break;
+		break;
 	}
 	switch(msgcolor)
 	{
 		case 1:
 			ann_msgcolor = "|cffff6060"; //lightred
-			break;
+		break;
 		case 2:
 			ann_msgcolor = "|cff00ccff"; //lightblue
-			break;
+		break;
 		case 3:
 			ann_msgcolor = "|cff0000ff"; //blue
-			break;
+		break;
 		case 4:
 			ann_msgcolor = "|cff00ff00"; //green
-			break;
+		break;
 		case 5:
 			ann_msgcolor = "|cffff0000"; //red
-			break;
+		break;
 		case 6:
 			ann_msgcolor = "|cffffcc00"; //gold
-			break;
+		break;
 		case 7:
 			ann_msgcolor = "|cff888888"; //grey
-			break;
+		break;
 		case 8:
 			ann_msgcolor = "|cffffffff"; //white
-			break;
+		break;
 		case 9:
 			ann_msgcolor = "|cffff00ff"; //magenta
-			break;
+		break;
 		case 10:
 			ann_msgcolor = "|cffffff00"; //yellow
-			break;
+		break;
 	}
 	LOG_BASIC("Announce colors initialized.");
 }
@@ -1684,13 +1655,13 @@ void World::CleanupCheaters()
 	uint32 cl;
 	uint32 level;
 	uint32 talentpts;
-	char * start, *end;
-	Field * f;
+	char* start, *end;
+	Field* f;
 	uint32 should_talents;
 	uint32 used_talents;
-	SpellEntry * sp;
+	SpellEntry* sp;
 
-	QueryResult * result = CharacterDatabase.Query("SELECT guid, name, class, level, available_talent_points, spells FROM characters");
+	QueryResult* result = CharacterDatabase.Query("SELECT guid, name, class, level, available_talent_points, spells FROM characters");
 	if(result == NULL)
 		return;
 
@@ -1703,25 +1674,25 @@ void World::CleanupCheaters()
 		level = f[3].GetUInt32();
 		talentpts = f[4].GetUInt32();
 		start = f[5].GetString();
-		should_talents = (level<10 ? 0 : level - 9);
+		should_talents = (level < 10 ? 0 : level - 9);
 		used_talents -=
 
-
-		start = (char*)get_next_field.GetString();//buff;
+		start = (char*)get_next_field.GetString(); // buff;
 		while(true)
 		{
 			end = strchr(start,',');
-			if(!end)break;
+			if(!end)
+				break;
+
 			*end= 0;
 			sp = dbcSpell.LookupEntry(atol(start));
 			start = end +1;
 
 			if(sp->talent_tree)
-
+			// ????
 		}
-
-	} while(result->NextRow());*/
-
+	}
+	while(result->NextRow());*/
 }
 
 void World::CheckForExpiredInstances()
@@ -1763,11 +1734,11 @@ CharacterLoaderThread::CharacterLoaderThread()
 
 CharacterLoaderThread::~CharacterLoaderThread()
 {
+
 }
 
 bool CharacterLoaderThread::run()
 {
-
 	running = true;
 	for(;;)
 	{
@@ -1806,7 +1777,7 @@ void World::PollMailboxInsertQueue(DatabaseConnection* con)
 		do
 		{
 			f = result->Fetch();
-			vector<uint64> itemGuids;
+			vector< uint64 > itemGuids;
 
 			int fieldCounter = 6;
 			for(int itemSlot = 0; itemSlot < MAIL_MAX_ITEM_SLOT; itemSlot++)
@@ -1830,7 +1801,6 @@ void World::PollMailboxInsertQueue(DatabaseConnection* con)
 			Log.Notice("MailboxQueue", "Sending message to %u (item: %u)...", f[1].GetUInt32(), itemid);
 			sMailSystem.SendAutomatedMessage(0, f[0].GetUInt64(), f[1].GetUInt64(), f[2].GetString(), f[3].GetString(), f[5].GetUInt32(),
 			                                 0, itemGuids, f[4].GetUInt32());
-
 		}
 		while(result->NextRow());
 		delete result;
@@ -1843,8 +1813,8 @@ void World::PollCharacterInsertQueue(DatabaseConnection* con)
 {
 	// Our local stuff..
 	bool has_results = false;
-	map<uint32, vector<insert_playeritem> > itemMap;
-	map<uint32, vector<insert_playeritem> >::iterator itr;
+	map<uint32, vector<insert_playeritem>> itemMap;
+	map<uint32, vector<insert_playeritem>>::iterator itr;
 	Field* f;
 	insert_playeritem ipi;
 	static const char* characterTableFormat = "uSuuuuuussuuuuuuuuuuuuuuffffuususuufffuuuuusuuuUssuuuuuuffffuuuuufffssssssuuuuuuuu";
@@ -1884,9 +1854,7 @@ void World::PollCharacterInsertQueue(DatabaseConnection* con)
 				itemMap.insert(make_pair(ipi.ownerguid, to_insert));
 			}
 			else
-			{
 				itr->second.push_back(ipi);
-			}
 
 		}
 		while(result->NextRow());
@@ -1929,32 +1897,28 @@ void World::PollCharacterInsertQueue(DatabaseConnection* con)
 				{
 					case 's':
 						ss << ",'" << CharacterDatabase.EscapeString(f[i].GetString(), con) << "'";
-						break;
-
+					break;
 					case 'f':
 						ss << ",'" << f[i].GetFloat() << "'";
-						break;
-
+					break;
 					case 'S':
-						{
-							// this is the character name, append a hex version of the guid to it to prevent name clashes.
-							char newname[100];
-							snprintf(newname, 20, "%5s%X", f[i].GetString(), new_guid);
-							ss << ",'" << CharacterDatabase.EscapeString(newname, con) << "'";
-							inf->name = strdup(newname);
-						}
-						break;
-
+					{
+						// this is the character name, append a hex version of the guid to it to prevent name clashes.
+						char newname[100];
+						snprintf(newname, 20, "%5s%X", f[i].GetString(), new_guid);
+						ss << ",'" << CharacterDatabase.EscapeString(newname, con) << "'";
+						inf->name = strdup(newname);
+					}
+					break;
 					case 'U':
-						{
-							// this is our forced rename field. force it to one.
-							ss << ",1";
-						}
-						break;
-
+					{
+						// this is our forced rename field. force it to one.
+						ss << ",1";
+					}
+					break;
 					default:
 						ss << "," << f[i].GetUInt32();
-						break;
+					break;
 				}
 
 				++i;
@@ -1985,11 +1949,10 @@ void World::PollCharacterInsertQueue(DatabaseConnection* con)
 				case RACE_NIGHTELF:
 				case RACE_DRAENEI:
 					inf->team = 0;
-					break;
-
+				break;
 				default:
 					inf->team = 1;
-					break;
+				break;
 			}
 
 			// add playerinfo to objectmgr
@@ -1999,7 +1962,7 @@ void World::PollCharacterInsertQueue(DatabaseConnection* con)
 			itr = itemMap.find(guid);
 			if(itr != itemMap.end())
 			{
-				for(vector<insert_playeritem>::iterator vtr = itr->second.begin(); vtr != itr->second.end(); ++vtr)
+				for(vector< insert_playeritem >::iterator vtr = itr->second.begin(); vtr != itr->second.end(); ++vtr)
 				{
 					ss.rdbuf()->str("");
 					ss << "INSERT INTO playeritems VALUES(";
@@ -2060,7 +2023,7 @@ void World::DisconnectUsersWithAccount(const char* account, WorldSession* m_sess
 	}
 	m_sessionlock.ReleaseReadLock();
 	if(FoundUser == false)
-		m_session->SystemMessage("There is nobody online with account [%s]", account);
+		m_session->SystemMessage("There is nobody online with that account. [%s]", account);
 }
 
 void World::DisconnectUsersWithIP(const char* ip, WorldSession* m_session)
@@ -2088,7 +2051,8 @@ void World::DisconnectUsersWithIP(const char* ip, WorldSession* m_session)
 		}
 	}
 	if(FoundUser == false)
-		m_session->SystemMessage("There is nobody online with ip [%s]", ip);
+		m_session->SystemMessage("There is nobody online with that ip. [%s]", ip);
+
 	m_sessionlock.ReleaseReadLock();
 }
 
@@ -2116,7 +2080,7 @@ void World::DisconnectUsersWithPlayerName(const char* plr, WorldSession* m_sessi
 		}
 	}
 	if(FoundUser == false)
-		m_session->SystemMessage("There is no body online with the name [%s]", plr);
+		m_session->SystemMessage("There is nobody online with that name. [%s]", plr);
 	m_sessionlock.ReleaseReadLock();
 }
 
@@ -2136,8 +2100,7 @@ void World::SendBCMessageByID(uint32 id)
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld())
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld())
 		{
 			const char* text = itr->second->LocalizedBroadCast(id);
 			uint32 textLen = (uint32)strlen(text) + 1;
@@ -2167,8 +2130,7 @@ void World::SendLocalizedWorldText(bool wide, const char* format, ...)  // May n
 	SessionMap::iterator itr;
 	for(itr = m_sessions.begin(); itr != m_sessions.end(); itr++)
 	{
-		if(itr->second->GetPlayer() &&
-		        itr->second->GetPlayer()->IsInWorld())
+		if(itr->second->GetPlayer() && itr->second->GetPlayer()->IsInWorld())
 		{
 			string temp = SessionLocalizedTextFilter(itr->second, format);
 			// parsing
@@ -2226,7 +2188,6 @@ void World::UpdateTotalTraffic()
 
 	objmgr._playerslock.AcquireReadLock();
 	HM_NAMESPACE::hash_map<uint32, Player*>::const_iterator itr;
-
 	for(itr = objmgr._players.begin(); itr != objmgr._players.end(); ++itr)
 	{
 		s = itr->second->GetSession()->GetSocket();

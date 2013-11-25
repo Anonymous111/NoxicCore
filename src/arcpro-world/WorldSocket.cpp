@@ -11,20 +11,21 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 // Class WorldSocket - Main network code functions, handles
 // reading/writing of all packets.
 
 #include "StdAfx.h"
 #include "AuthCodes.h"
 
-/* echo send/received packets to console */
+// echo send/received packets to console
 //#define ECHO_PACKET_LOG_TO_CONSOLE 1
 
 #pragma pack(push, 1)
@@ -102,7 +103,7 @@ void WorldSocket::OnDisconnect()
 
 	if(mQueued)
 	{
-		sWorld.RemoveQueuedSocket(this);	// Remove from queued sockets.
+		sWorld.RemoveQueuedSocket(this); // Remove from queued sockets.
 		mQueued = false;
 	}
 }
@@ -125,7 +126,9 @@ void WorldSocket::OutPacket(uint16 opcode, size_t len, const void* data)
 		/* queue the packet */
 		queueLock.Acquire();
 		WorldPacket* pck = new WorldPacket(opcode, len);
-		if(len) pck->append((const uint8*)data, len);
+		if(len)
+			pck->append((const uint8*)data, len);
+
 		_queue.Push(pck);
 		queueLock.Release();
 	}
@@ -147,31 +150,26 @@ void WorldSocket::UpdateQueuedPackets()
 		switch(_OutPacket(pck->GetOpcode(), pck->size(), pck->size() ? pck->contents() : NULL))
 		{
 			case OUTPACKET_RESULT_SUCCESS:
-				{
-					delete pck;
-					_queue.pop_front();
-				}
-				break;
-
+			{
+				delete pck;
+				_queue.pop_front();
+			}break;
 			case OUTPACKET_RESULT_NO_ROOM_IN_BUFFER:
-				{
-					/* still connected */
-					queueLock.Release();
-					return;
-				}
-				break;
-
+			{
+				/* still connected */
+				queueLock.Release();
+				return;
+			}break;
 			default:
+			{
+				/* kill everything in the buffer */
+				while((pck == _queue.Pop()) != 0)
 				{
-					/* kill everything in the buffer */
-					while((pck == _queue.Pop()) != 0)
-					{
 						delete pck;
-					}
-					queueLock.Release();
-					return;
 				}
-				break;
+				queueLock.Release();
+				return;
+			}break;
 		}
 	}
 	queueLock.Release();
@@ -208,11 +206,11 @@ OUTPACKET_RESULT WorldSocket::_OutPacket(uint16 opcode, size_t len, const void* 
 
 	// Pass the rest of the packet to our send buffer (if there is any)
 	if(len > 0 && rv)
-	{
 		rv = BurstSend((const uint8*)data, (uint32)len);
-	}
 
-	if(rv) BurstPush();
+	if(rv)
+		BurstPush();
+
 	BurstEnd();
 	return rv ? OUTPACKET_RESULT_SUCCESS : OUTPACKET_RESULT_SOCKET_ERROR;
 }
@@ -232,7 +230,6 @@ void WorldSocket::OnConnect()
 	wp << uint32(0x1234ABCD);
 
 	SendPacket(&wp);
-
 }
 
 void WorldSocket::_HandleAuthSession(WorldPacket* recvPacket)
@@ -345,7 +342,7 @@ void WorldSocket::InformationRetreiveCallback(WorldPacket & recvData, uint32 req
 	pAuthenticationPacket->read(digest, 20);
 
 	uint32 t = 0;
-	if(m_fullAccountName == NULL)				// should never happen !
+	if(m_fullAccountName == NULL) // should never happen !
 		sha.UpdateData(AccountName);
 	else
 	{
@@ -373,7 +370,7 @@ void WorldSocket::InformationRetreiveCallback(WorldPacket & recvData, uint32 req
 	WorldSession* pSession = new WorldSession(AccountID, AccountName, this);
 	mSession = pSession;
 	ARCPRO_ASSERT(mSession != NULL);
-	// aquire delete mutex
+	// acquire delete mutex
 	pSession->deleteMutex.Acquire();
 
 	// Set session properties
@@ -428,9 +425,7 @@ void WorldSocket::InformationRetreiveCallback(WorldPacket & recvData, uint32 req
 	// Check for queue.
 	uint32 playerLimit = sWorld.GetPlayerLimit();
 	if((sWorld.GetSessionCount() < playerLimit) || pSession->HasGMPermissions())
-	{
 		Authenticate();
-	}
 	else if(playerLimit > 0)
 	{
 		// Queued, sucker.
@@ -477,7 +472,6 @@ void WorldSocket::Authenticate()
 
 	if(mSession->HasGMPermissions())
 		sWorld.gmList.insert(mSession);
-
 }
 
 void WorldSocket::UpdateQueuePosition(uint32 Position)
@@ -592,22 +586,20 @@ void WorldSocket::OnRead()
 		switch(Packet->GetOpcode())
 		{
 			case CMSG_PING:
-				{
-					_HandlePing(Packet);
-					delete Packet;
-				}
-				break;
+			{
+				_HandlePing(Packet);
+				delete Packet;
+			}break;
 			case CMSG_AUTH_SESSION:
-				{
-					_HandleAuthSession(Packet);
-				}
-				break;
+				_HandleAuthSession(Packet);
+			break;
 			default:
-				{
-					if(mSession) mSession->QueuePacket(Packet);
-					else delete Packet;
-				}
-				break;
+			{
+				if(mSession)
+					mSession->QueuePacket(Packet);
+				else
+					delete Packet;
+			}break;
 		}
 	}
 }

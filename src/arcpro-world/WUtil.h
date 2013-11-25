@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,22 +24,21 @@
 
 namespace Arcpro
 {
-
 	// Common ArcPro world stuff
 	class SERVER_DECL Util
 	{
-		public:
-
-			static uint32 GUID_LOPART(uint64 GUID);
-			static uint32 GUID_HIPART(uint64 GUID);
-			static uint32 GET_CREATURE_ENTRY_FROM_GUID(uint64 guid);
-			static void ArcproAssert(bool condition);
-			static uint64 MAKE_PET_GUID(uint32 entry, uint32 lowGUID);
-			static uint64 MAKE_ITEM_GUID(uint32 lowGUID);
-			static uint32 MAKE_UNIT_ACTION_BUTTON( uint32 spell, uint32 unk );
-			static uint32 MAKE_GAME_TIME();
+	public:
+		static uint32 GUID_LOPART(uint64 GUID);
+		static uint32 GUID_HIPART(uint64 GUID);
+		static uint32 GET_CREATURE_ENTRY_FROM_GUID(uint64 guid);
+		static void ArcproAssert(bool condition);
+		static uint64 MAKE_PET_GUID(uint32 entry, uint32 lowGUID);
+		static uint64 MAKE_ITEM_GUID(uint32 lowGUID);
+		static uint32 MAKE_UNIT_ACTION_BUTTON(uint32 spell, uint32 unk);
+		static uint32 MAKE_GAME_TIME();
 	};
 }
-#define ARCPRO_ASSERT( EXPR ) Arcpro::Util::ArcproAssert( EXPR ); ANALYSIS_ASSUME( EXPR )
+
+#define ARCPRO_ASSERT(EXPR) Arcpro::Util::ArcproAssert(EXPR); ANALYSIS_ASSUME(EXPR)
 
 #endif

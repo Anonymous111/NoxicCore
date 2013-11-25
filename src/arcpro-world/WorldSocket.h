@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,67 +34,65 @@ class WorldSession;
 
 enum OUTPACKET_RESULT
 {
-    OUTPACKET_RESULT_SUCCESS = 1,
-    OUTPACKET_RESULT_NO_ROOM_IN_BUFFER = 2,
-    OUTPACKET_RESULT_NOT_CONNECTED = 3,
-    OUTPACKET_RESULT_SOCKET_ERROR = 4,
+    OUTPACKET_RESULT_SUCCESS			= 1,
+    OUTPACKET_RESULT_NO_ROOM_IN_BUFFER	= 2,
+    OUTPACKET_RESULT_NOT_CONNECTED		= 3,
+    OUTPACKET_RESULT_SOCKET_ERROR		= 4,
 };
 
 class SERVER_DECL WorldSocket : public Socket
 {
-	public:
-		WorldSocket(SOCKET fd);
-		~WorldSocket();
+public:
+	WorldSocket(SOCKET fd);
+	~WorldSocket();
 
-		// vs8 fix - send null on empty buffer
-		ARCPRO_INLINE void SendPacket(WorldPacket* packet) { if(!packet) return; OutPacket(packet->GetOpcode(), packet->size(), (packet->size() ? (const void*)packet->contents() : NULL)); }
-		ARCPRO_INLINE void SendPacket(StackBufferBase* packet) { if(!packet) return; OutPacket(packet->GetOpcode(), packet->GetSize(), (packet->GetSize() ? (const void*)packet->GetBufferPointer() : NULL)); }
+	// vs8 fix - send null on empty buffer
+	ARCPRO_INLINE void SendPacket(WorldPacket* packet) { if(!packet) return; OutPacket(packet->GetOpcode(), packet->size(), (packet->size() ? (const void*)packet->contents() : NULL)); }
+	ARCPRO_INLINE void SendPacket(StackBufferBase* packet) { if(!packet) return; OutPacket(packet->GetOpcode(), packet->GetSize(), (packet->GetSize() ? (const void*)packet->GetBufferPointer() : NULL)); }
 
-		void  OutPacket(uint16 opcode, size_t len, const void* data);
-		OUTPACKET_RESULT  _OutPacket(uint16 opcode, size_t len, const void* data);
+	void OutPacket(uint16 opcode, size_t len, const void* data);
+	OUTPACKET_RESULT _OutPacket(uint16 opcode, size_t len, const void* data);
 
-		ARCPRO_INLINE uint32 GetLatency() { return _latency; }
+	ARCPRO_INLINE uint32 GetLatency() { return _latency; }
 
-		void Authenticate();
-		void InformationRetreiveCallback(WorldPacket & recvData, uint32 requestid);
+	void Authenticate();
+	void InformationRetreiveCallback(WorldPacket & recvData, uint32 requestid);
 
-		void  UpdateQueuePosition(uint32 Position);
+	void UpdateQueuePosition(uint32 Position);
 
-		void OnRead();
-		void OnConnect();
-		void OnDisconnect();
+	void OnRead();
+	void OnConnect();
+	void OnDisconnect();
 
-		ARCPRO_INLINE void SetSession(WorldSession* session) { mSession = session; }
+	ARCPRO_INLINE void SetSession(WorldSession* session) { mSession = session; }
 		ARCPRO_INLINE WorldSession* GetSession() { return mSession; }
-		bool Authed;
+	bool Authed;
 
-		void UpdateQueuedPackets();
+	void UpdateQueuedPackets();
 
-	protected:
+protected:
+	void _HandleAuthSession(WorldPacket* recvPacket);
+		oid _HandlePing(WorldPacket* recvPacket);
 
-		void _HandleAuthSession(WorldPacket* recvPacket);
-		void _HandlePing(WorldPacket* recvPacket);
+private:
+	uint32 mOpcode;
+	uint32 mRemaining;
+	uint32 mSize;
+	uint32 mSeed;
+	uint32 mClientSeed;
+	uint32 mClientBuild;
+	uint32 mRequestID;
 
-	private:
+	WorldSession* mSession;
+	WorldPacket* pAuthenticationPacket;
+	FastQueue<WorldPacket*, DummyLock> _queue;
+	Mutex queueLock;
 
-		uint32 mOpcode;
-		uint32 mRemaining;
-		uint32 mSize;
-		uint32 mSeed;
-		uint32 mClientSeed;
-		uint32 mClientBuild;
-		uint32 mRequestID;
-
-		WorldSession* mSession;
-		WorldPacket* pAuthenticationPacket;
-		FastQueue<WorldPacket*, DummyLock> _queue;
-		Mutex queueLock;
-
-		WowCrypt _crypt;
-		uint32 _latency;
-		bool mQueued;
-		bool m_nagleEanbled;
-		string* m_fullAccountName;
+	WowCrypt _crypt;
+	uint32 _latency;
+	bool mQueued;
+	bool m_nagleEanbled;
+	string* m_fullAccountName;
 };
 
 

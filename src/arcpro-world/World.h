@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -81,14 +81,13 @@ enum IntRates
 
 enum EnviromentalDamage
 {
-    DAMAGE_EXHAUSTED = 0,
-    DAMAGE_DROWNING = 1,
-    DAMAGE_FALL = 2,
-    DAMAGE_LAVA = 3,
-    DAMAGE_SLIME = 4,
-    DAMAGE_FIRE = 5
+    DAMAGE_EXHAUSTED	= 0,
+    DAMAGE_DROWNING		= 1,
+    DAMAGE_FALL			= 2,
+    DAMAGE_LAVA			= 3,
+    DAMAGE_SLIME		= 4,
+    DAMAGE_FIRE			= 5
 };
-
 
 // ServerMessages.dbc
 enum ServerMessageType
@@ -119,11 +118,11 @@ enum WorldMapInfoFlag
 
 enum AccountFlags
 {
-    ACCOUNT_FLAG_VIP		 = 0x1,
-    ACCOUNT_FLAG_NO_AUTOJOIN = 0x2,
-    //ACCOUNT_FLAG_XTEND_INFO  = 0x4,
-    ACCOUNT_FLAG_XPACK_01	= 0x8,
-    ACCOUNT_FLAG_XPACK_02	= 0x10,
+    ACCOUNT_FLAG_VIP			= 0x1,
+    ACCOUNT_FLAG_NO_AUTOJOIN	= 0x2,
+    //ACCOUNT_FLAG_XTEND_INFO	= 0x4,
+    ACCOUNT_FLAG_XPACK_01		= 0x8,
+    ACCOUNT_FLAG_XPACK_02		= 0x10,
 };
 
 #pragma pack(push,1)
@@ -192,7 +191,6 @@ struct MapInfo
 		return HasFlag(uint32(WMI_INSTANCE_HAS_NORMAL_10MEN) << difficulty);
 	}
 };
-
 #pragma pack(pop)
 
 enum REALM_TYPE
@@ -200,87 +198,86 @@ enum REALM_TYPE
     REALM_PVE = 0,
     REALM_PVP = 1,
 };
+
 struct AreaTable;
 
 class BasicTaskExecutor : public ThreadBase
 {
-		CallbackBase* cb;
-		uint32 priority;
-	public:
-		BasicTaskExecutor(CallbackBase* Callback, uint32 Priority) : cb(Callback), priority(Priority) {}
-		~BasicTaskExecutor() { delete cb; }
-		bool run();
+	CallbackBase* cb;
+	uint32 priority;
+public:
+	BasicTaskExecutor(CallbackBase* Callback, uint32 Priority) : cb(Callback), priority(Priority) {}
+	~BasicTaskExecutor() { delete cb; }
+	bool run();
 };
 
 class Task
 {
-		CallbackBase* _cb;
-	public:
-		Task(CallbackBase* cb) : _cb(cb), completed(false), in_progress(false) {}
-		~Task() { delete _cb; }
-		bool completed;
-		bool in_progress;
-		void execute();
+	CallbackBase* _cb;
+public:
+	Task(CallbackBase* cb) : _cb(cb), completed(false), in_progress(false) {}
+	~Task() { delete _cb; }
+	bool completed;
+	bool in_progress;
+	void execute();
 };
 
 struct CharacterLoaderThread : public ThreadBase
 {
-		Arcpro::Threading::ConditionVariable cond;
+	Arcpro::Threading::ConditionVariable cond;
 
-		bool running;
-	public:
-		CharacterLoaderThread();
-		~CharacterLoaderThread();
-		void OnShutdown();
-		bool run();
+	bool running;
+public:
+	CharacterLoaderThread();
+	~CharacterLoaderThread();
+	void OnShutdown();
+	bool run();
 };
 
 class TaskList
 {
-		set<Task*> tasks;
-		Mutex queueLock;
-	public:
-		TaskList() : thread_count(0) {};
-		Task* GetTask();
-		void AddTask(Task* task);
-		void RemoveTask(Task* task)
-		{
-			queueLock.Acquire();
-			tasks.erase(task);
-			queueLock.Release();
-		}
+	set<Task*> tasks;
+	Mutex queueLock;
+public:
+	TaskList() : thread_count(0) {};
+	Task* GetTask();
+	void AddTask(Task* task);
+	void RemoveTask(Task* task)
+	{
+		queueLock.Acquire();
+		tasks.erase(task);
+		queueLock.Release();
+	}
 
-		void spawn();
-		void kill();
+	void spawn();
+	void kill();
 
-		void wait();
-		void waitForThreadsToExit();
-		Arcpro::Threading::AtomicCounter thread_count;
-		bool running;
+	void wait();
+	void waitForThreadsToExit();
+	Arcpro::Threading::AtomicCounter thread_count;
+	bool running;
 };
 
 enum BasicTaskExecutorPriorities
 {
-    BTE_PRIORITY_LOW		= 0,
-    BTE_PRIORITY_MED		= 1,
-    BTW_PRIORITY_HIGH	   = 2,
+    BTE_PRIORITY_LOW	= 0,
+    BTE_PRIORITY_MED	= 1,
+    BTW_PRIORITY_HIGH	= 2,
 };
 
 class TaskExecutor : public ThreadBase
 {
-		TaskList* starter;
-	public:
-		TaskExecutor(TaskList* l) : starter(l) { ++l->thread_count; }
-		~TaskExecutor() { --starter->thread_count; }
+	TaskList* starter;
+public:
+	TaskExecutor(TaskList* l) : starter(l) { ++l->thread_count; }
+	~TaskExecutor() { --starter->thread_count; }
 
-		bool run();
+	bool run();
 };
 
 struct WMOAreaTableTripple
 {
-	WMOAreaTableTripple(int32 r, int32 a, int32 g) : groupId(g), rootId(r), adtId(a)
-	{
-	}
+	WMOAreaTableTripple(int32 r, int32 a, int32 g) : groupId(g), rootId(r), adtId(a) {}
 
 	bool operator <(const WMOAreaTableTripple & b) const
 	{
@@ -301,478 +298,477 @@ typedef set<WorldSession*> SessionSet;
 
 class SERVER_DECL World : public Singleton<World>, public EventableObject
 {
-	private:
-		uint32 HordePlayers;
-		uint32 AlliancePlayers;
+private:
+	uint32 HordePlayers;
+	uint32 AlliancePlayers;
 
-	public:
-		ARCPRO_INLINE uint32 getHordePlayerCount() { return HordePlayers; }
-		ARCPRO_INLINE uint32 getAlliancePlayerCount() { return AlliancePlayers; }
-		ARCPRO_INLINE uint32 getPlayerCount() { return (HordePlayers + AlliancePlayers); }
-		ARCPRO_INLINE void resetPlayerCount() { HordePlayers = AlliancePlayers = 0; }
-		ARCPRO_INLINE void incrementPlayerCount(uint32 faction)
-		{
-			if(faction == 1)
-				HordePlayers++;
-			else
-				AlliancePlayers++;
-		}
-		ARCPRO_INLINE void decrementPlayerCount(uint32 faction)
-		{
-			if(faction == 1)
-				HordePlayers--;
-			else
-				AlliancePlayers--;
-		}
+public:
+	ARCPRO_INLINE uint32 getHordePlayerCount() { return HordePlayers; }
+	ARCPRO_INLINE uint32 getAlliancePlayerCount() { return AlliancePlayers; }
+	ARCPRO_INLINE uint32 getPlayerCount() { return (HordePlayers + AlliancePlayers); }
+	ARCPRO_INLINE void resetPlayerCount() { HordePlayers = AlliancePlayers = 0; }
+	ARCPRO_INLINE void incrementPlayerCount(uint32 faction)
+	{
+		if(faction == 1)
+			HordePlayers++;
+		else
+			AlliancePlayers++;
+	}
+	ARCPRO_INLINE void decrementPlayerCount(uint32 faction)
+	{
+		if(faction == 1)
+			HordePlayers--;
+		else
+			AlliancePlayers--;
+	}
 
 // ToDo: Encapsulate below this point
-	public:
-		World();
-		~World();
+public:
+	World();
+	~World();
 
-		/** Reloads the config and sets all of the setting variables
-		 */
-		void Rehash(bool load);
+	/** Reloads the config and sets all of the setting variables */
+	void Rehash(bool load);
 
-		void CleanupCheaters();
-		WorldSession* FindSession(uint32 id);
-		WorldSession* FindSessionByName(const char*);
-		void AddSession(WorldSession* s);
-		void RemoveSession(uint32 id);
+	void CleanupCheaters();
+	WorldSession* FindSession(uint32 id);
+	WorldSession* FindSessionByName(const char*);
+	void AddSession(WorldSession* s);
+	void RemoveSession(uint32 id);
 
-		void AddGlobalSession(WorldSession* session);
-		void RemoveGlobalSession(WorldSession* session);
-		void DeleteSession(WorldSession* session);
-		void DeleteSessions(std::list< WorldSession* > &slist);
+	void AddGlobalSession(WorldSession* session);
+	void RemoveGlobalSession(WorldSession* session);
+	void DeleteSession(WorldSession* session);
+	void DeleteSessions(std::list<WorldSession*> &slist);
 
-		size_t GetSessionCount()
+	size_t GetSessionCount()
+	{
+		m_sessionlock.AcquireReadLock();
+		size_t ssize = m_sessions.size();
+		m_sessionlock.ReleaseReadLock();
+
+		return ssize;
+	}
+	uint32 GetNonGmSessionCount();
+	ARCPRO_INLINE size_t GetQueueCount() { return mQueuedSessions.size(); }
+	void GetStats(uint32* GMCount, float* AverageLatency);
+
+	ARCPRO_INLINE uint32 GetPlayerLimit() const { return m_playerLimit; }
+	void SetPlayerLimit(uint32 limit) { m_playerLimit = limit; }
+
+	ARCPRO_INLINE bool getAllowMovement() const { return m_allowMovement; }
+	void SetAllowMovement(bool allow) { m_allowMovement = allow; }
+	ARCPRO_INLINE bool getGMTicketStatus() { return m_gmTicketSystem; };
+	bool toggleGMTicketStatus()
+	{
+		m_gmTicketSystem = !m_gmTicketSystem;
+		return m_gmTicketSystem;
+	};
+
+	ARCPRO_INLINE std::string getGmClientChannel() { return GmClientChannel; }
+
+	void SetMotd(const char* motd) { m_motd = motd; }
+	ARCPRO_INLINE const char* GetMotd() const { return m_motd.c_str(); }
+
+	bool SetInitialWorldSettings();
+
+	void SendWorldText(const char* text, WorldSession* self = 0);
+	void SendWorldWideScreenText(const char* text, WorldSession* self = 0);
+	void SendGlobalMessage(WorldPacket* packet, WorldSession* self = 0);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	//void PlaySoundToAll( uint32 soundid )
+	//  Plays the sound to everyone logged in and in the world
+	//
+	//Parameter(s)
+	//  uint32 soundid  -  Identifier of the sound to play
+	//
+	//Return Value
+	//  None
+	//
+	///////////////////////////////////////////////////////////////////////////////////////////////////
+	void PlaySoundToAll(uint32 soundid);
+
+	void SendZoneMessage(WorldPacket* packet, uint32 zoneid, WorldSession* self = 0);
+	void SendInstanceMessage(WorldPacket* packet, uint32 instanceid, WorldSession* self = 0);
+	void SendFactionMessage(WorldPacket* packet, uint8 teamId);
+	void SendGamemasterMessage(WorldPacket* packet, WorldSession* self = 0);
+	void SendGMWorldText(const char* text, WorldSession* self = 0);
+	void SendDamageLimitTextToGM(const char* playername, const char* dmglog);
+	void SendBCMessageByID(uint32 id);
+	void SendLocalizedWorldText(bool wide, const char* format, ...);
+
+	void SendZoneUnderAttackMsg(uint32 areaid, uint8 team);
+
+	ARCPRO_INLINE void SetStartTime(uint32 val) { m_StartTime = val; }
+	ARCPRO_INLINE uint32 GetUptime(void) { return (uint32)UNIXTIME - m_StartTime; }
+	ARCPRO_INLINE uint32 GetStartTime(void) { return m_StartTime; }
+	std::string GetUptimeString();
+	// cebernic: textfilter,no fast,but works:D ...
+	ARCPRO_INLINE std::string SessionLocalizedTextFilter(WorldSession* _session, const char* text)
+	{
+		std::string opstr = string(text);
+		std::string::iterator t = opstr.begin();
+		std::string temp;
+		int found = 0;
+		std::string num;
+		while(t != opstr.end())
 		{
-			m_sessionlock.AcquireReadLock();
-			size_t ssize = m_sessions.size();
-			m_sessionlock.ReleaseReadLock();
-
-			return ssize;
-		}
-		uint32 GetNonGmSessionCount();
-		ARCPRO_INLINE size_t GetQueueCount() { return mQueuedSessions.size(); }
-		void GetStats(uint32* GMCount, float* AverageLatency);
-
-		ARCPRO_INLINE uint32 GetPlayerLimit() const { return m_playerLimit; }
-		void SetPlayerLimit(uint32 limit) { m_playerLimit = limit; }
-
-		ARCPRO_INLINE bool getAllowMovement() const { return m_allowMovement; }
-		void SetAllowMovement(bool allow) { m_allowMovement = allow; }
-		ARCPRO_INLINE bool getGMTicketStatus() { return m_gmTicketSystem; };
-		bool toggleGMTicketStatus()
-		{
-			m_gmTicketSystem = !m_gmTicketSystem;
-			return m_gmTicketSystem;
-		};
-
-		ARCPRO_INLINE std::string getGmClientChannel() { return GmClientChannel; }
-
-		void SetMotd(const char* motd) { m_motd = motd; }
-		ARCPRO_INLINE const char* GetMotd() const { return m_motd.c_str(); }
-
-		bool SetInitialWorldSettings();
-
-		void SendWorldText(const char* text, WorldSession* self = 0);
-		void SendWorldWideScreenText(const char* text, WorldSession* self = 0);
-		void SendGlobalMessage(WorldPacket* packet, WorldSession* self = 0);
-
-
-		///////////////////////////////////////////////////////////////////////////////////////////////////
-		//void PlaySoundToAll( uint32 soundid )
-		//  Plays the sound to everyone logged in and in the world
-		//
-		//Parameter(s)
-		//  uint32 soundid  -  Identifier of the sound to play
-		//
-		//Return Value
-		//  None
-		//
-		//
-		///////////////////////////////////////////////////////////////////////////////////////////////////
-		void PlaySoundToAll(uint32 soundid);
-
-
-		void SendZoneMessage(WorldPacket* packet, uint32 zoneid, WorldSession* self = 0);
-		void SendInstanceMessage(WorldPacket* packet, uint32 instanceid, WorldSession* self = 0);
-		void SendFactionMessage(WorldPacket* packet, uint8 teamId);
-		void SendGamemasterMessage(WorldPacket* packet, WorldSession* self = 0);
-		void SendGMWorldText(const char* text, WorldSession* self = 0);
-		void SendDamageLimitTextToGM(const char* playername, const char* dmglog);
-		void SendBCMessageByID(uint32 id);
-		void SendLocalizedWorldText(bool wide, const char* format, ...);
-
-		void SendZoneUnderAttackMsg(uint32 areaid, uint8 team);
-
-		ARCPRO_INLINE void SetStartTime(uint32 val) { m_StartTime = val; }
-		ARCPRO_INLINE uint32 GetUptime(void) { return (uint32)UNIXTIME - m_StartTime; }
-		ARCPRO_INLINE uint32 GetStartTime(void) { return m_StartTime; }
-		std::string GetUptimeString();
-		// cebernic: textfilter,no fast,but works:D ...
-		ARCPRO_INLINE std::string SessionLocalizedTextFilter(WorldSession* _session, const char* text)
-		{
-			std::string opstr = string(text);
-			std::string::iterator t = opstr.begin();
-			std::string temp;
-			int found = 0;
-			std::string num;
-			while(t != opstr.end())
+			if((char)(*t) == '{' && strlen((char*) & (*t)) > 1)    // find and no end :D
 			{
-				if((char)(*t) == '{' && strlen((char*) & (*t)) > 1)    // find and no end :D
-				{
-					found++;
-					++t;
-					continue;
-				}
-				if(found == 1)
-				{
-					if((char)(*t) == '}') found++;
-					else num.push_back(*t);
-				}
-				if(found)    // get the flag and doing my work and skip pushback.
-				{
-					if(found == 2)
-					{
-						temp += _session->LocalizedWorldSrv((uint32) atoi((char*)num.c_str()));
-						found = 0;
-						num.clear();
-					}
-				}
-				else temp.push_back(*t);
+				found++;
 				++t;
+				continue;
 			}
-			return temp;
-		}
-
-		// update the world server every frame
-		void Update(time_t diff);
-		void CheckForExpiredInstances();
-
-
-		void UpdateSessions(uint32 diff);
-
-		ARCPRO_INLINE void setRate(int index, float value)
-		{
-			regen_values[index] = value;
-		}
-
-		ARCPRO_INLINE float getRate(int index)
-		{
-			return regen_values[index];
-		}
-
-		ARCPRO_INLINE uint32 getIntRate(int index)
-		{
-			return int_rates[index];
-		}
-
-		ARCPRO_INLINE void setIntRate(int index, uint32 value)
-		{
-			int_rates[index] = value;
-		}
-
-		// talent inspection lookup tables
-		std::map< uint32, uint32 > InspectTalentTabPos;
-		std::map< uint32, uint32 > InspectTalentTabSize;
-		std::map< uint32, uint32 > InspectTalentTabBit;
-		uint32 InspectTalentTabPages[12][3];
-
-		// map text emote to spell prices
-		typedef std::map< uint32, uint32> SpellPricesMap;
-		SpellPricesMap mPrices;
-
-		ARCPRO_INLINE uint32 GetTimeOut() {return TimeOut;}
-
-		struct NameGenData
-		{
-			string name;
-			uint32 type;
-		};
-		vector<NameGenData> _namegendata[3];
-		void LoadNameGenData();
-
-		void LoadWMOAreaData()
-		{
-			for(DBCStorage<WMOAreaTableEntry>::iterator itr = dbcWMOAreaTable.begin(); itr != dbcWMOAreaTable.end(); ++itr)
+			if(found == 1)
 			{
-				WMOAreaTableTripple tmp((*itr)->rootId, (*itr)->adtId, (*itr)->groupId);
-
-				m_WMOAreaTableTripples.insert(std::make_pair(tmp, (*itr)));
+				if((char)(*t) == '}') found++;
+				else num.push_back(*t);
 			}
+			if(found)    // get the flag and doing my work and skip pushback.
+			{
+				if(found == 2)
+				{
+					temp += _session->LocalizedWorldSrv((uint32) atoi((char*)num.c_str()));
+					found = 0;
+					num.clear();
+				}
+			}
+			else
+				temp.push_back(*t);
+
+			++t;
 		}
+		return temp;
+	}
 
-		WMOAreaTableEntry* GetWMOAreaData(int32 rootid, int32 adtid, int32 groupid)
+	// update the world server every frame
+	void Update(time_t diff);
+	void CheckForExpiredInstances();
+
+
+	void UpdateSessions(uint32 diff);
+
+	ARCPRO_INLINE void setRate(int index, float value)
+	{
+		regen_values[index] = value;
+	}
+
+	ARCPRO_INLINE float getRate(int index)
+	{
+		return regen_values[index];
+	}
+
+	ARCPRO_INLINE uint32 getIntRate(int index)
+	{
+		return int_rates[index];
+	}
+
+	ARCPRO_INLINE void setIntRate(int index, uint32 value)
+	{
+		int_rates[index] = value;
+	}
+
+	// talent inspection lookup tables
+	std::map<uint32, uint32> InspectTalentTabPos;
+	std::map<uint32, uint32> InspectTalentTabSize;
+	std::map<uint32, uint32> InspectTalentTabBit;
+	uint32 InspectTalentTabPages[12][3];
+
+	// map text emote to spell prices
+	typedef std::map<uint32, uint32> SpellPricesMap;
+	SpellPricesMap mPrices;
+
+	ARCPRO_INLINE uint32 GetTimeOut() { return TimeOut; }
+
+	struct NameGenData
+	{
+		string name;
+		uint32 type;
+	};
+
+	vector<NameGenData> _namegendata[3];
+	void LoadNameGenData();
+
+	void LoadWMOAreaData()
+	{
+		for(DBCStorage<WMOAreaTableEntry>::iterator itr = dbcWMOAreaTable.begin(); itr != dbcWMOAreaTable.end(); ++itr)
 		{
-			WMOAreaTableTripple tmp(rootid, adtid, groupid);
-			std::map<WMOAreaTableTripple, WMOAreaTableEntry*>::iterator itr = m_WMOAreaTableTripples.find(tmp);
+			WMOAreaTableTripple tmp((*itr)->rootId, (*itr)->adtId, (*itr)->groupId);
 
-			if(itr != m_WMOAreaTableTripples.end())
-				return itr->second;
-			return NULL;
+			m_WMOAreaTableTripples.insert(std::make_pair(tmp, (*itr)));
 		}
+	}
 
-		std::string GenerateName(uint32 type = 0);
+	WMOAreaTableEntry* GetWMOAreaData(int32 rootid, int32 adtid, int32 groupid)
+	{
+		WMOAreaTableTripple tmp(rootid, adtid, groupid);
+		std::map<WMOAreaTableTripple, WMOAreaTableEntry*>::iterator itr = m_WMOAreaTableTripples.find(tmp);
 
-		std::map<uint32, AreaTable*> mAreaIDToTable;
-		std::map<uint32, AreaTable*> mZoneIDToTable;
+		if(itr != m_WMOAreaTableTripples.end())
+			return itr->second;
 
-		uint32 AddQueuedSocket(WorldSocket* Socket);
-		void RemoveQueuedSocket(WorldSocket* Socket);
-		uint32 GetQueuePos(WorldSocket* Socket);
-		void UpdateQueuedSessions(uint32 diff);
+		return NULL;
+	}
 
-		Mutex queueMutex;
+	std::string GenerateName(uint32 type = 0);
 
-		uint32 mQueueUpdateInterval;
-		bool m_useIrc;
+	std::map<uint32, AreaTable*> mAreaIDToTable;
+	std::map<uint32, AreaTable*> mZoneIDToTable;
 
-		void SaveAllPlayers();
+	uint32 AddQueuedSocket(WorldSocket* Socket);
+	void RemoveQueuedSocket(WorldSocket* Socket);
+	uint32 GetQueuePos(WorldSocket* Socket);
+	void UpdateQueuedSessions(uint32 diff);
 
-		string MapPath;
-		string vMapPath;
-		bool UnloadMapFiles;
-		bool BreathingEnabled;
-		bool SpeedhackProtection;
-		uint32 mAcceptedConnections;
-		uint32 SocketSendBufSize;
-		uint32 SocketRecvBufSize;
+	Mutex queueMutex;
 
-		int32 StartingLevel;
-		uint32 ExtraTalents;
-		uint32 MaxProfs;
-		uint32 DKStartTalentPoints;
+	uint32 mQueueUpdateInterval;
+	bool m_useIrc;
 
-		uint32 PeakSessionCount;
-		uint32 ArenaQueueDiff;
-		bool SendStatsOnJoin;
-		SessionSet gmList;
-		bool Collision;
-		bool DisableFearMovement;
+	void SaveAllPlayers();
 
-		void ShutdownClasses();
-		void DeleteObject(Object* obj);
+	string MapPath;
+	string vMapPath;
+	bool UnloadMapFiles;
+	bool BreathingEnabled;
+	bool SpeedhackProtection;
+	uint32 mAcceptedConnections;
+	uint32 SocketSendBufSize;
+	uint32 SocketRecvBufSize;
 
-		uint32 compression_threshold;
+	int32 StartingLevel;
+	uint32 ExtraTalents;
+	uint32 MaxProfs;
+	uint32 DKStartTalentPoints;
 
-		void	SetKickAFKPlayerTime(uint32 idletimer) {m_KickAFKPlayers = idletimer;}
-		uint32	GetKickAFKPlayerTime() {return m_KickAFKPlayers;}
+	uint32 PeakSessionCount;
+	uint32 ArenaQueueDiff;
+	bool SendStatsOnJoin;
+	SessionSet gmList;
+	bool Collision;
+	bool DisableFearMovement;
 
-		uint32 GetRealmType() { return realmtype; }
+	void ShutdownClasses();
+	void DeleteObject(Object* obj);
 
-		uint32 flood_lines;
-		uint32 flood_seconds;
-		bool flood_message;
-		bool gm_skip_attunement;
+	uint32 compression_threshold;
 
-		bool show_gm_in_who_list;
-		uint32 map_unload_time;
+	void SetKickAFKPlayerTime(uint32 idletimer) {m_KickAFKPlayers = idletimer;}
+	uint32 GetKickAFKPlayerTime() {return m_KickAFKPlayers;}
 
-		bool interfaction_chat;
-		bool interfaction_group;
-		bool interfaction_guild;
-		bool interfaction_trade;
-		bool interfaction_friend;
-		bool interfaction_misc;
-		bool crossover_chars;
-		bool antiMasterLootNinja;
-		bool gamemaster_listOnlyActiveGMs;
-		bool gamemaster_hidePermissions;
-		bool gamemaster_startonGMIsland;
-		bool gamemaster_disableachievements;
+	uint32 GetRealmType() { return realmtype; }
 
-		//Arena Settings
-		int Arena_Season;
-		int Arena_Progress;
+	uint32 flood_lines;
+	uint32 flood_seconds;
+	bool flood_message;
+	bool gm_skip_attunement;
 
+	bool show_gm_in_who_list;
+	uint32 map_unload_time;
 
-		// broadcast system config
-		bool BCSystemEnable;
-		int BCInterval;
-		int BCTriggerPercentCap;
-		int BCOrderMode;
+	bool interfaction_chat;
+	bool interfaction_group;
+	bool interfaction_guild;
+	bool interfaction_trade;
+	bool interfaction_friend;
+	bool interfaction_misc;
+	bool crossover_chars;
+	bool antiMasterLootNinja;
+	bool gamemaster_listOnlyActiveGMs;
+	bool gamemaster_hidePermissions;
+	bool gamemaster_startonGMIsland;
+	bool gamemaster_disableachievements;
 
-		bool realmAllowTBCcharacters;
+	//Arena Settings
+	int Arena_Season;
+	int Arena_Progress;
 
-		std::string announce_tag;
-		bool GMAdminTag;
-		bool NameinAnnounce;
-		bool NameinWAnnounce;
-		bool announce_output;
+	// broadcast system config
+	bool BCSystemEnable;
+	int BCInterval;
+	int BCTriggerPercentCap;
+	int BCOrderMode;
 
-		int announce_tagcolor;
-		int announce_gmtagcolor;
-		int announce_namecolor;
-		int announce_msgcolor;
-		string ann_namecolor;
-		string ann_gmtagcolor;
-		string ann_tagcolor;
-		string ann_msgcolor;
-		void AnnounceColorChooser(int tagcolor, int gmtagcolor, int namecolor, int msgcolor);
+	bool realmAllowTBCcharacters;
 
-		bool antihack_teleport;
-		bool antihack_speed;
-		bool antihack_flight;
-		uint32 flyhack_threshold;
-		bool no_antihack_on_gm;
+	std::string announce_tag;
+	bool GMAdminTag;
+	bool NameinAnnounce;
+	bool NameinWAnnounce;
+	bool announce_output;
 
-		bool instance_TakeGroupLeaderID;
-		bool instance_SlidingExpiration;
-		int instance_DailyHeroicInstanceResetHour;
-		bool instance_CheckTriggerPrerequisites;
+	int announce_tagcolor;
+	int announce_gmtagcolor;
+	int announce_namecolor;
+	int announce_msgcolor;
+	string ann_namecolor;
+	string ann_gmtagcolor;
+	string ann_tagcolor;
+	string ann_msgcolor;
+	void AnnounceColorChooser(int tagcolor, int gmtagcolor, int namecolor, int msgcolor);
 
-		// battleground settings
-		struct BGSettings{
-			uint32 AV_MIN;
-			uint32 AV_MAX;
-			uint32 AB_MIN;
-			uint32 AB_MAX;
-			uint32 WSG_MIN;
-			uint32 WSG_MAX;
-			uint32 EOTS_MIN;
-			uint32 EOTS_MAX;
-			uint32 SOTA_MIN;
-			uint32 SOTA_MAX;
-			uint32 IOC_MIN;
-			uint32 IOC_MAX;
-		}bgsettings;
+	bool antihack_teleport;
+	bool antihack_speed;
+	bool antihack_flight;
+	uint32 flyhack_threshold;
+	bool no_antihack_on_gm;
 
-		struct ArenaSettings{
-			// Min/Max players per side for the arenas
+	bool instance_TakeGroupLeaderID;
+	bool instance_SlidingExpiration;
+	int instance_DailyHeroicInstanceResetHour;
+	bool instance_CheckTriggerPrerequisites;
 
-			uint32 A2V2_MIN;
-			uint32 A2V2_MAX;
-			uint32 A3V3_MIN;
-			uint32 A3V3_MAX;
-			uint32 A5V5_MIN;
-			uint32 A5V5_MAX;
-		}arenaSettings;
+	// battleground settings
+	struct BGSettings
+	{
+		uint32 AV_MIN;
+		uint32 AV_MAX;
+		uint32 AB_MIN;
+		uint32 AB_MAX;
+		uint32 WSG_MIN;
+		uint32 WSG_MAX;
+		uint32 EOTS_MIN;
+		uint32 EOTS_MAX;
+		uint32 SOTA_MIN;
+		uint32 SOTA_MAX;
+		uint32 IOC_MIN;
+		uint32 IOC_MAX;
+	}bgsettings;
 
+	struct ArenaSettings
+	{
+		// Min/Max players per side for the arenas
+		uint32 A2V2_MIN;
+		uint32 A2V2_MAX;
+		uint32 A3V3_MIN;
+		uint32 A3V3_MAX;
+		uint32 A5V5_MIN;
+		uint32 A5V5_MAX;
+	}arenaSettings;
 
-		// damage/hp/mp cap settings
-		struct
-		{
-			bool enable;
-			uint32 autoattackDamageCap;
-			uint32 spellDamageCap;
-			uint32 healthCap;
-			uint32 manaCap;
-			uint32 honorpoints;	
-			uint32 arenapoints;
-			bool disconnect;
-			bool broadcast;
-		} m_limits;
+	// damage/hp/mp cap settings
+	struct
+	{
+		bool enable;
+		uint32 autoattackDamageCap;
+		uint32 spellDamageCap;
+		uint32 healthCap;
+		uint32 manaCap;
+		uint32 honorpoints;	
+		uint32 arenapoints;
+		bool disconnect;
+		bool broadcast;
+	}m_limits;
 
-		int GMTTimeZone;
+	int GMTTimeZone;
 
-		void CharacterEnumProc(QueryResultVector & results, uint32 AccountId);
-		void LoadAccountDataProc(QueryResultVector & results, uint32 AccountId);
+	void CharacterEnumProc(QueryResultVector & results, uint32 AccountId);
+	void LoadAccountDataProc(QueryResultVector & results, uint32 AccountId);
 
-		void PollCharacterInsertQueue(DatabaseConnection* con);
-		void PollMailboxInsertQueue(DatabaseConnection* con);
-		void DisconnectUsersWithAccount(const char* account, WorldSession* session);
-		void DisconnectUsersWithIP(const char* ip, WorldSession* session);
-		void DisconnectUsersWithPlayerName(const char* plr, WorldSession* session);
+	void PollCharacterInsertQueue(DatabaseConnection* con);
+	void PollMailboxInsertQueue(DatabaseConnection* con);
+	void DisconnectUsersWithAccount(const char* account, WorldSession* session);
+	void DisconnectUsersWithIP(const char* ip, WorldSession* session);
+	void DisconnectUsersWithPlayerName(const char* plr, WorldSession* session);
 
-		void LogoutPlayers();
+	void LogoutPlayers();
 
-	private:
-		EventableObjectHolder* eventholder;
-		//! Timers
-		typedef HM_NAMESPACE::hash_map<uint32, WorldSession*> SessionMap;
-		SessionMap m_sessions;
-		RWLock m_sessionlock;
+private:
+	EventableObjectHolder* eventholder;
+	//! Timers
+	typedef HM_NAMESPACE::hash_map<uint32, WorldSession*> SessionMap;
+	SessionMap m_sessions;
+	RWLock m_sessionlock;
 
-		typedef HM_NAMESPACE::hash_map<uint32, AreaTrigger*> AreaTriggerMap;
-		AreaTriggerMap m_AreaTrigger;
+	typedef HM_NAMESPACE::hash_map<uint32, AreaTrigger*> AreaTriggerMap;
+	AreaTriggerMap m_AreaTrigger;
 
-		Arcpro::PerformanceCounter perfcounter;
+	Arcpro::PerformanceCounter perfcounter;
 
-	protected:
-		Mutex SessionsMutex;//FOR GLOBAL !
-		SessionSet Sessions;
+protected:
+	Mutex SessionsMutex; // FOR GLOBAL !
+	SessionSet Sessions;
 
-		float regen_values[MAX_RATES];
-		uint32 int_rates[MAX_INTRATES];
+	float regen_values[MAX_RATES];
+	uint32 int_rates[MAX_INTRATES];
 
-		uint32 m_playerLimit;
-		bool m_allowMovement;
-		bool m_gmTicketSystem;
-		std::string m_motd;
+	uint32 m_playerLimit;
+	bool m_allowMovement;
+	bool m_gmTicketSystem;
+	std::string m_motd;
 
-		uint32 realmtype;
+	uint32 realmtype;
 
-		uint32 TimeOut;
+	uint32 TimeOut;
 
-		uint32 m_StartTime;
-		uint32 m_queueUpdateTimer;
+	uint32 m_StartTime;
+	uint32 m_queueUpdateTimer;
 
-		QueueSet mQueuedSessions;
+	QueueSet mQueuedSessions;
 
-		uint32	m_KickAFKPlayers;//don't lag the server if you are useless anyway :P
-	public:
-		std::string GmClientChannel;
-		bool m_reqGmForCommands;
-		bool m_lfgForNonLfg;
-		list<SpellEntry*> dummyspells;
-		uint32 m_levelCap;
-		uint32 m_genLevelCap;
-		bool m_limitedNames;
-		bool m_useAccountData;
-		bool m_AdditionalFun;
-		std::map<WMOAreaTableTripple, WMOAreaTableEntry*> m_WMOAreaTableTripples;
+	uint32 m_KickAFKPlayers; // don't lag the server if you are useless anyway :P
 
-		// Gold Cap
-		bool GoldCapEnabled;
-		uint32 GoldLimit;
-		uint32 GoldStartAmount;
+public:
+	std::string GmClientChannel;
+	bool m_reqGmForCommands;
+	bool m_lfgForNonLfg;
+	list<SpellEntry*> dummyspells;
+	uint32 m_levelCap;
+	uint32 m_genLevelCap;
+	bool m_limitedNames;
+	bool m_useAccountData;
+	bool m_AdditionalFun;
+	std::map<WMOAreaTableTripple, WMOAreaTableEntry*> m_WMOAreaTableTripples;
 
-		char* m_banTable;
+	// Gold Cap
+	bool GoldCapEnabled;
+	uint32 GoldLimit;
+	uint32 GoldStartAmount;
 
-		static float m_movementCompressThreshold;
-		static float m_movementCompressThresholdCreatures;
-		static uint32 m_movementCompressRate;
-		static uint32 m_movementCompressInterval;
-		/*
-		 * Traffic meter stuff
-		 */
-	protected:
-		double TotalTrafficInKB;
-		double TotalTrafficOutKB;
-		double LastTotalTrafficInKB;
-		double LastTotalTrafficOutKB;
-		time_t LastTrafficQuery;
+	char* m_banTable;
 
-		void UpdateTotalTraffic();
-	public:
-		void QueryTotalTraffic(double* totalin, double* totalout)
-		{
+	static float m_movementCompressThreshold;
+	static float m_movementCompressThresholdCreatures;
+	static uint32 m_movementCompressRate;
+	static uint32 m_movementCompressInterval;
 
-			// We don't want to spam this
-			if(LastTrafficQuery == 0 || LastTrafficQuery <= (UNIXTIME - 10))
-				UpdateTotalTraffic();
+	// Traffic meter stuff
+protected:
+	double TotalTrafficInKB;
+	double TotalTrafficOutKB;
+	double LastTotalTrafficInKB;
+	double LastTotalTrafficOutKB;
+	time_t LastTrafficQuery;
 
-			*totalin = TotalTrafficInKB;
-			*totalout = TotalTrafficOutKB;
-		}
+	void UpdateTotalTraffic();
 
-		void QueryLastTotalTraffic(double* totalin, double* totalout)
-		{
-			*totalin = LastTotalTrafficInKB;
-			*totalout = LastTotalTrafficOutKB;
-		}
+public:
+	void QueryTotalTraffic(double* totalin, double* totalout)
+	{
+		// We don't want to spam this
+		if(LastTrafficQuery == 0 || LastTrafficQuery <= (UNIXTIME - 10))
+			UpdateTotalTraffic();
 
-		float GetCPUUsage()
-		{
-			return perfcounter.GetCurrentCPUUsage();
-		}
+		*totalin = TotalTrafficInKB;
+		*totalout = TotalTrafficOutKB;
+	}
+
+	void QueryLastTotalTraffic(double* totalin, double* totalout)
+	{
+		*totalin = LastTotalTrafficInKB;
+		*totalout = LastTotalTrafficOutKB;
+	}
+
+	float GetCPUUsage()
+	{
+		return perfcounter.GetCurrentCPUUsage();
+	}
 
 		float GetRAMUsage()
-		{
-			return perfcounter.GetCurrentRAMUsage();
-		}
+	{
+		return perfcounter.GetCurrentRAMUsage();
+	}
 
 };
 

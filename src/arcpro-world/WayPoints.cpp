@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -113,6 +113,7 @@ bool ChatHandler::HandleWPAddCommand(const char* args, WorldSession* m_session)
 
 	if(showing)
 		ai->showWayPoints(p, ai->m_WayPointsShowBackwards);
+
 	return true;
 }
 
@@ -192,9 +193,8 @@ bool ChatHandler::HandleWPShowCommand(const char* args, WorldSession* m_session)
 		}
 
 		if(pPlayer->waypointunit != NULL)
-		{
 			pPlayer->waypointunit->hideWayPoints(pPlayer);
-		}
+
 		pPlayer->waypointunit = ai;
 		ai->showWayPoints(pPlayer, Backwards);
 		ai->m_WayPointsShowBackwards = Backwards;
@@ -202,9 +202,7 @@ bool ChatHandler::HandleWPShowCommand(const char* args, WorldSession* m_session)
 	else
 	{
 		if(ai->m_WayPointsShowing == true)
-		{
 			SystemMessage(m_session, "Waypoints Already Showing.");
-		}
 		else
 			ai->showWayPoints(m_session->GetPlayer(), Backwards);
 	}
@@ -290,7 +288,9 @@ bool ChatHandler::HandleWPChangeNoCommand(const char* args, WorldSession* m_sess
 	uint32 NewID = (pNewID) ? atoi(pNewID) : 0;
 
 	uint32 wpid = Arcpro::Util::GUID_LOPART(guid);
-	if(NewID == wpid) return false;
+	if(NewID == wpid)
+		return false;
+
 	if(wpid)
 	{
 		//Refresh client
@@ -463,9 +463,8 @@ bool ChatHandler::HandleWPWaitCommand(const char* args, WorldSession* m_session)
 			Wait = (pWait) ? atoi(pWait) : 10000;
 
 			if(Wait < 5000)
-			{
 				SystemMessage(m_session, "A Wait Time of less then 5000ms can cause lag, consider extending it.");
-			}
+
 			wp->waittime = Wait;
 
 			//save wp
@@ -583,13 +582,9 @@ bool ChatHandler::HandleWPSkinCommand(const char* args, WorldSession* m_session)
 			char* pSkinId = strtok(NULL, " ");
 			SkinId = (pSkinId) ? atoi(pSkinId) : 0;
 			if(Backwards)
-			{
 				wp->backwardskinid = SkinId;
-			}
 			else
-			{
 				wp->forwardskinid = SkinId;
-			}
 
 			//save wp
 			ai->saveWayPoints();
@@ -645,6 +640,7 @@ bool ChatHandler::HandleWPInfoCommand(const char* args, WorldSession* m_session)
 				ss << " (Run)\n";
 			else
 				ss << " (Walk)\n";
+
 			ss << "Backwards\n";
 			ss << "   emoteid: " << wp->backwardemoteid << "\n";
 			ss << "   oneshot: " << ((wp->backwardemoteoneshot == 1) ? "Yes" : "No") << "\n";
@@ -795,6 +791,7 @@ bool ChatHandler::HandleSaveWaypoints(const char* args, WorldSession* m_session)
 	{
 		if(cr->GetAIInterface()->m_WayPointsShowing)
 			pPlayer->waypointunit->hideWayPoints(pPlayer);
+
 		pPlayer->waypointunit = NULL;
 	}
 
@@ -807,7 +804,9 @@ bool ChatHandler::HandleDeleteWaypoints(const char* args, WorldSession* m_sessio
 {
 	Creature* cr =
 	    m_session->GetPlayer()->GetMapMgr()->GetCreature(GET_LOWGUID_PART(m_session->GetPlayer()->GetSelection()));
-	if(!cr)return false;
+	if(!cr)
+		return false;
+
 	if(!cr->GetSQL_id())
 		return false;
 
