@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,12 +24,11 @@
 
 class UpdateMask
 {
-		uint32* mUpdateMask;
-		uint32 mCount; // in values
-		uint32 mBlocks; // in uint32 blocks
-
+	uint32* mUpdateMask;
+	uint32 mCount; // in values
+	uint32 mBlocks; // in uint32 blocks
 	public:
-		UpdateMask() : mUpdateMask(0), mCount(0), mBlocks(0) { }
+		UpdateMask() : mUpdateMask(0), mCount(0), mBlocks(0) {}
 		UpdateMask(const UpdateMask & mask) : mUpdateMask(0) { *this = mask; }
 
 		~UpdateMask()
@@ -41,21 +40,21 @@ class UpdateMask
 		void SetBit(const uint32 index)
 		{
 			ARCPRO_ASSERT(index < mCount);
-			((uint8*)mUpdateMask)[ index >> 3 ] |= 1 << (index & 0x7);
-			// ( (uint8 *)mUpdateMask )[ index / 8 ] |= 1 * pow( 2, index % 8 );
+			((uint8*)mUpdateMask)[index>> 3] |= 1 << (index & 0x7);
+			//((uint8*)mUpdateMask)[index / 8] |= 1 * pow(2, index % 8);
 		}
 
 		void UnsetBit(const uint32 index)
 		{
 			ARCPRO_ASSERT(index < mCount);
-			((uint8*)mUpdateMask)[ index >> 3 ] &= (0xff ^ (1 << (index & 0x7)));
-			// ( (uint8 *)mUpdateMask )[ index / 8 ] &= 255 - ( 1 * pow( 2, index % 8 ) ) );
+			((uint8*)mUpdateMask)[index>> 3] &= (0xff ^ (1 << (index & 0x7)));
+			// ((uint8*)mUpdateMask)[index / 8] &= 255 - (1 * pow(2, index % 8)));
 		}
 
 		bool GetBit(const uint32 index) const
 		{
 			ARCPRO_ASSERT(index < mCount);
-			return (((uint8*)mUpdateMask)[ index >> 3 ] & (1 << (index & 0x7))) != 0;
+			return (((uint8*)mUpdateMask)[index>> 3] & (1 << (index & 0x7))) != 0;
 			//actually int->bool conversion is not needed here
 		}
 
@@ -64,9 +63,10 @@ class UpdateMask
 			uint32 x;
 			for(x = mBlocks - 1; x; x--)
 				if(mUpdateMask[x])break;
+
 			return (x + 1);
 		}
-		ARCPRO_INLINE uint32 GetBlockCount() const {return mBlocks;}
+		ARCPRO_INLINE uint32 GetBlockCount() const { return mBlocks; }
 
 		ARCPRO_INLINE uint32 GetLength() const { return (mBlocks * sizeof(uint32)); }
 		ARCPRO_INLINE uint32 GetCount() const { return mCount; }
@@ -80,7 +80,7 @@ class UpdateMask
 			mCount = valuesCount;
 			//mBlocks = valuesCount/32 + 1;
 			//mBlocks = (valuesCount + 31) / 32;
-			mBlocks = mCount >> 5;
+			mBlocks = mCount>> 5;
 			if(mCount & 31)
 				++mBlocks;
 
@@ -91,7 +91,7 @@ class UpdateMask
 		void Clear()
 		{
 			if(mUpdateMask)
-				memset(mUpdateMask, 0, mBlocks << 2);
+				memset(mUpdateMask, 0, mBlocks <<2);
 		}
 
 		UpdateMask & operator = (const UpdateMask & mask)
