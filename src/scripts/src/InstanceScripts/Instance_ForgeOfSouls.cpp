@@ -40,7 +40,7 @@ public:
 	BronjahmAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(MAGICBANE, Target_Current, 35, 0, 5);
-		AddSpell(MAGICBANE, Target_RandomPlayer, 20, 0, 15, 5, 40, false, "I will sever your soul from your body!", Text_Yell, 16595);
+		AddSpell(CORRUPTSOUL, Target_RandomPlayer, 20, 0, 15, 5, 40, false, "I will sever your soul from your body!", Text_Yell, 16595);
 		// Dont know how to set no cooldown to a spell so i put 50000 seconds.
 		AddPhaseSpell(2, AddSpell(68872, Target_Self, 100, 4, 50000));
 		AddPhaseSpell(2, AddSpell(70043, Target_Current, 100, 1, 0));
