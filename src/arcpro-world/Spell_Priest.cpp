@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,18 +23,18 @@
 
 class DispersionSpell : public Spell
 {
-		SPELL_FACTORY_FUNCTION(DispersionSpell);
+	SPELL_FACTORY_FUNCTION(DispersionSpell);
 
-		void DoAfterHandleEffect(Unit* target, uint32 i)
+	void DoAfterHandleEffect(Unit* target, uint32 i)
+	{
+		if(p_caster != NULL)
 		{
-			if( p_caster != NULL )
-			{
-				// Mana regeneration
-				p_caster->CastSpell(target, 60069, true);
-				// Remove snares and movement impairing effects and make player immune to them
-				p_caster->CastSpell(target, 63230, true);
-			}
+			// Mana regeneration
+			p_caster->CastSpell(target, 60069, true);
+			// Remove snares and movement impairing effects and make player immune to them
+			p_caster->CastSpell(target, 63230, true);
 		}
+	}
 };
 
 void SpellFactoryMgr::SetupPriest()

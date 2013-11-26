@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,15 +23,15 @@
 
 class InnervateSpell : public Spell
 {
-		SPELL_FACTORY_FUNCTION(InnervateSpell);
+	SPELL_FACTORY_FUNCTION(InnervateSpell);
 
-		int32 DoCalculateEffect(uint32 i, Unit* target, int32 value)
-		{
-			if(p_caster != NULL && i == 0 && target != NULL)
-				value = (uint32)(p_caster->GetBaseMana() * 0.225f);
+	int32 DoCalculateEffect(uint32 i, Unit* target, int32 value)
+	{
+		if(p_caster != NULL && i == 0 && target != NULL)
+			value = (uint32)(p_caster->GetBaseMana() * 0.225f);
 
-			return value;
-		}
+	return value;
+	}
 };
 
 void SpellFactoryMgr::SetupDruid()
