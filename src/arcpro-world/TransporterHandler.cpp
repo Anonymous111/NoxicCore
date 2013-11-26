@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,7 +34,7 @@ bool Transporter::CreateAsTransporter(uint32 EntryID, const char* Name, int32 Ti
 	SetByte(GAMEOBJECT_BYTES_1, 3, 100);
 
 	//Maybe this would be the perfect way, so there would be no extra checks in Object.cpp:
-	//SetByte( GAMEOBJECT_BYTES_1, 0, GAMEOBJECT_TYPE_TRANSPORT );
+	//SetByte(GAMEOBJECT_BYTES_1, 0, GAMEOBJECT_TYPE_TRANSPORT);
 	//but these fields seems to change often and between server flavours (ArcPro, ArcEmu, Aspire, name another one) - by: VLack aka. VLsoft
 	if(pInfo)
 		pInfo->Type = GAMEOBJECT_TYPE_TRANSPORT;
@@ -71,12 +71,12 @@ bool FillPathVector(uint32 PathID, TransportPath & Path)
 		DBCTaxiPathNode* pathnode = dbcTaxiPathNode.LookupRow(j);
 		if(pathnode->path == PathID)
 		{
-			Path[i].mapid	   = pathnode->mapid;
-			Path[i].x		   = pathnode->x;
-			Path[i].y		   = pathnode->y;
-			Path[i].z		   = pathnode->z;
-			Path[i].actionFlag  = pathnode->flags;
-			Path[i].delay	   = pathnode->waittime;
+			Path[i].mapid = pathnode->mapid;
+			Path[i].x = pathnode->x;
+			Path[i].y = pathnode->y;
+			Path[i].z = pathnode->z;
+			Path[i].actionFlag = pathnode->flags;
+			Path[i].delay = pathnode->waittime;
 			++i;
 		}
 	}
@@ -92,7 +92,7 @@ bool Transporter::GenerateWaypoints()
 
 	if(path.Size() == 0) return false;
 
-	vector<keyFrame> keyFrames;
+	vector< keyFrame > keyFrames;
 	int mapChange = 0;
 	for(int i = 1; i < (int)path.Size() - 1; i++)
 	{
@@ -104,14 +104,10 @@ bool Transporter::GenerateWaypoints()
 				keyFrames.push_back(k);
 			}
 			else
-			{
 				mapChange = 1;
-			}
 		}
 		else
-		{
 			mapChange--;
-		}
 	}
 
 	int lastStop = -1;
@@ -120,17 +116,13 @@ bool Transporter::GenerateWaypoints()
 	// first cell is arrived at by teleportation :S
 	keyFrames[0].distFromPrev = 0;
 	if(keyFrames[0].actionflag == 2)
-	{
 		lastStop = 0;
-	}
 
 	// find the rest of the distances between key points
 	for(size_t i = 1; i < keyFrames.size(); i++)
 	{
 		if((keyFrames[i - 1].actionflag == 1) || (keyFrames[i].mapid != keyFrames[i - 1].mapid))
-		{
 			keyFrames[i].distFromPrev = 0;
-		}
 		else
 		{
 			keyFrames[i].distFromPrev =
@@ -183,9 +175,8 @@ bool Transporter::GenerateWaypoints()
 		keyFrames[i].tTo *= 1000;
 	}
 
-	//	for (int i = 0; i < keyFrames.size(); i++) {
-	//		sLog.outString("%f, %f, %f, %f, %f, %f, %f", keyFrames[i].x, keyFrames[i].y, keyFrames[i].distUntilStop, keyFrames[i].distSinceStop, keyFrames[i].distFromPrev, keyFrames[i].tFrom, keyFrames[i].tTo);
-	//	}
+	//for(int i = 0; i < keyFrames.size(); i++)
+		//sLog.outString("%f, %f, %f, %f, %f, %f, %f", keyFrames[i].x, keyFrames[i].y, keyFrames[i].distUntilStop, keyFrames[i].distSinceStop, keyFrames[i].distFromPrev, keyFrames[i].tFrom, keyFrames[i].tTo);
 
 	// Now we're completely set up; we can move along the length of each waypoint at 100 ms intervals
 	// speed = max(30, t) (remember x = 0.5s^2, and when accelerating, a = 1 unit/s^2
@@ -200,7 +191,7 @@ bool Transporter::GenerateWaypoints()
 	t += keyFrames[0].delay * 1000;
 
 	int cM = keyFrames[0].mapid;
-	for(size_t i = 0; i < keyFrames.size() - 1; i++)	    //
+	for(size_t i = 0; i < keyFrames.size() - 1; i++)
 	{
 		float d = 0;
 		float tFrom = keyFrames[i].tFrom;
@@ -228,7 +219,7 @@ bool Transporter::GenerateWaypoints()
 						cM = keyFrames[i].mapid;
 					}
 
-					//					sLog.outString("T: %d, D: %f, x: %f, y: %f, z: %f", t, d, newX, newY, newZ);
+					//sLog.outString("T: %d, D: %f, x: %f, y: %f, z: %f", t, d, newX, newY, newZ);
 					TWayPoint pos2(keyFrames[i].mapid, newX, newY, newZ, teleport);
 					if(teleport || ((t - last_t) >= 1000))
 					{
@@ -237,28 +228,22 @@ bool Transporter::GenerateWaypoints()
 					}
 				}
 
-				if(tFrom < tTo)							// caught in tFrom dock's "gravitational pull"
+				if(tFrom < tTo) // caught in tFrom dock's "gravitational pull"
 				{
 					if(tFrom <= 30000)
-					{
 						d = 0.5f * (tFrom / 1000) * (tFrom / 1000);
-					}
 					else
-					{
 						d = 0.5f * 30 * 30 + 30 * ((tFrom - 30000) / 1000);
-					}
+
 					d = d - keyFrames[i].distSinceStop;
 				}
 				else
 				{
 					if(tTo <= 30000)
-					{
 						d = 0.5f * (tTo / 1000) * (tTo / 1000);
-					}
 					else
-					{
 						d = 0.5f * 30 * 30 + 30 * ((tTo - 30000) / 1000);
-					}
+
 					d = keyFrames[i].distUntilStop - d;
 				}
 				t += 100;
@@ -280,9 +265,9 @@ bool Transporter::GenerateWaypoints()
 
 		TWayPoint pos2(keyFrames[i + 1].mapid, keyFrames[i + 1].x, keyFrames[i + 1].y, keyFrames[i + 1].z, teleport);
 
-		//		sLog.outString("T: %d, x: %f, y: %f, z: %f, t:%d", t, pos.x, pos.y, pos.z, teleport);
+		//sLog.outString("T: %d, x: %f, y: %f, z: %f, t:%d", t, pos.x, pos.y, pos.z, teleport);
 
-		//if (teleport)
+		//if(teleport)
 		//m_WayPoints[t] = pos;
 		if(keyFrames[i + 1].delay > 5)
 			pos2.delayed = true;
@@ -291,7 +276,7 @@ bool Transporter::GenerateWaypoints()
 		last_t = t;
 
 		t += keyFrames[i + 1].delay * 1000;
-		//		sLog.outString("------");
+		//sLog.outString("------");
 	}
 
 	uint32 timer = t;
@@ -337,7 +322,7 @@ void Transporter::UpdatePosition()
 		}
 		else{
 			SetPosition(mCurrentWaypoint->second.x, mCurrentWaypoint->second.y, mCurrentWaypoint->second.z, m_position.o, false);
-			MovePassengers( mCurrentWaypoint->second.x, mCurrentWaypoint->second.y, mCurrentWaypoint->second.z, m_position.o );
+			MovePassengers(mCurrentWaypoint->second.x, mCurrentWaypoint->second.y, mCurrentWaypoint->second.z, m_position.o);
 		}
 
 		if(mCurrentWaypoint->second.delayed)
@@ -347,39 +332,31 @@ void Transporter::UpdatePosition()
 			{
 				case 3015:
 				case 7087:
-					{
-						PlaySoundToSet(5154);		// ShipDocked LightHouseFogHorn.wav
-					}
-					break;
+					PlaySoundToSet(5154); // ShipDocked LightHouseFogHorn.wav
+				break;
 				case 3031:
-					{
-						PlaySoundToSet(11804);		// ZeppelinDocked	ZeppelinHorn.wav
-					}
-					break;
+					PlaySoundToSet(11804); // ZeppelinDocked	ZeppelinHorn.wav
+				break;
 				default :
-					{
-						PlaySoundToSet(5495);		// BoatDockingWarning	BoatDockedWarning.wav
-					}
-					break;
+					PlaySoundToSet(5495); // BoatDockingWarning	BoatDockedWarning.wav
+				break;
 			}
 			TransportGossip(GetInfo()->DisplayID);
 		}
 	}
 }
+
 void Transporter::TransportGossip(uint32 route)
 {
 	if(route == 241)
 	{
 		if(mCurrentWaypoint->second.mapid)
-		{
 			Log.Debug("Transporter", "Arrived in Ratchet at %u", m_timer);
-		}
 		else
-		{
 			Log.Debug("Transporter", "Arrived in Booty at %u", m_timer);
-		}
 	}
 }
+
 void Transporter::TransportPassengers(uint32 mapid, uint32 oldmap, float x, float y, float z)
 {
 	sEventMgr.RemoveEvents(this, EVENT_TRANSPORTER_NEXT_WAYPOINT);
@@ -458,7 +435,6 @@ Transporter::~Transporter()
 	sEventMgr.RemoveEvents(this);
 	for(TransportNPCMap::iterator itr = m_npcs.begin(); itr != m_npcs.end(); ++itr)
 		delete itr->second;
-
 }
 
 void ObjectMgr::LoadTransporters()
@@ -490,9 +466,7 @@ void ObjectMgr::LoadTransporters()
 				do
 				{
 					pTransporter->AddNPC(result2->Fetch()[1].GetUInt32(), result2->Fetch()[2].GetFloat(),
-					                     result2->Fetch()[3].GetFloat(), result2->Fetch()[4].GetFloat(),
-					                     result2->Fetch()[5].GetFloat());
-
+						result2->Fetch()[3].GetFloat(), result2->Fetch()[4].GetFloat(), result2->Fetch()[5].GetFloat());
 				}
 				while(result2->NextRow());
 				delete result2;
@@ -538,7 +512,7 @@ Creature* Transporter::GetCreature(uint32 Guid)
 	if(itr == m_npcs.end())
 		return NULL;
 	if(itr->second->IsCreature())
-		return TO< Creature* >(itr->second);
+		return TO<Creature*>(itr->second);
 	else
 		return NULL;
 }
@@ -554,40 +528,47 @@ uint32 Transporter::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* ta
 	return cnt;
 }
 
-void Transporter::MovePassengers( float x, float y, float z, float o ){
-	for( TransportNPCMap::iterator itr = m_npcs.begin(); itr != m_npcs.end(); ++itr ){
+void Transporter::MovePassengers(float x, float y, float z, float o)
+{
+	for(TransportNPCMap::iterator itr = m_npcs.begin(); itr != m_npcs.end(); ++itr)
+	{
 		Object *obj = itr->second;
 		
-		obj->SetPosition( x + obj->transporter_info.x, y + obj->transporter_info.y, z + obj->transporter_info.z, o + obj->transporter_info.o, false );
+		obj->SetPosition(x + obj->transporter_info.x, y + obj->transporter_info.y, z + obj->transporter_info.z, o + obj->transporter_info.o, false);
 	}
 
-	for( PassengerMap::iterator itr = mPassengers.begin(); itr != mPassengers.end(); ++itr ){
+	for(PassengerMap::iterator itr = mPassengers.begin(); itr != mPassengers.end(); ++itr)
+	{
 		Player *p = itr->second;
-		p->SetPosition( x + p->transporter_info.x, y + p->transporter_info.y, z + p->transporter_info.z, o + p->transporter_info.o, false );
+		p->SetPosition(x + p->transporter_info.x, y + p->transporter_info.y, z + p->transporter_info.z, o + p->transporter_info.o, false);
 	}
 
-	for( std::map< uint64, Object* >::iterator itr = passengers.begin(); itr != passengers.end(); ++itr ){
+	for(std::map<uint64, Object*>::iterator itr = passengers.begin(); itr != passengers.end(); ++itr)
+	{
 		Object *obj = itr->second;
 		
-		obj->SetPosition( x + obj->transporter_info.x, y + obj->transporter_info.y, z + obj->transporter_info.z, o + obj->transporter_info.o, false );
+		obj->SetPosition(x + obj->transporter_info.x, y + obj->transporter_info.y, z + obj->transporter_info.z, o + obj->transporter_info.o, false);
 	}
 }
 
-void Transporter::AddPassenger( Object *o ){
-	if( o->IsPlayer() ){
-		AddPlayer( static_cast< Player* >( o ) );
+void Transporter::AddPassenger(Object *o)
+{
+	if(o->IsPlayer())
+	{
+		AddPlayer(static_cast<Player*>(o));
 		return;
 	}
 
-	passengers[ o->GetGUID() ] = o;
+	passengers[o->GetGUID()] = o;
 }
 
-void Transporter::RemovePassenger( Object *o ){
-	if( o->IsPlayer() ){
-		RemovePlayer( static_cast< Player* >( o ) );
+void Transporter::RemovePassenger(Object *o)
+{
+	if(o->IsPlayer())
+	{
+		RemovePlayer(static_cast<Player*>(o));
 		return;
 	}
 
-	passengers.erase( o->GetGUID() );
+	passengers.erase(o->GetGUID());
 }
-

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -248,7 +248,7 @@ void Aura::SpellAuraTransform(bool apply)
 		case 42365:	// murloc costume
 			m_target->SetDisplayId(apply ? 21723 : m_target->GetNativeDisplayId());
 		break;
-		/*case 50517: // Dread Corsair
+		case 50517: // Dread Corsair
 		case 51926: // Corsair Costume
 		{
 			if(apply)
@@ -326,7 +326,7 @@ void Aura::SpellAuraTransform(bool apply)
 			}
 			else
 				m_target->SetDisplayId(m_target->GetNativeDisplayId());
-		}break;*/
+		}break;
 		case 118: // Polymorph
 		case 228: // Polymorph: Chicken
 		case 851: // Polymorph: Sheep

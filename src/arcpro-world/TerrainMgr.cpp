@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -89,7 +89,7 @@ float TileMap::GetHeightB(float x, float y, int x_int, int y_int)
 		if(x > y)
 		{
 			// 1 triangle (h1, h2, h5 points)
-			int32 h1 = V9_h1_ptr[  0];
+			int32 h1 = V9_h1_ptr[0];
 			int32 h2 = V9_h1_ptr[129];
 			int32 h5 = 2 * m_heightMap8B[x_int * 128 + y_int];
 			a = h2 - h1;
@@ -122,7 +122,7 @@ float TileMap::GetHeightB(float x, float y, int x_int, int y_int)
 		else
 		{
 			// 4 triangle (h3, h4, h5 points)
-			int32 h3 = V9_h1_ptr[  1];
+			int32 h3 = V9_h1_ptr[1];
 			int32 h4 = V9_h1_ptr[130];
 			int32 h5 = 2 * m_heightMap8B[x_int * 128 + y_int];
 			a = h4 - h3;
@@ -144,7 +144,7 @@ float TileMap::GetHeightS(float x, float y, int x_int, int y_int)
 		if(x > y)
 		{
 			// 1 triangle (h1, h2, h5 points)
-			int32 h1 = V9_h1_ptr[  0];
+			int32 h1 = V9_h1_ptr[0];
 			int32 h2 = V9_h1_ptr[129];
 			int32 h5 = 2 * m_heightMap8S[x_int * 128 + y_int];
 			a = h2 - h1;
@@ -177,7 +177,7 @@ float TileMap::GetHeightS(float x, float y, int x_int, int y_int)
 		else
 		{
 			// 4 triangle (h3, h4, h5 points)
-			int32 h3 = V9_h1_ptr[  1];
+			int32 h3 = V9_h1_ptr[1];
 			int32 h4 = V9_h1_ptr[130];
 			int32 h5 = 2 * m_heightMap8S[x_int * 128 + y_int];
 			a = h4 - h3;
@@ -263,6 +263,7 @@ float TileMap::GetHeight(float x, float y)
 		return GetHeightS(x, y, x_int, y_int);
 	else if(m_heightMapFlags & MAP_HEIGHT_AS_INT8)
 		return GetHeightB(x, y, x_int, y_int);
+
 	return GetHeightF(x, y, x_int, y_int);
 }
 
@@ -281,13 +282,12 @@ void TileMap::Load(char* filename)
 
 	fread(&header, 1, sizeof(header), f);
 
-	if(header.buildMagic != 12340)  //wow version
+	if(header.buildMagic != 12340) // wow version
 	{
 		sLog.Error("Terrain", "%s: from incorrect client (you: %u us: %u)", filename, header.buildMagic, 12340);
 		fclose(f);
 		return;
 	}
-
 
 	if(header.areaMapOffset != 0)
 		LoadAreaData(f, header);

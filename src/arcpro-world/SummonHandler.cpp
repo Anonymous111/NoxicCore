@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,7 +23,7 @@
 
 SummonHandler::SummonHandler()
 {
-	std::fill(summonslots.begin(), summonslots.end(), reinterpret_cast< Unit* >(NULL));
+	std::fill(summonslots.begin(), summonslots.end(), reinterpret_cast<Unit*>(NULL));
 }
 
 SummonHandler::~SummonHandler()
@@ -38,45 +38,45 @@ void SummonHandler::AddSummon(Unit* summon)
 
 void SummonHandler::AddSummonToSlot(Unit* summon, uint8 slot)
 {
-	if(summonslots[ slot ] != NULL)
-		summonslots[ slot ]->Delete();
+	if(summonslots[slot] != NULL)
+		summonslots[slot]->Delete();
 
-	summonslots[ slot ] = summon;
+	summonslots[slot] = summon;
 }
 
 void SummonHandler::RemoveSummon(Unit* summon)
 {
-	std::set< Unit* >::iterator itr = guardians.find(summon);
+	std::set<Unit*>::iterator itr = guardians.find(summon);
 	if(itr != guardians.end())
 		guardians.erase(itr);
 }
 
 void SummonHandler::RemoveSummonFromSlot(uint8 slot, bool del)
 {
-	if(summonslots[ slot ] != NULL)
+	if(summonslots[slot] != NULL)
 	{
 		if(del)
-			summonslots[ slot ]->Delete();
+			summonslots[slot]->Delete();
 
-		summonslots[ slot ] = NULL;
+		summonslots[slot] = NULL;
 	}
 }
 
 void SummonHandler::ExpireSummonsInSlot()
 {
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = *itr;
 
 		if(u != NULL)
 			u->Delete();
 	}
-	std::fill(summonslots.begin(), summonslots.end(), reinterpret_cast< Unit* >(NULL));
+	std::fill(summonslots.begin(), summonslots.end(), reinterpret_cast<Unit*>(NULL));
 }
 
 void SummonHandler::RemoveAllSummons()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end();)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end();)
 	{
 		Unit* g = *itr;
 		++itr;
@@ -87,9 +87,9 @@ void SummonHandler::RemoveAllSummons()
 	ExpireSummonsInSlot();
 }
 
-void SummonHandler::GetSummonSlotSpellIDs(std::vector< uint32 > &spellids)
+void SummonHandler::GetSummonSlotSpellIDs(std::vector<uint32> &spellids)
 {
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 
@@ -101,7 +101,7 @@ void SummonHandler::GetSummonSlotSpellIDs(std::vector< uint32 > &spellids)
 
 bool SummonHandler::HasSummonInSlot(uint8 slot)
 {
-	if(summonslots[ slot ] != 0)
+	if(summonslots[slot] != 0)
 		return true;
 	else
 		return false;
@@ -109,10 +109,10 @@ bool SummonHandler::HasSummonInSlot(uint8 slot)
 
 void SummonHandler::SetPvPFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->SetPvPFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
@@ -122,10 +122,10 @@ void SummonHandler::SetPvPFlags()
 
 void SummonHandler::SetFFAPvPFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->SetFFAPvPFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
@@ -135,10 +135,10 @@ void SummonHandler::SetFFAPvPFlags()
 
 void SummonHandler::SetSanctuaryFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->SetSanctuaryFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
@@ -148,10 +148,10 @@ void SummonHandler::SetSanctuaryFlags()
 
 void SummonHandler::RemovePvPFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->RemovePvPFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
@@ -162,10 +162,10 @@ void SummonHandler::RemovePvPFlags()
 
 void SummonHandler::RemoveFFAPvPFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->RemoveFFAPvPFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
@@ -175,15 +175,13 @@ void SummonHandler::RemoveFFAPvPFlags()
 
 void SummonHandler::RemoveSanctuaryFlags()
 {
-	for(std::set< Unit* >::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
+	for(std::set<Unit*>::iterator itr = guardians.begin(); itr != guardians.end(); ++itr)
 		(*itr)->RemoveSanctuaryFlag();
 
-	for(std::tr1::array< Unit*, SUMMON_SLOTS >::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
+	for(std::tr1::array<Unit*, SUMMON_SLOTS>::iterator itr = summonslots.begin(); itr != summonslots.end(); ++itr)
 	{
 		Unit* u = (*itr);
 		if(u != NULL)
 			u->RemoveSanctuaryFlag();
 	}
 }
-
-

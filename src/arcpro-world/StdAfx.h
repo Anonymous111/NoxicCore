@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -242,6 +242,5 @@ extern SERVER_DECL SessionLogWriter* Player_Log;
 
 #endif
 
-#define RECRUITING "Info: |cff00FF7FArcPro is recruiting developers: https://forums.arcpro.info"
+#define RECRUITING "Info: |cff00FF7FArcPro is recruiting developers: zdroid9770@yahoo.com"
 #define BUGTRACKER "https://github.com/ArcPro/ArcPro/issues"
-

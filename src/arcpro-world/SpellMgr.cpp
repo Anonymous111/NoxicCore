@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -26,7 +26,7 @@ initialiseSingleton(SpellFactoryMgr);
 void SpellFactoryMgr::AddSpellByEntry(SpellEntry* info, spell_factory_function spell_func)
 {
 	if(info != NULL)
-		info->SpellFactoryFunc = (void * (*)) spell_func;
+		info->SpellFactoryFunc = (void* (*)) spell_func;
 }
 
 void SpellFactoryMgr::AddSpellById(uint32 spellId, spell_factory_function spell_func)
@@ -81,10 +81,10 @@ SpellEntry* SpellFactoryMgr::GetSpellEntryByDifficulty(uint32 id, uint8 difficul
 {
     SpellDifficultyEntry* spellDiff = dbcSpellDifficultyEntry.LookupEntry(id);
 
-    if ( spellDiff == NULL )
+    if(spellDiff == NULL)
         return NULL;
 
-    if ( spellDiff->SpellId[difficulty] <= 0 )
+    if(spellDiff->SpellId[difficulty] <= 0)
         return NULL;
 
     return dbcSpell.LookupEntryForced(spellDiff->SpellId[difficulty]);

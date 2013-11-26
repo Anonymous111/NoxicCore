@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,39 +23,42 @@
 
 class DamageShieldSpellProc : public SpellProc
 {
-		SPELL_PROC_FACTORY_FUNCTION(DamageShieldSpellProc);
+	SPELL_PROC_FACTORY_FUNCTION(DamageShieldSpellProc);
 
-		bool CanProc(Unit* victim, SpellEntry* CastingSpell)
-		{
-			// Allow only proc for player unit
-			if(! mTarget->IsPlayer())
-				return false;
-			return true;
-		}
-
-		bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
-		{
-			Player* plr = TO_PLAYER(mTarget);
-
-			dmg_overwrite[0] = plr->GetBlockDamageReduction() * (mOrigSpell->EffectBasePoints[0] + 1) / 100;
-
-			// plr->GetBlockDamageReduction() returns ZERO if player has no shield equipped
-			if(dmg_overwrite[0] == 0)
-				return true;
-
+	bool CanProc(Unit* victim, SpellEntry* CastingSpell)
+	{
+		// Allow only proc for player unit
+		if(! mTarget->IsPlayer())
 			return false;
-		}
+
+		return true;
+	}
+
+	bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
+	{
+		Player* plr = TO_PLAYER(mTarget);
+
+		dmg_overwrite[0] = plr->GetBlockDamageReduction() * (mOrigSpell->EffectBasePoints[0] + 1) / 100;
+
+		// plr->GetBlockDamageReduction() returns ZERO if player has no shield equipped
+		if(dmg_overwrite[0] == 0)
+			return true;
+
+		return false;
+	}
 };
 
 
-class JuggernautSpellProc : public SpellProc{
-	SPELL_PROC_FACTORY_FUNCTION( JuggernautSpellProc );
+class JuggernautSpellProc : public SpellProc
+{
+	SPELL_PROC_FACTORY_FUNCTION(JuggernautSpellProc);
 
-	bool CanProc(Unit* victim, SpellEntry* CastingSpell){
-		if( CastingSpell == NULL )
+	bool CanProc(Unit* victim, SpellEntry* CastingSpell)
+	{
+		if(CastingSpell == NULL)
 			return false;
 
-		if( CastingSpell->NameHash == SPELL_HASH_CHARGE )
+		if(CastingSpell->NameHash == SPELL_HASH_CHARGE)
 			return true;
 		else
 			return false;
@@ -65,5 +68,6 @@ class JuggernautSpellProc : public SpellProc{
 void SpellProcMgr::SetupWarrior()
 {
 	AddByNameHash(SPELL_HASH_DAMAGE_SHIELD, &DamageShieldSpellProc::Create);
-	AddById( 65156, &JuggernautSpellProc::Create );
+
+	AddById(65156, &JuggernautSpellProc::Create);
 }

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -45,18 +45,13 @@ void WorldSession::HandleTaxiNodeStatusQueryOpcode(WorldPacket & recv_data)
 
 	// Check for known nodes
 	if((GetPlayer()->GetTaximask(field) & submask) != submask)
-	{
 		data << uint8(0);
-	}
 	else
-	{
 		data << uint8(1);
-	}
 
 	SendPacket(&data);
 	LOG_DEBUG("WORLD: Sent SMSG_TAXINODE_STATUS");
 }
-
 
 void WorldSession::HandleTaxiQueryAvaibleNodesOpcode(WorldPacket & recv_data)
 {
@@ -66,7 +61,8 @@ void WorldSession::HandleTaxiQueryAvaibleNodesOpcode(WorldPacket & recv_data)
 	uint64 guid;
 	recv_data >> guid;
 	Creature* pCreature = _player->GetMapMgr()->GetCreature(GET_LOWGUID_PART(guid));
-	if(!pCreature) return;
+	if(!pCreature)
+		return;
 
 	SendTaxiList(pCreature);
 }
@@ -106,18 +102,15 @@ void WorldSession::SendTaxiList(Creature* pCreature)
 
 	//Remove nodes unknown to player
 	for(uint8 i = 0; i < 12; i++)
-	{
 		TaxiMask[i] &= GetPlayer()->GetTaximask(i);
-	}
 
 	WorldPacket data(64);
 	data.Initialize(SMSG_SHOWTAXINODES);
 	data << uint32(1) << guid;
 	data << uint32(curloc);
 	for(int i = 0; i < 12; i++)
-	{
 		data << TaxiMask[i];
-	}
+
 	SendPacket(&data);
 
 	LOG_DEBUG("WORLD: Sent SMSG_SHOWTAXINODES");
@@ -194,36 +187,36 @@ void WorldSession::HandleActivateTaxiOpcode(WorldPacket & recv_data)
 	uint32 modelid = 0;
 	if(_player->IsTeamHorde())
 	{
-		CreatureInfo *ci = CreatureNameStorage.LookupEntry( taxinode->horde_mount );
+		CreatureInfo* ci = CreatureNameStorage.LookupEntry(taxinode->horde_mount);
 		
-		if( ci == NULL )
-			ci = CreatureNameStorage.LookupEntry( taxinode->alliance_mount );
+		if(ci == NULL)
+			ci = CreatureNameStorage.LookupEntry(taxinode->alliance_mount);
 		
-		if( ci == NULL )
-			ci = CreatureNameStorage.LookupEntry( 541 ); // Riding Gryphon, in case neither of the above work
+		if(ci == NULL)
+			ci = CreatureNameStorage.LookupEntry(541); // Riding Gryphon, in case neither of the above work
 		
-		if( ci != NULL )
+		if(ci != NULL)
 			modelid = ci->Male_DisplayID;
 		else
 			modelid = 6852; // Riding Gryphon modelid, in case it wasn't in the db;
 	}
 	else
 	{
-		CreatureInfo *ci = CreatureNameStorage.LookupEntry( taxinode->alliance_mount );
+		CreatureInfo* ci = CreatureNameStorage.LookupEntry(taxinode->alliance_mount);
 		
-		if( ci == NULL )
-			ci = CreatureNameStorage.LookupEntry( taxinode->horde_mount );
+		if(ci == NULL)
+			ci = CreatureNameStorage.LookupEntry(taxinode->horde_mount);
 		
-		if( ci == NULL )
-			ci = CreatureNameStorage.LookupEntry( 541 ); // Riding Gryphon, in case neither of the above work
+		if(ci == NULL)
+			ci = CreatureNameStorage.LookupEntry(541); // Riding Gryphon, in case neither of the above work
 
-		if( ci != NULL )
+		if(ci != NULL)
 			modelid = ci->Male_DisplayID;
 		else
 			modelid = 6852; // Riding Gryphon modelid, in case it wasn't in the db
 	}
 
-	//GetPlayer( )->setDismountCost( newmoney );
+	//GetPlayer()->setDismountCost(newmoney);
 
 	data << uint32(0);
 	// 0 Ok
@@ -321,7 +314,8 @@ void WorldSession::HandleMultipleActivateTaxiOpcode(WorldPacket & recvPacket)
 	for(uint32 i = 2; i < nodecount; ++i)
 	{
 		TaxiPath* np = sTaxiMgr.GetTaxiPath(pathes[i - 1], pathes[i]);
-		if(!np) return;
+		if(!np)
+			return;
 		totalcost += np->GetPrice();
 	}
 
@@ -344,19 +338,23 @@ void WorldSession::HandleMultipleActivateTaxiOpcode(WorldPacket & recvPacket)
 	if(_player->IsTeamHorde())
 	{
 		CreatureInfo* ci = CreatureNameStorage.LookupEntry(taxinode->horde_mount);
-		if(!ci) return;
+		if(!ci)
+			return;
 		modelid = ci->Male_DisplayID;
-		if(!modelid) return;
+		if(!modelid)
+			return;
 	}
 	else
 	{
 		CreatureInfo* ci = CreatureNameStorage.LookupEntry(taxinode->alliance_mount);
-		if(!ci) return;
+		if(!ci)
+			return;
 		modelid = ci->Male_DisplayID;
-		if(!modelid) return;
+		if(!modelid)
+			return;
 	}
 
-	//GetPlayer( )->setDismountCost( newmoney );
+	//GetPlayer()->setDismountCost(newmoney);
 
 	data << uint32(0);
 	// 0 Ok

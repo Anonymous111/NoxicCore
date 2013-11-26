@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -69,7 +69,7 @@ void InitImplicitTargetFlags()
 	SET_TARGET_TYPE(48, SPELL_TARGET_OBJECT_SELF);
 	SET_TARGET_TYPE(49, SPELL_TARGET_OBJECT_SELF);
 	SET_TARGET_TYPE(50, SPELL_TARGET_OBJECT_SELF);
-	SET_TARGET_TYPE(52, SPELL_TARGET_AREA | SPELL_TARGET_REQUIRE_GAMEOBJECT | SPELL_TARGET_REQUIRE_ATTACKABLE );
+	SET_TARGET_TYPE(52, SPELL_TARGET_AREA | SPELL_TARGET_REQUIRE_GAMEOBJECT | SPELL_TARGET_REQUIRE_ATTACKABLE);
 	SET_TARGET_TYPE(34, SPELL_TARGET_NOT_IMPLEMENTED); //seige stuff
 	SET_TARGET_TYPE(53, SPELL_TARGET_AREA_CURTARGET | SPELL_TARGET_REQUIRE_ATTACKABLE);
 	SET_TARGET_TYPE(54, SPELL_TARGET_AREA_CONE | SPELL_TARGET_REQUIRE_ATTACKABLE);
@@ -108,7 +108,7 @@ void Spell::FillTargetMap(uint32 i)
 
 	if(TargetType & SPELL_TARGET_NOT_IMPLEMENTED)
 		return;
-	if(TargetType & SPELL_TARGET_NO_OBJECT)  //summon spells that appear infront of caster
+	if(TargetType & SPELL_TARGET_NO_OBJECT) //summon spells that appear infront of caster
 	{
 		HandleTargetNoObject();
 		return;
@@ -127,8 +127,8 @@ void Spell::FillTargetMap(uint32 i)
 	if(TargetType & (SPELL_TARGET_AREA | SPELL_TARGET_AREA_SELF))  //targetted aoe
 		AddAOETargets(i, TargetType, GetRadius(i), m_spellInfo->MaxTargets);
 	//TODO: ArcPro, doesn't support summon slots?
-	/*if (TargetType & SPELL_TARGET_OBJECT_CURTOTEMS && u_caster != NULL)
-		for (uint32 i=1; i<5; ++i) //totem slots are 1, 2, 3, 4
+	/*if(TargetType & SPELL_TARGET_OBJECT_CURTOTEMS && u_caster != NULL)
+		for(uint32 i=1; i< 5; ++i) //totem slots are 1, 2, 3, 4
 			AddTarget(i, TargetType, u_caster->m_summonslot[i]);*/
 	if(TargetType & SPELL_TARGET_OBJECT_CURPET && p_caster != NULL)
 		AddTarget(i, TargetType, p_caster->GetSummon());
@@ -170,7 +170,7 @@ void Spell::FillTargetMap(uint32 i)
 
 void Spell::AddScriptedOrSpellFocusTargets(uint32 i, uint32 TargetType, float r, uint32 maxtargets)
 {
-	for(std::set< Object* >::iterator itr = m_caster->GetInRangeSetBegin(); itr != m_caster->GetInRangeSetEnd(); ++itr)
+	for(std::set<Object*>::iterator itr = m_caster->GetInRangeSetBegin(); itr != m_caster->GetInRangeSetEnd(); ++itr)
 	{
 		Object* o = *itr;
 
@@ -205,9 +205,7 @@ void Spell::AddConeTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarge
 		if(m_caster->isInRange(TO_UNIT(*itr), GetRadius(i)))
 		{
 			if(m_spellInfo->cone_width ? m_caster->isInArc(TO_UNIT(*itr), m_spellInfo->cone_width) : m_caster->isInFront(TO_UNIT(*itr)))  // !!! is the target within our cone ?
-			{
 				AddTarget(i, TargetType, (*itr));
-			}
 		}
 		if(maxtargets != 0 && list->size() >= maxtargets)
 			return;
@@ -240,8 +238,8 @@ void Spell::AddChainTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarg
 	range *= range;
 
 	//is this party only?
-	Player* casterFrom = TO< Player* >(u_caster->GetPlayerOwner());
-	Player* pfirstTargetFrom = TO< Player* >(firstTarget->GetPlayerOwner());
+	Player* casterFrom = TO<Player*>(u_caster->GetPlayerOwner());
+	Player* pfirstTargetFrom = TO<Player*>(firstTarget->GetPlayerOwner());
 
 	if(casterFrom != NULL && pfirstTargetFrom != NULL && casterFrom->GetGroup() == pfirstTargetFrom->GetGroup())
 		RaidOnly = true;
@@ -289,7 +287,7 @@ void Spell::AddPartyTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarg
 	Object* u = m_caster->GetMapMgr()->_GetObject(m_targets.m_unitTarget);
 	if(u == NULL)
 		u = m_caster;
-	Player* p = TO< Player* >(u->GetPlayerOwner());
+	Player* p = TO<Player*>(u->GetPlayerOwner());
 
 	if(p == NULL || u_caster == NULL)
 		return;
@@ -321,7 +319,7 @@ void Spell::AddRaidTargets(uint32 i, uint32 TargetType, float r, uint32 maxtarge
 	Object* u = m_caster->GetMapMgr()->_GetObject(m_targets.m_unitTarget);
 	if(u == NULL)
 		u = m_caster;
-	Player* p = TO< Player* >(u->GetPlayerOwner());
+	Player* p = TO<Player*>(u->GetPlayerOwner());
 
 	if(p == NULL || u_caster == NULL)
 		return;
@@ -467,10 +465,10 @@ bool Spell::AddTarget(uint32 i, uint32 TargetType, Object* obj)
 		{
 			//TODO: Add support for this in ArcPro
 			/*Object* lasttarget = NULL;
-			if (m_orderedObjects.size() > 0)
+			if(m_orderedObjects.size() > 0)
 			{
 				lasttarget = m_caster->GetMapMgr()->_GetObject(m_orderedObjects[m_orderedObjects.size() - 1]);
-				if (lasttarget != NULL)
+				if(lasttarget != NULL)
 				{
 					x = lasttarget->GetPositionX();
 					y = lasttarget->GetPositionY();
@@ -482,8 +480,6 @@ bool Spell::AddTarget(uint32 i, uint32 TargetType, Object* obj)
 		if(!CollideInterface.CheckLOS(m_caster->GetMapId(), x, y, z + 2, obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ() + 2))
 			return false;
 	}
-
-
 
 	return true;
 }
@@ -640,7 +636,7 @@ bool Spell::GenerateTargets(SpellCastTargets* t)
 			while(sWorld.Collision && !CollideInterface.CheckLOS(m_caster->GetMapId(), m_caster->GetPositionX(), m_caster->GetPositionY(), m_caster->GetPositionZ(), t->m_destX, t->m_destY, t->m_destZ));
 			result = true;
 		}
-		else if(TargetType & SPELL_TARGET_AREA)  //targetted aoe
+		else if(TargetType & SPELL_TARGET_AREA) //targetted aoe
 		{
 			//spells like blizzard, rain of fire
 			if(u_caster->GetUInt64Value(UNIT_FIELD_CHANNEL_OBJECT))

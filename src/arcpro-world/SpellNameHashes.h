@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -26904,6 +26904,5 @@
 #define SPELL_HASH_TWILIGHT_PULSE                                                         0x0395F728
 #define SPELL_HASH_MULTI_SHADOW_SHOT                                                      0xAD8B60FF
 #define SPELL_HASH_ONEFIVE_SEC_COOLDOWN_CREATURE_SPECIAL_TWO                              0x5A6F0397
-
 
 #endif		// _SPELLHASHES_H

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,7 +34,6 @@ void WorldSession::HandleInitiateTrade(WorldPacket & recv_data)
 
 	if(pTarget == 0)
 	{
-
 		TradeStatus = TRADE_STATUS_PLAYER_NOT_FOUND;
 
 		OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -79,7 +78,6 @@ void WorldSession::HandleBeginTrade(WorldPacket & recv_data)
 	Player* plr = _player->GetTradeTarget();
 	if(_player->mTradeTarget == 0 || plr == 0)
 	{
-
 		TradeStatus = TRADE_STATUS_PLAYER_NOT_FOUND;
 
 		OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -111,13 +109,11 @@ void WorldSession::HandleBusyTrade(WorldPacket & recv_data)
 	Player* plr = _player->GetTradeTarget();
 	if(_player->mTradeTarget == 0 || plr == 0)
 	{
-
 		TradeStatus = TRADE_STATUS_PLAYER_NOT_FOUND;
 
 		OutPacket(TRADE_STATUS_PLAYER_NOT_FOUND, 4, &TradeStatus);
 		return;
 	}
-
 
 	OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
 	plr->m_session->OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -192,8 +188,6 @@ void WorldSession::HandleUnacceptTrade(WorldPacket & recv_data)
 	OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
 	plr->m_session->OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
 
-
-
 	TradeStatus = TRADE_STATUS_STATE_CHANGED;
 
 	OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -225,7 +219,7 @@ void WorldSession::HandleSetTradeItem(WorldPacket & recv_data)
 	if(TradeSlot < 6)
 	{
 		if(pItem->IsAccountbound())
-			return;//dual accounting is not allowed so noone can trade Accountbound items. Btw the client doesn't send any client-side notification
+			return; //dual accounting is not allowed so noone can trade Accountbound items. Btw the client doesn't send any client-side notification
 		if(pItem->IsSoulbound())
 		{
 			sCheatLog.writefromsession(this, "tried to cheat trade a soulbound item");
@@ -247,12 +241,11 @@ void WorldSession::HandleSetTradeItem(WorldPacket & recv_data)
 
 	if(pItem->IsContainer())
 	{
-		if(TO< Container* >(pItem)->HasItems())
+		if(TO<Container*>(pItem)->HasItems())
 		{
 			_player->GetItemInterface()->BuildInventoryChangeError(pItem, 0, INV_ERR_CAN_ONLY_DO_WITH_EMPTY_BAGS);
 
 			//--trade cancel
-
 			TradeStatus = TRADE_STATUS_CANCELLED;
 
 			OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -300,7 +293,8 @@ void WorldSession::HandleSetTradeGold(WorldPacket & recv_data)
 	// cebernic: TradeGold sameway.
 	uint32 TradeStatus = TRADE_STATUS_STATE_CHANGED;
 	Player* plr = _player->GetTradeTarget();
-	if(!plr) return;
+	if(!plr)
+		return;
 
 	OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
 	plr->m_session->OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);
@@ -333,7 +327,8 @@ void WorldSession::HandleClearTradeItem(WorldPacket & recv_data)
 
 	// clean status
 	Player* plr = _player->GetTradeTarget();
-	if(!plr) return;
+	if(!plr)
+		return;
 
 	uint32 TradeStatus = TRADE_STATUS_STATE_CHANGED;
 
@@ -342,7 +337,6 @@ void WorldSession::HandleClearTradeItem(WorldPacket & recv_data)
 
 	plr->mTradeStatus = TradeStatus;
 	_player->mTradeStatus = TradeStatus;
-
 
 	_player->mTradeItems[TradeSlot] = 0;
 	_player->SendTradeUpdate();
@@ -369,13 +363,14 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 		uint32 TargetItemCount = 0;
 		Player* pTarget = plr;
 
-		/*		// Calculate Item Count
-				for(uint32 Index = 0; Index < 7; ++Index)
-				{
-					if(_player->mTradeItems[Index] != 0)	++ItemCount;
-					if(pTarget->mTradeItems[Index] != 0)	++TargetItemCount;
-				}*/
-
+		/*// Calculate Item Count
+		for(uint32 Index = 0; Index < 7; ++Index)
+		{
+			if(_player->mTradeItems[Index] != 0)
+				++ItemCount;
+			if(pTarget->mTradeItems[Index] != 0)
+				++TargetItemCount;
+		}*/
 
 		// Calculate Count
 		for(uint32 Index = 0; Index < 6; ++Index) // cebernic: checking for 6items ,untradable item check via others func.
@@ -386,36 +381,40 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 			pItem = _player->mTradeItems[Index];
 			if(pItem)
 			{
-				if((pItem->IsContainer() && TO< Container* >(pItem)->HasItems())   || (pItem->GetProto()->Bonding == ITEM_BIND_ON_PICKUP))
+				if((pItem->IsContainer() && TO<Container*>(pItem)->HasItems())   || (pItem->GetProto()->Bonding == ITEM_BIND_ON_PICKUP))
 				{
 					ItemCount = 0;
 					TargetItemCount = 0;
 					break;
 				}
-				else ++ItemCount;
+				else
+					++ItemCount;
 			}
 
 			pItem = pTarget->mTradeItems[Index];
 			if(pItem)
 			{
-				if((pItem->IsContainer() && TO< Container* >(pItem)->HasItems())   || (pItem->GetProto()->Bonding == ITEM_BIND_ON_PICKUP))
+				if((pItem->IsContainer() && TO<Container*>(pItem)->HasItems())   || (pItem->GetProto()->Bonding == ITEM_BIND_ON_PICKUP))
 				{
 					ItemCount = 0;
 					TargetItemCount = 0;
 					break;
 				}
-				else ++TargetItemCount;
+				else
+					++TargetItemCount;
 			}
 
-			//if(_player->mTradeItems[Index] != 0)	++ItemCount;
-			//if(pTarget->mTradeItems[Index] != 0)	++TargetItemCount;
+			/*if(_player->mTradeItems[Index] != 0)
+				++ItemCount;
+			if(pTarget->mTradeItems[Index] != 0)
+				++TargetItemCount;*/
 		}
 
 
 
 		if((_player->m_ItemInterface->CalculateFreeSlots(NULL) + ItemCount) < TargetItemCount ||
 		        (pTarget->m_ItemInterface->CalculateFreeSlots(NULL) + TargetItemCount) < ItemCount ||
-		        (ItemCount == 0 && TargetItemCount == 0 && !pTarget->mTradeGold && !_player->mTradeGold))	// cebernic added it
+		        (ItemCount == 0 && TargetItemCount == 0 && !pTarget->mTradeGold && !_player->mTradeGold)) // cebernic added it
 		{
 			// Not enough slots on one end.
 			TradeStatus = TRADE_STATUS_CANCELLED;
@@ -431,17 +430,14 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 				Guid = _player->mTradeItems[Index] ? _player->mTradeItems[Index]->GetGUID() : 0;
 				if(Guid != 0)
 				{
-					if(_player->mTradeItems[Index]->GetProto()->Bonding == ITEM_BIND_ON_PICKUP ||
-					        _player->mTradeItems[Index]->GetProto()->Bonding  >=  ITEM_BIND_QUEST)
-					{
+					if(_player->mTradeItems[Index]->GetProto()->Bonding == ITEM_BIND_ON_PICKUP || 
+							_player->mTradeItems[Index]->GetProto()->Bonding >=  ITEM_BIND_QUEST)
 						_player->mTradeItems[Index] = NULL;
-					}
 					else
 					{
 						if(GetPermissionCount() > 0)
-						{
 							sGMLog.writefromsession(this, "traded item %s to %s", _player->mTradeItems[Index]->GetProto()->Name1, pTarget->GetName());
-						}
+
 						pItem = _player->m_ItemInterface->SafeRemoveAndRetreiveItemByGuid(Guid, true);
 					}
 				}
@@ -450,14 +446,10 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 				if(Guid != 0)
 				{
 					if(pTarget->mTradeItems[Index]->GetProto()->Bonding == ITEM_BIND_ON_PICKUP ||
-					        pTarget->mTradeItems[Index]->GetProto()->Bonding  >=  ITEM_BIND_QUEST)
-					{
+							pTarget->mTradeItems[Index]->GetProto()->Bonding >=  ITEM_BIND_QUEST)
 						pTarget->mTradeItems[Index] = NULL;
-					}
 					else
-					{
 						pTarget->m_ItemInterface->SafeRemoveAndRetreiveItemByGuid(Guid, true);
-					}
 				}
 			}
 
@@ -486,9 +478,7 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 			{
 				// Check they don't have more than the max gold
 				if(sWorld.GoldCapEnabled && (_player->GetGold() + pTarget->mTradeGold) > sWorld.GoldLimit)
-				{
 					_player->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_TOO_MUCH_GOLD);
-				}
 				else
 				{
 					_player->ModGold(pTarget->mTradeGold);
@@ -500,9 +490,7 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 			{
 				// Check they don't have more than the max gold
 				if(sWorld.GoldCapEnabled && (pTarget->GetGold() + _player->mTradeGold) > sWorld.GoldLimit)
-				{
 					pTarget->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_TOO_MUCH_GOLD);
-				}
 				else
 				{
 					pTarget->ModGold(_player->mTradeGold);
@@ -512,7 +500,6 @@ void WorldSession::HandleAcceptTrade(WorldPacket & recv_data)
 
 			// Close Window
 			TradeStatus = TRADE_STATUS_COMPLETE;
-
 		}
 
 		OutPacket(SMSG_TRADE_STATUS, 4, &TradeStatus);

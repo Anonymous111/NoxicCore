@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -54,16 +54,16 @@ void WorldSession::HandleUseItemOpcode(WorldPacket & recvPacket)
 	ItemPrototype* itemProto = tmpItem->GetProto();
 
 	// only some consumable items can be used in arenas
-	if( ( itemProto->Class == ITEM_CLASS_CONSUMABLE ) &&
-		!itemProto->HasFlag( ITEM_FLAG_USEABLE_IN_ARENA ) &&
-		( GetPlayer()->m_bg != NULL ) &&
-		IS_ARENA( GetPlayer()->m_bg->GetType() ) )
+	if((itemProto->Class == ITEM_CLASS_CONSUMABLE) &&
+		!itemProto->HasFlag(ITEM_FLAG_USEABLE_IN_ARENA) &&
+		(GetPlayer()->m_bg != NULL) &&
+		IS_ARENA(GetPlayer()->m_bg->GetType()))
 	{
 		GetPlayer()->GetItemInterface()->BuildInventoryChangeError(tmpItem, NULL, INV_ERR_NOT_DURING_ARENA_MATCH);
 		return;
 	}
 
-	if(tmpItem->IsSoulbound())     // SouldBind item will be used after SouldBind()
+	if(tmpItem->IsSoulbound()) // SouldBind item will be used after SouldBind()
 	{
 		if(sScriptMgr.CallScriptedItem(tmpItem, _player))
 			return;
@@ -151,9 +151,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket & recvPacket)
 		if(!p_User->CombatStatus.IsInCombat() && !p_User->IsMounted())
 		{
 			if(p_User->GetStandState())
-			{
 				p_User->SetStandState(STANDSTATE_STAND);
-			}
 		}
 	}
 
@@ -222,7 +220,6 @@ void WorldSession::HandleUseItemOpcode(WorldPacket & recvPacket)
 		}
 		else
 		{
-
 			if(!_player->GetSummon() || _player->GetSummon()->GetEntry() != (uint32)itemProto->ForcedPetId)
 			{
 				_player->SendCastResult(spellInfo->Id, SPELL_FAILED_SPELL_IN_PROGRESS, cn, 0);
@@ -242,7 +239,6 @@ void WorldSession::HandleUseItemOpcode(WorldPacket & recvPacket)
 #ifdef ENABLE_ACHIEVEMENTS
 	_player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_USE_ITEM, itemProto->ItemId, 0, 0);
 #endif
-
 }
 
 void WorldSession::HandleSpellClick(WorldPacket & recvPacket)
@@ -264,12 +260,13 @@ void WorldSession::HandleSpellClick(WorldPacket & recvPacket)
 	if(!target_unit)
 		return;
 
-	if( !_player->isInRange( target_unit, MAX_INTERACTION_RANGE ) )
+	if(!_player->isInRange(target_unit, MAX_INTERACTION_RANGE))
 		return;
 
-	if( target_unit->IsVehicle() ){
-		if( target_unit->GetVehicleComponent() != NULL )
-			target_unit->GetVehicleComponent()->AddPassenger( _player );
+	if(target_unit->IsVehicle())
+	{
+		if(target_unit->GetVehicleComponent() != NULL)
+			target_unit->GetVehicleComponent()->AddPassenger(_player);
 		return;
 	}
 
@@ -278,13 +275,13 @@ void WorldSession::HandleSpellClick(WorldPacket & recvPacket)
 
 	if(!_player->HasAurasWithNameHash(SPELL_HASH_LIGHTWELL_RENEW) && target_unit->RemoveAura(59907))
 	{
-		SpellClickSpell *sp = SpellClickSpellStorage.LookupEntry( creature_id );
-		if( sp == NULL ){
-			if( target_unit->IsCreature() ){
-				Creature *c = TO< Creature* >( target_unit );
+		SpellClickSpell *sp = SpellClickSpellStorage.LookupEntry(creature_id);
+		if(sp == NULL){
+			if(target_unit->IsCreature()){
+				Creature *c = TO<Creature*>(target_unit);
 				
-				sChatHandler.BlueSystemMessage( this, "NPC Id %u ( %s ) has no spellclick spell associated with it.", c->GetProto()->Id, c->GetCreatureInfo()->Name  );
-				LOG_ERROR("Spellclick packet received for creature %u but there is no spell associated with it.", creature_id );
+				sChatHandler.BlueSystemMessage(this, "NPC Id %u (%s) has no spellclick spell associated with it.", c->GetProto()->Id, c->GetCreatureInfo()->Name );
+				LOG_ERROR("Spellclick packet received for creature %u but there is no spell associated with it.", creature_id);
 				return;
 			}
 		}
@@ -299,13 +296,15 @@ void WorldSession::HandleSpellClick(WorldPacket & recvPacket)
 		return;
 	}
 	
-	SpellClickSpell *sp = SpellClickSpellStorage.LookupEntry( creature_id );
-	if( sp == NULL ){
-		if( target_unit->IsCreature() ){
-			Creature *c = TO< Creature* >( target_unit );
+	SpellClickSpell *sp = SpellClickSpellStorage.LookupEntry(creature_id);
+	if(sp == NULL)
+	{
+		if(target_unit->IsCreature())
+		{
+			Creature *c = TO<Creature*>(target_unit);
 
-			sChatHandler.BlueSystemMessage( this, "NPC Id %u ( %s ) has no spellclick spell associated with it.", c->GetProto()->Id, c->GetCreatureInfo()->Name  );
-			LOG_ERROR("Spellclick packet received for creature %u but there is no spell associated with it.", creature_id );
+			sChatHandler.BlueSystemMessage(this, "NPC Id %u (%s) has no spellclick spell associated with it.", c->GetProto()->Id, c->GetCreatureInfo()->Name );
+			LOG_ERROR("Spellclick packet received for creature %u but there is no spell associated with it.", creature_id);
 			return;
 		}
 	}
@@ -330,7 +329,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket & recvPacket)
 	uint32 spellId;
 	uint8 cn, unk; //Alice : Added to 3.0.2
 
-	recvPacket >> cn >> spellId  >> unk;
+	recvPacket >> cn >> spellId >> unk;
 	// check for spell id
 	SpellEntry* spellInfo = dbcSpell.LookupEntryForced(spellId);
 
@@ -343,8 +342,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket & recvPacket)
 	if(!_player->isAlive() && _player->GetShapeShift() != FORM_SPIRITOFREDEMPTION && !(spellInfo->Attributes & ATTRIBUTES_DEAD_CASTABLE)) //They're dead, not in spirit of redemption and the spell can't be cast while dead.
 		return;
 
-	LOG_DETAIL("WORLD: got cast spell packet, spellId - %i (%s), data length = %i",
-	           spellId, spellInfo->Name, recvPacket.size());
+	LOG_DETAIL("WORLD: got cast spell packet, spellId - %i (%s), data length = %i", spellId, spellInfo->Name, recvPacket.size());
 
 	// Cheat Detection only if player and not from an item
 	// this could fuck up things but meh it's needed ALOT of the newbs are using WPE now
@@ -368,27 +366,27 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket & recvPacket)
 		//autoshot 75
 		if((spellInfo->AttributesExB & ATTRIBUTESEXB_ACTIVATE_AUTO_SHOT) /*spellInfo->Attributes == 327698*/)	// auto shot..
 		{
-			//sLog.outString( "HandleSpellCast: Auto Shot-type spell cast (id %u, name %s)" , spellInfo->Id , spellInfo->Name );
+			//sLog.outString("HandleSpellCast: Auto Shot-type spell cast (id %u, name %s)" , spellInfo->Id , spellInfo->Name);
 			Item* weapon = GetPlayer()->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_RANGED);
 			if(!weapon)
 				return;
 			uint32 spellid;
 			switch(weapon->GetProto()->SubClass)
 			{
-				case 2:			 // bows
-				case 3:			 // guns
-				case 18:		 // crossbow
+				case 2: // bows
+				case 3: // guns
+				case 18: // crossbow
 					spellid = SPELL_RANGED_GENERAL;
-					break;
-				case 16:			// thrown
+				break;
+				case 16: // thrown
 					spellid = SPELL_RANGED_THROW;
-					break;
-				case 19:			// wands
+				break;
+				case 19: // wands
 					spellid = SPELL_RANGED_WAND;
-					break;
+				break;
 				default:
 					spellid = 0;
-					break;
+				break;
 			}
 
 			if(!spellid)
@@ -496,9 +494,7 @@ void WorldSession::HandleCancelChannellingOpcode(WorldPacket & recvPacket)
 	if(!plyr)
 		return;
 	if(plyr->m_currentSpell)
-	{
 		plyr->m_currentSpell->cancel();
-	}
 }
 
 void WorldSession::HandleCancelAutoRepeatSpellOpcode(WorldPacket & recv_data)
@@ -538,26 +534,26 @@ void WorldSession::HandlePetCastSpell(WorldPacket & recvPacket)
 	}
 	else if(guid != _player->m_CurrentCharm)
 	{
-		if( _player->GetCharmedUnitGUID() != guid )
+		if(_player->GetCharmedUnitGUID() != guid)
 			return;
 	}
 
 	SpellCastTargets targets;
-	targets.read( recvPacket, guid );
+	targets.read(recvPacket, guid);
 
 	float missilepitch = 0.0f;
 	float missilespeed = 0;
 	uint32 traveltime  = 0;
 	
-	if( castflags & 2 ){
+	if(castflags & 2){
 		recvPacket >> missilepitch;
 		recvPacket >> missilespeed;
 
 		float dx = targets.m_destX - targets.m_srcX;
 		float dy = targets.m_destY - targets.m_srcY;
 
-		if( ( missilepitch != M_PI / 4 ) && ( missilepitch != -M_PI / 4 ) ) //lets not divide by 0 lul
-			traveltime = ( sqrtf( dx * dx + dy * dy ) / ( cosf( missilepitch ) * missilespeed ) ) * 1000;
+		if((missilepitch != M_PI / 4) && (missilepitch != -M_PI / 4)) //lets not divide by 0 lul
+			traveltime = (sqrtf(dx * dx + dy * dy) / (cosf(missilepitch) * missilespeed)) * 1000;
 	}
 
 	if(spellid == 33395)	// Summoned Water Elemental's freeze
@@ -568,14 +564,14 @@ void WorldSession::HandlePetCastSpell(WorldPacket & recvPacket)
 	else			// trinket?
 	{
 		uint64 charmguid = _player->m_CurrentCharm;
-		if( charmguid == 0 )
+		if(charmguid == 0)
 			charmguid = _player->GetCharmedUnitGUID();
 
-		Unit* nc = _player->GetMapMgr()->GetUnit( charmguid );
+		Unit* nc = _player->GetMapMgr()->GetUnit(charmguid);
 		if(nc)
 		{
 			bool check = false;
-			for(list<AI_Spell*>::iterator itr = nc->GetAIInterface()->m_spells.begin(); itr != nc->GetAIInterface()->m_spells.end(); ++itr)//.......meh. this is a crappy way of doing this, I bet.
+			for(list< AI_Spell* >::iterator itr = nc->GetAIInterface()->m_spells.begin(); itr != nc->GetAIInterface()->m_spells.end(); ++itr)//.......meh. this is a crappy way of doing this, I bet.
 			{
 				if((*itr)->spell->Id == spellid)
 				{
@@ -586,7 +582,7 @@ void WorldSession::HandlePetCastSpell(WorldPacket & recvPacket)
 
 			if(nc->IsCreature())
 			{
-				Creature* c = TO< Creature* >(nc);
+				Creature* c = TO<Creature*>(nc);
 
 				if(c->GetProto()->spelldataid != 0)
 				{
@@ -631,7 +627,7 @@ void WorldSession::HandleCancelTotem(WorldPacket & recv_data)
 
 	if(slot >= UNIT_SUMMON_SLOTS)
 	{
-		LOG_ERROR("Player %u %s tried to cancel a summon at slot %u, slot number is out of range. ( tried to crash the server? )", _player->GetLowGUID(), _player->GetName(), slot);
+		LOG_ERROR("Player %u %s tried to cancel a summon at slot %u, slot number is out of range. (tried to crash the server?)", _player->GetLowGUID(), _player->GetName(), slot);
 		return;
 	}
 

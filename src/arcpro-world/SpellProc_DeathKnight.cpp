@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,63 +23,64 @@
 
 class ButcherySpellProc : public SpellProc
 {
-		SPELL_PROC_FACTORY_FUNCTION(ButcherySpellProc);
+	SPELL_PROC_FACTORY_FUNCTION(ButcherySpellProc);
 
-		bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
-		{
-			dmg_overwrite[0] = mOrigSpell->EffectBasePoints[0] + 1;
+	bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
+	{
+		dmg_overwrite[0] = mOrigSpell->EffectBasePoints[0] + 1;
 
-			return false;
-		}
+		return false;
+	}
 };
 
 class BladeBarrierSpellProc : public SpellProc
 {
-		SPELL_PROC_FACTORY_FUNCTION(BladeBarrierSpellProc);
+	SPELL_PROC_FACTORY_FUNCTION(BladeBarrierSpellProc);
 
-		void Init(Object* obj)
-		{
-			mProcFlags = PROC_ON_CAST_SPELL;
+	void Init(Object* obj)
+	{
+		mProcFlags = PROC_ON_CAST_SPELL;
 
-			mProcClassMask[0] = mOrigSpell->EffectSpellClassMask[0][0];
-			mProcClassMask[1] = mOrigSpell->EffectSpellClassMask[0][1];
-			mProcClassMask[2] = mOrigSpell->EffectSpellClassMask[0][2];
+		mProcClassMask[0] = mOrigSpell->EffectSpellClassMask[0][0];
+		mProcClassMask[1] = mOrigSpell->EffectSpellClassMask[0][1];
+		mProcClassMask[2] = mOrigSpell->EffectSpellClassMask[0][2];
 
-			dk = TO_DK(mTarget);
-		}
+		dk = TO_DK(mTarget);
+	}
 
-		bool CanProc(Unit* victim, SpellEntry* CastingSpell)
-		{
-			if(dk->IsAllRunesOfTypeInUse(RUNE_BLOOD))
-				return true;
-			return false;
-		}
+	bool CanProc(Unit* victim, SpellEntry* CastingSpell)
+	{
+		if(dk->IsAllRunesOfTypeInUse(RUNE_BLOOD))
+			return true;
 
-	private:
-		DeathKnight* dk;
+		return false;
+	}
+
+private:
+	DeathKnight* dk;
 };
 
 class DeathRuneMasterySpellProc : public SpellProc
 {
-		SPELL_PROC_FACTORY_FUNCTION(DeathRuneMasterySpellProc);
+	SPELL_PROC_FACTORY_FUNCTION(DeathRuneMasterySpellProc);
 
-		bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
-		{
-			DeathKnight* dk = TO_DK(mTarget);
+	bool DoEffect(Unit* victim, SpellEntry* CastingSpell, uint32 flag, uint32 dmg, uint32 abs, int* dmg_overwrite, uint32 weapon_damage_type)
+	{
+		DeathKnight* dk = TO_DK(mTarget);
 
-			if(dk->GetRuneType(dk->GetLastUsedUnitSlot()) == RUNE_DEATH)
-				return true;
-
-			uint8 count = 2;
-			for(uint8 x = 0; x < MAX_RUNES && count; ++x)
-				if((dk->GetRuneType(x) == RUNE_FROST || dk->GetRuneType(x) == RUNE_UNHOLY) && ! dk->GetRuneIsUsed(x))
-				{
-					dk->ConvertRune(x, RUNE_DEATH);
-					--count;
-				}
-
+		if(dk->GetRuneType(dk->GetLastUsedUnitSlot()) == RUNE_DEATH)
 			return true;
-		}
+
+		uint8 count = 2;
+		for(uint8 x = 0; x < MAX_RUNES && count; ++x)
+			if((dk->GetRuneType(x) == RUNE_FROST || dk->GetRuneType(x) == RUNE_UNHOLY) && ! dk->GetRuneIsUsed(x))
+			{
+				dk->ConvertRune(x, RUNE_DEATH);
+				--count;
+			}
+
+		return true;
+	}
 };
 
 void SpellProcMgr::SetupDeathKnight()

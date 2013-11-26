@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,24 +23,24 @@
 
 class TwinBladesOfAzzinothSpellProc : public SpellProc
 {
-		SPELL_PROC_FACTORY_FUNCTION(TwinBladesOfAzzinothSpellProc);
+	SPELL_PROC_FACTORY_FUNCTION(TwinBladesOfAzzinothSpellProc);
 
-		void Init(Object* obj)
+	void Init(Object* obj)
+	{
+		if(! mTarget->IsPlayer())
+			return;
+
+		/* The Twin Blades of Azzinoth.
+			* According to comments on wowhead, this proc has ~0.75ppm (procs-per-minute). */
+		Item* mh = TO_PLAYER(mTarget)->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_MAINHAND);
+		Item* of = TO_PLAYER(mTarget)->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_OFFHAND);
+		if(mh != NULL && of != NULL)
 		{
-			if(! mTarget->IsPlayer())
-				return;
-
-			/* The Twin Blades of Azzinoth.
-				* According to comments on wowhead, this proc has ~0.75ppm (procs-per-minute). */
-			Item* mh = TO_PLAYER(mTarget)->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_MAINHAND);
-			Item* of = TO_PLAYER(mTarget)->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_OFFHAND);
-			if(mh != NULL && of != NULL)
-			{
-				uint32 mhs = mh->GetProto()->Delay;
-				uint32 ohs = of->GetProto()->Delay;
-				mProcChance = mhs * ohs / (800 * (mhs + ohs));     // 0.75 ppm
-			}
+			uint32 mhs = mh->GetProto()->Delay;
+			uint32 ohs = of->GetProto()->Delay;
+			mProcChance = mhs * ohs / (800 * (mhs + ohs));     // 0.75 ppm
 		}
+	}
 };
 
 void SpellProcMgr::SetupItems()
