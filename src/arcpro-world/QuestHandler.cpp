@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -200,7 +200,6 @@ void WorldSession::HandleQuestGiverQueryQuestOpcode(WorldPacket & recv_data)
 		return;
 	}
 
-
 	if((status == QMGR_QUEST_AVAILABLE) || (status == QMGR_QUEST_REPEATABLE) || (status == QMGR_QUEST_CHAT))
 	{
 		sQuestMgr.BuildQuestDetails(&data, qst, qst_giver, 1, language, _player);	 // 0 because we want goodbye to function
@@ -232,7 +231,6 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket & recv_data)
 	recv_data >> quest_id;
 
 	_player->AcceptQuest(guid, quest_id);
-
 }
 
 void WorldSession::HandleQuestgiverCancelOpcode(WorldPacket & recvPacket)
@@ -272,11 +270,11 @@ void WorldSession::HandleQuestlogRemoveQuestOpcode(WorldPacket & recvPacket)
 			GetPlayer()->GetItemInterface()->RemoveItemAmt(qPtr->receive_items[i], 1);
 	}
 
-	if( qPtr->srcitem && qPtr->srcitem != qPtr->receive_items[0] )
+	if(qPtr->srcitem && qPtr->srcitem != qPtr->receive_items[0])
 	{
-		ItemPrototype *itemProto = ::ItemPrototypeStorage.LookupEntry( qPtr->srcitem );
-		if( itemProto != NULL )
-			if( itemProto->QuestId != qPtr->id )
+		ItemPrototype *itemProto = ::ItemPrototypeStorage.LookupEntry(qPtr->srcitem);
+		if(itemProto != NULL)
+			if(itemProto->QuestId != qPtr->id)
 				_player->GetItemInterface()->RemoveItemAmt(qPtr->srcitem, qPtr->srcitemcount ? qPtr->srcitemcount : 1);
 	}
 	//remove all quest items (but not trade goods) collected and required only by this quest
@@ -589,7 +587,7 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recvPacket)
 
 
 	sQuestMgr.OnQuestFinished(GetPlayer(), qst, qst_giver, reward_slot);
-	//if(qst_giver->GetTypeId() == TYPEID_UNIT) qst->LUA_SendEvent(TO< Creature* >( qst_giver ),GetPlayer(),ON_QUEST_COMPLETEQUEST);
+	//if(qst_giver->GetTypeId() == TYPEID_UNIT) qst->LUA_SendEvent(TO<Creature*>(qst_giver),GetPlayer(),ON_QUEST_COMPLETEQUEST);
 
 	if(qst->next_quest_id)
 	{
@@ -617,8 +615,7 @@ void WorldSession::HandlePushQuestToPartyOpcode(WorldPacket & recv_data)
 		if(pGroup)
 		{
 			uint32 pguid = _player->GetLowGUID();
-			SubGroup* sgr = _player->GetGroup() ?
-			                _player->GetGroup()->GetSubGroup(_player->GetSubGroup()) : 0;
+			SubGroup* sgr = _player->GetGroup() ? _player->GetGroup()->GetSubGroup(_player->GetSubGroup()) : 0;
 
 			if(sgr)
 			{
@@ -639,29 +636,19 @@ void WorldSession::HandlePushQuestToPartyOpcode(WorldPacket & recv_data)
 
 						// Checks if the player has the quest
 						if(pPlayer->GetQuestLogForEntry(questid))
-						{
 							response = QUEST_SHARE_MSG_HAVE_QUEST;
-						}
 						// Checks if the player has finished the quest
 						else if(pPlayer->HasFinishedQuest(questid))
-						{
 							response = QUEST_SHARE_MSG_FINISH_QUEST;
-						}
 						// Checks if the player is able to take the quest
 						else if(status != QMGR_QUEST_AVAILABLE && status != QMGR_QUEST_CHAT)
-						{
 							response = QUEST_SHARE_MSG_CANT_TAKE_QUEST;
-						}
 						// Checks if the player has room in his/her questlog
 						else if(pPlayer->GetOpenQuestSlot() == -1)
-						{
 							response = QUEST_SHARE_MSG_LOG_FULL;
-						}
 						// Checks if the player is dueling
-						else if(pPlayer->DuelingWith)   // || pPlayer->GetQuestSharer() ) //VLack: A possible lock up can occur if we don't zero out questsharer, because sometimes the client does not send the reply packet.. This of course eliminates the check on it, so it is possible to spam group members with quest sharing, but hey, they are YOUR FRIENDS, and better than not being able to receive quest sharing requests at all!
-						{
+						else if(pPlayer->DuelingWith /* || pPlayer->GetQuestSharer()*/) //VLack: A possible lock up can occur if we don't zero out questsharer, because sometimes the client does not send the reply packet.. This of course eliminates the check on it, so it is possible to spam group members with quest sharing, but hey, they are YOUR FRIENDS, and better than not being able to receive quest sharing requests at all!
 							response = QUEST_SHARE_MSG_BUSY;
-						}
 
 						//VLack: The quest giver player has to be visible for pPlayer, or else the client will show a non-functional "complete quest" panel instead of the "accept quest" one!
 						//We could either push a full player create for pPlayer that would cause problems later (because they are still out of range and this would have to be handled somehow),
@@ -669,9 +656,7 @@ void WorldSession::HandlePushQuestToPartyOpcode(WorldPacket & recv_data)
 						//Also, pPlayer's client can send a busy response automatically even if the players see each other, but they are still too far away.
 						//But sometimes nothing happens on pPlayer's client (near the end of mutual visibility line), no quest window and no busy response either. This has to be solved later, maybe a distance check here...
 						if(response == QUEST_SHARE_MSG_SHARING_QUEST && !pPlayer->IsVisible(_player->GetGUID()))
-						{
 							response = QUEST_SHARE_MSG_BUSY;
-						}
 
 						if(response != QUEST_SHARE_MSG_SHARING_QUEST)
 						{

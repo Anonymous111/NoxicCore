@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,13 +23,13 @@
 
 enum FactionFlags
 {
-    FACTION_FLAG_VISIBLE            = 0x01,
-    FACTION_FLAG_AT_WAR             = 0x02,
-    FACTION_FLAG_HIDDEN             = 0x04,
-    FACTION_FLAG_FORCED_INVISIBLE   = 0x08,// if both ACTION_FLAG_VISIBLE and FACTION_FLAG_FORCED_INVISIBLE are set, client crashes!
-    FACTION_FLAG_DISABLE_ATWAR      = 0x10,// disables AtWar button for client, but you can be in war with the faction
-    FACTION_FLAG_INACTIVE           = 0x20,
-    FACTION_FLAG_RIVAL              = 0x40 // only Scryers and Aldor have this flag
+	FACTION_FLAG_VISIBLE			= 0x01,
+	FACTION_FLAG_AT_WAR				= 0x02,
+	FACTION_FLAG_HIDDEN				= 0x04,
+	FACTION_FLAG_FORCED_INVISIBLE	= 0x08, // if both ACTION_FLAG_VISIBLE and FACTION_FLAG_FORCED_INVISIBLE are set, client crashes!
+	FACTION_FLAG_DISABLE_ATWAR		= 0x10, // disables AtWar button for client, but you can be in war with the faction
+	FACTION_FLAG_INACTIVE			= 0x20,
+	FACTION_FLAG_RIVAL				= 0x40 // only Scryers and Aldor have this flag
 };
 
 Standing Player::GetReputationRankFromStanding(int32 Standing_)
@@ -235,10 +235,7 @@ void Player::ModStanding(uint32 Faction, int32 Value)
 	//
 	// If we are in a lvl80 instance or heroic, or raid and we have a championing tabard on,
 	// we get reputation after the faction determined by the worn tabard.
-	if((GetMapMgr()->GetMapInfo()->minlevel == 80 ||
-	        (GetMapMgr()->iInstanceMode == MODE_HEROIC &&
-	         GetMapMgr()->GetMapInfo()->minlevel_heroic == 80)) &&
-	        ChampioningFactionID != 0)
+	if((GetMapMgr()->GetMapInfo()->minlevel == 80 || (GetMapMgr()->iInstanceMode == MODE_HEROIC && GetMapMgr()->GetMapInfo()->minlevel_heroic == 80)) && ChampioningFactionID != 0)
 		Faction = ChampioningFactionID;
 
 	FactionDBC* f = dbcFaction.LookupEntryForced(Faction);
@@ -270,9 +267,7 @@ void Player::ModStanding(uint32 Faction, int32 Value)
 	else
 	{
 		if(pctReputationMod > 0)
-		{
 			newValue = Value + (Value * pctReputationMod / 100);
-		}
 		// Increment it.
 		if(RankChanged(itr->second->standing, newValue))
 		{
@@ -313,9 +308,7 @@ void Player::SetAtWar(uint32 Faction, bool Set)
 		return;
 
 	if(SetFlagAtWar(rep->flag, Set))
-	{
 		UpdateInrangeSetsBasedOnReputation();
-	}
 }
 
 void WorldSession::HandleSetAtWarOpcode(WorldPacket & recv_data)
@@ -339,7 +332,7 @@ void Player::UpdateInrangeSetsBasedOnReputation()
 		if(!(*itr)->IsUnit())
 			continue;
 
-		pUnit = TO< Unit* >(*itr);
+		pUnit = TO<Unit*>(*itr);
 		if(pUnit->m_factionDBC == NULL || pUnit->m_factionDBC->RepListId < 0)
 			continue;
 
@@ -357,7 +350,7 @@ void Player::Reputation_OnKilledUnit(Unit* pUnit, bool InnerLoop)
 {
 
 	// add rep for on kill
-	if(!pUnit->IsCreature() || pUnit->IsPet() || pUnit->isCritter() )
+	if(!pUnit->IsCreature() || pUnit->IsPet() || pUnit->isCritter())
 		return;
 
 	Group* m_Group = GetGroup();
@@ -385,7 +378,7 @@ void Player::Reputation_OnKilledUnit(Unit* pUnit, bool InnerLoop)
 	if(modifier != 0)
 	{
 		// Apply this data.
-		for(vector<ReputationMod>::iterator itr = modifier->mods.begin(); itr != modifier->mods.end(); ++itr)
+		for(vector< ReputationMod >::iterator itr = modifier->mods.begin(); itr != modifier->mods.end(); ++itr)
 		{
 			if(!(*itr).faction[team])
 				continue;
@@ -426,9 +419,7 @@ void Player::Reputation_OnTalk(FactionDBC* dbc)
 		return;
 
 	if(SetFlagVisible(rep->flag, true) && IsInWorld())
-	{
 		m_session->OutPacket(SMSG_SET_FACTION_VISIBLE, 4, &dbc->RepListId);
-	}
 }
 
 void Player::SetFactionInactive(uint32 faction, bool set)
@@ -448,7 +439,7 @@ void WorldSession::HandleSetFactionInactiveOpcode(WorldPacket & recv_data)
 	_player->SetFactionInactive(id, (inactive == 1));
 }
 
-bool Player::AddNewFaction(FactionDBC* dbc, int32 standing, bool base)    // if ( base ) standing = baseRepValue
+bool Player::AddNewFaction(FactionDBC* dbc, int32 standing, bool base)    // if(base) standing = baseRepValue
 {
 	if(dbc == NULL || dbc->RepListId < 0)
 		return false;
@@ -457,8 +448,7 @@ bool Player::AddNewFaction(FactionDBC* dbc, int32 standing, bool base)    // if 
 	uint32 ClassMask = getClassMask();
 	for(uint32 i = 0; i < 4; i++)
 	{
-		if((dbc->RaceMask[i] & RaceMask || (dbc->RaceMask[i] == 0 && dbc->ClassMask[i] != 0)) &&
-		        (dbc->ClassMask[i] & ClassMask || dbc->ClassMask[i] == 0))
+		if((dbc->RaceMask[i] & RaceMask || (dbc->RaceMask[i] == 0 && dbc->ClassMask[i] != 0)) && (dbc->ClassMask[i] & ClassMask || dbc->ClassMask[i] == 0))
 		{
 			FactionReputation* rep = new FactionReputation;
 			rep->flag = static_cast<uint8>(dbc->repFlags[i]);

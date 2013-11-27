@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -54,12 +54,10 @@ void WorldSession::HandleNameQueryOpcode(WorldPacket & recv_data)
 //////////////////////////////////////////////////////////////
 void WorldSession::HandleQueryTimeOpcode(WorldPacket & recv_data)
 {
-
 	WorldPacket data(SMSG_QUERY_TIME_RESPONSE, 4 + 4);
 	data << (uint32)UNIXTIME;
 	data << (uint32)0; //VLack: 3.1; thanks Stewart for reminding me to have the correct structure even if it seems the old one still works.
 	SendPacket(&data);
-
 }
 
 //////////////////////////////////////////////////////////////
@@ -86,9 +84,8 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
 		data << uint8(0) << uint8(0) << uint8(0);
 		data << "Level is WayPoint ID";
 		for(uint32 i = 0; i < 8; i++)
-		{
 			data << uint32(0);
-		}
+
 		data << uint8(0);
 	}
 	else
@@ -136,9 +133,8 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
 
 		// these are the 6 seperate quest items a creature can drop
 		for(uint32 i = 0; i < 6; ++i)
-		{
 			data << uint32(ci->QuestItems[i]);
-		}
+
 		data << ci->waypointid;
 	}
 
@@ -215,10 +211,7 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket & recv_data)
 
 	// questitems that the go can contain
 	for(uint32 i = 0; i < 6; ++i)
-	{
 		data << uint32(goinfo->QuestItems[i]);
-
-	}
 
 	SendPacket(&data);
 }
@@ -267,7 +260,6 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & recv_data)
 		}
 		else
 		{
-
 			data << uint8(0x01); //show ?
 			data << pCorpse->GetMapId(); // mapid (that tombstones shown on)
 			data << pCorpse->GetPositionX();
@@ -358,7 +350,7 @@ void WorldSession::HandleInrangeQuestgiverQuery(WorldPacket & recv_data)
 	data << count;
 
 	// 32 count
-	// <foreach count>
+	// < foreach count >
 	//    64 guid
 	//    8 status
 
@@ -388,9 +380,7 @@ void WorldSession::HandleAchievmentQueryOpcode(WorldPacket & recv_data)
 	uint64 guid = recv_data.unpackGUID(); // Get the inspectee's GUID
 	Player* pTarget = objmgr.GetPlayer((uint32)guid);
 	if(!pTarget)
-	{
 		return;
-	}
 #ifdef ENABLE_ACHIEVEMENTS
 	pTarget->GetAchievementMgr().SendAllAchievementData(GetPlayer());
 #endif

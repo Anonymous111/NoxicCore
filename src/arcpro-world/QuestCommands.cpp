@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -30,9 +30,7 @@ uint32 GetQuestIDFromLink(const char* questlink)
 
 	const char* ptr = strstr(questlink, "|Hquest:");
 	if(ptr == NULL)
-	{
 		return 0;
-	}
 
 	return atol(ptr + 8); // quest id is just past "|Hquest:" (8 bytes)
 }
@@ -81,9 +79,7 @@ string RemoveQuestFromPlayer(Player* plr, Quest* qst)
 		}
 	}
 	else
-	{
 		recout += "Player has no quests to remove.";
-	}
 
 	recout += "\n\n";
 
@@ -255,8 +251,9 @@ bool ChatHandler::HandleQuestStartCommand(const char* args, WorldSession* m_sess
 				}
 				else
 				{
-					if( ( qst->time != 0 ) && plr->HasTimedQuest() ){
-						sQuestMgr.SendQuestInvalid( INVALID_REASON_HAVE_TIMED_QUEST, plr );
+					if((qst->time != 0) && plr->HasTimedQuest())
+					{
+						sQuestMgr.SendQuestInvalid(INVALID_REASON_HAVE_TIMED_QUEST, plr);
 						return true;
 					}
 
@@ -291,10 +288,10 @@ bool ChatHandler::HandleQuestStartCommand(const char* args, WorldSession* m_sess
 						}
 					}
 
+					/*if(qst->count_required_item || qst_giver->GetTypeId() == TYPEID_GAMEOBJECT) // gameobject quests deactivate
+						plr->UpdateNearbyGameObjects();
 
-					//if(qst->count_required_item || qst_giver->GetTypeId() == TYPEID_GAMEOBJECT)	// gameobject quests deactivate
-					//	plr->UpdateNearbyGameObjects();
-					//ScriptSystem->OnQuestEvent(qst, TO< Creature* >( qst_giver ), _player, QUEST_EVENT_ON_ACCEPT);
+					ScriptSystem->OnQuestEvent(qst, TO<Creature*>(qst_giver), _player, QUEST_EVENT_ON_ACCEPT);*/
 
 					sHookInterface.OnQuestAccept(plr, qst, NULL);
 
@@ -338,29 +335,21 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 		if(quest_id == 0)
 			return false;
 		if(strstr(args, "|r"))
-		{
 			reward_slot = atol(strstr(args, "|r") + 2);
-		}
 		else
-		{
 			reward_slot = 0;
-		}
 	}
 	else if(strchr(args, ' '))
-	{
 		reward_slot = atol(strchr(args, ' ') + 1);
-	}
 	else
-	{
 		reward_slot = 0;
-	}
+
 	// currently Quest::reward_choiceitem declaration is
 	// uint32 reward_choiceitem[6];
 	// so reward_slot must be 0 to 5
 	if(reward_slot > 5)
-	{
 		reward_slot = 0;
-	}
+
 	std::string recout = "|cff00ff00";
 
 	Quest* qst = QuestStorage.LookupEntry(quest_id);
@@ -431,9 +420,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 				recout += "Player was on that quest, but has now completed it.";
 			}
 			else
-			{
 				recout += "The quest has now been completed for that player.";
-			}
 
 			sGMLog.writefromsession(m_session, "completed quest %u [%s] for player %s", quest_id, qst->title, plr->GetName());
 			sQuestMgr.BuildQuestComplete(plr, qst);
@@ -448,13 +435,10 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 					int32 amt = 0;
 					uint32 fact = qst->reward_repfaction[z];
 					if(qst->reward_repvalue[z])
-					{
 						amt = qst->reward_repvalue[z];
-					}
 					if(qst->reward_replimit && (plr->GetStanding(fact) >= (int32)qst->reward_replimit))
-					{
 						continue;
-					}
+
 					amt = float2int32(amt * sWorld.getRate(RATE_QUESTREPUTATION));
 					plr->ModStanding(fact, amt);
 				}
@@ -466,9 +450,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 				{
 					ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(qst->reward_item[i]);
 					if(!proto)
-					{
 						LOG_ERROR("Invalid item prototype in quest reward! ID %d, quest %d", qst->reward_item[i], qst->id);
-					}
 					else
 					{
 						Item* add;
@@ -478,9 +460,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 						{
 							slotresult = plr->GetItemInterface()->FindFreeInventorySlot(proto);
 							if(!slotresult.Result)
-							{
 								plr->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_INVENTORY_FULL);
-							}
 							else
 							{
 								Item* itm = objmgr.CreateItem(qst->reward_item[i], plr);
@@ -488,9 +468,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 								{
 									itm->SetStackCount(uint32(qst->reward_itemcount[i]));
 									if(!plr->GetItemInterface()->SafeAddItem(itm, slotresult.ContainerSlot, slotresult.Slot))
-									{
 										itm->DeleteMe();
-									}
 								}
 							}
 						}
@@ -507,9 +485,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 			{
 				ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(qst->reward_choiceitem[reward_slot]);
 				if(!proto)
-				{
 					LOG_ERROR("Invalid item prototype in quest reward! ID %d, quest %d", qst->reward_choiceitem[reward_slot], qst->id);
-				}
 				else
 				{
 					Item* add;
@@ -519,9 +495,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 					{
 						slotresult = plr->GetItemInterface()->FindFreeInventorySlot(proto);
 						if(!slotresult.Result)
-						{
 							plr->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_INVENTORY_FULL);
-						}
 						else
 						{
 							Item* itm = objmgr.CreateItem(qst->reward_choiceitem[reward_slot], plr);
@@ -529,9 +503,7 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 							{
 								itm->SetStackCount(uint32(qst->reward_choiceitemcount[reward_slot]));
 								if(!plr->GetItemInterface()->SafeAddItem(itm, slotresult.ContainerSlot, slotresult.Slot))
-								{
 									itm->DeleteMe();
-								}
 							}
 						}
 					}
@@ -559,9 +531,8 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 				// Money reward
 				// Check they don't have more than the max gold
 				if(sWorld.GoldCapEnabled && (plr->GetGold() + qst->reward_money) <= sWorld.GoldLimit)
-				{
 					plr->ModGold(qst->reward_money);
-				}
+
 				plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_QUEST_REWARD_GOLD, qst->reward_money, 0, 0);
 			}
 			plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_COMPLETE_QUESTS_IN_ZONE, qst->zone_id, 0, 0);
@@ -583,31 +554,34 @@ bool ChatHandler::HandleQuestFinishCommand(const char* args, WorldSession* m_ses
 	return true;
 }
 
-bool ChatHandler::HandleQuestFailCommand( const char *args, WorldSession *m_session ){
-	if( args == NULL )
+bool ChatHandler::HandleQuestFailCommand(const char *args, WorldSession *m_session)
+{
+	if(args == NULL)
 		return false;
 
-	uint32 questid = static_cast< uint32 >( atoi( args ) );
+	uint32 questid = static_cast<uint32>(atoi(args));
 
-	if( questid == 0 )
+	if(questid == 0)
 		return false;
 
-	Player *player = m_session->GetPlayer();
-	QuestLogEntry *qle = player->GetQuestLogForEntry( questid );
+	Player* player = m_session->GetPlayer();
+	QuestLogEntry* qle = player->GetQuestLogForEntry(questid);
 
-	if( qle == NULL ){
-		RedSystemMessage( m_session, "quest %u not found in player's questlog", questid );
+	if(qle == NULL)
+	{
+		RedSystemMessage(m_session, "quest %u not found in player's questlog", questid);
 		return false;
 	}
 
-	qle->Fail( false );
+	qle->Fail(false);
 
 	return true;
 }
 
 bool ChatHandler::HandleQuestItemCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	std::string my_item_lookup = "SELECT item, item_count FROM gameobject_quest_item_binding WHERE quest = " + string(args);
 
@@ -667,7 +641,8 @@ bool ChatHandler::HandleQuestItemCommand(const char* args, WorldSession* m_sessi
 
 bool ChatHandler::HandleQuestGiverCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	std::string recout;
 
@@ -718,7 +693,6 @@ bool ChatHandler::HandleQuestGiverCommand(const char* args, WorldSession* m_sess
 			recout = "|cff00ccffNo creature quest starter info found.\n\n";
 			SendMultilineMessage(m_session, recout.c_str());
 		}
-
 	}
 	else
 	{
@@ -1293,7 +1267,8 @@ bool ChatHandler::HandleQuestDelBothCommand(const char* args, WorldSession* m_se
 
 bool ChatHandler::HandleQuestFinisherCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	std::string recout;
 
@@ -1412,9 +1387,7 @@ bool ChatHandler::HandleQuestFinisherCommand(const char* args, WorldSession* m_s
 bool ChatHandler::HandleQuestStarterSpawnCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
-	{
 		return false;
-	}
 
 	std::string recout;
 
@@ -1440,9 +1413,7 @@ bool ChatHandler::HandleQuestStarterSpawnCommand(const char* args, WorldSession*
 	CreatureInfo* creatureResult = CreatureNameStorage.LookupEntry(atol(starterId.c_str()));
 
 	if(creatureResult)
-	{
 		starterName = creatureResult->Name;
-	}
 	else
 	{
 		recout = "|cff00ccffNo quest starter info found.\n\n";
@@ -1486,9 +1457,7 @@ bool ChatHandler::HandleQuestStarterSpawnCommand(const char* args, WorldSession*
 bool ChatHandler::HandleQuestFinisherSpawnCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
-	{
 		return false;
-	}
 
 	std::string recout;
 
@@ -1514,9 +1483,7 @@ bool ChatHandler::HandleQuestFinisherSpawnCommand(const char* args, WorldSession
 	CreatureInfo* creatureResult = CreatureNameStorage.LookupEntry(atol(finisherId.c_str()));
 
 	if(creatureResult)
-	{
 		finisherName = creatureResult->Name;
-	}
 	else
 	{
 		recout = "|cff00ccffNo quest finisher info found.\n\n";
@@ -1585,7 +1552,8 @@ bool ChatHandler::HandleQuestLoadCommand(const char* args, WorldSession* m_sessi
 
 bool ChatHandler::HandleQuestRemoveCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	Player* plr = getSelectedChar(m_session, true);
 	if(!plr)
@@ -1619,7 +1587,8 @@ bool ChatHandler::HandleQuestRemoveCommand(const char* args, WorldSession* m_ses
 
 bool ChatHandler::HandleQuestRewardCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	stringstream recout;
 
@@ -1670,9 +1639,7 @@ bool ChatHandler::HandleQuestRewardCommand(const char* args, WorldSession* m_ses
 			}
 		}
 		if((q->count_reward_choiceitem == 0) && (q->count_reward_item == 0))
-		{
 			recout << "Quest " << qu_id << " has no item rewards.";
-		}
 	}
 	else
 	{

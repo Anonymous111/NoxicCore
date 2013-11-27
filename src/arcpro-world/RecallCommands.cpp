@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -38,7 +38,7 @@ bool GetRecallLocation(const char* location, uint32 & map, LocationVector & v)
 		float z = fields[5].GetFloat();
 		float o = fields[6].GetFloat();
 
-		if(strnicmp(const_cast< char* >(location), locname, strlen(location)) == 0)
+		if(strnicmp(const_cast<char*>(location), locname, strlen(location)) == 0)
 		{
 			map = locmap;
 			v.x = x;
@@ -247,7 +247,7 @@ bool ChatHandler::HandleRecallPortPlayerCommand(const char* args, WorldSession* 
 
 		if(strnicmp((char*)location, locname, strlen(args)) == 0)
 		{
-			sGMLog.writefromsession(m_session, "ported %s to %s ( map: %u, x: %f, y: %f, z: %f, 0: %f )", plr->GetName(), locname, locmap, x, y, z, o);
+			sGMLog.writefromsession(m_session, "ported %s to %s (map: %u, x: %f, y: %f, z: %f, 0: %f)", plr->GetName(), locname, locmap, x, y, z, o);
 			if(plr->GetSession() && (plr->GetSession()->CanUseCommand('a') || !m_session->GetPlayer()->m_isGmInvisible))
 				plr->GetSession()->SystemMessage("%s teleported you to location %s!", m_session->GetPlayer()->GetName(), locname);
 

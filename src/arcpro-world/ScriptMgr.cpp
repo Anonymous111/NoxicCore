@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -108,7 +108,6 @@ entry	text
 */
 
 #include "StdAfx.h"
-
 #include <git_version.h>
 
 namespace worldstring
@@ -116,19 +115,12 @@ namespace worldstring
 
 }
 
-
-
 initialiseSingleton(ScriptMgr);
 initialiseSingleton(HookInterface);
 
-ScriptMgr::ScriptMgr()
-{
-}
+ScriptMgr::ScriptMgr() {}
 
-ScriptMgr::~ScriptMgr()
-{
-
-}
+ScriptMgr::~ScriptMgr() {}
 
 struct ScriptingEngine_dl
 {
@@ -156,7 +148,7 @@ void ScriptMgr::LoadScripts()
 	Path = PREFIX;
 	Path += '/';
 #ifdef WIN32
-	/*Path = Config.MainConfig.GetStringDefault( "Script", "BinaryLocation", "script_bin" );
+	/*Path = Config.MainConfig.GetStringDefault("Script", "BinaryLocation", "script_bin");
 	Path += "\\";*/
 	FileMask = ".dll";
 #else
@@ -207,7 +199,7 @@ void ScriptMgr::LoadScripts()
 				const char *version = vcall();
 				uint32 stype = scall();
 
-				if( strcmp( version, BUILD_HASH_STR ) != 0 )
+				if(strcmp(version, BUILD_HASH_STR) != 0)
 				{
 					loadmessage << "ERROR: Version mismatch.";
 					LOG_ERROR(loadmessage.str().c_str());
@@ -217,7 +209,7 @@ void ScriptMgr::LoadScripts()
 				}
 				else
 				{
-					loadmessage << ' ' << std::string( BUILD_HASH_STR ) << " : ";
+					loadmessage << ' ' << std::string(BUILD_HASH_STR) << " : ";
 
 					if((stype & SCRIPT_TYPE_SCRIPT_ENGINE) != 0)
 					{
@@ -247,9 +239,7 @@ void ScriptMgr::LoadScripts()
 	}
 
 	if(count == 0)
-	{
-		LOG_ERROR("  No external scripts found! Server will continue to function with limited functionality.");
-	}
+		LOG_ERROR("No external scripts found! Server will continue to function with limited functionality.");
 	else
 	{
 		Log.Success("Server", "Loaded %u external libraries.", count);
@@ -374,9 +364,7 @@ void ScriptMgr::register_gameobject_script(uint32 entry, exp_create_gameobject_a
 void ScriptMgr::register_dummy_aura(uint32 entry, exp_handle_dummy_aura callback)
 {
 	if(_auras.find(entry) != _auras.end())
-	{
 		LOG_ERROR("ScriptMgr is trying to register a script for Aura ID: %u even if there's already one for that Aura. Remove one of those scripts.", entry);
-	}
 
 	SpellEntry* sp = dbcSpell.LookupEntryForced(entry);
 	if(sp == NULL)
@@ -386,7 +374,7 @@ void ScriptMgr::register_dummy_aura(uint32 entry, exp_handle_dummy_aura callback
 	}
 
 	if(!sp->AppliesAura(SPELL_AURA_DUMMY) && !sp->AppliesAura(SPELL_AURA_PERIODIC_TRIGGER_DUMMY))
-		LOG_ERROR("ScriptMgr has registered a dummy aura handler for Spell ID: %u ( %s ), but spell has no dummy aura!", entry, sp->Name);
+		LOG_ERROR("ScriptMgr has registered a dummy aura handler for Spell ID: %u (%s), but spell has no dummy aura!", entry, sp->Name);
 
 	_auras.insert(HandleDummyAuraMap::value_type(entry, callback));
 }
@@ -407,7 +395,7 @@ void ScriptMgr::register_dummy_spell(uint32 entry, exp_handle_dummy_spell callba
 	}
 
 	if(!sp->HasEffect(SPELL_EFFECT_DUMMY) && !sp->HasEffect(SPELL_EFFECT_SCRIPT_EFFECT) && !sp->HasEffect(SPELL_EFFECT_SEND_EVENT))
-		LOG_ERROR("ScriptMgr has registered a dummy handler for Spell ID: %u ( %s ), but spell has no dummy/script/send event effect!", entry, sp->Name);
+		LOG_ERROR("ScriptMgr has registered a dummy handler for Spell ID: %u (%s), but spell has no dummy/script/send event effect!", entry, sp->Name);
 
 	_spells.insert(HandleDummySpellMap::value_type(entry, callback));
 }
@@ -447,41 +435,31 @@ void ScriptMgr::register_instance_script(uint32 pMapId, exp_create_instance_ai p
 void ScriptMgr::register_creature_script(uint32* entries, exp_create_creature_ai callback)
 {
 	for(uint32 y = 0; entries[y] != 0; y++)
-	{
 		register_creature_script(entries[y], callback);
-	}
 };
 
 void ScriptMgr::register_gameobject_script(uint32* entries, exp_create_gameobject_ai callback)
 {
 	for(uint32 y = 0; entries[y] != 0; y++)
-	{
 		register_gameobject_script(entries[y], callback);
-	}
 };
 
 void ScriptMgr::register_dummy_aura(uint32* entries, exp_handle_dummy_aura callback)
 {
 	for(uint32 y = 0; entries[y] != 0; y++)
-	{
 		register_dummy_aura(entries[y], callback);
-	}
 };
 
 void ScriptMgr::register_dummy_spell(uint32* entries, exp_handle_dummy_spell callback)
 {
 	for(uint32 y = 0; entries[y] != 0; y++)
-	{
 		register_dummy_spell(entries[y], callback);
-	}
 };
 
 void ScriptMgr::register_script_effect(uint32* entries, exp_handle_script_effect callback)
 {
 	for(uint32 y = 0; entries[y] != 0; y++)
-	{
 		register_script_effect(entries[y], callback);
-	}
 };
 
 void ScriptMgr::register_script_effect(uint32 entry, exp_handle_script_effect callback)
@@ -503,7 +481,7 @@ void ScriptMgr::register_script_effect(uint32 entry, exp_handle_script_effect ca
 	}
 
 	if(!sp->HasEffect(SPELL_EFFECT_SCRIPT_EFFECT) && !sp->HasEffect(SPELL_EFFECT_SEND_EVENT))
-		LOG_ERROR("ScriptMgr has registered a script effect handler for Spell ID: %u ( %s ), but spell has no scripted effect!", entry, sp->Name);
+		LOG_ERROR("ScriptMgr has registered a script effect handler for Spell ID: %u (%s), but spell has no scripted effect!", entry, sp->Name);
 
 	SpellScriptEffects.insert(std::pair< uint32, exp_handle_script_effect >(entry, callback));
 }
@@ -533,6 +511,7 @@ InstanceScript* ScriptMgr::CreateScriptClassForInstance(uint32 pMapId, MapMgr* p
 	InstanceCreateMap::iterator Iter = mInstances.find(pMapMgr->GetMapId());
 	if(Iter == mInstances.end())
 		return NULL;
+
 	exp_create_instance_ai function_ptr = Iter->second;
 	return (function_ptr)(pMapMgr);
 };
@@ -584,10 +563,7 @@ void ScriptMgr::register_item_gossip_script(uint32 entry, GossipScript* gs)
 }
 
 /* CreatureAI Stuff */
-CreatureAIScript::CreatureAIScript(Creature* creature) : _unit(creature), linkedCreatureAI(NULL)
-{
-
-}
+CreatureAIScript::CreatureAIScript(Creature* creature) : _unit(creature), linkedCreatureAI(NULL) {}
 
 CreatureAIScript::~CreatureAIScript()
 {
@@ -633,11 +609,7 @@ bool CreatureAIScript::IsAlive()
 }
 
 /* GameObjectAI Stuff */
-
-GameObjectAIScript::GameObjectAIScript(GameObject* goinstance) : _gameobject(goinstance)
-{
-
-}
+GameObjectAIScript::GameObjectAIScript(GameObject* goinstance) : _gameobject(goinstance) {}
 
 void GameObjectAIScript::ModifyAIUpdateEvent(uint32 newfrequency)
 {
@@ -655,19 +627,18 @@ void GameObjectAIScript::RegisterAIUpdateEvent(uint32 frequency)
 }
 
 /* InstanceAI Stuff */
-
-InstanceScript::InstanceScript(MapMgr* pMapMgr) : mInstance(pMapMgr)
-{
-};
+InstanceScript::InstanceScript(MapMgr* pMapMgr) : mInstance(pMapMgr) {};
 
 void InstanceScript::RegisterUpdateEvent(uint32 pFrequency)
 {
 	sEventMgr.AddEvent(mInstance, &MapMgr::CallScriptUpdate, EVENT_SCRIPT_UPDATE_EVENT, pFrequency, 0, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 };
+
 void InstanceScript::ModifyUpdateEvent(uint32 pNewFrequency)
 {
 	sEventMgr.ModifyEventTimeAndTimeLeft(mInstance, EVENT_SCRIPT_UPDATE_EVENT, pNewFrequency);
 };
+
 void InstanceScript::RemoveUpdateEvent()
 {
 	sEventMgr.RemoveEvents(mInstance, EVENT_SCRIPT_UPDATE_EVENT);
@@ -717,8 +688,8 @@ bool ScriptMgr::has_hook(ServerHookEvents evt, void* ptr) const
 
 bool ScriptMgr::has_quest_script(uint32 entry) const
 {
-	Quest* q = QuestStorage.LookupEntry(entry);
-	return (q == NULL || q->pQuestScript != NULL);
+	Quest* pQuest = QuestStorage.LookupEntry(entry);
+	return (pQuest == NULL || pQuest->pQuestScript != NULL);
 }
 
 void ScriptMgr::register_creature_gossip(uint32 entry, Arcpro::Gossip::Script* script)
@@ -776,6 +747,7 @@ Arcpro::Gossip::Script* ScriptMgr::get_go_gossip(uint32 entry) const
 	GossipMap::const_iterator itr = gogossip_.find(entry);
 	if(itr != gogossip_.end())
 		return itr->second;
+
 	return NULL;
 }
 
@@ -784,6 +756,7 @@ Arcpro::Gossip::Script* ScriptMgr::get_item_gossip(uint32 entry) const
 	GossipMap::const_iterator itr = itemgossip_.find(entry);
 	if(itr != itemgossip_.end())
 		return itr->second;
+
 	return NULL;
 }
 
@@ -832,8 +805,6 @@ void ScriptMgr::UnloadScriptEngines()
 		}
 	}
 }
-
-
 
 //support for Gossip scripts added before r4106 changes
 void GossipScript::OnHello(Object* pObject, Player* Plr)
@@ -1084,7 +1055,6 @@ bool HookInterface::OnPreUnitDie(Unit* killer, Unit* victim)
 	}
 	return ret_val;
 }
-
 
 void HookInterface::OnAdvanceSkillLine(Player* pPlayer, uint32 skillLine, uint32 current)
 {

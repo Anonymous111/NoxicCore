@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -54,7 +54,6 @@ void Player::SendWorldStateUpdate(uint32 WorldState, uint32 Value)
 
 	m_session->SendPacket(&data);
 }
-
 
 void Player::Gossip_SendPOI(float X, float Y, uint32 Icon, uint32 Flags, uint32 Data, const char* Name)
 {
@@ -128,7 +127,6 @@ void Player::SendLogXPGain(uint64 guid, uint32 NormalXP, uint32 RestedXP, bool t
 			data << uint8(0);
 
 		data << uint8(0);
-
 	}
 
 	m_session->SendPacket(&data);
@@ -136,7 +134,6 @@ void Player::SendLogXPGain(uint64 guid, uint32 NormalXP, uint32 RestedXP, bool t
 
 void Player::SendCastResult(uint32 SpellId, uint8 ErrorMessage, uint8 MultiCast, uint32 Extra)
 {
-
 	WorldPacket data(SMSG_CAST_FAILED, 80);
 
 	data << uint8(MultiCast);
@@ -151,7 +148,6 @@ void Player::SendCastResult(uint32 SpellId, uint8 ErrorMessage, uint8 MultiCast,
 
 void Player::SendSpellCooldownEvent(uint32 SpellId)
 {
-
 	WorldPacket data(SMSG_COOLDOWN_EVENT, 12);
 
 	data << uint32(SpellId);
@@ -160,10 +156,8 @@ void Player::SendSpellCooldownEvent(uint32 SpellId)
 	m_session->SendPacket(&data);
 }
 
-
 void Player::SendSpellModifier(uint8 spellgroup, uint8 spelltype, int32 v, bool is_pct)
 {
-
 	WorldPacket data((uint16)(is_pct ? SMSG_SET_PCT_SPELL_MODIFIER : SMSG_SET_FLAT_SPELL_MODIFIER), 48);
 
 	data << uint8(spellgroup);
@@ -175,7 +169,6 @@ void Player::SendSpellModifier(uint8 spellgroup, uint8 spelltype, int32 v, bool 
 
 void Player::SendItemPushResult(bool created, bool recieved, bool sendtoset, bool newitem, uint8 destbagslot, uint32 destslot, uint32 count, uint32 entry, uint32 suffix, uint32 randomprop, uint32 stack)
 {
-
 	WorldPacket data(SMSG_ITEM_PUSH_RESULT, 8 + 4 + 4 + 4 + 1 + 4 + 4 + 4 + 4 + 4 + 4);
 
 	data << uint64(GetGUID());
@@ -208,12 +201,10 @@ void Player::SendItemPushResult(bool created, bool recieved, bool sendtoset, boo
 		GetGroup()->SendPacketToAll(&data);
 	else
 		m_session->SendPacket(&data);
-
 }
 
 void Player::SendSetProficiency(uint8 ItemClass, uint32 Proficiency)
 {
-
 	WorldPacket data(SMSG_SET_PROFICIENCY, 40);
 
 	data << uint8(ItemClass);
@@ -224,7 +215,6 @@ void Player::SendSetProficiency(uint8 ItemClass, uint32 Proficiency)
 
 void Player::SendLoginVerifyWorld(uint32 MapId, float X, float Y, float Z, float O)
 {
-
 	WorldPacket data(SMSG_LOGIN_VERIFY_WORLD, 20);
 
 	data << uint32(MapId);
@@ -238,7 +228,6 @@ void Player::SendLoginVerifyWorld(uint32 MapId, float X, float Y, float Z, float
 
 void Player::SendPlaySpellVisual(uint64 guid, uint32 visualid)
 {
-
 	WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);
 
 	data << uint64(guid);
@@ -249,7 +238,6 @@ void Player::SendPlaySpellVisual(uint64 guid, uint32 visualid)
 
 void Player::SendDungeonDifficulty()
 {
-
 	WorldPacket data(MSG_SET_DUNGEON_DIFFICULTY, 12);
 
 	data << uint32(iInstanceType);
@@ -282,7 +270,6 @@ void Player::SendInstanceDifficulty(uint32 difficulty)
 
 void Player::SendNewDrunkState(uint32 state, uint32 itemid)
 {
-
 	WorldPacket data(SMSG_CROSSED_INEBRIATION_THRESHOLD, (8 + 4 + 4));
 
 	data << GetGUID();
@@ -295,8 +282,7 @@ void Player::SendNewDrunkState(uint32 state, uint32 itemid)
 /*Loot type MUST be
 1-corpse, go
 2-skinning/herbalism/minning
-3-Fishing
-*/
+3-Fishing*/
 void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 {
 	Group* m_Group = m_playerInfo->m_Group;
@@ -365,15 +351,12 @@ void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 	WorldPacket data, data2(32);
 	data.SetOpcode(SMSG_LOOT_RESPONSE);
 
-
 	m_lootGuid = guid;
-
 
 	data << uint64(guid);
 	data << uint8(loot_type);  //loot_type;
 	data << uint32(pLoot->gold);
 	data << uint8(0);   //loot size reserve
-
 
 	std::vector<__LootItem>::iterator iter = pLoot->items.begin();
 	uint32 count = 0;
@@ -399,10 +382,10 @@ void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 				continue;
 
 		// team check
-		if( itemProto->HasFlag2(ITEM_FLAG2_HORDE_ONLY) && IsTeamAlliance() ) 
+		if(itemProto->HasFlag2(ITEM_FLAG2_HORDE_ONLY) && IsTeamAlliance()) 
 			continue; 
 
-		if( itemProto->HasFlag2(ITEM_FLAG2_ALLIANCE_ONLY) && IsTeamHorde() ) 
+		if(itemProto->HasFlag2(ITEM_FLAG2_ALLIANCE_ONLY) && IsTeamHorde()) 
 			continue;
 
 		//quest items check. type 4/5
@@ -441,9 +424,7 @@ void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 
 						}
 						else
-						{
 							finishedCount++;
-						}
 					}
 				}
 			}
@@ -456,21 +437,19 @@ void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 			{
 				case PARTY_LOOT_MASTER:
 					slottype = 2;
-					break;
+				break;
 				case PARTY_LOOT_GROUP:
 				case PARTY_LOOT_RR:
 				case PARTY_LOOT_NBG:
 					slottype = 1;
-					break;
+				break;
 				default:
 					slottype = 0;
-					break;
+				break;
 			}
 			// only quality items are distributed
 			if(itemProto->Quality < m_Group->GetThreshold())
-			{
 				slottype = 0;
-			}
 
 			// if all people passed anyone can loot it? :P
 			if(iter->passed)
@@ -563,9 +542,7 @@ void Player::SendLoot(uint64 guid, uint8 loot_type, uint32 mapid)
 					pGroup->Unlock();
 				}
 				else
-				{
 					m_session->SendPacket(&data2);
-				}
 			}
 		}
 		count++;
@@ -619,9 +596,9 @@ void Player::SendInitialLogonPackets()
 
 	data.Initialize(SMSG_LOGIN_SETTIMESPEED);
 
-	data << uint32( Arcpro::Util::MAKE_GAME_TIME() );
+	data << uint32(Arcpro::Util::MAKE_GAME_TIME());
 	data << float(0.0166666669777748f);    // Normal Game Speed
-	data << uint32(0);   // 3.1.2
+	data << uint32(0); // 3.1.2
 
 	m_session->SendPacket(&data);
 
@@ -643,7 +620,6 @@ void Player::SendInitialLogonPackets()
 
 void Player::SendLootUpdate(Object* o)
 {
-
 	if(!IsVisible(o->GetGUID()))
 		return;
 
@@ -662,14 +638,12 @@ void Player::SendLootUpdate(Object* o)
 
 void Player::SendUpdateDataToSet(ByteBuffer* groupbuf, ByteBuffer* nongroupbuf, bool sendtoself)
 {
-
 	/////////////////////////// first case we need to send to both grouped and ungrouped players in the set /////////////////////////////
 	if(groupbuf != NULL && nongroupbuf != NULL)
 	{
-
-		for(std::set< Object* >::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
+		for(std::set<Object*>::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
 		{
-			Player* p = TO< Player* >(*itr);
+			Player* p = TO<Player*>(*itr);
 
 			if(p->GetGroup() != NULL && GetGroup() != NULL && p->GetGroup()->GetID() == GetGroup()->GetID())
 				p->PushUpdateData(groupbuf, 1);
@@ -678,32 +652,26 @@ void Player::SendUpdateDataToSet(ByteBuffer* groupbuf, ByteBuffer* nongroupbuf, 
 		}
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	else
-
 		////////////////////////////////////////////// second case we send to group only ///////////////////////////////////////////////////
 		if(groupbuf != NULL && nongroupbuf == NULL)
 		{
-
-			for(std::set< Object* >::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
+			for(std::set<Object*>::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
 			{
-				Player* p = TO< Player* >(*itr);
+				Player* p = TO<Player*>(*itr);
 
 				if(p->GetGroup() != NULL && GetGroup() != NULL && p->GetGroup()->GetID() == GetGroup()->GetID())
 					p->PushUpdateData(groupbuf, 1);
 			}
 		}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 		else
-
 			////////////////////////////////////////// Last case we send to nongroup only ////////////////////////////////////////////////////
 			if(groupbuf == NULL && nongroupbuf != NULL)
 			{
-
-				for(std::set< Object* >::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
+				for(std::set<Object*>::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
 				{
-					Player* p = TO< Player* >(*itr);
+					Player* p = TO<Player*>(*itr);
 
 					if(p->GetGroup() == NULL || p->GetGroup()->GetID() != GetGroup()->GetID())
 						p->PushUpdateData(nongroupbuf, 1);
@@ -711,14 +679,12 @@ void Player::SendUpdateDataToSet(ByteBuffer* groupbuf, ByteBuffer* nongroupbuf, 
 			}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 	if(sendtoself)
 		PushUpdateData(groupbuf, 1);
 }
 
 void Player::TagUnit(Object* o)
 {
-
 	// For new players who get a create object
 	uint32 Flags = o->GetUInt32Value(UNIT_DYNAMIC_FLAGS);
 	Flags |= U_DYN_FLAG_TAPPED_BY_PLAYER;
@@ -745,7 +711,6 @@ void Player::SendPartyKillLog(uint64 GUID)
 
 void Player::SendDestroyObject(uint64 GUID)
 {
-
 	WorldPacket data(SMSG_DESTROY_OBJECT, 9);
 
 	data << GUID;
@@ -754,10 +719,8 @@ void Player::SendDestroyObject(uint64 GUID)
 	m_session->SendPacket(&data);
 }
 
-
 void Player::SendEquipmentSetList()
 {
-
 	WorldPacket data(SMSG_EQUIPMENT_SET_LIST, 1000);
 
 	m_ItemInterface->m_EquipmentSets.FillEquipmentSetListPacket(data);
@@ -800,8 +763,9 @@ void Player::SendTotemCreated(uint8 slot, uint64 GUID, uint32 duration, uint32 s
 	m_session->SendPacket(&data);
 }
 
-void Player::SendInitialWorldstates(){
-	WorldPacket data( SMSG_INIT_WORLD_STATES, 100 );
-	m_mapMgr->GetWorldStatesHandler().BuildInitWorldStatesForZone( m_zoneId, m_AreaID, data );
-	m_session->SendPacket( &data );
+void Player::SendInitialWorldstates()
+{
+	WorldPacket data(SMSG_INIT_WORLD_STATES, 100);
+	m_mapMgr->GetWorldStatesHandler().BuildInitWorldStatesForZone(m_zoneId, m_AreaID, data);
+	m_session->SendPacket(&data);
 }

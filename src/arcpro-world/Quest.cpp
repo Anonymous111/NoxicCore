@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -86,14 +86,10 @@ WorldPacket* WorldSession::BuildQuestQueryResponse(Quest* qst)
 	}
 
 	for(i = 0; i < 5; ++i)
-	{
-		*data << uint32(0);							// column index in QuestFactionReward.dbc but use unknown
-	}
+		*data << uint32(0); // column index in QuestFactionReward.dbc but use unknown
 
-	for(i = 0; i < 5; ++i)					// Unknown
-	{
+	for(i = 0; i < 5; ++i) // Unknown
 		*data << uint32(0);
-	}
 
 	*data << qst->point_mapid;						// Unknown
 	*data << qst->point_x;							// Unknown
@@ -162,10 +158,7 @@ QuestLogEntry::QuestLogEntry()
 	completed = 0;
 }
 
-QuestLogEntry::~QuestLogEntry()
-{
-
-}
+QuestLogEntry::~QuestLogEntry() {}
 
 void QuestLogEntry::Init(Quest* quest, Player* plr, uint32 slot)
 {
@@ -187,16 +180,13 @@ void QuestLogEntry::Init(Quest* quest, Player* plr, uint32 slot)
 				plr->quest_spells.insert(quest->required_spell[i]);
 		}
 		else if(quest->required_emote[i] != 0)
-		{
 			isemotequest = true;
-		}
 		if(quest->required_mob[i] != 0)
 		{
 			if(!plr->HasQuestMob(quest->required_mob[i]))
 				plr->quest_mobs.insert(quest->required_mob[i]);
 		}
 	}
-
 
 	// update slot
 	plr->SetQuestLogSlot(this, slot);
@@ -206,7 +196,7 @@ void QuestLogEntry::Init(Quest* quest, Player* plr, uint32 slot)
 	memset(m_mobcount, 0, 4 * 4);
 	memset(m_explored_areas, 0, 4 * 4);
 
-	if( m_quest->time > 0 )
+	if(m_quest->time > 0)
 		expirytime = UNIXTIME + m_quest->time / 1000;
 	else
 		expirytime = 0;
@@ -294,13 +284,9 @@ bool QuestLogEntry::LoadFromDB(Field* fields)
 		m_mobcount[i] = fields[f].GetUInt32();
 		f++;
 		if(GetQuest()->required_mobtype[i] == QUEST_MOB_TYPE_CREATURE)
-		{
 			CALL_QUESTSCRIPT_EVENT(this, OnCreatureKill)(GetQuest()->required_mob[i], m_plr, this);
-		}
 		else
-		{
 			CALL_QUESTSCRIPT_EVENT(this, OnGameObjectActivate)(GetQuest()->required_mob[i], m_plr, this);
-		}
 	}
 
 	completed = fields[f].GetUInt32();
@@ -313,37 +299,31 @@ bool QuestLogEntry::CanBeFinished()
 {
 	uint32 i;
 
-	if(m_quest->iscompletedbyspelleffect && ( completed == QUEST_INCOMPLETE ) )
+	if(m_quest->iscompletedbyspelleffect && (completed == QUEST_INCOMPLETE))
 		return false;
 
-	if( completed == QUEST_FAILED )
+	if(completed == QUEST_FAILED)
 		return false;
 	else
-	if( completed == QUEST_COMPLETE )
-		return true;
+		if(completed == QUEST_COMPLETE)
+			return true;
 
 	for(i = 0; i < 4; ++i)
 	{
 		if(m_quest->required_mob[i])
 		{
 			if(m_mobcount[i] < m_quest->required_mobcount[i])
-			{
 				return false;
-			}
 		}
 		if(m_quest->required_spell[i])   // requires spell cast, with no required target
 		{
 			if(m_mobcount[i] == 0 || m_mobcount[i] < m_quest->required_mobcount[i])
-			{
 				return false;
-			}
 		}
 		if(m_quest->required_emote[i])   // requires emote, with no required target
 		{
 			if(m_mobcount[i] == 0 || m_mobcount[i] < m_quest->required_mobcount[i])
-			{
 				return false;
-			}
 		}
 	}
 
@@ -352,9 +332,7 @@ bool QuestLogEntry::CanBeFinished()
 		if(m_quest->required_item[i])
 		{
 			if(m_plr->GetItemInterface()->GetItemCount(m_quest->required_item[i]) < m_quest->required_itemcount[i])
-			{
 				return false;
-			}
 		}
 	}
 
@@ -403,7 +381,7 @@ void QuestLogEntry::SetSlot(int32 i)
 
 void QuestLogEntry::Finish()
 {
-	sEventMgr.RemoveEvents( m_plr, EVENT_TIMED_QUEST_EXPIRE );
+	sEventMgr.RemoveEvents(m_plr, EVENT_TIMED_QUEST_EXPIRE);
 
 	uint32 base = GetBaseField(m_slot);
 	m_plr->SetUInt32Value(base + 0, 0);
@@ -420,20 +398,20 @@ void QuestLogEntry::Finish()
 	delete this;
 }
 
-void QuestLogEntry::Fail( bool timerexpired ){
-	sEventMgr.RemoveEvents( m_plr, EVENT_TIMED_QUEST_EXPIRE );
+void QuestLogEntry::Fail(bool timerexpired){
+	sEventMgr.RemoveEvents(m_plr, EVENT_TIMED_QUEST_EXPIRE);
 
 	completed = QUEST_FAILED;
 	expirytime = 0;
 	mDirty = true;
 	
-	uint32 base = GetBaseField( m_slot );
-	m_plr->SetUInt32Value( base + 1, 2 );
+	uint32 base = GetBaseField(m_slot);
+	m_plr->SetUInt32Value(base + 1, 2);
 
-	if( timerexpired )
-		sQuestMgr.SendQuestUpdateFailedTimer( m_quest, m_plr );
+	if(timerexpired)
+		sQuestMgr.SendQuestUpdateFailedTimer(m_quest, m_plr);
 	else
-		sQuestMgr.SendQuestUpdateFailed( m_quest, m_plr );
+		sQuestMgr.SendQuestUpdateFailed(m_quest, m_plr);
 }
 
 void QuestLogEntry::UpdatePlayerFields()
@@ -457,16 +435,12 @@ void QuestLogEntry::UpdatePlayerFields()
 			if(m_quest->required_triggers[i])
 			{
 				if(m_explored_areas[i] == 1)
-				{
 					count++;
-				}
 			}
 		}
 
 		if(count == m_quest->count_requiredtriggers)
-		{
 			field1 |= 0x01000000;
-		}
 	}
 
 	// spell casts / emotes
@@ -482,9 +456,7 @@ void QuestLogEntry::UpdatePlayerFields()
 			}
 		}
 		if(cast_complete)
-		{
 			field0 |= 0x01000000; // "Objective Complete"
-		}
 	}
 	else if(isemotequest)
 	{
@@ -498,9 +470,7 @@ void QuestLogEntry::UpdatePlayerFields()
 			}
 		}
 		if(emote_complete)
-		{
 			field0 |= 0x01000000; // "Objective Complete"
-		}
 	}
 
 	// mob hunting / counter
@@ -526,20 +496,22 @@ void QuestLogEntry::UpdatePlayerFields()
 		}
 	}
 
-	if( ( m_quest->time != 0 ) && ( expirytime < UNIXTIME ) )
+	if((m_quest->time != 0) && (expirytime < UNIXTIME))
 		completed = QUEST_FAILED;
 
-	if( completed == QUEST_FAILED )
+	if(completed == QUEST_FAILED)
 		field0 |= 2;
 
 	m_plr->SetUInt32Value(base + 1, field0);
 	m_plr->SetUInt64Value(base + 2, field1);
 
-	if( ( m_quest->time != 0 ) && ( completed != QUEST_FAILED ) ){
-		m_plr->SetUInt32Value( base + 4, expirytime );
-		sEventMgr.AddEvent( m_plr, &Player::EventTimedQuestExpire, m_quest->id, EVENT_TIMED_QUEST_EXPIRE, ( expirytime - UNIXTIME ) * 1000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT );
-	}else
-		m_plr->SetUInt32Value( base + 4, 0 );
+	if((m_quest->time != 0) && (completed != QUEST_FAILED))
+	{
+		m_plr->SetUInt32Value(base + 4, expirytime);
+		sEventMgr.AddEvent(m_plr, &Player::EventTimedQuestExpire, m_quest->id, EVENT_TIMED_QUEST_EXPIRE, (expirytime - UNIXTIME) * 1000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
+	}
+	else
+		m_plr->SetUInt32Value(base + 4, 0);
 }
 
 void QuestLogEntry::SendQuestComplete()
@@ -561,4 +533,3 @@ void QuestLogEntry::Complete()
 {
 	completed = QUEST_COMPLETE;
 }
-
