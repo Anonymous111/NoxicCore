@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -214,7 +214,7 @@ void AIInterface::Update(uint32 p_time)
 		{
 			if(!m_Unit->bInvincible && m_Unit->IsPet())
 			{
-				Pet* pPet = TO< Pet* >(m_Unit);
+				Pet* pPet = TO<Pet*>(m_Unit);
 
 				if(pPet->GetPetAction() == PET_ACTION_ATTACK || pPet->GetPetState() != PET_STATE_PASSIVE)
 					_UpdateCombat(p_time);
@@ -376,11 +376,8 @@ void AIInterface::_UpdateTargets()
 		for(i = m_assistTargets.begin(); i != m_assistTargets.end();)
 		{
 			i2 = i++;
-			if((*i2) == NULL || (*i2)->event_GetCurrentInstanceId() != m_Unit->event_GetCurrentInstanceId() ||
-			        !(*i2)->isAlive() || m_Unit->GetDistanceSq((*i2)) >= 2500.0f || !(*i2)->CombatStatus.IsInCombat() || !((*i2)->m_phase & m_Unit->m_phase))
-			{
+			if((*i2) == NULL || (*i2)->event_GetCurrentInstanceId() != m_Unit->event_GetCurrentInstanceId() || !(*i2)->isAlive() || m_Unit->GetDistanceSq((*i2)) >= 2500.0f || !(*i2)->CombatStatus.IsInCombat() || !((*i2)->m_phase & m_Unit->m_phase))
 				m_assistTargets.erase(i2);
-			}
 		}
 	}
 
@@ -421,7 +418,7 @@ void AIInterface::_UpdateTargets()
 						case INSTANCE_NONRAID:
 						case INSTANCE_MULTIMODE:
 							instance = true;
-							break;
+						break;
 					}
 				}
 
@@ -432,13 +429,10 @@ void AIInterface::_UpdateTargets()
 
 		LockAITargets(false);
 
-		if( disable_combat )
+		if(disable_combat)
 			return;
 
-		if(m_aiTargets.size() == 0
-		        && m_AIState != STATE_IDLE && m_AIState != STATE_FOLLOWING
-		        && m_AIState != STATE_EVADE && m_AIState != STATE_FEAR
-		        && m_AIState != STATE_WANDER && m_AIState != STATE_SCRIPTIDLE)
+		if(m_aiTargets.size() == 0 && m_AIState != STATE_IDLE && m_AIState != STATE_FOLLOWING && m_AIState != STATE_EVADE && m_AIState != STATE_FEAR && m_AIState != STATE_WANDER && m_AIState != STATE_SCRIPTIDLE)
 		{
 			if(m_Unit->GetMapMgr() && m_Unit->GetMapMgr()->GetMapInfo())
 			{
@@ -449,18 +443,18 @@ void AIInterface::_UpdateTargets()
 					case INSTANCE_NONRAID:
 					case INSTANCE_MULTIMODE:
 						target = FindTarget();
-						break;
+					break;
 					default:
 						if(m_outOfCombatRange && _CalcDistanceFromHome() < m_outOfCombatRange)
 							target = FindTarget();
-						break;
+					break;
 				}
 
 				if(target != NULL)
 					AttackReaction(target, 1, 0);
 			}
 		}
-		else if(m_aiTargets.size() == 0 && ((m_AIType == AITYPE_PET && (m_Unit->IsPet() && TO< Pet* >(m_Unit)->GetPetState() == PET_STATE_AGGRESSIVE)) || (!m_Unit->IsPet() && disable_melee == false)))
+		else if(m_aiTargets.size() == 0 && ((m_AIType == AITYPE_PET && (m_Unit->IsPet() && TO<Pet*>(m_Unit)->GetPetState() == PET_STATE_AGGRESSIVE)) || (!m_Unit->IsPet() && disable_melee == false)))
 		{
 			Unit* target = FindTarget();
 			if(target)
@@ -489,7 +483,7 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 	if(getNextTarget() == m_Unit)
 		setNextTarget(GetMostHated());
 
-	uint16 agent = static_cast<uint16>(m_aiCurrentAgent);
+	uint16 agent = static_cast< uint16 >(m_aiCurrentAgent);
 
 	// If creature is very far from spawn point return to spawnpoint
 	// If at instance don't return -- this is wrong ... instance creatures always returns to spawnpoint, dunno how do you got this idea.
@@ -500,7 +494,7 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 		HandleEvent(EVENT_LEAVECOMBAT, m_Unit, 0);
 	else if(nextTarget == NULL && m_AIState != STATE_FOLLOWING && m_AIState != STATE_SCRIPTMOVE)
 	{
-//		SetNextTarget(FindTargetForSpell(m_nextSpell));
+		//SetNextTarget(FindTargetForSpell(m_nextSpell));
 		if(m_is_in_instance)
 			setNextTarget(FindTarget());
 		else
@@ -522,7 +516,6 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 
 	if(sWorld.Collision)
 	{
-
 		if(m_Unit->GetMapMgr() != NULL && getNextTarget() != NULL)
 		{
 			if(!Flying())
@@ -536,7 +529,7 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 						if(target_land_z > m_Unit->GetMapMgr()->GetLiquidHeight(getNextTarget()->GetPositionX(), getNextTarget()->GetPositionY()))
 							HandleEvent(EVENT_LEAVECOMBAT, m_Unit, 0);  //bugged npcs, probably db fault
 					}
-					else if(TO< Player* >(getNextTarget())->GetSession() != NULL)
+					else if(TO<Player*>(getNextTarget())->GetSession() != NULL)
 					{
 						MovementInfo* mi = TO_PLAYER(getNextTarget())->GetSession()->GetMovementInfo();
 
@@ -559,7 +552,7 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 			if(m_Unit->IsCreature())
 				cansee = TO<Creature*>(m_Unit)->CanSee(getNextTarget());
 			else
-				cansee = TO< Player* >(m_Unit)->CanSee(getNextTarget());
+				cansee = TO<Player*>(m_Unit)->CanSee(getNextTarget());
 		}
 		else
 			resetNextTarget();
@@ -572,13 +565,11 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 			if(!m_nextSpell)
 				m_nextSpell = this->getSpell();
 
-			/*
-			if(!m_nextSpell && waiting_for_cooldown)
+			/*if(!m_nextSpell && waiting_for_cooldown)
 			{
 				// don't start running to the target for melee if we're waiting for a cooldown.
 				return;
-			}
-			*/
+			}*/
 
 			if(m_canFlee && !m_hasFleed
 			        && ((m_Unit->GetHealth() / m_Unit->GetMaxHealth()) < m_FleeHealth))
@@ -605,7 +596,7 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 				if(getNextTarget()->IsPlayer())
 				{
 					float dist = m_Unit->GetDistanceSq(getNextTarget());
-					if(TO< Player* >(getNextTarget())->m_currentMovement == MOVE_ROOT || dist >= 64.0f)
+					if(TO<Player*>(getNextTarget())->m_currentMovement == MOVE_ROOT || dist >= 64.0f)
 						agent =  AGENT_RANGED;
 				}
 				else if(getNextTarget()->m_canMove == false || m_Unit->GetDistanceSq(getNextTarget()) >= 64.0f)
@@ -627,276 +618,271 @@ void AIInterface::_UpdateCombat(uint32 p_time)
 		switch(agent)
 		{
 			case AGENT_MELEE:
+			{
+				float combatReach[2]; // Calculate Combat Reach
+				float distance = m_Unit->CalcDistance(getNextTarget());
+
+				combatReach[0] = getNextTarget()->GetModelHalfSize();
+				combatReach[1] = _CalcCombatRange(getNextTarget(), false);
+
+				if((
+					//distance >= combatReach[0] &&  //removed by Zack. You can create an exploit with this that creature will never attack
+					distance <= combatReach[1] + DISTANCE_TO_SMALL_TO_WALK)
+					//|| gracefull_hit_on_target == GetNextTarget()
+					) // Target is in Range -> Attack
 				{
-					float combatReach[2]; // Calculate Combat Reach
-					float distance = m_Unit->CalcDistance(getNextTarget());
-
-					combatReach[0] = getNextTarget()->GetModelHalfSize();
-					combatReach[1] = _CalcCombatRange(getNextTarget(), false);
-
-					if((
-//					distance >= combatReach[0] &&  //removed by Zack. You can create an exploit with this that creature will never attack
-					            distance <= combatReach[1] + DISTANCE_TO_SMALL_TO_WALK)
-//					|| gracefull_hit_on_target == GetNextTarget()
-					  ) // Target is in Range -> Attack
+					//gracefull_hit_on_target = NULL;
+					//m_moveRun = false;
+					//FIX ME: offhand shit
+					if(m_Unit->isAttackReady(false) && !m_fleeTimer)
 					{
-//					gracefull_hit_on_target = NULL;
-//					m_moveRun = false;
-						//FIX ME: offhand shit
-						if(m_Unit->isAttackReady(false) && !m_fleeTimer)
+						m_creatureState = ATTACKING;
+						bool infront = m_Unit->isInFront(getNextTarget());
+
+						if(!infront) // set InFront
 						{
-							m_creatureState = ATTACKING;
-							bool infront = m_Unit->isInFront(getNextTarget());
-
-							if(!infront) // set InFront
+							//prevent mob from rotating while stunned
+							if(!m_Unit->IsStunned())
 							{
-								//prevent mob from rotating while stunned
-								if(!m_Unit->IsStunned())
-								{
-									setInFront(getNextTarget());
-									infront = true;
-								}
-							}
-							if(infront)
-							{
-								m_Unit->setAttackTimer(0, false);
-#ifdef ENABLE_CREATURE_DAZE
-								//we require to know if strike was successful. If there was no dmg then target cannot be dazed by it
-								Unit* t_unit = getNextTarget();
-								if(!t_unit)
-									return; //omg lol, in seconds we lost target. This might be possible due to the Eventrelocated
-								uint32 health_before_strike = t_unit->GetHealth();
-#endif
-								if( m_Unit->GetOnMeleeSpell() != 0 )
-									m_Unit->CastOnMeleeSpell();
-								else
-									m_Unit->Strike(getNextTarget(), (agent == AGENT_MELEE ? MELEE : RANGED), NULL, 0, 0, 0, false, false);
-
-#ifdef ENABLE_CREATURE_DAZE
-								//now if the target is facing his back to us then we could just cast dazed on him :P
-								//as far as i know dazed is casted by most of the creatures but feel free to remove this code if you think otherwise
-								if(getNextTarget() && m_Unit->m_factionDBC &&
-								        !(m_Unit->m_factionDBC->RepListId == -1 && m_Unit->m_faction->FriendlyMask == 0 && m_Unit->m_faction->HostileMask == 0) /* neutral creature */
-								        && getNextTarget()->IsPlayer() && !m_Unit->IsPet() && health_before_strike > getNextTarget()->GetHealth()
-								        && Rand(m_Unit->get_chance_to_daze(getNextTarget())))
-								{
-									float our_facing = m_Unit->calcRadAngle(m_Unit->GetPositionX(), m_Unit->GetPositionY(), getNextTarget()->GetPositionX(), getNextTarget()->GetPositionY());
-									float his_facing = getNextTarget()->GetOrientation();
-									if(fabs(our_facing - his_facing) < CREATURE_DAZE_TRIGGER_ANGLE && !getNextTarget()->HasAura(CREATURE_SPELL_TO_DAZE))
-									{
-										SpellEntry* info = dbcSpell.LookupEntry(CREATURE_SPELL_TO_DAZE);
-										Spell* sp = sSpellFactoryMgr.NewSpell(m_Unit, info, false, NULL);
-										SpellCastTargets targets;
-										targets.m_unitTarget = getNextTarget()->GetGUID();
-										sp->prepare(&targets);
-									}
-								}
-#endif
+								setInFront(getNextTarget());
+								infront = true;
 							}
 						}
-					}
-					else // Target out of Range -> Run to it
-					{
-						//calculate next move
-//					float dist = combatReach[1]; //this is theoretically right but annoying formula in game
-//					float dist = combatReach[1] - m_Unit->GetCombatReach(); //ignore our combat reach, make sure target (player) can reach us first.
-
-						//practical tests show that we really should try to jump on target to get good results :S
-						//simply ignore combat reach and move as close as visually not annoying
-						float dist;
-						if(m_Unit->GetModelHalfSize() > getNextTarget()->GetModelHalfSize())
-							dist = m_Unit->GetModelHalfSize();
-						else
-							dist = getNextTarget()->GetModelHalfSize();
-
-						//removed by Zack. You can create an exploit with this that creature will never attack
-//					if (distance<combatReach[0]) //if we are inside one each other
-//						dist = -(combatReach[1] - distance);
-//					gracefull_hit_on_target = GetNextTarget(); // this is an exploit where you manage to move the exact speed that mob will reposition itself all the time
-
-						SetRun();
-						_CalcDestinationAndMove(getNextTarget(), dist);
-					}
-				}
-				break;
-			case AGENT_RANGED:
-				{
-					float combatReach[2]; // Calculate Combat Reach
-					float distance = m_Unit->CalcDistance(getNextTarget());
-
-					combatReach[0] = 8.0f;
-					combatReach[1] = 30.0f;
-
-					if(distance >= combatReach[0] && distance <= combatReach[1]) // Target is in Range -> Attack
-					{
-//					m_moveRun = false;
-						//FIX ME: offhand shit
-						if(m_Unit->isAttackReady(false) && !m_fleeTimer)
+						if(infront)
 						{
-							m_creatureState = ATTACKING;
-							bool infront = m_Unit->isInFront(getNextTarget());
+							m_Unit->setAttackTimer(0, false);
+#ifdef ENABLE_CREATURE_DAZE
+							//we require to know if strike was successful. If there was no dmg then target cannot be dazed by it
+							Unit* t_unit = getNextTarget();
+							if(!t_unit)
+								return; //omg lol, in seconds we lost target. This might be possible due to the Eventrelocated
+							uint32 health_before_strike = t_unit->GetHealth();
+#endif
+							if(m_Unit->GetOnMeleeSpell() != 0)
+								m_Unit->CastOnMeleeSpell();
+							else
+								m_Unit->Strike(getNextTarget(), (agent == AGENT_MELEE ? MELEE : RANGED), NULL, 0, 0, 0, false, false);
 
-							if(!infront) // set InFront
+#ifdef ENABLE_CREATURE_DAZE
+							//now if the target is facing his back to us then we could just cast dazed on him :P
+							//as far as i know dazed is casted by most of the creatures but feel free to remove this code if you think otherwise
+							if(getNextTarget() && m_Unit->m_factionDBC &&
+									!(m_Unit->m_factionDBC->RepListId == -1 && m_Unit->m_faction->FriendlyMask == 0 && m_Unit->m_faction->HostileMask == 0) /* neutral creature */
+									&& getNextTarget()->IsPlayer() && !m_Unit->IsPet() && health_before_strike > getNextTarget()->GetHealth()
+									&& Rand(m_Unit->get_chance_to_daze(getNextTarget())))
 							{
-								//prevent mob from rotating while stunned
-								if(!m_Unit->IsStunned())
+								float our_facing = m_Unit->calcRadAngle(m_Unit->GetPositionX(), m_Unit->GetPositionY(), getNextTarget()->GetPositionX(), getNextTarget()->GetPositionY());
+								float his_facing = getNextTarget()->GetOrientation();
+								if(fabs(our_facing - his_facing) < CREATURE_DAZE_TRIGGER_ANGLE && !getNextTarget()->HasAura(CREATURE_SPELL_TO_DAZE))
 								{
-									setInFront(getNextTarget());
-									infront = true;
-								}
-							}
-
-							if(infront)
-							{
-								m_Unit->setAttackTimer(0, false);
-								SpellEntry* info = dbcSpell.LookupEntryForced(SPELL_RANGED_GENERAL);
-								if(info)
-								{
+									SpellEntry* info = dbcSpell.LookupEntry(CREATURE_SPELL_TO_DAZE);
 									Spell* sp = sSpellFactoryMgr.NewSpell(m_Unit, info, false, NULL);
 									SpellCastTargets targets;
 									targets.m_unitTarget = getNextTarget()->GetGUID();
 									sp->prepare(&targets);
-									//Lets make spell handle this
-									//m_Unit->Strike( GetNextTarget(), ( agent == AGENT_MELEE ? MELEE : RANGED ), NULL, 0, 0, 0 );
 								}
+							}
+#endif
+						}
+					}
+				}
+				else // Target out of Range -> Run to it
+				{
+					//calculate next move
+					//float dist = combatReach[1]; //this is theoretically right but annoying formula in game
+					//float dist = combatReach[1] - m_Unit->GetCombatReach(); //ignore our combat reach, make sure target (player) can reach us first.
+
+					//practical tests show that we really should try to jump on target to get good results :S
+					//simply ignore combat reach and move as close as visually not annoying
+					float dist;
+					if(m_Unit->GetModelHalfSize() > getNextTarget()->GetModelHalfSize())
+						dist = m_Unit->GetModelHalfSize();
+					else
+						dist = getNextTarget()->GetModelHalfSize();
+
+					//removed by Zack. You can create an exploit with this that creature will never attack
+					/*if(distance< combatReach[0]) //if we are inside one each other
+						dist = -(combatReach[1] - distance);
+					gracefull_hit_on_target = GetNextTarget();*/ // this is an exploit where you manage to move the exact speed that mob will reposition itself all the time
+
+					SetRun();
+					_CalcDestinationAndMove(getNextTarget(), dist);
+				}
+			}break;
+			case AGENT_RANGED:
+			{
+				float combatReach[2]; // Calculate Combat Reach
+				float distance = m_Unit->CalcDistance(getNextTarget());
+
+				combatReach[0] = 8.0f;
+				combatReach[1] = 30.0f;
+
+				if(distance >= combatReach[0] && distance <= combatReach[1]) // Target is in Range -> Attack
+				{
+					//m_moveRun = false;
+					//FIX ME: offhand shit
+					if(m_Unit->isAttackReady(false) && !m_fleeTimer)
+					{
+						m_creatureState = ATTACKING;
+						bool infront = m_Unit->isInFront(getNextTarget());
+
+						if(!infront) // set InFront
+						{
+							//prevent mob from rotating while stunned
+							if(!m_Unit->IsStunned())
+							{
+								setInFront(getNextTarget());
+								infront = true;
+							}
+						}
+
+						if(infront)
+						{
+							m_Unit->setAttackTimer(0, false);
+							SpellEntry* info = dbcSpell.LookupEntryForced(SPELL_RANGED_GENERAL);
+							if(info)
+							{
+								Spell* sp = sSpellFactoryMgr.NewSpell(m_Unit, info, false, NULL);
+								SpellCastTargets targets;
+								targets.m_unitTarget = getNextTarget()->GetGUID();
+								sp->prepare(&targets);
+								//Lets make spell handle this
+								//m_Unit->Strike(GetNextTarget(), (agent == AGENT_MELEE ? MELEE : RANGED), NULL, 0, 0, 0);
 							}
 						}
 					}
-					else // Target out of Range -> Run to it
-					{
-						//calculate next move
-						float dist;
-
-						if(distance < combatReach[0])// Target is too near
-							dist = 9.0f;
-						else
-							dist = 20.0f;
-
-						SetRun();
-						_CalcDestinationAndMove(getNextTarget(), dist);
-					}
 				}
-				break;
+				else // Target out of Range -> Run to it
+				{
+					//calculate next move
+					float dist;
+
+					if(distance < combatReach[0])// Target is too near
+						dist = 9.0f;
+					else
+						dist = 20.0f;
+
+					SetRun();
+					_CalcDestinationAndMove(getNextTarget(), dist);
+				}
+			}break;
 			case AGENT_SPELL:
+			{
+				if(!m_nextSpell || !getNextTarget())
+					return;  // this shouldn't happen
+
+				SpellCastTime* sd = dbcSpellCastTime.LookupEntry(m_nextSpell->spell->CastingTimeIndex);
+
+				float distance = m_Unit->CalcDistance(getNextTarget());
+				bool los = true;
+
+				if(sWorld.Collision)
+					los = CollideInterface.CheckLOS(m_Unit->GetMapId(), m_Unit->GetPositionNC(), getNextTarget()->GetPositionNC());
+				if(los && ((distance <= m_nextSpell->maxrange + m_Unit->GetModelHalfSize() /*&& distance >= m_nextSpell->minrange*/) || m_nextSpell->maxrange == 0)) // Target is in Range -> Attack
 				{
-					if(!m_nextSpell || !getNextTarget())
-						return;  // this shouldn't happen
+					SpellEntry* spellInfo = m_nextSpell->spell;
 
-					SpellCastTime* sd = dbcSpellCastTime.LookupEntry(m_nextSpell->spell->CastingTimeIndex);
+					/* if in range stop moving so we don't interrupt the spell */
+					//do not stop for instant spells
+					if(sd && GetCastTime(sd) != 0)
+						StopMovement(0);
 
-					float distance = m_Unit->CalcDistance(getNextTarget());
-					bool los = true;
+					/*if(m_nextSpell->procCount)
+						m_nextSpell->procCount--;*/
 
-					if(sWorld.Collision)
-						los = CollideInterface.CheckLOS(m_Unit->GetMapId(), m_Unit->GetPositionNC(), getNextTarget()->GetPositionNC());
-					if(los
-					        && ((distance <= m_nextSpell->maxrange + m_Unit->GetModelHalfSize() /*&& distance >= m_nextSpell->minrange*/) || m_nextSpell->maxrange == 0)) // Target is in Range -> Attack
+					SpellCastTargets targets = setSpellTargets(spellInfo, getNextTarget());
+					uint32 targettype = m_nextSpell->spelltargetType;
+					switch(targettype)
 					{
-						SpellEntry* spellInfo = m_nextSpell->spell;
-
-						/* if in range stop moving so we don't interrupt the spell */
-						//do not stop for instant spells
-						if(sd && GetCastTime(sd) != 0)
-							StopMovement(0);
-
-						/*					if(m_nextSpell->procCount)
-												m_nextSpell->procCount--;*/
-
-						SpellCastTargets targets = setSpellTargets(spellInfo, getNextTarget());
-						uint32 targettype = m_nextSpell->spelltargetType;
-						switch(targettype)
-						{
-							case TTYPE_CASTER:
-							case TTYPE_SINGLETARGET:
-									CastSpell(m_Unit, spellInfo, targets);
-									break;
-							case TTYPE_SOURCE:
-									m_Unit->CastSpellAoF(targets.m_srcX, targets.m_srcY, targets.m_srcZ, spellInfo, true);
-									break;
-							case TTYPE_DESTINATION:
-									m_Unit->CastSpellAoF(targets.m_destX, targets.m_destY, targets.m_destZ, spellInfo, true);
-									break;
-							default:
-								LOG_ERROR("AI Agents: Targettype of AI agent spell %u for creature %u not set", spellInfo->Id, TO<Creature*>(m_Unit)->GetCreatureInfo()->Id);
-						}
-						// CastSpell(m_Unit, spellInfo, targets);
-						if(m_nextSpell && m_nextSpell->cooldown)
-							m_nextSpell->cooldowntime = getMSTime() + m_nextSpell->cooldown;
-
-						next_spell_time = (uint32)UNIXTIME + MOB_SPELLCAST_GLOBAL_COOLDOWN;
-
-						m_nextSpell = NULL;
+						case TTYPE_CASTER:
+						case TTYPE_SINGLETARGET:
+							CastSpell(m_Unit, spellInfo, targets);
+						break;
+						case TTYPE_SOURCE:
+							m_Unit->CastSpellAoF(targets.m_srcX, targets.m_srcY, targets.m_srcZ, spellInfo, true);
+						break;
+						case TTYPE_DESTINATION:
+							m_Unit->CastSpellAoF(targets.m_destX, targets.m_destY, targets.m_destZ, spellInfo, true);
+						break;
+						default:
+							LOG_ERROR("AI Agents: Targettype of AI agent spell %u for creature %u not set", spellInfo->Id, TO<Creature*>(m_Unit)->GetCreatureInfo()->Id);
+						break;
 					}
-					else // Target out of Range -> Run to it
-					{
-						//calculate next move
-						SetRun();
-						float close_to_enemy = 0.0f;
-						if(distance > m_nextSpell->maxrange)
-							close_to_enemy = m_nextSpell->maxrange - DISTANCE_TO_SMALL_TO_WALK ;
-						else if(distance < m_nextSpell->minrange)
-							close_to_enemy = m_nextSpell->minrange + DISTANCE_TO_SMALL_TO_WALK ;
+					// CastSpell(m_Unit, spellInfo, targets);
+					if(m_nextSpell && m_nextSpell->cooldown)
+						m_nextSpell->cooldowntime = getMSTime() + m_nextSpell->cooldown;
 
-						if(close_to_enemy < 0)
-							close_to_enemy = 0;
+					next_spell_time = (uint32)UNIXTIME + MOB_SPELLCAST_GLOBAL_COOLDOWN;
 
-						_CalcDestinationAndMove(getNextTarget(), close_to_enemy);  //if we make exact movement we will never position perfectly
-						/*Destination* dst = _CalcDestination(GetNextTarget(), dist);
-						MoveTo(dst->x, dst->y, dst->z,0);
-						delete dst;*/
-					}
+					m_nextSpell = NULL;
 				}
-				break;
-			case AGENT_FLEE:
+				else // Target out of Range -> Run to it
 				{
-					//float dist = 5.0f;
+					//calculate next move
+					SetRun();
+					float close_to_enemy = 0.0f;
+					if(distance > m_nextSpell->maxrange)
+						close_to_enemy = m_nextSpell->maxrange - DISTANCE_TO_SMALL_TO_WALK ;
+					else if(distance < m_nextSpell->minrange)
+						close_to_enemy = m_nextSpell->minrange + DISTANCE_TO_SMALL_TO_WALK ;
 
-					SetWalk();
-					if(m_fleeTimer == 0)
-						m_fleeTimer = m_FleeDuration;
+					if(close_to_enemy < 0)
+						close_to_enemy = 0;
 
+					_CalcDestinationAndMove(getNextTarget(), close_to_enemy);  //if we make exact movement we will never position perfectly
 					/*Destination* dst = _CalcDestination(GetNextTarget(), dist);
 					MoveTo(dst->x, dst->y, dst->z,0);
 					delete dst;*/
-					_CalcDestinationAndMove(getNextTarget(), 5.0f);
-					if(!m_hasFleed)
-						CALL_SCRIPT_EVENT(m_Unit, OnFlee)(getNextTarget());
-
-					m_AIState = STATE_FLEEING;
-					//removed by Zack : somehow creature starts to attack self. Just making sure it is not this one
-//				m_nextTarget = m_Unit;
-//				m_Unit->SetUInt64Value(UNIT_FIELD_TARGET, 0);
-					resetNextTarget();
-
-					WorldPacket data(SMSG_MESSAGECHAT, 100);
-					string msg = "%s attempts to run away in fear!";
-					data << (uint8)CHAT_MSG_CHANNEL;
-					data << (uint32)LANG_UNIVERSAL;
-					data << (uint32)(strlen(TO<Creature*>(m_Unit)->GetCreatureInfo()->Name) + 1);
-					data << TO<Creature*>(m_Unit)->GetCreatureInfo()->Name;
-					data << (uint64)0;
-					data << (uint32)(msg.size() + 1);
-					data << msg;
-					data << uint8(0);
-
-					m_Unit->SendMessageToSet(&data, false);
-
-					//m_Unit->SendChatMessage(CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, msg);
-					//sChatHandler.FillMessageData(&data, CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, msg, m_Unit->GetGUID());
-
-					m_hasFleed = true;
 				}
-				break;
+			}break;
+			case AGENT_FLEE:
+			{
+				//float dist = 5.0f;
+
+				SetWalk();
+				if(m_fleeTimer == 0)
+					m_fleeTimer = m_FleeDuration;
+
+				/*Destination* dst = _CalcDestination(GetNextTarget(), dist);
+				MoveTo(dst->x, dst->y, dst->z,0);
+				delete dst;*/
+				_CalcDestinationAndMove(getNextTarget(), 5.0f);
+				if(!m_hasFleed)
+					CALL_SCRIPT_EVENT(m_Unit, OnFlee)(getNextTarget());
+
+				m_AIState = STATE_FLEEING;
+				//removed by Zack : somehow creature starts to attack self. Just making sure it is not this one
+				//m_nextTarget = m_Unit;
+				//m_Unit->SetUInt64Value(UNIT_FIELD_TARGET, 0);
+				resetNextTarget();
+
+				WorldPacket data(SMSG_MESSAGECHAT, 100);
+				string msg = "%s attempts to run away in fear!";
+				data << (uint8)CHAT_MSG_CHANNEL;
+				data << (uint32)LANG_UNIVERSAL;
+				data << (uint32)(strlen(TO<Creature*>(m_Unit)->GetCreatureInfo()->Name) + 1);
+				data << TO<Creature*>(m_Unit)->GetCreatureInfo()->Name;
+				data << (uint64)0;
+				data << (uint32)(msg.size() + 1);
+				data << msg;
+				data << uint8(0);
+
+				m_Unit->SendMessageToSet(&data, false);
+
+				//m_Unit->SendChatMessage(CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, msg);
+				//sChatHandler.FillMessageData(&data, CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, msg, m_Unit->GetGUID());
+
+				m_hasFleed = true;
+			}break;
 			case AGENT_CALLFORHELP:
-				{
-					FindFriends(64.0f /*8.0f*/);
-					m_hasCalledForHelp = true; // We only want to call for Help once in a Fight.
-					if(m_Unit->IsCreature())
-						TO<Creature*>(m_Unit)->HandleMonsterSayEvent(MONSTER_SAY_EVENT_CALL_HELP);
+			{
+				FindFriends(64.0f /*8.0f*/);
+				m_hasCalledForHelp = true; // We only want to call for Help once in a Fight.
+				if(m_Unit->IsCreature())
+					TO<Creature*>(m_Unit)->HandleMonsterSayEvent(MONSTER_SAY_EVENT_CALL_HELP);
 
-					CALL_SCRIPT_EVENT(m_Unit, OnCallForHelp)();
-				}
-				break;
+				CALL_SCRIPT_EVENT(m_Unit, OnCallForHelp)();
+			}break;
 		}
 	}
 	else if(!getNextTarget() || getNextTarget()->GetInstanceID() != m_Unit->GetInstanceID() || !getNextTarget()->isAlive() || !cansee)
@@ -919,10 +905,10 @@ void AIInterface::DismissPet()
 		return;
 
 	if(m_Unit->GetCreatedBySpell() == 0)
-		TO< Player* >( m_PetOwner )->SetFreePetNo(false, (int)m_Unit->GetUInt32Value(UNIT_FIELD_PETNUMBER));
+		TO<Player*>(m_PetOwner)->SetFreePetNo(false, (int)m_Unit->GetUInt32Value(UNIT_FIELD_PETNUMBER));
 
-	TO< Player* >( m_PetOwner )->SetPet(NULL);
-	TO< Player* >( m_PetOwner )->SetPetName("");
+	TO<Player*>(m_PetOwner)->SetPet(NULL);
+	TO<Player*>(m_PetOwner)->SetPetName("");
 
 	//FIXME:Check hunter pet or not
 	//FIXME:Check enslaved creature
@@ -931,7 +917,7 @@ void AIInterface::DismissPet()
 	WorldPacket data;
 	data.Initialize(SMSG_PET_SPELLS);
 	data << (uint64)0;
-	TO< Player* >( m_PetOwner )->GetSession()->SendPacket(&data);
+	TO<Player*>(m_PetOwner)->GetSession()->SendPacket(&data);
 
 	sEventMgr.RemoveEvents(((Creature*)m_Unit));
 	if(m_Unit->IsInWorld())
@@ -943,7 +929,7 @@ void AIInterface::DismissPet()
 
 void AIInterface::AttackReaction(Unit* pUnit, uint32 damage_dealt, uint32 spellId)
 {
-	if(m_AIState == STATE_EVADE || !pUnit || !pUnit->isAlive() || m_Unit->IsDead() || ( m_Unit == pUnit ) || ( m_AIType == AITYPE_PASSIVE ) || disable_combat )
+	if(m_AIState == STATE_EVADE || !pUnit || !pUnit->isAlive() || m_Unit->IsDead() || (m_Unit == pUnit) || (m_AIType == AITYPE_PASSIVE) || disable_combat)
 		return;
 
 	if(sWorld.Collision && pUnit->IsPlayer())
@@ -958,9 +944,9 @@ void AIInterface::AttackReaction(Unit* pUnit, uint32 damage_dealt, uint32 spellI
 				{
 					if(!pUnit->IsPlayer() && target_land_z > m_Unit->GetMapMgr()->GetLiquidHeight(pUnit->GetPositionX(), pUnit->GetPositionY()))
 						return;
-					else if(TO< Player* >(pUnit)->GetSession() != NULL)
+					else if(TO<Player*>(pUnit)->GetSession() != NULL)
 					{
-						MovementInfo* mi = TO< Player* >(pUnit)->GetSession()->GetMovementInfo();
+						MovementInfo* mi = TO<Player*>(pUnit)->GetSession()->GetMovementInfo();
 
 						if(mi != NULL && !(mi->flags & MOVEFLAG_FALLING) && !(mi->flags & MOVEFLAG_SWIMMING) && !(mi->flags & MOVEFLAG_LEVITATE))
 							return;
@@ -970,9 +956,9 @@ void AIInterface::AttackReaction(Unit* pUnit, uint32 damage_dealt, uint32 spellI
 		}
 	}
 
-	if(pUnit->IsPlayer() && TO< Player* >(pUnit)->GetMisdirectionTarget() != 0)
+	if(pUnit->IsPlayer() && TO<Player*>(pUnit)->GetMisdirectionTarget() != 0)
 	{
-		Unit* mTarget = m_Unit->GetMapMgr()->GetUnit(TO< Player* >(pUnit)->GetMisdirectionTarget());
+		Unit* mTarget = m_Unit->GetMapMgr()->GetUnit(TO<Player*>(pUnit)->GetMisdirectionTarget());
 		if(mTarget != NULL && mTarget->isAlive())
 			pUnit = mTarget;
 	}
@@ -1034,7 +1020,7 @@ void AIInterface::HealReaction(Unit* caster, Unit* victim, SpellEntry* sp, uint3
 		// both are players so they might be in the same group
 		if(caster->IsPlayer() && victim->IsPlayer())
 		{
-			if(TO< Player* >(caster)->GetGroup() == TO< Player* >(victim)->GetGroup())
+			if(TO<Player*>(caster)->GetGroup() == TO<Player*>(victim)->GetGroup())
 			{
 				// get victim into combat since they are both
 				// in the same party
@@ -1101,16 +1087,15 @@ Unit* AIInterface::FindTarget()
 	Unit* critterTarget = NULL;
 	float distance = 999999.0f; // that should do it.. :p
 	std::set<Object*>::iterator itr, itr2;
-	std::set< Object* >::iterator pitr, pitr2;
+	std::set<Object*>::iterator pitr, pitr2;
 	Unit* pUnit;
 	float dist;
 
 	// Don't remove this please! - dfighter
-	/*
-	if( m_AIType == AITYPE_PET ){
+	/*if(m_AIType == AITYPE_PET)
+	{
 	    printf("I'm a pet and I'm looking for targets, RAWR!\n");
-	}
-	*/
+	}*/
 
 	//target is immune to all form of attacks, cant attack either.
 	// not attackable creatures sometimes fight enemies in scripted fights though
@@ -1121,9 +1106,9 @@ Unit* AIInterface::FindTarget()
 	if(m_isNeutralGuard)
 	{
 		Player* tmpPlr;
-		for(std::set< Object*>::iterator itrPlr = m_Unit->GetInRangePlayerSetBegin(); itrPlr != m_Unit->GetInRangePlayerSetEnd(); ++itrPlr)
+		for(std::set<Object*>::iterator itrPlr = m_Unit->GetInRangePlayerSetBegin(); itrPlr != m_Unit->GetInRangePlayerSetEnd(); ++itrPlr)
 		{
-			tmpPlr = TO< Player* >(*itrPlr);
+			tmpPlr = TO<Player*>(*itrPlr);
 
 			if(tmpPlr == NULL)
 				continue;
@@ -1183,7 +1168,7 @@ Unit* AIInterface::FindTarget()
 		pitr = pitr2;
 		++pitr2;
 
-		pUnit = TO< Player* >(*pitr);
+		pUnit = TO<Player*>(*pitr);
 
 		if(UnsafeCanOwnerAttackUnit(pUnit) == false)
 			continue;
@@ -1263,17 +1248,15 @@ Unit* AIInterface::FindTarget()
 	}
 
 	if(!target)
-	{
 		target = critterTarget;
-	}
 
 	if(target)
 	{
-		/*		if(m_isGuard)
-				{
-					m_Unit->m_runSpeed = m_Unit->m_base_runSpeed * 2.0f;
-					m_fastMove = true;
-				}*/
+		/*if(m_isGuard)
+		{
+			m_Unit->m_runSpeed = m_Unit->m_base_runSpeed * 2.0f;
+			m_fastMove = true;
+		}*/
 
 		AttackReaction(target, 1, 0);
 
@@ -1294,9 +1277,10 @@ Unit* AIInterface::FindTarget()
 
 Unit* AIInterface::FindTargetForSpell(AI_Spell* sp)
 {
-	/*if(!m_Unit) return NULL;*/
+	/*if(!m_Unit)
+		return NULL;
 
-	/*if(!sp)
+	if(!sp)
 	{
 		m_Unit->SetUInt64Value(UNIT_FIELD_TARGET, 0);
 		return NULL;
@@ -1336,7 +1320,6 @@ Unit* AIInterface::FindTargetForSpell(AI_Spell* sp)
 
 bool AIInterface::FindFriends(float dist)
 {
-
 	if(m_Unit->GetMapMgr() == NULL)
 		return false;
 
@@ -1410,7 +1393,8 @@ bool AIInterface::FindFriends(float dist)
 		else
 			zoneSpawn = ZoneGuardStorage.LookupEntry(at->AreaId);
 
-		if(!zoneSpawn) return result;
+		if(!zoneSpawn)
+			return result;
 
 		uint32 team = 1; // horde default
 		if(isAlliance(m_Unit))
@@ -1434,18 +1418,16 @@ bool AIInterface::FindFriends(float dist)
 		if(fabs(z - m_Unit->GetPositionZ()) > 10.0f)
 			z = m_Unit->GetPositionZ();
 
-
 		CreatureProto* cp = CreatureProtoStorage.LookupEntry(guardid);
 		if(!cp)
 			return result;
 
 		uint8 spawned = 0;
 
-		std::set< Object* >::iterator hostileItr = m_Unit->GetInRangePlayerSetBegin();
+		std::set<Object*>::iterator hostileItr = m_Unit->GetInRangePlayerSetBegin();
 		for(; hostileItr != m_Unit->GetInRangePlayerSetEnd(); hostileItr++)
 		{
-
-			Player* p = TO< Player* >(*hostileItr);
+			Player* p = TO<Player*>(*hostileItr);
 
 			if(spawned >= 3)
 				break;
@@ -1536,19 +1518,19 @@ float AIInterface::_CalcAggroRange(Unit* target)
 	if(AggroRange > 40.0f)
 		AggroRange = 40.0f;
 
-	/*  //printf("aggro range: %f , stealthlvl: %d , detectlvl: %d\n",AggroRange,target->GetStealthLevel(),m_Unit->m_stealthDetectBonus);
-		if(! ((Creature*)m_Unit)->CanSee(target))
-		{
-			AggroRange = 0;
-		//	AggroRange *= ( 100.0f - (target->m_stealthLevel - m_Unit->m_stealthDetectBonus)* 20.0f ) / 100.0f;
-		}
+	/*//printf("aggro range: %f , stealthlvl: %d , detectlvl: %d\n",AggroRange,target->GetStealthLevel(),m_Unit->m_stealthDetectBonus);
+	if(! ((Creature*)m_Unit)->CanSee(target))
+	{
+		AggroRange = 0;
+		//AggroRange *= (100.0f - (target->m_stealthLevel - m_Unit->m_stealthDetectBonus)* 20.0f) / 100.0f;
+	}
 	*/
 
 	// SPELL_AURA_MOD_DETECT_RANGE
 	int32 modDetectRange = target->getDetectRangeMod(m_Unit->GetGUID());
 	AggroRange += modDetectRange;
 	if(target->IsPlayer())
-		AggroRange += TO< Player* >(target)->DetectedRange;
+		AggroRange += TO<Player*>(target)->DetectedRange;
 
 	// Re-check if aggro range exceeds Minimum/Maximum caps
 	if(AggroRange < 3.0f)
@@ -1622,17 +1604,18 @@ float AIInterface::_CalcCombatRange(Unit* target, bool ranged)
 
 	float selfreach = m_Unit->GetCombatReach();
 	float targetradius;
-//	targetradius = target->GetBoundingRadius(); //this is plain wrong. Represents i have no idea what :)
+	//targetradius = target->GetBoundingRadius(); //this is plain wrong. Represents i have no idea what :)
 	targetradius = target->GetModelHalfSize();
 	float selfradius;
-//	selfradius = m_Unit->GetBoundingRadius(); //this is plain wrong. Represents i have no idea what :)
+	//selfradius = m_Unit->GetBoundingRadius(); //this is plain wrong. Represents i have no idea what :)
 	selfradius = m_Unit->GetModelHalfSize();
-//	float targetscale = target->GetScale();
-//	float selfscale = m_Unit->GetScale();
+	//float targetscale = target->GetScale();
+	//float selfscale = m_Unit->GetScale();
 
-//	range = ((((targetradius*targetradius)*targetscale) + selfreach) + ((selfradius*selfscale) + rang));
+	//range = ((((targetradius*targetradius)*targetscale) + selfreach) + ((selfradius*selfscale) + rang));
 	range = targetradius + selfreach + selfradius + rang;
-//	if(range > 28.29f) range = 28.29f;
+	/*if(range > 28.29f)
+		range = 28.29f;*/
 	return range;
 }
 
@@ -1754,7 +1737,7 @@ void AIInterface::SendMoveToPacket()
 
 bool AIInterface::StopMovement(uint32 time)
 {
-	if( m_Unit->GetCurrentVehicle() != NULL )
+	if(m_Unit->GetCurrentVehicle() != NULL)
 		return true;
 
 	m_splinePriority = SPLINE_PRIORITY_MOVEMENT;
@@ -2090,10 +2073,14 @@ bool AIInterface::hideWayPoints(Player* pPlayer)
 
 bool AIInterface::saveWayPoints()
 {
-	if(!m_waypoints)return false;
+	if(!m_waypoints)
+		return false;
 
-	if(!GetUnit()) return false;
-	if(!GetUnit()->IsCreature()) return false;
+	if(!GetUnit())
+		return false;
+
+	if(!GetUnit()->IsCreature())
+		return false;
 
 	WorldDatabase.Execute("DELETE FROM creature_waypoints WHERE spawnid = %u", TO_CREATURE(GetUnit())->GetSQL_id());
 	WayPointMap::const_iterator itr;
@@ -2152,8 +2139,8 @@ WayPoint* AIInterface::getWayPoint(uint32 wpid)
 	if(wpid >= m_waypoints->size())
 		return NULL; //not valid id
 
-	/*WayPointMap::const_iterator itr = m_waypoints->find( wpid );
-	if( itr != m_waypoints->end( ) )
+	/*WayPointMap::const_iterator itr = m_waypoints->find(wpid);
+	if(itr != m_waypoints->end())
 		return itr->second;*/
 	return m_waypoints->at(wpid);
 }
@@ -2263,8 +2250,7 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 				{
 					// register linkup event
 					c->haslinkupevent = true;
-					sEventMgr.AddEvent(c, &Creature::FormationLinkUp, m_formationLinkSqlId,
-					                   EVENT_CREATURE_FORMATION_LINKUP, 1000, 0, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
+					sEventMgr.AddEvent(c, &Creature::FormationLinkUp, m_formationLinkSqlId, EVENT_CREATURE_FORMATION_LINKUP, 1000, 0, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 				}
 			}
 			else
@@ -2290,15 +2276,14 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 						float wanderDistance = rand()%4 + 2;
 						float wanderX = ((wanderDistance*rand()) / RAND_MAX) - wanderDistance / 2;
 						float wanderY = ((wanderDistance*rand()) / RAND_MAX) - wanderDistance / 2;
-						float wanderZ = 0; // FIX ME ( I don't know how to get appropriate Z coord, maybe use client height map data)
+						float wanderZ = 0; // FIX ME (I don't know how to get appropriate Z coord, maybe use client height map data)
 
-						if(m_Unit->CalcDistance(m_Unit->GetPositionX(), m_Unit->GetPositionY(), m_Unit->GetPositionZ(), ((Creature*)m_Unit)->respawn_cord[0], ((Creature*)m_Unit)->respawn_cord[1], ((Creature*)m_Unit)->respawn_cord[2])>15)
+						if(m_Unit->CalcDistance(m_Unit->GetPositionX(), m_Unit->GetPositionY(), m_Unit->GetPositionZ(), ((Creature*)m_Unit)->respawn_cord[0], ((Creature*)m_Unit)->respawn_cord[1], ((Creature*)m_Unit)->respawn_cord[2]) >15)
 							MoveTo(((Creature*)m_Unit)->respawn_cord[0],((Creature*)m_Unit)->respawn_cord[1],((Creature*)m_Unit)->respawn_cord[2],false); //return home
 						else
 							MoveTo(m_Unit->GetPositionX() + wanderX, m_Unit->GetPositionY() + wanderY, m_Unit->GetPositionZ() + wanderZ,false);
 					}
-				}
-				*/
+				}*/
 				return;
 			}
 			else //we do have waypoints
@@ -2312,7 +2297,8 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 				{
 					// 1 -> 10 then 1 -> 10
 					m_currentWaypoint++;
-					if(m_currentWaypoint > GetWayPointsCount()) m_currentWaypoint = 1;  //Happens when you delete last wp seems to continue ticking
+					if(m_currentWaypoint > GetWayPointsCount())
+						m_currentWaypoint = 1;  //Happens when you delete last wp seems to continue ticking
 					destpoint = m_currentWaypoint;
 					m_moveBackward = false;
 				}
@@ -2413,8 +2399,7 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 			float dist = m_Unit->CalcDistance(unitToFear);
 			if(dist > 30.0f || (Rand(25) && dist > 10.0f))	// not too far or too close
 			{
-				if(m_Unit->GetMapId() == 572 || m_Unit->GetMapId() == 562 || m_Unit->GetMapId() == 559 ||
-				   m_Unit->GetMapId() == 617 || m_Unit->GetMapId() == 618 )   //GET MAP ID
+				if(m_Unit->GetMapId() == 572 || m_Unit->GetMapId() == 562 || m_Unit->GetMapId() == 559 || m_Unit->GetMapId() == 617 || m_Unit->GetMapId() == 618) //GET MAP ID
 				{
 					Fx = m_Unit->GetPositionX();
 					Fy = m_Unit->GetPositionY();
@@ -2441,8 +2426,7 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 					Fz = m_Unit->GetMapMgr()->GetADTLandHeight(Fx, Fy);
 				else
 				{
-					if(CollideInterface.GetFirstPoint(m_Unit->GetMapId(), m_Unit->GetPositionX(), m_Unit->GetPositionY(), m_Unit->GetPositionZ() + 2.0f,
-					                                  Fx, Fy, Fz + 2.0f, Fx, Fy, Fz, -1.0f))
+					if(CollideInterface.GetFirstPoint(m_Unit->GetMapId(), m_Unit->GetPositionX(), m_Unit->GetPositionY(), m_Unit->GetPositionZ() + 2.0f, Fx, Fy, Fz + 2.0f, Fx, Fy, Fz, -1.0f))
 					{
 						//Fz = CollideInterface.GetHeight(m_Unit->GetMapId(), Fx, Fy, m_Unit->GetPositionZ() + 2.0f);
 					}
@@ -2504,8 +2488,7 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 				float dist = m_Unit->GetDistanceSq(unitToFollow);
 
 				// re-calculate orientation based on target's movement
-				if(m_lastFollowX != unitToFollow->GetPositionX() ||
-				        m_lastFollowY != unitToFollow->GetPositionY())
+				if(m_lastFollowX != unitToFollow->GetPositionX() || m_lastFollowY != unitToFollow->GetPositionY())
 				{
 					float dx = unitToFollow->GetPositionX() - m_Unit->GetPositionX();
 					float dy = unitToFollow->GetPositionY() - m_Unit->GetPositionY();
@@ -2538,9 +2521,7 @@ void AIInterface::_UpdateMovement(uint32 p_time)
 						if(m_formationLinkTarget != 0)
 							d = m_formationFollowDistance;
 
-						MoveTo(delta_x + (d * (cosf(m_fallowAngle + unitToFollow->GetOrientation()))),
-						       delta_y + (d * (sinf(m_fallowAngle + unitToFollow->GetOrientation()))),
-						       unitToFollow->GetPositionZ(), unitToFollow->GetOrientation());
+						MoveTo(delta_x + (d * (cosf(m_fallowAngle + unitToFollow->GetOrientation()))), delta_y + (d * (sinf(m_fallowAngle + unitToFollow->GetOrientation()))), unitToFollow->GetPositionZ(), unitToFollow->GetOrientation());
 					}
 					else
 						_CalcDestinationAndMove(unitToFollow, FollowDistance);
@@ -2595,9 +2576,9 @@ SpellCastTargets AIInterface::setSpellTargets(SpellEntry* spellInfo, Unit* targe
 	else if(m_nextSpell->spelltargetType == TTYPE_SOURCE)
 	{
 		targets.m_targetMask = TARGET_FLAG_SOURCE_LOCATION;
-//		targets.m_srcX = m_Unit->GetPositionX();
-//		targets.m_srcY = m_Unit->GetPositionY();
-//		targets.m_srcZ = m_Unit->GetPositionZ();
+		//targets.m_srcX = m_Unit->GetPositionX();
+		//targets.m_srcY = m_Unit->GetPositionY();
+		//targets.m_srcZ = m_Unit->GetPositionZ();
 	}
 	else if(m_nextSpell->spelltargetType == TTYPE_DESTINATION)
 	{
@@ -2632,14 +2613,14 @@ AI_Spell* AIInterface::getSpell()
 	waiting_for_cooldown = false;
 
 	// look at our spells
-	AI_Spell*   sp = NULL;
-	AI_Spell*   def_spell = NULL;
+	AI_Spell* sp = NULL;
+	AI_Spell* def_spell = NULL;
 	uint32 cool_time = 0;
 	uint32 cool_time2;
 	uint32 nowtime = getMSTime();
 
 	if(m_Unit->IsPet())
-		sp = def_spell = TO< Pet* >(m_Unit)->HandleAutoCastEvent();
+		sp = def_spell = TO<Pet*>(m_Unit)->HandleAutoCastEvent();
 	else
 	{
 		for(list<AI_Spell*>::iterator itr = m_spells.begin(); itr != m_spells.end();)
@@ -2700,7 +2681,7 @@ AI_Spell* AIInterface::getSpell()
 					}
 					else //we failed casting it due to given chance, we activate false cooldown on it to not spam searching this list
 					{
-//						sp->cooldowntime = nowtime + sp->cooldown / ( sp->procChance + 1 );
+//						sp->cooldowntime = nowtime + sp->cooldown / (sp->procChance + 1);
 						cool_time2 = 2000;
 						sp->cooldowntime = nowtime + cool_time2;
 						if(!cool_time || cool_time2 < cool_time)
@@ -2797,7 +2778,7 @@ Unit* AIInterface::GetMostHated()
 	if(ResultUnit != NULL)
 		return ResultUnit;
 
-	pair<Unit*, int32> currentTarget;
+	pair< Unit*, int32 > currentTarget;
 	currentTarget.first = 0;
 	currentTarget.second = -1;
 
@@ -3048,7 +3029,7 @@ bool AIInterface::taunt(Unit* caster, bool apply)
 			int32 oldthreat = getThreatByPtr(caster);
 			//make sure we rush the target anyway. Since we are not taunted yet, this will also set our target
 			modThreatByPtr(caster, abs(m_currentHighestThreat - oldthreat) + 1); //we need to be the most hated at this moment
-//			SetNextTarget(caster);
+			//SetNextTarget(caster);
 		}
 		isTaunted = true;
 		tauntedBy = caster;
@@ -3128,9 +3109,7 @@ void AIInterface::CheckTarget(Unit* target)
 	}
 
 	if(target->GetGUID() == getUnitToFollowBackupGUID())
-	{
 		m_UnitToFollow_backup = 0;
-	}
 
 	AssistTargetSet::iterator  itr = m_assistTargets.find(target);
 	if(itr != m_assistTargets.end())
@@ -3405,13 +3384,7 @@ void AIInterface::_UpdateTotem(uint32 p_time)
 	{
 		Spell* pSpell = sSpellFactoryMgr.NewSpell(m_Unit, totemspell, true, 0);
 		Unit* nextTarget = getNextTarget();
-		if(nextTarget == NULL ||
-		        (!m_Unit->GetMapMgr()->GetUnit(nextTarget->GetGUID()) ||
-		         !nextTarget->isAlive() ||
-		         !IsInrange(m_Unit, nextTarget, pSpell->GetProto()->base_range_or_radius_sqr) ||
-		         !isAttackable(m_Unit, nextTarget, !(pSpell->GetProto()->c_is_flags & SPELL_FLAG_IS_TARGETINGSTEALTHED))
-		        )
-		  )
+		if(nextTarget == NULL || (!m_Unit->GetMapMgr()->GetUnit(nextTarget->GetGUID()) || !nextTarget->isAlive() || !IsInrange(m_Unit, nextTarget, pSpell->GetProto()->base_range_or_radius_sqr) || !isAttackable(m_Unit, nextTarget, !(pSpell->GetProto()->c_is_flags & SPELL_FLAG_IS_TARGETINGSTEALTHED))))
 		{
 			//we set no target and see if we managed to fid a new one
 			resetNextTarget();
@@ -3842,9 +3815,7 @@ void AIInterface::EventEnterCombat(Unit* pUnit, uint32 misc1)
 
 	// set the target first
 	if(pUnit->GetInstanceID() == m_Unit->GetInstanceID())
-	{
 		m_Unit->SetTargetGUID(pUnit->GetGUID());
-	}
 	/* send the message */
 	if(m_Unit->IsCreature())
 	{
@@ -3872,7 +3843,6 @@ void AIInterface::EventEnterCombat(Unit* pUnit, uint32 misc1)
 		m_combatResetZ = pUnit->GetPositionZ();
 	}
 
-
 	// dismount if mounted
 	if(m_Unit->IsCreature() && !(TO_CREATURE(m_Unit)->GetCreatureInfo()->Flags1 & CREATURE_FLAG1_FIGHT_MOUNTED))
 		m_Unit->SetMount(0);
@@ -3889,10 +3859,10 @@ void AIInterface::EventEnterCombat(Unit* pUnit, uint32 misc1)
 				m_Unit->GetMapMgr()->AddCombatInProgress(m_Unit->GetGUID());
 		}
 	}
-	if(pUnit->IsPlayer() && TO< Player* >(pUnit)->InGroup())
+	if(pUnit->IsPlayer() && TO<Player*>(pUnit)->InGroup())
 	{
 		m_Unit->GetAIInterface()->modThreatByPtr(pUnit, 1);
-		Group* pGroup = TO< Player* >(pUnit)->GetGroup();
+		Group* pGroup = TO<Player*>(pUnit)->GetGroup();
 
 		Player* pGroupGuy;
 		GroupMembersSet::iterator itr;
@@ -3903,9 +3873,7 @@ void AIInterface::EventEnterCombat(Unit* pUnit, uint32 misc1)
 			{
 				pGroupGuy = (*itr)->m_loggedInPlayer;
 				if(pGroupGuy && pGroupGuy->isAlive() && m_Unit->GetMapMgr() == pGroupGuy->GetMapMgr() && pGroupGuy->GetDistanceSq(pUnit) <= 40 * 40) //50 yards for now. lets see if it works
-				{
 					m_Unit->GetAIInterface()->AttackReaction(pGroupGuy, 1, 0);
-				}
 			}
 		}
 		pGroup->Unlock();
@@ -3939,12 +3907,12 @@ void AIInterface::EventLeaveCombat(Unit* pUnit, uint32 misc1)
 			case INSTANCE_BATTLEGROUND:
 				if(m_outOfCombatRange && _CalcDistanceFromHome() < m_outOfCombatRange)
 					target = FindTarget();
-				break;
+			break;
 			case INSTANCE_RAID:
 			case INSTANCE_NONRAID:
 			case INSTANCE_MULTIMODE:
 				target = FindTarget();
-				break;
+			break;
 		}
 
 		if(target != NULL)
@@ -3998,11 +3966,9 @@ void AIInterface::EventLeaveCombat(Unit* pUnit, uint32 misc1)
 		m_lastFollowX = m_lastFollowY = 0;
 		if(m_Unit->IsPet())
 		{
-			TO< Pet* >(m_Unit)->SetPetAction(PET_ACTION_FOLLOW);
+			TO<Pet*>(m_Unit)->SetPetAction(PET_ACTION_FOLLOW);
 			if(m_Unit->isAlive() && m_Unit->IsInWorld())
-			{
-				TO< Pet* >(m_Unit)->HandleAutoCastEvent(AUTOCAST_EVENT_LEAVE_COMBAT);
-			}
+				TO<Pet*>(m_Unit)->HandleAutoCastEvent(AUTOCAST_EVENT_LEAVE_COMBAT);
 		}
 		HandleEvent(EVENT_FOLLOWOWNER, 0, 0);
 	}
@@ -4046,7 +4012,7 @@ void AIInterface::EventLeaveCombat(Unit* pUnit, uint32 misc1)
 		if(creature->m_spawn)
 			m_Unit->SetMount(creature->m_spawn->MountedDisplayID);
 
-		//m_Unit->SetMount(TO<Creature*>(m_Unit)->GetSpawnO->MountedDisplayID );
+		//m_Unit->SetMount(TO<Creature*>(m_Unit)->GetSpawnO->MountedDisplayID);
 	}
 	//Zack : not sure we need to send this. Did not see it in the dumps since mob died eventually but it seems logical to make this
 	m_Unit->smsg_AttackStop(pUnit);
@@ -4079,7 +4045,7 @@ void AIInterface::EventFollowOwner(Unit* pUnit, uint32 misc1)
 
 	m_AIState = STATE_FOLLOWING;
 	if(m_Unit->IsPet())
-		TO< Pet* >(m_Unit)->SetPetAction(PET_ACTION_FOLLOW);
+		TO<Pet*>(m_Unit)->SetPetAction(PET_ACTION_FOLLOW);
 
 	SetUnitToFollow(m_PetOwner);
 	m_lastFollowX = m_lastFollowY = 0;
@@ -4239,9 +4205,7 @@ void AIInterface::EventUnitDied(Unit* pUnit, uint32 misc1)
 	if(m_Unit->GetMapMgr())
 		pInstance = m_Unit->GetMapMgr()->pInstance;
 
-	if(m_Unit->GetMapMgr() && m_Unit->IsCreature() && !m_Unit->IsPet() && pInstance && (pInstance->m_mapInfo->type == INSTANCE_RAID
-	            || pInstance->m_mapInfo->type == INSTANCE_NONRAID
-	            || pInstance->m_mapInfo->type == INSTANCE_MULTIMODE))
+	if(m_Unit->GetMapMgr() && m_Unit->IsCreature() && !m_Unit->IsPet() && pInstance && (pInstance->m_mapInfo->type == INSTANCE_RAID || pInstance->m_mapInfo->type == INSTANCE_NONRAID || pInstance->m_mapInfo->type == INSTANCE_MULTIMODE))
 	{
 		InstanceBossInfoMap* bossInfoMap = objmgr.m_InstanceBossInfoMap[m_Unit->GetMapMgr()->GetMapId()];
 		Creature* pCreature = TO<Creature*>(m_Unit);
@@ -4289,10 +4253,9 @@ void AIInterface::EventUnitDied(Unit* pUnit, uint32 misc1)
 		}
 	}
 
-
 	//remove negative auras
-	//if( m_Unit->IsCreature() )
-	//	m_Unit->RemoveNegativeAuras();
+	//if(m_Unit->IsCreature())
+		//m_Unit->RemoveNegativeAuras();
 }
 
 void AIInterface::EventHostileAction(Unit* pUnit, uint32 misc1)

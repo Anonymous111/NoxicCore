@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -26,11 +26,11 @@
 #ifndef __MAPMGR_H
 #define __MAPMGR_H
 
-extern Arcpro::Utility::TLSObject<MapMgr*> t_currentMapContext;
+extern Arcpro::Utility::TLSObject< MapMgr* > t_currentMapContext;
 
-#define IS_PERSISTENT_INSTANCE(p) ( ((p)->m_mapInfo->type == INSTANCE_MULTIMODE && (p)->m_difficulty >= MODE_HEROIC) || (p)->m_mapInfo->type == INSTANCE_RAID )
-#define IS_RESETABLE_INSTANCE(p) ( !(p)->m_persistent && ((p)->m_mapInfo->type == INSTANCE_NONRAID || ((p)->m_mapInfo->type == INSTANCE_MULTIMODE && (p)->m_difficulty == MODE_NORMAL)) )
-#define CHECK_INSTANCE_GROUP(p,g) ( (p)->m_creatorGroup == 0 || ((g) && (p)->m_creatorGroup == (g)->GetID()) )
+#define IS_PERSISTENT_INSTANCE(p) (((p)->m_mapInfo->type == INSTANCE_MULTIMODE && (p)->m_difficulty >= MODE_HEROIC) || (p)->m_mapInfo->type == INSTANCE_RAID)
+#define IS_RESETABLE_INSTANCE(p) (!(p)->m_persistent && ((p)->m_mapInfo->type == INSTANCE_NONRAID || ((p)->m_mapInfo->type == INSTANCE_MULTIMODE && (p)->m_difficulty == MODE_NORMAL)))
+#define CHECK_INSTANCE_GROUP(p,g) ((p)->m_creatorGroup == 0 || ((g) && (p)->m_creatorGroup == (g)->GetID()))
 
 #define GO_GUID_RECYCLE_INTERVAL	2048	//client will cache GO positions. Using same guid for same client will make GO appear at wrong possition so we try to avoid assigning same guid
 
@@ -77,21 +77,21 @@ typedef std::set<Object*> ObjectSet;
 typedef std::set<Object*> UpdateQueue;
 typedef std::set<Player*> PUpdateQueue;
 typedef std::set<Player*> PlayerSet;
-typedef HM_NAMESPACE::hash_map<uint32, Object*> StorageMap;
-typedef set<uint64> CombatProgressMap;
+typedef HM_NAMESPACE::hash_map< uint32, Object* > StorageMap;
+typedef set< uint64 > CombatProgressMap;
 typedef set<Creature*> CreatureSet;
 typedef set<GameObject*> GameObjectSet;
-typedef HM_NAMESPACE::hash_map<uint32, Creature*> CreatureSqlIdMap;
-typedef HM_NAMESPACE::hash_map<uint32, GameObject*> GameObjectSqlIdMap;
+typedef HM_NAMESPACE::hash_map< uint32, Creature* > CreatureSqlIdMap;
+typedef HM_NAMESPACE::hash_map< uint32, GameObject* > GameObjectSqlIdMap;
 
 #define MAX_TRANSPORTERS_PER_MAP 25
 
 class Transporter;
 #define RESERVE_EXPAND_SIZE 1024
 
-#define CALL_INSTANCE_SCRIPT_EVENT( Mgr, Func ) if ( Mgr != NULL && Mgr->GetScript() != NULL ) Mgr->GetScript()->Func
+#define CALL_INSTANCE_SCRIPT_EVENT(Mgr, Func) if(Mgr != NULL && Mgr->GetScript() != NULL) Mgr->GetScript()->Func
 
-class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject, public CThread, public WorldStatesHandler::WorldStatesObserver
+class SERVER_DECL MapMgr : public CellHandler < MapCell >, public EventableObject, public CThread, public WorldStatesHandler::WorldStatesObserver
 {
 		friend class MapCell;
 		friend class MapScriptInterface;
@@ -111,7 +111,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 // Local (mapmgr) storage/generation of GameObjects
 /////////////////////////////////////////////
 		uint32 m_GOHighGuid;
-		std::vector< GameObject* > GOStorage;
+		std::vector<GameObject*> GOStorage;
 		GameObject* CreateGameObject(uint32 entry);
 		GameObject* CreateAndSpawnGameObject(uint32 entryID, float x, float y, float z, float o, float scale);
 
@@ -127,7 +127,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 // Local (mapmgr) storage/generation of Creatures
 /////////////////////////////////////////////
 		uint32 m_CreatureHighGuid;
-		std::vector< Creature* > CreatureStorage;
+		std::vector<Creature*> CreatureStorage;
 		CreatureSet::iterator creature_iterator;//required by owners despawning creatures and deleting *(++itr)
 		uint64 GenerateCreatureGUID(uint32 entry);
 		Creature* CreateCreature(uint32 entry);
@@ -141,11 +141,11 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 
 
 		////////////////////////////////////////////////////////////////////////////////////
-		//Summon* CreateSummon( uint32 entry, SummonType type )
+		//Summon* CreateSummon(uint32 entry, SummonType type)
 		//  Summon factory function, creates and returns the appropriate summon subclass.
 		//
 		//Parameter(s)
-		//  uint32 entry     -  entry of the summon ( NPC id )
+		//  uint32 entry     -  entry of the summon (NPC id)
 		//  SummonType type  -  Type of the summon
 		//
 		//Return Value
@@ -159,7 +159,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 // Local (mapmgr) storage/generation of DynamicObjects
 ////////////////////////////////////////////
 		uint32 m_DynamicObjectHighGuid;
-		typedef HM_NAMESPACE::hash_map<uint32, DynamicObject*> DynamicObjectStorageMap;
+		typedef HM_NAMESPACE::hash_map< uint32, DynamicObject* > DynamicObjectStorageMap;
 		DynamicObjectStorageMap m_DynamicObjectStorage;
 		DynamicObject* CreateDynamicObject();
 
@@ -172,7 +172,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 //////////////////////////////////////////////////////////
 // Local (mapmgr) storage of pets
 ///////////////////////////////////////////
-		typedef HM_NAMESPACE::hash_map<uint32, Pet*> PetStorageMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Pet* > PetStorageMap;
 		PetStorageMap m_PetStorage;
 		PetStorageMap::iterator pet_iterator;
 		Pet* GetPet(uint32 guid)
@@ -186,7 +186,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 ////////////////////////////////
 
 		// double typedef lolz// a compile breaker..
-		typedef HM_NAMESPACE::hash_map<uint32, Player*> PlayerStorageMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Player* > PlayerStorageMap;
 		PlayerStorageMap m_PlayerStorage;
 		Player* GetPlayer(uint32 guid)
 		{
@@ -274,8 +274,8 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 		void EventRespawnGameObject(GameObject* o, uint16 x, uint16 y);
 		void SendChatMessageToCellPlayers(Object* obj, WorldPacket* packet, uint32 cell_radius, uint32 langpos, int32 lang, WorldSession* originator);
 		void SendPvPCaptureMessage(int32 ZoneMask, uint32 ZoneId, const char* Message, ...);
-		void SendPacketToAllPlayers( WorldPacket *packet ) const;
-		void SendPacketToPlayersInZone( uint32 zone, WorldPacket *packet ) const;
+		void SendPacketToAllPlayers(WorldPacket *packet) const;
+		void SendPacketToPlayersInZone(uint32 zone, WorldPacket *packet) const;
 
 		Instance* pInstance;
 		void BeginInstanceExpireCountdown();
@@ -345,7 +345,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 		CreatureSet activeCreatures;
 		EventableObjectHolder eventHolder;
 		CBattleground* m_battleground;
-		set<Corpse*> m_corpses;
+		set< Corpse* > m_corpses;
 		CreatureSqlIdMap _sqlids_creatures;
 		GameObjectSqlIdMap _sqlids_gameobjects;
 
@@ -365,7 +365,7 @@ class SERVER_DECL MapMgr : public CellHandler <MapCell>, public EventableObject,
 
 		WorldStatesHandler& GetWorldStatesHandler(){ return worldstateshandler; }
 
-		void onWorldStateUpdate( uint32 zone, uint32 field, uint32 value );
+		void onWorldStateUpdate(uint32 zone, uint32 field, uint32 value);
 
 	protected:
 		InstanceScript* mInstanceScript;

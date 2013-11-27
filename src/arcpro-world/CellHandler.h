@@ -11,17 +11,13 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-//
-// CellHandler.h
-//
 
 #ifndef __CELLHANDLER_H
 #define __CELLHANDLER_H
@@ -43,33 +39,32 @@
 
 class Map;
 
-template < class Class >
+template <class Class>
 class CellHandler
 {
-	public:
-		CellHandler(Map* map);
-		~CellHandler();
+public:
+	CellHandler(Map* map);
+	~CellHandler();
 
-		Class* GetCell(uint32 x, uint32 y);
-		Class* GetCellByCoords(float x, float y);
-		Class* Create(uint32 x, uint32 y);
-		Class* CreateByCoords(float x, float y);
-		void Remove(uint32 x, uint32 y);
+	Class* GetCell(uint32 x, uint32 y);
+	Class* GetCellByCoords(float x, float y);
+	Class* Create(uint32 x, uint32 y);
+	Class* CreateByCoords(float x, float y);
+	void Remove(uint32 x, uint32 y);
 
-		bool Allocated(uint32 x, uint32 y) { return _cells[x][y] != NULL; }
+	bool Allocated(uint32 x, uint32 y) { return _cells[x][y] != NULL; }
 
-		static uint32 GetPosX(float x);
-		static uint32 GetPosY(float y);
+	static uint32 GetPosX(float x);
+	static uint32 GetPosY(float y);
 
-		Map* GetBaseMap() { return _map; }
+	Map* GetBaseMap() { return _map; }
 
-	protected:
-		void _Init();
+protected:
+	void _Init();
 
+	Class*** _cells;
 
-		Class*** _cells;
-
-		Map* _map;
+	Map* _map;
 };
 
 template <class Class>
@@ -81,19 +76,14 @@ CellHandler<Class>::CellHandler(Map* map)
 	_Init();
 }
 
-
-
 template <class Class>
 void CellHandler<Class>::_Init()
 {
-
 	_cells = new Class** [_sizeX];
 
 	ARCPRO_ASSERT(_cells != NULL);
 	for(uint32 i = 0; i < _sizeX; i++)
-	{
 		_cells[i] = NULL;
-	}
 }
 
 template <class Class>
@@ -122,6 +112,7 @@ Class* CellHandler<Class>::Create(uint32 x, uint32 y)
 {
 	if(x >= _sizeX ||  y >= _sizeY)
 		return NULL;
+
 	if(!_cells[x])
 	{
 		_cells[x] = new Class*[_sizeY];
@@ -147,7 +138,10 @@ void CellHandler<Class>::Remove(uint32 x, uint32 y)
 {
 	if(x >= _sizeX ||  y >= _sizeY)
 		return;
-	if(!_cells[x]) return;
+
+	if(!_cells[x])
+		return;
+
 	ARCPRO_ASSERT(_cells[x][y] != NULL);
 
 	Class* cls = _cells[x][y];
@@ -159,7 +153,9 @@ void CellHandler<Class>::Remove(uint32 x, uint32 y)
 template <class Class>
 Class* CellHandler<Class>::GetCell(uint32 x, uint32 y)
 {
-	if(x >= _sizeX || y >= _sizeY || !_cells[x]) return NULL;
+	if(x >= _sizeX || y >= _sizeY || !_cells[x])
+		return NULL;
+
 	return _cells[x][y];
 }
 

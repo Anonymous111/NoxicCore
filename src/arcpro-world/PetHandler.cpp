@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,17 +49,17 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 			switch(misc)
 			{
 				case PET_ACTION_ATTACK:
+				{
+					if(!sEventMgr.HasEvent(_player, EVENT_PLAYER_CHARM_ATTACK))
 					{
-						if(!sEventMgr.HasEvent(_player, EVENT_PLAYER_CHARM_ATTACK))
-						{
-							uint32 timer = pCharm->GetBaseAttackTime(MELEE);
-							if(!timer) timer = 2000;
+						uint32 timer = pCharm->GetBaseAttackTime(MELEE);
+						if(!timer)
+							timer = 2000;
 
-							sEventMgr.AddEvent(_player, &Player::_EventCharmAttack, EVENT_PLAYER_CHARM_ATTACK, timer, 0, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-							_player->_EventCharmAttack();
-						}
+						sEventMgr.AddEvent(_player, &Player::_EventCharmAttack, EVENT_PLAYER_CHARM_ATTACK, timer, 0, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
+						_player->_EventCharmAttack();
 					}
-					break;
+				}break;
 			}
 		}
 		return;
@@ -92,132 +92,121 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 		switch(action)
 		{
 			case PET_ACTION_ACTION:
+			{
+				pPet->SetPetAction(misc);	   // set current action
+				switch(misc)
 				{
-					pPet->SetPetAction(misc);	   // set current action
-					switch(misc)
-					{
-						case PET_ACTION_ATTACK:
+					case PET_ACTION_ATTACK:
+						{
+							// make sure the target is attackable
+							if(pTarget == pPet || !isAttackable(pPet, pTarget))
 							{
-								// make sure the target is attackable
-								if(pTarget == pPet || !isAttackable(pPet, pTarget))
-								{
-									pPet->SendActionFeedback(PET_FEEDBACK_CANT_ATTACK_TARGET);
-									return;
-								}
-
-								// Clear the threat
-								pPet->GetAIInterface()->WipeTargetList();
-								pPet->GetAIInterface()->WipeHateList();
-
-								// Attack target with melee if the owner if we don't have spells - other wise cast. All done by AIInterface.
-								if(pPet->GetAIInterface()->getUnitToFollow() == NULL)
-									pPet->GetAIInterface()->SetUnitToFollow(_player);
-
-								// EVENT_PET_ATTACK
-								pPet->GetAIInterface()->SetAIState(STATE_ATTACKING);
-								pPet->GetAIInterface()->AttackReaction(pTarget, 1, 0);
+								pPet->SendActionFeedback(PET_FEEDBACK_CANT_ATTACK_TARGET);
+								return;
 							}
-							break;
-						case PET_ACTION_FOLLOW:
-							{
-								// Clear the threat
-								pPet->GetAIInterface()->WipeTargetList();
-								pPet->GetAIInterface()->WipeHateList();
 
-								// Follow the owner... run to him...
+							// Clear the threat
+							pPet->GetAIInterface()->WipeTargetList();
+							pPet->GetAIInterface()->WipeHateList();
+
+							// Attack target with melee if the owner if we don't have spells - other wise cast. All done by AIInterface.
+							if(pPet->GetAIInterface()->getUnitToFollow() == NULL)
 								pPet->GetAIInterface()->SetUnitToFollow(_player);
-								pPet->GetAIInterface()->HandleEvent(EVENT_FOLLOWOWNER, pPet, 0);
-							}
-							break;
+
+							// EVENT_PET_ATTACK
+							pPet->GetAIInterface()->SetAIState(STATE_ATTACKING);
+							pPet->GetAIInterface()->AttackReaction(pTarget, 1, 0);
+						}break;
+						case PET_ACTION_FOLLOW:
+						{
+							// Clear the threat
+							pPet->GetAIInterface()->WipeTargetList();
+							pPet->GetAIInterface()->WipeHateList();
+
+							// Follow the owner... run to him...
+							pPet->GetAIInterface()->SetUnitToFollow(_player);
+							pPet->GetAIInterface()->HandleEvent(EVENT_FOLLOWOWNER, pPet, 0);
+						}break;
 						case PET_ACTION_STAY:
-							{
-								// Clear the threat
-								pPet->GetAIInterface()->WipeTargetList();
-								pPet->GetAIInterface()->WipeHateList();
+						{
+							// Clear the threat
+							pPet->GetAIInterface()->WipeTargetList();
+							pPet->GetAIInterface()->WipeHateList();
 
-								// Stop following the owner, and sit.
-								pPet->GetAIInterface()->ResetUnitToFollow();
-							}
-							break;
+							// Stop following the owner, and sit.
+							pPet->GetAIInterface()->ResetUnitToFollow();
+						}break;
 						case PET_ACTION_DISMISS:
-							{
-								// Bye byte...
-								pPet->Dismiss();
-							}
-							break;
-					}
+						{
+							// Bye byte...
+							pPet->Dismiss();
+						}break;
 				}
-				break;
-
+			}break;
 			case PET_ACTION_SPELL_2:
 			case PET_ACTION_SPELL_1:
 			case PET_ACTION_SPELL:
-				{
-					// misc == spellid
-					SpellEntry* entry = dbcSpell.LookupEntryForced(misc);
-					if(entry == NULL)
-						return;
+			{
+				// misc == spellid
+				SpellEntry* entry = dbcSpell.LookupEntryForced(misc);
+				if(entry == NULL)
+					return;
 
-					AI_Spell* sp = pPet->GetAISpellForSpellId(entry->Id);
-					if(sp != NULL)
+				AI_Spell* sp = pPet->GetAISpellForSpellId(entry->Id);
+				if(sp != NULL)
+				{
+					// Check the cooldown
+					if(sp->cooldowntime && getMSTime() < sp->cooldowntime)
 					{
-						// Check the cooldown
-						if(sp->cooldowntime && getMSTime() < sp->cooldowntime)
+						pPet->SendCastFailed(misc, SPELL_FAILED_NOT_READY);
+						return;
+					}
+					else
+					{
+						if(sp->spellType != STYPE_BUFF)
 						{
-							pPet->SendCastFailed(misc, SPELL_FAILED_NOT_READY);
-							return;
+							// make sure the target is attackable
+							if(pTarget == pPet || !isAttackable(pPet, pTarget))
+							{
+								pPet->SendActionFeedback(PET_FEEDBACK_CANT_ATTACK_TARGET);
+								return;
+							}
+						}
+
+						if(sp->autocast_type != AUTOCAST_EVENT_ATTACK)
+						{
+							if(sp->autocast_type == AUTOCAST_EVENT_OWNER_ATTACKED)
+								pPet->CastSpell(_player, sp->spell, false);
+							else
+								pPet->CastSpell(pPet, sp->spell, false);
 						}
 						else
 						{
-							if(sp->spellType != STYPE_BUFF)
-							{
-								// make sure the target is attackable
-								if(pTarget == pPet || !isAttackable(pPet, pTarget))
-								{
-									pPet->SendActionFeedback(PET_FEEDBACK_CANT_ATTACK_TARGET);
-									return;
-								}
-							}
+							// Clear the threat
+							pPet->GetAIInterface()->WipeTargetList();
+							pPet->GetAIInterface()->WipeHateList();
 
-							if(sp->autocast_type != AUTOCAST_EVENT_ATTACK)
-							{
-								if(sp->autocast_type == AUTOCAST_EVENT_OWNER_ATTACKED)
-									pPet->CastSpell(_player, sp->spell, false);
-								else
-									pPet->CastSpell(pPet, sp->spell, false);
-							}
-							else
-							{
-								// Clear the threat
-								pPet->GetAIInterface()->WipeTargetList();
-								pPet->GetAIInterface()->WipeHateList();
-
-								pPet->GetAIInterface()->AttackReaction(pTarget, 1, 0);
-								pPet->GetAIInterface()->SetNextSpell(sp);
-							}
+							pPet->GetAIInterface()->AttackReaction(pTarget, 1, 0);
+							pPet->GetAIInterface()->SetNextSpell(sp);
 						}
 					}
 				}
-				break;
+			}break;
 			case PET_ACTION_STATE:
+			{
+				if(misc == PET_STATE_PASSIVE)
 				{
-					if(misc == PET_STATE_PASSIVE)
-					{
-						// stop attacking and run to owner
-						pPet->GetAIInterface()->WipeTargetList();
-						pPet->GetAIInterface()->WipeHateList();
-						pPet->GetAIInterface()->SetUnitToFollow(_player);
-						pPet->GetAIInterface()->HandleEvent(EVENT_FOLLOWOWNER, pPet, 0);
-					}
-					pPet->SetPetState(misc);
-
+					// stop attacking and run to owner
+					pPet->GetAIInterface()->WipeTargetList();
+					pPet->GetAIInterface()->WipeHateList();
+					pPet->GetAIInterface()->SetUnitToFollow(_player);
+					pPet->GetAIInterface()->HandleEvent(EVENT_FOLLOWOWNER, pPet, 0);
 				}
-				break;
+				pPet->SetPetState(misc);
+			}break;
 			default:
-				{
-					LOG_DEBUG("WARNING: Unknown pet action received. Action = %.4X, Misc = %.4X", action, misc);
-				}
-				break;
+				LOG_DEBUG("WARNING: Unknown pet action received. Action = %.4X, Misc = %.4X", action, misc);
+			break;
 		}
 
 		/* Send pet action sound - WHEE THEY TALK */
@@ -387,7 +376,6 @@ void WorldSession::HandleBuyStableSlot(WorldPacket & recv_data)
 	_player->m_StableSlotCount++;
 }
 
-
 void WorldSession::HandlePetSetActionOpcode(WorldPacket & recv_data)
 {
 	CHECK_INWORLD_RETURN
@@ -469,7 +457,8 @@ void WorldSession::HandlePetAbandon(WorldPacket & recv_data)
 	CHECK_INWORLD_RETURN
 
 	Pet* pet = _player->GetSummon();
-	if(!pet) return;
+	if(!pet)
+		return;
 
 	pet->Dismiss();
 }
@@ -617,4 +606,3 @@ void WorldSession::HandlePetLearnTalent(WorldPacket & recvPacket)
 	// send talent update
 	pPet->SendTalentsToOwner();
 }
-

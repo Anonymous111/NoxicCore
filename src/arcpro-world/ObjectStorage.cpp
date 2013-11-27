@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,55 +23,55 @@
 
 /** Table formats converted to strings
  */
-const char * gItemPrototypeFormat						= "uuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffuffuuuuuuuuuufuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
-const char * gItemNameFormat							= "usu";
-const char * gCreatureNameFormat						= "usssuuuuuuuuuuffcuuuuuuu";
-const char * gGameObjectNameFormat						= "uuussssuuuuuuuuuuuuuuuuuuuuuuuufuuuuuu";
-const char * gCreatureProtoFormat						= "uuuuuuufuuuffuuffuuuuuuuuffsuuufffuuuuuuuuuuuuuuuuu";
-const char * gDisplayBoundingFormat						= "ufffffff";
-const char * gVendorRestrictionEntryFormat				= "uuuuuuuu";
-const char * gAreaTriggerFormat							= "ucuusffffuu";
-const char * gItemPageFormat							= "usu";
-const char * gNpcTextFormat								= "ufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuu";
-const char * gQuestFormat								= "uuuuuuuuuuuuuuuuuuussssssssssuuuuuuuuuuuuiiiiuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuiiiiiiuiuuuuuuuuuuuuuuusuuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
-//const char * gSpellExtraFormat							= "uuuu";
-const char* gGraveyardFormat							= "uffffuuuux";
-const char* gTeleportCoordFormat						= "uxufffx";
-const char* gPvPAreaFormat								= "ush";
-const char* gFishingFormat								= "uuu";
-const char* gWorldMapInfoFormat						= "uuuuuufffusuuuuuuuufu";
-const char* gZoneGuardsFormat							= "uuu";
-const char* gUnitModelSizeFormat						= "ufu";
-const char* gWorldStringTableFormat					= "us";  // p2wow added [for worldserver common message storage]
-const char* gWorldBroadCastFormat						= "usu"; // announce message
-const char* gBattleMasterFormat						= "uu";
-const char* gSpellClickSpellsFormat					= "uu";
-const char* gTotemDisplayIDsFormat                     = "uuuu";
+const char* gItemPrototypeFormat			= "uuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffuffuuuuuuuuuufuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
+const char* gItemNameFormat					= "usu";
+const char* gCreatureNameFormat				= "usssuuuuuuuuuuffcuuuuuuu";
+const char* gGameObjectNameFormat			= "uuussssuuuuuuuuuuuuuuuuuuuuuuuufuuuuuu";
+const char* gCreatureProtoFormat			= "uuuuuuufuuuffuuffuuuuuuuuffsuuufffuuuuuuuuuuuuuuuuu";
+const char* gDisplayBoundingFormat			= "ufffffff";
+const char* gVendorRestrictionEntryFormat	= "uuuuuuuu";
+const char* gAreaTriggerFormat				= "ucuusffffuu";
+const char* gItemPageFormat					= "usu";
+const char* gNpcTextFormat					= "ufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuufssuuuuuuu";
+const char* gQuestFormat					= "uuuuuuuuuuuuuuuuuuussssssssssuuuuuuuuuuuuiiiiuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuiiiiiiuiuuuuuuuuuuuuuuusuuuusuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
+//const char* gSpellExtraFormat				= "uuuu";
+const char* gGraveyardFormat				= "uffffuuuux";
+const char* gTeleportCoordFormat			= "uxufffx";
+const char* gPvPAreaFormat					= "ush";
+const char* gFishingFormat					= "uuu";
+const char* gWorldMapInfoFormat				= "uuuuuufffusuuuuuuuufu";
+const char* gZoneGuardsFormat				= "uuu";
+const char* gUnitModelSizeFormat			= "ufu";
+const char* gWorldStringTableFormat			= "us";  // p2wow added [for worldserver common message storage]
+const char* gWorldBroadCastFormat			= "usu"; // announce message
+const char* gBattleMasterFormat				= "uu";
+const char* gSpellClickSpellsFormat			= "uu";
+const char* gTotemDisplayIDsFormat 			= "uuuu";
 
 /** SQLStorage symbols
  */
-SERVER_DECL SQLStorage<ItemPrototype, ArrayStorageContainer<ItemPrototype> >				ItemPrototypeStorage;
-SERVER_DECL SQLStorage<ItemName, ArrayStorageContainer<ItemName> >							ItemNameStorage;
-SERVER_DECL SQLStorage<CreatureInfo, HashMapStorageContainer<CreatureInfo> >				CreatureNameStorage;
-SERVER_DECL SQLStorage<GameObjectInfo, HashMapStorageContainer<GameObjectInfo> >			GameObjectNameStorage;
-SERVER_DECL SQLStorage<CreatureProto, HashMapStorageContainer<CreatureProto> >				CreatureProtoStorage;
-SERVER_DECL SQLStorage<DisplayBounding, HashMapStorageContainer<DisplayBounding> >				DisplayBoundingStorage;
-SERVER_DECL SQLStorage<VendorRestrictionEntry, ArrayStorageContainer<VendorRestrictionEntry> > VendorRestrictionEntryStorage;
-SERVER_DECL SQLStorage<AreaTrigger, HashMapStorageContainer<AreaTrigger> >					AreaTriggerStorage;
-SERVER_DECL SQLStorage<ItemPage, HashMapStorageContainer<ItemPage> >						ItemPageStorage;
-SERVER_DECL SQLStorage<Quest, HashMapStorageContainer<Quest> >								QuestStorage;
-SERVER_DECL SQLStorage<GossipText, HashMapStorageContainer<GossipText> >					NpcTextStorage;
-SERVER_DECL SQLStorage<GraveyardTeleport, HashMapStorageContainer<GraveyardTeleport> >		GraveyardStorage;
-SERVER_DECL SQLStorage<TeleportCoords, HashMapStorageContainer<TeleportCoords> >			TeleportCoordStorage;
-SERVER_DECL SQLStorage<FishingZoneEntry, HashMapStorageContainer<FishingZoneEntry> >		FishingZoneStorage;
-SERVER_DECL SQLStorage<MapInfo, ArrayStorageContainer<MapInfo> >							WorldMapInfoStorage;
-SERVER_DECL SQLStorage<ZoneGuardEntry, HashMapStorageContainer<ZoneGuardEntry> >			ZoneGuardStorage;
-SERVER_DECL SQLStorage<UnitModelSizeEntry, HashMapStorageContainer<UnitModelSizeEntry> >	UnitModelSizeStorage;
-SERVER_DECL SQLStorage<WorldStringTable, HashMapStorageContainer<WorldStringTable> >		WorldStringTableStorage;
-SERVER_DECL SQLStorage<WorldBroadCast, HashMapStorageContainer<WorldBroadCast> >			WorldBroadCastStorage;
-SERVER_DECL SQLStorage<BGMaster, HashMapStorageContainer<BGMaster> >						BGMasterStorage;
-SERVER_DECL SQLStorage< SpellClickSpell, HashMapStorageContainer< SpellClickSpell > >		SpellClickSpellStorage;
-SERVER_DECL SQLStorage< TotemDisplayIdEntry, HashMapStorageContainer< TotemDisplayIdEntry > > TotemDisplayIdStorage;
+SERVER_DECL SQLStorage<ItemPrototype, ArrayStorageContainer<ItemPrototype>>						ItemPrototypeStorage;
+SERVER_DECL SQLStorage<ItemName, ArrayStorageContainer<ItemName>>								ItemNameStorage;
+SERVER_DECL SQLStorage<CreatureInfo, HashMapStorageContainer<CreatureInfo>>						CreatureNameStorage;
+SERVER_DECL SQLStorage<GameObjectInfo, HashMapStorageContainer<GameObjectInfo>>					GameObjectNameStorage;
+SERVER_DECL SQLStorage<CreatureProto, HashMapStorageContainer<CreatureProto>>					CreatureProtoStorage;
+SERVER_DECL SQLStorage<DisplayBounding, HashMapStorageContainer<DisplayBounding>>				DisplayBoundingStorage;
+SERVER_DECL SQLStorage<VendorRestrictionEntry, ArrayStorageContainer<VendorRestrictionEntry>>	VendorRestrictionEntryStorage;
+SERVER_DECL SQLStorage<AreaTrigger, HashMapStorageContainer<AreaTrigger>>						AreaTriggerStorage;
+SERVER_DECL SQLStorage<ItemPage, HashMapStorageContainer<ItemPage>>								ItemPageStorage;
+SERVER_DECL SQLStorage<Quest, HashMapStorageContainer<Quest>>									QuestStorage;
+SERVER_DECL SQLStorage<GossipText, HashMapStorageContainer<GossipText>>							NpcTextStorage;
+SERVER_DECL SQLStorage<GraveyardTeleport, HashMapStorageContainer<GraveyardTeleport>>			GraveyardStorage;
+SERVER_DECL SQLStorage<TeleportCoords, HashMapStorageContainer<TeleportCoords>>					TeleportCoordStorage;
+SERVER_DECL SQLStorage<FishingZoneEntry, HashMapStorageContainer<FishingZoneEntry>>				FishingZoneStorage;
+SERVER_DECL SQLStorage<MapInfo, ArrayStorageContainer<MapInfo>>									WorldMapInfoStorage;
+SERVER_DECL SQLStorage<ZoneGuardEntry, HashMapStorageContainer<ZoneGuardEntry>>					ZoneGuardStorage;
+SERVER_DECL SQLStorage<UnitModelSizeEntry, HashMapStorageContainer<UnitModelSizeEntry>>			UnitModelSizeStorage;
+SERVER_DECL SQLStorage<WorldStringTable, HashMapStorageContainer<WorldStringTable>>				WorldStringTableStorage;
+SERVER_DECL SQLStorage<WorldBroadCast, HashMapStorageContainer<WorldBroadCast>>					WorldBroadCastStorage;
+SERVER_DECL SQLStorage<BGMaster, HashMapStorageContainer<BGMaster>>								BGMasterStorage;
+SERVER_DECL SQLStorage<SpellClickSpell, HashMapStorageContainer<SpellClickSpell>>				SpellClickSpellStorage;
+SERVER_DECL SQLStorage<TotemDisplayIdEntry, HashMapStorageContainer<TotemDisplayIdEntry>>		TotemDisplayIdStorage;
 
 
 SERVER_DECL set<string> ExtraMapCreatureTables;
@@ -100,43 +100,44 @@ void ObjectMgr::LoadProfessionDiscoveries()
 void ObjectMgr::LoadExtraCreatureProtoStuff()
 {
 	{
-		StorageContainerIterator<CreatureProto> * itr = CreatureProtoStorage.MakeIterator();
+		StorageContainerIterator<CreatureProto>* itr = CreatureProtoStorage.MakeIterator();
 		CreatureProto* cn;
 		while(!itr->AtEnd())
 		{
 			cn = itr->Get();
 
 			// Process spell fields
-			for( uint32 i = 0; i < MAX_CREATURE_PROTO_SPELLS; i++ ){
-				if( cn->AISpells[ i ] == 0 )
+			for(uint32 i = 0; i < MAX_CREATURE_PROTO_SPELLS; i++)
+			{
+				if(cn->AISpells[i] == 0)
 					continue;
 
-				SpellEntry *sp = dbcSpell.LookupEntryForced( cn->AISpells[ i ] );
-				if( sp == NULL )
+				SpellEntry* sp = dbcSpell.LookupEntryForced(cn->AISpells[i]);
+				if(sp == NULL)
 					continue;
 
-				if( ( sp->Attributes & ATTRIBUTES_PASSIVE ) == 0 )
-					cn->castable_spells.push_back( sp->Id );
+				if((sp->Attributes & ATTRIBUTES_PASSIVE) == 0)
+					cn->castable_spells.push_back(sp->Id);
 				else
-					cn->start_auras.insert( sp->Id );
-
+					cn->start_auras.insert(sp->Id);
 			}
 
 			// process creature spells from creaturespelldata.dbc
-			if( cn->spelldataid != 0 ){
-				CreatureSpellDataEntry* spe = dbcCreatureSpellData.LookupEntry( cn->spelldataid );
-				for( uint32 i = 0; i < 3; i++ ){
-					if( spe->Spells[ i ] == 0 )
+			if(cn->spelldataid != 0)
+			{
+				CreatureSpellDataEntry* spe = dbcCreatureSpellData.LookupEntry(cn->spelldataid);
+				for(uint32 i = 0; i < 3; i++){
+					if(spe->Spells[i] == 0)
 						continue;
 
-					SpellEntry *sp = dbcSpell.LookupEntryForced( spe->Spells[ i ] );
-					if( sp == NULL )
+					SpellEntry* sp = dbcSpell.LookupEntryForced(spe->Spells[i]);
+					if(sp == NULL)
 						continue;
 
-					if( ( sp->Attributes & ATTRIBUTES_PASSIVE ) == 0 )
-						cn->castable_spells.push_back( sp->Id );
+					if((sp->Attributes & ATTRIBUTES_PASSIVE) == 0)
+						cn->castable_spells.push_back(sp->Id);
 					else
-						cn->start_auras.insert( sp->Id );
+						cn->start_auras.insert(sp->Id);
 				}
 			}
 
@@ -154,8 +155,10 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 
 			if(!cn->MinHealth)
 				cn->MinHealth = 1;
+
 			if(!cn->MaxHealth)
 				cn->MaxHealth = 1;
+
 			if(cn->AttackType > SCHOOL_ARCANE)
 				cn->AttackType = SCHOOL_NORMAL;
 
@@ -173,7 +176,7 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 	}
 
 	{
-		StorageContainerIterator<CreatureInfo> * itr = CreatureNameStorage.MakeIterator();
+		StorageContainerIterator<CreatureInfo>* itr = CreatureNameStorage.MakeIterator();
 		CreatureInfo* ci;
 		while(!itr->AtEnd())
 		{
@@ -181,7 +184,7 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 
 			ci->lowercase_name = string(ci->Name);
 			for(uint32 j = 0; j < ci->lowercase_name.length(); ++j)
-				ci->lowercase_name[j] = static_cast<char>(tolower(ci->lowercase_name[j]));   // Darvaleo 2008/08/15 - Copied lowercase conversion logic from ItemPrototype task
+				ci->lowercase_name[j] = static_cast<char>(tolower(ci->lowercase_name[j])); // Darvaleo 2008/08/15 - Copied lowercase conversion logic from ItemPrototype task
 
 			for(int i = 0; i < NUM_MONSTER_SAY_EVENTS; i++)
 				ci->MonsterSay[i] = objmgr.HasMonsterSay(ci->Id, MONSTER_SAY_EVENTS(i));
@@ -230,7 +233,8 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 				int32  targettype = fields[8].GetInt32();
 				if(targettype == -1)
 					sp->spelltargetType = static_cast<uint8>(GetAiTargetType(spe));
-				else sp->spelltargetType = static_cast<uint8>(targettype);
+				else
+					sp->spelltargetType = static_cast<uint8>(targettype);
 
 				sp->cooldown = fields[9].GetInt32();
 				sp->floatMisc1 = fields[10].GetFloat();
@@ -271,32 +275,33 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 						int RecoveryTime = sp->spell->RecoveryTime;
 						if(sp->spell->DurationIndex)
 							Dur =::GetDuration(sd);
+
 						Casttime = GetCastTime(dbcSpellCastTime.LookupEntry(sp->spell->CastingTimeIndex));
 						cooldown = Dur + Casttime + RecoveryTime;
 						if(cooldown < 0)
 							sp->cooldown = 2000; //huge value that should not loop while adding some timestamp to it
-						else sp->cooldown = cooldown;
+						else
+							sp->cooldown = cooldown;
 					}
 
-					/*
-					//now apply the moron filter
-					if(sp->procChance== 0)
+					/*//now apply the moron filter
+					if(sp->procChance == 0)
 					{
 						//printf("SpellId %u in ai_agent for %u is invalid.\n", (unsigned int)fields[5].GetUInt32(), (unsigned int)sp->entryId);
 						delete sp;
 						sp = NULL;
 						continue;
 					}
-					if(sp->spellType== 0)
+					if(sp->spellType == 0)
 					{
 						//right now only these 2 are used
 						if(IsBeneficSpell(sp->spell))
 							sp->spellType==STYPE_HEAL;
-						else sp->spellType==STYPE_BUFF;
+						else
+							sp->spellType==STYPE_BUFF;
 					}
-					if(sp->spelltargetType== 0)
-						sp->spelltargetType = RecommandAISpellTargetType(sp->spell);
-						*/
+					if(sp->spelltargetType == 0)
+						sp->spelltargetType = RecommandAISpellTargetType(sp->spell);*/
 				}
 
 				if(sp->agent == AGENT_RANGED)
@@ -326,13 +331,12 @@ void ObjectMgr::LoadExtraCreatureProtoStuff()
 					cn->m_canCallForHelp = true;
 					if(sp->floatMisc1)
 						cn->m_callForHelpHealth = 0.2f;
+
 					delete sp;
 					sp = NULL;
 				}
 				else
-				{
 					cn->spells.push_back(sp);
-				}
 			}
 			while(result->NextRow());
 
@@ -371,9 +375,7 @@ void ObjectMgr::LoadExtraItemStuff()
 				mItemSets.insert(ItemSetContentMap::value_type(pItemPrototype->ItemSet, l));
 			}
 			else
-			{
 				l = itr2->second;
-			}
 			l->push_back(pItemPrototype);
 		}
 
@@ -381,13 +383,14 @@ void ObjectMgr::LoadExtraItemStuff()
 		// lowercase name, used for searches
 		pItemPrototype->lowercase_name = pItemPrototype->Name1;
 		for(uint32 j = 0; j < pItemPrototype->lowercase_name.length(); ++j)
-			pItemPrototype->lowercase_name[j] = static_cast<char>(tolower(pItemPrototype->lowercase_name[j]));
+			pItemPrototype->lowercase_name[j] = static_cast< char >(tolower(pItemPrototype->lowercase_name[j]));
 
 		//load item_pet_food_type from extra table
 		uint32 ft = 0;
 		map<uint32, uint32>::iterator iter = foodItems.find(pItemPrototype->ItemId);
 		if(iter != foodItems.end())
 			ft = iter->second;
+
 		pItemPrototype->FoodType = ft ;
 
 		// forced pet entries
@@ -406,8 +409,7 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 23731: //Grimoire of Intercept (Rank 3)
 				// Felguard
 				pItemPrototype->ForcedPetId = 17252;
-				break;
-
+			break;
 			case 16321: //Grimoire of Blood Pact (Rank 1)
 			case 16322: //Grimoire of Blood Pact (Rank 2)
 			case 16323: //Grimoire of Blood Pact (Rank 3)
@@ -430,8 +432,7 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 16331: //Grimoire of Phase Shift
 				// Imp
 				pItemPrototype->ForcedPetId = 416;
-				break;
-
+			break;
 			case 16357: //Grimoire of Consume Shadows (Rank 1)
 			case 16358: //Grimoire of Consume Shadows (Rank 2)
 			case 16359: //Grimoire of Consume Shadows (Rank 3)
@@ -460,8 +461,7 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 22182: //Grimoire of Torment (Rank 7)
 				// Voidwalker
 				pItemPrototype->ForcedPetId = 1860;
-				break;
-
+			break;
 			case 16368: //Grimoire of Lash of Pain (Rank 2)
 			case 16371: //Grimoire of Lash of Pain (Rank 3)
 			case 16372: //Grimoire of Lash of Pain (Rank 4)
@@ -477,8 +477,7 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 22187: //Grimoire of Soothing Kiss (Rank 5)
 				// Succubus
 				pItemPrototype->ForcedPetId = 1863;
-				break;
-
+			break;
 			case 16381: //Grimoire of Devour Magic (Rank 2)
 			case 16382: //Grimoire of Devour Magic (Rank 3)
 			case 16383: //Grimoire of Devour Magic (Rank 4)
@@ -494,8 +493,7 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 22190: //Grimoire of Tainted Blood (Rank 5)
 				//Felhunter
 				pItemPrototype->ForcedPetId = 417;
-				break;
-
+			break;
 			case 21283:
 			case 3144:
 			case 21282:
@@ -504,11 +502,10 @@ void ObjectMgr::LoadExtraItemStuff()
 			case 22891:
 				// Player
 				pItemPrototype->ForcedPetId = 0;
-				break;
-
+			break;
 			default:
 				pItemPrototype->ForcedPetId = -1;
-				break;
+			break;
 		}
 
 		if(!itr->Inc())
@@ -533,9 +530,9 @@ void ObjectMgr::LoadExtraGameObjectStuff()
 	itr->Destruct();
 }
 
-#define make_task(storage, itype, storagetype, tablename, format) tl.AddTask( new Task( \
-	new CallbackP2< SQLStorage< itype, storagetype< itype > >, const char *, const char *> \
-    (&storage, &SQLStorage< itype, storagetype< itype > >::Load, tablename, format) ) )
+#define make_task(storage, itype, storagetype, tablename, format) tl.AddTask(new Task(\
+	new CallbackP2< SQLStorage< itype, storagetype< itype > >, const char *, const char * > \
+    (&storage, &SQLStorage< itype, storagetype< itype > >::Load, tablename, format)))
 
 void Storage_FillTaskList(TaskList & tl)
 {
@@ -578,6 +575,7 @@ void Storage_Cleanup()
 			}
 			for(list<AI_Spell*>::iterator it = p->spells.begin(); it != p->spells.end(); ++it)
 				delete(*it);
+
 			p->spells.clear();
 			p->start_auras.clear();
 			if(!itr->Inc())
@@ -608,7 +606,7 @@ void Storage_Cleanup()
 	TotemDisplayIdStorage.Cleanup();
 }
 
-vector<pair<string, string> > additionalTables;
+vector<pair<string, string>> additionalTables;
 
 bool LoadAdditionalTable(const char* TableName, const char* SecondName, bool firstLoad = false)
 {
@@ -622,33 +620,33 @@ bool LoadAdditionalTable(const char* TableName, const char* SecondName, bool fir
 		ExtraMapGameObjectTables.insert(string(SecondName));
 		return false;
 	}
-	else if(firstLoad && !stricmp(TableName, "items"))				// Items
+	else if(firstLoad && !stricmp(TableName, "items")) // Items
 		ItemPrototypeStorage.LoadAdditionalData(SecondName, gItemPrototypeFormat);
-	else if(firstLoad && !stricmp(TableName, "creature_proto"))		// Creature Proto
+	else if(firstLoad && !stricmp(TableName, "creature_proto")) // Creature Proto
 		CreatureProtoStorage.LoadAdditionalData(SecondName, gCreatureProtoFormat);
-	else if(firstLoad && !stricmp(TableName, "creature_names"))		// Creature Names
+	else if(firstLoad && !stricmp(TableName, "creature_names")) // Creature Names
 		CreatureNameStorage.LoadAdditionalData(SecondName, gCreatureNameFormat);
-	else if(firstLoad && !stricmp(TableName, "gameobject_names"))	// GO Names
+	else if(firstLoad && !stricmp(TableName, "gameobject_names")) // GO Names
 		GameObjectNameStorage.LoadAdditionalData(SecondName, gGameObjectNameFormat);
-	else if(!stricmp(TableName, "areatriggers"))		// Areatriggers
+	else if(!stricmp(TableName, "areatriggers")) // Areatriggers
 		AreaTriggerStorage.LoadAdditionalData(SecondName, gAreaTriggerFormat);
-	else if(!stricmp(TableName, "itempages"))			// Item Pages
+	else if(!stricmp(TableName, "itempages")) // Item Pages
 		ItemPrototypeStorage.LoadAdditionalData(SecondName, gItemPageFormat);
-	else if(!stricmp(TableName, "worldstring_tables"))			// WorldString
+	else if(!stricmp(TableName, "worldstring_tables")) // WorldString
 		WorldStringTableStorage.LoadAdditionalData(SecondName, gWorldStringTableFormat);
-	else if(!stricmp(TableName, "worldbroadcast"))			// Worldbroadcast
+	else if(!stricmp(TableName, "worldbroadcast")) // Worldbroadcast
 		WorldBroadCastStorage.LoadAdditionalData(SecondName, gWorldBroadCastFormat);
-	else if(firstLoad && !stricmp(TableName, "quests"))				// Quests
+	else if(firstLoad && !stricmp(TableName, "quests")) // Quests
 		QuestStorage.LoadAdditionalData(SecondName, gQuestFormat);
-	else if(!stricmp(TableName, "npc_text"))			// NPC Text Storage
+	else if(!stricmp(TableName, "npc_text")) // NPC Text Storage
 		NpcTextStorage.LoadAdditionalData(SecondName, gNpcTextFormat);
-	else if(!stricmp(TableName, "fishing"))				// Fishing Zones
+	else if(!stricmp(TableName, "fishing")) // Fishing Zones
 		FishingZoneStorage.LoadAdditionalData(SecondName, gFishingFormat);
-	else if(!stricmp(TableName, "teleport_coords"))		// Teleport coords
+	else if(!stricmp(TableName, "teleport_coords")) // Teleport coords
 		TeleportCoordStorage.LoadAdditionalData(SecondName, gTeleportCoordFormat);
-	else if(!stricmp(TableName, "graveyards"))			// Graveyards
+	else if(!stricmp(TableName, "graveyards")) // Graveyards
 		GraveyardStorage.LoadAdditionalData(SecondName, gGraveyardFormat);
-	else if(!stricmp(TableName, "worldmap_info"))		// WorldMapInfo
+	else if(!stricmp(TableName, "worldmap_info")) // WorldMapInfo
 		WorldMapInfoStorage.LoadAdditionalData(SecondName, gWorldMapInfoFormat);
 	else if(!stricmp(TableName, "zoneguards"))
 		ZoneGuardStorage.LoadAdditionalData(SecondName, gZoneGuardsFormat);
@@ -663,39 +661,39 @@ bool LoadAdditionalTable(const char* TableName, const char* SecondName, bool fir
 bool Storage_ReloadTable(const char* TableName)
 {
 	// bur: mah god this is ugly :P
-	/*if(!stricmp(TableName, "items"))					// Items
+	if(!stricmp(TableName, "items")) // Items
 		ItemPrototypeStorage.Reload();
-	else if(!stricmp(TableName, "creature_proto"))		// Creature Proto
+	else if(!stricmp(TableName, "creature_proto")) // Creature Proto
 		CreatureProtoStorage.Reload();
-	else if(!stricmp(TableName, "creature_names"))		// Creature Names
+	else if(!stricmp(TableName, "creature_names")) // Creature Names
 		CreatureNameStorage.Reload();
-	else if(!stricmp(TableName, "gameobject_names"))	// GO Names
-		GameObjectNameStorage.Reload();*/
-	if(!stricmp(TableName, "areatriggers"))		// Areatriggers
+	else if(!stricmp(TableName, "gameobject_names")) // GO Names
+		GameObjectNameStorage.Reload();//
+	/*if*/else if(!stricmp(TableName, "areatriggers")) // Areatriggers
 		AreaTriggerStorage.Reload();
-	else if(!stricmp(TableName, "itempages"))			// Item Pages
+	else if(!stricmp(TableName, "itempages")) // Item Pages
 		ItemPageStorage.Reload();
-	else if(!stricmp(TableName, "worldstring_tables"))			// wst
+	else if(!stricmp(TableName, "worldstring_tables")) // wst
 		WorldStringTableStorage.Reload();
-	else if(!stricmp(TableName, "worldbroadcast"))			// wb
+	else if(!stricmp(TableName, "worldbroadcast")) // wb
 		WorldBroadCastStorage.Reload();
-	/*else if(!stricmp(TableName, "quests"))				// Quests
-		QuestStorage.Reload();*/
-	else if(!stricmp(TableName, "npc_text"))			// NPC Text Storage
+	else if(!stricmp(TableName, "quests")) // Quests
+		QuestStorage.Reload();//
+	else if(!stricmp(TableName, "npc_text")) // NPC Text Storage
 		NpcTextStorage.Reload();
-	else if(!stricmp(TableName, "fishing"))				// Fishing Zones
+	else if(!stricmp(TableName, "fishing")) // Fishing Zones
 		FishingZoneStorage.Reload();
-	else if(!stricmp(TableName, "teleport_coords"))		// Teleport coords
+	else if(!stricmp(TableName, "teleport_coords")) // Teleport coords
 		TeleportCoordStorage.Reload();
-	else if(!stricmp(TableName, "graveyards"))			// Graveyards
+	else if(!stricmp(TableName, "graveyards")) // Graveyards
 		GraveyardStorage.Reload();
-	else if(!stricmp(TableName, "worldmap_info"))		// WorldMapInfo
+	else if(!stricmp(TableName, "worldmap_info")) // WorldMapInfo
 		WorldMapInfoStorage.Reload();
 	else if(!stricmp(TableName, "zoneguards"))
 		ZoneGuardStorage.Reload();
 	else if(!stricmp(TableName, "unit_display_sizes"))
 		UnitModelSizeStorage.Reload();
-	else if(!stricmp(TableName, "command_overrides"))	// Command Overrides
+	else if(!stricmp(TableName, "command_overrides")) // Command Overrides
 	{
 		CommandTableStorage::getSingleton().Dealloc();
 		CommandTableStorage::getSingleton().Init();
@@ -706,7 +704,7 @@ bool Storage_ReloadTable(const char* TableName)
 
 	uint32 len = (uint32)strlen(TableName);
 	uint32 len2;
-	for(vector<pair<string, string> >::iterator itr = additionalTables.begin(); itr != additionalTables.end(); ++itr)
+	for(vector<pair<string, string>>::iterator itr = additionalTables.begin(); itr != additionalTables.end(); ++itr)
 	{
 		len2 = (uint32)itr->second.length();
 		if(!strnicmp(TableName, itr->second.c_str(), min(len, len2)))
@@ -754,7 +752,6 @@ void ObjectMgr::StoreBroadCastGroupKey()
 		Log.Notice("ObjectMgr", "BCSystem Disabled.");
 		return;
 	}
-	// ----------------
 
 	vector<string> keyGroup;
 	QueryResult* result = WorldDatabase.Query("SELECT DISTINCT percent FROM `worldbroadcast` ORDER BY percent DESC");

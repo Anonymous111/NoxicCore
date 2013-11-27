@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,35 +49,25 @@ ObjectMgr::~ObjectMgr()
 
 	Log.Notice("ObjectMgr", "Deleting Itemsets...");
 	for(ItemSetContentMap::iterator i = mItemSets.begin(); i != mItemSets.end(); ++i)
-	{
 		delete i->second;
-	}
 	mItemSets.clear();
 
 	Log.Notice("ObjectMgr", "Deleting PlayerCreateInfo...");
 	for(PlayerCreateInfoMap::iterator i = mPlayerCreateInfo.begin(); i != mPlayerCreateInfo.end(); ++ i)
-	{
 		delete i->second;
-	}
 	mPlayerCreateInfo.clear();
 
 	Log.Notice("ObjectMgr", "Deleting Guilds...");
 	for(GuildMap::iterator i = mGuild.begin(); i != mGuild.end(); ++i)
-	{
 		delete i->second;
-	}
 
 	Log.Notice("ObjectMgr", "Deleting Vendors...");
 	for(VendorMap::iterator i = mVendors.begin(); i != mVendors.end(); ++ i)
-	{
 		delete i->second;
-	}
 
 	Log.Notice("ObjectMgr", "Deleting Spell Override...");
 	for(OverrideIdMap::iterator i = mOverrideIdMap.begin(); i != mOverrideIdMap.end(); ++i)
-	{
 		delete i->second;
-	}
 
 	Log.Notice("ObjectMgr", "Deleting Trainers...");
 	for(TrainerMap::iterator i = mTrainers.begin(); i != mTrainers.end(); ++ i)
@@ -93,15 +83,14 @@ ObjectMgr::~ObjectMgr()
 	{
 		LevelMap* l = i->second;
 		for(LevelMap::iterator i2 = l->begin(); i2 != l->end(); ++i2)
-		{
 			delete i2->second;
-		}
+
 		l->clear();
 		delete l;
 	}
 
 	Log.Notice("ObjectMgr", "Deleting Waypoint Cache...");
-	for(HM_NAMESPACE::hash_map<uint32, WayPointMap*>::iterator i = m_waypoints.begin(); i != m_waypoints.end(); ++i)
+	for(HM_NAMESPACE::hash_map< uint32, WayPointMap* >::iterator i = m_waypoints.begin(); i != m_waypoints.end(); ++i)
 	{
 		for(WayPointMap::iterator i2 = i->second->begin(); i2 != i->second->end(); ++i2)
 			if((*i2))
@@ -111,7 +100,7 @@ ObjectMgr::~ObjectMgr()
 	}
 
 	Log.Notice("ObjectMgr", "Deleting timed emote Cache...");
-	for(HM_NAMESPACE::hash_map<uint32, TimedEmoteList*>::iterator i = m_timedemotes.begin(); i != m_timedemotes.end(); ++i)
+	for(HM_NAMESPACE::hash_map< uint32, TimedEmoteList* >::iterator i = m_timedemotes.begin(); i != m_timedemotes.end(); ++i)
 	{
 		for(TimedEmoteList::iterator i2 = i->second->begin(); i2 != i->second->end(); ++i2)
 			if((*i2))
@@ -143,10 +132,8 @@ ObjectMgr::~ObjectMgr()
 	Log.Notice("ObjectMgr", "Deleting Charters...");
 	for(int i = 0; i < NUM_CHARTER_TYPES; ++i)
 	{
-		for(HM_NAMESPACE::hash_map<uint32, Charter*>::iterator itr =  m_charters[i].begin(); itr != m_charters[i].end(); ++itr)
-		{
+		for(HM_NAMESPACE::hash_map< uint32, Charter* >::iterator itr =  m_charters[i].begin(); itr != m_charters[i].end(); ++itr)
 			delete itr->second;
-		}
 	}
 
 	Log.Notice("ObjectMgr", "Deleting Reputation Tables...");
@@ -163,7 +150,7 @@ ObjectMgr::~ObjectMgr()
 		delete mod;
 	}
 
-	for(HM_NAMESPACE::hash_map<uint32, InstanceReputationModifier*>::iterator itr = this->m_reputation_instance.begin(); itr != this->m_reputation_instance.end(); ++itr)
+	for(HM_NAMESPACE::hash_map< uint32, InstanceReputationModifier* >::iterator itr = this->m_reputation_instance.begin(); itr != this->m_reputation_instance.end(); ++itr)
 	{
 		InstanceReputationModifier* mod = itr->second;
 		mod->mods.clear();
@@ -182,16 +169,14 @@ ObjectMgr::~ObjectMgr()
 			{
 				SubGroup* pSubGroup = pGroup->GetSubGroup(i);
 				if(pSubGroup != NULL)
-				{
 					pSubGroup->Disband();
-				}
 			}
 			delete pGroup;
 		}
 	}
 
 	Log.Notice("ObjectMgr", "Deleting Player Information...");
-	for(HM_NAMESPACE::hash_map<uint32, PlayerInfo*>::iterator itr = m_playersinfo.begin(); itr != m_playersinfo.end(); ++itr)
+	for(HM_NAMESPACE::hash_map< uint32, PlayerInfo* >::iterator itr = m_playersinfo.begin(); itr != m_playersinfo.end(); ++itr)
 	{
 		itr->second->m_Group = NULL;
 		free(itr->second->name);
@@ -215,13 +200,13 @@ ObjectMgr::~ObjectMgr()
 	}
 
 	Log.Notice("ObjectMgr", "Deleting Arena Teams...");
-	for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeams.begin(); itr != m_arenaTeams.end(); ++itr)
+	for(HM_NAMESPACE::hash_map< uint32, ArenaTeam* >::iterator itr = m_arenaTeams.begin(); itr != m_arenaTeams.end(); ++itr)
 	{
 		delete(*itr).second;
 	}
 
 	Log.Notice("ObjectMgr", "Deleting Profession Discoveries...");
-	std::set<ProfessionDiscovery*>::iterator itr = ProfessionDiscoveryTable.begin();
+	std::set< ProfessionDiscovery* >::iterator itr = ProfessionDiscoveryTable.begin();
 	for(; itr != ProfessionDiscoveryTable.end(); itr++)
 		delete(*itr);
 
@@ -235,10 +220,10 @@ ObjectMgr::~ObjectMgr()
 	m_spelltargetconstraints.clear();
 
 	Log.Notice("ObjectMgr", "Cleaning up vehicle accessories...");
-	for( std::map< uint32, std::vector< VehicleAccessoryEntry* >* >::iterator itr = vehicle_accessories.begin(); itr != vehicle_accessories.end(); ++itr ){
-		std::vector< VehicleAccessoryEntry* > *v = itr->second;
+	for(std::map<uint32, std::vector<VehicleAccessoryEntry*>*>::iterator itr = vehicle_accessories.begin(); itr != vehicle_accessories.end(); ++itr){
+		std::vector<VehicleAccessoryEntry*> *v = itr->second;
 
-		for( std::vector< VehicleAccessoryEntry* >::iterator itr2 = v->begin(); itr2 != v->end(); ++itr2 )
+		for(std::vector<VehicleAccessoryEntry*>::iterator itr2 = v->begin(); itr2 != v->end(); ++itr2)
 			delete *itr2;
 		v->clear();
 
@@ -247,9 +232,8 @@ ObjectMgr::~ObjectMgr()
 	
 	vehicle_accessories.clear();
 
-
-	Log.Notice( "ObjectMgr", "Cleaning up worldstate templates" );
-	for( std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr ){
+	Log.Notice("ObjectMgr", "Cleaning up worldstate templates");
+	for(std::map<uint32, std::multimap<uint32, WorldState>*>::iterator itr = worldstate_templates.begin(); itr != worldstate_templates.end(); ++itr){
 		itr->second->clear();
 		delete itr->second;
 	}
@@ -292,13 +276,10 @@ Group* ObjectMgr::GetGroupById(uint32 id)
 	return ret;
 }
 
-//
-// Player names
-//
 void ObjectMgr::DeletePlayerInfo(uint32 guid)
 {
 	PlayerInfo* pl;
-	HM_NAMESPACE::hash_map<uint32, PlayerInfo*>::iterator i;
+	HM_NAMESPACE::hash_map< uint32, PlayerInfo* >::iterator i;
 	PlayerNameStringIndexMap::iterator i2;
 	playernamelock.AcquireWriteLock();
 	i = m_playersinfo.find(guid);
@@ -310,9 +291,7 @@ void ObjectMgr::DeletePlayerInfo(uint32 guid)
 
 	pl = i->second;
 	if(pl->m_Group)
-	{
 		pl->m_Group->RemovePlayer(pl);
-	}
 
 	if(pl->guild)
 	{
@@ -337,7 +316,7 @@ void ObjectMgr::DeletePlayerInfo(uint32 guid)
 
 PlayerInfo* ObjectMgr::GetPlayerInfo(uint32 guid)
 {
-	HM_NAMESPACE::hash_map<uint32, PlayerInfo*>::iterator i;
+	HM_NAMESPACE::hash_map< uint32, PlayerInfo* >::iterator i;
 	PlayerInfo* rv;
 	playernamelock.AcquireReadLock();
 	i = m_playersinfo.find(guid);
@@ -386,9 +365,7 @@ void ObjectMgr::LoadSpellSkills()
 	{
 		skilllinespell* sp = dbcSkillLineSpell.LookupRowForced(i);
 		if(sp)
-		{
 			mSpellSkills[sp->spell] = sp;
-		}
 	}
 	Log.Success("ObjectMgr", "%u spell skills loaded.", mSpellSkills.size());
 }
@@ -488,8 +465,7 @@ void ObjectMgr::LoadPlayersInfo()
 				char temp[300];
 				snprintf(temp, 300, "%s__%X__", pn->name, pn->guid);
 				Log.Notice("ObjectMgr", "Renaming duplicate player %s to %s. (%u)", pn->name, temp, pn->guid);
-				CharacterDatabase.WaitExecute("UPDATE characters SET name = '%s', forced_rename_pending = 1 WHERE guid = %u",
-				                              CharacterDatabase.EscapeString(string(temp)).c_str(), pn->guid);
+				CharacterDatabase.WaitExecute("UPDATE characters SET name = '%s', forced_rename_pending = 1 WHERE guid = %u", CharacterDatabase.EscapeString(string(temp)).c_str(), pn->guid);
 
 				free(pn->name);
 				pn->name = strdup(temp);
@@ -594,18 +570,17 @@ void ObjectMgr::LoadPlayerCreateInfo()
 		pPlayerCreateInfo->introid = fields[23].GetUInt32();
 
 		string taxiMaskStr = fields[24].GetString();
-		vector<string> tokens = StrSplit(taxiMaskStr, " ");
+		vector< string > tokens = StrSplit(taxiMaskStr, " ");
 
 		memset(pPlayerCreateInfo->taximask, 0, sizeof(pPlayerCreateInfo->taximask));
 		int index;
-		vector<string>::iterator iter;
+		vector< string >::iterator iter;
 		for(iter = tokens.begin(), index = 0; (index < 12) && (iter != tokens.end()); ++iter, ++index)
 		{
 			pPlayerCreateInfo->taximask[index] = atol((*iter).c_str());
 		}
 
-		QueryResult* sk_sql = WorldDatabase.Query(
-		                          "SELECT * FROM playercreateinfo_skills WHERE indexid=%u", pPlayerCreateInfo->index);
+		QueryResult* sk_sql = WorldDatabase.Query("SELECT * FROM playercreateinfo_skills WHERE indexid=%u", pPlayerCreateInfo->index);
 
 		if(sk_sql)
 		{
@@ -621,8 +596,7 @@ void ObjectMgr::LoadPlayerCreateInfo()
 			while(sk_sql->NextRow());
 			delete sk_sql;
 		}
-		QueryResult* sp_sql = WorldDatabase.Query(
-		                          "SELECT * FROM playercreateinfo_spells WHERE indexid=%u", pPlayerCreateInfo->index);
+		QueryResult* sp_sql = WorldDatabase.Query("SELECT * FROM playercreateinfo_spells WHERE indexid=%u", pPlayerCreateInfo->index);
 
 		if(sp_sql)
 		{
@@ -634,8 +608,7 @@ void ObjectMgr::LoadPlayerCreateInfo()
 			delete sp_sql;
 		}
 
-		QueryResult* items_sql = WorldDatabase.Query(
-		                             "SELECT * FROM playercreateinfo_items WHERE indexid=%u", pPlayerCreateInfo->index);
+		QueryResult* items_sql = WorldDatabase.Query("SELECT * FROM playercreateinfo_items WHERE indexid=%u", pPlayerCreateInfo->index);
 
 		if(items_sql)
 		{
@@ -652,8 +625,7 @@ void ObjectMgr::LoadPlayerCreateInfo()
 			delete items_sql;
 		}
 
-		QueryResult* bars_sql = WorldDatabase.Query(
-		                            "SELECT * FROM playercreateinfo_bars WHERE class=%u", pPlayerCreateInfo->class_);
+		QueryResult* bars_sql = WorldDatabase.Query("SELECT * FROM playercreateinfo_bars WHERE class=%u", pPlayerCreateInfo->class_);
 
 		if(bars_sql)
 		{
@@ -743,7 +715,6 @@ Corpse* ObjectMgr::LoadCorpse(uint32 guid)
 	return pCorpse;
 }
 
-
 //------------------------------------------------------
 // Live corpse retreival.
 // comments: I use the same tricky method to start from the last corpse instead of the first
@@ -763,7 +734,6 @@ Corpse* ObjectMgr::GetCorpseByOwner(uint32 ownerguid)
 	}
 	_corpseslock.Release();
 
-
 	return rv;
 }
 
@@ -772,7 +742,8 @@ void ObjectMgr::DelinkPlayerCorpses(Player* pOwner)
 	//dupe protection agaisnt crashs
 	Corpse* c;
 	c = this->GetCorpseByOwner(pOwner->GetLowGUID());
-	if(!c)return;
+	if(!c)
+		return;
 	sEventMgr.AddEvent(c, &Corpse::Delink, EVENT_CORPSE_SPAWN_BONES, 1, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 	CorpseAddEventDespawn(c);
 }
@@ -866,7 +837,6 @@ void ObjectMgr::LoadInstanceBossInfos()
 		}
 		free(trash);
 		bossInfo->trashRespawnOverride = (uint32)result->Fetch()[3].GetUInt32();
-
 
 		if(this->m_InstanceBossInfoMap[bossInfo->mapid] == NULL)
 			this->m_InstanceBossInfoMap[bossInfo->mapid] = new InstanceBossInfoMap;
@@ -981,7 +951,7 @@ void ObjectMgr::SetHighestGuids()
 		delete result;
 	}
 
-	result = CharacterDatabase.Query("SELECT MAX( UID ) FROM playerbugreports");
+	result = CharacterDatabase.Query("SELECT MAX(UID) FROM playerbugreports");
 	if(result != NULL)
 	{
 		m_reportID.SetVal(uint32(result->Fetch()[0].GetUInt64() + 1));
@@ -995,15 +965,14 @@ void ObjectMgr::SetHighestGuids()
 		delete result;
 	}
 
-
-	result = CharacterDatabase.Query("SELECT MAX( message_id ) FROM mailbox");
+	result = CharacterDatabase.Query("SELECT MAX(message_id) FROM mailbox");
 	if(result)
 	{
 		m_mailid.SetVal(uint32(result->Fetch()[0].GetUInt64() + 1));
 		delete result;
 	}
 
-	result = CharacterDatabase.Query("SELECT MAX( setGUID ) FROM equipmentsets");
+	result = CharacterDatabase.Query("SELECT MAX(setGUID) FROM equipmentsets");
 	if(result != NULL)
 	{
 		m_setGUID.SetVal(uint32(result->Fetch()[0].GetUInt32() + 1));
@@ -1035,7 +1004,6 @@ uint32 ObjectMgr::GenerateTicketID()
 	return ++m_ticketid;
 }
 
-
 uint32 ObjectMgr::GenerateEquipmentSetID()
 {
 	return ++m_setGUID;
@@ -1051,27 +1019,18 @@ uint32 ObjectMgr::GenerateLowGuid(uint32 guidhigh)
 
 	uint32 ret;
 	if(guidhigh == HIGHGUID_TYPE_ITEM)
-	{
-
 		ret = ++m_hiItemGuid;
-
-	}
 	else if(guidhigh == HIGHGUID_TYPE_PLAYER)
-	{
 		ret = ++m_hiPlayerGuid;
-	}
 	else
-	{
-
 		ret = ++m_hiItemGuid;
 
-	}
 	return ret;
 }
 
 void ObjectMgr::ProcessGameobjectQuests()
 {
-	QueryResult* result  = WorldDatabase.Query("SELECT * FROM gameobject_quest_item_binding");
+	QueryResult* result = WorldDatabase.Query("SELECT * FROM gameobject_quest_item_binding");
 	QueryResult* result2 = WorldDatabase.Query("SELECT * FROM gameobject_quest_pickup_binding");
 
 	GameObjectInfo* gon;
@@ -1086,12 +1045,10 @@ void ObjectMgr::ProcessGameobjectQuests()
 			qst = QuestStorage.LookupEntry(fields[1].GetUInt32());
 			if(gon && qst)
 				gon->itemMap[qst].insert(make_pair(fields[2].GetUInt32(), fields[3].GetUInt32()));
-
 		}
 		while(result->NextRow());
 		delete result;
 	}
-
 
 	if(result2)
 	{
@@ -1102,7 +1059,6 @@ void ObjectMgr::ProcessGameobjectQuests()
 			qst = QuestStorage.LookupEntry(fields[1].GetUInt32());
 			if(gon && qst)
 				gon->goMap.insert(make_pair(qst, fields[2].GetUInt32()));
-
 		}
 		while(result2->NextRow());
 		delete result2;
@@ -1118,11 +1074,11 @@ void ObjectMgr::ProcessGameobjectQuests()
 			text  = result->Fetch()[1].GetUInt32();
 
 			mNpcToGossipText[entry] = text;
-
 		}
 		while(result->NextRow());
 		delete result;
 	}
+
 	Log.Success("ObjectMgr", "%u NPC Gossip TextIds loaded.", mNpcToGossipText.size());
 }
 
@@ -1200,10 +1156,7 @@ bool ObjectMgr::RemoveGuild(uint32 guildId)
 {
 	GuildMap::iterator i = mGuild.find(guildId);
 	if(i == mGuild.end())
-	{
 		return false;
-	}
-
 
 	mGuild.erase(i);
 	return true;
@@ -1214,6 +1167,7 @@ Guild* ObjectMgr::GetGuild(uint32 guildId)
 	GuildMap::const_iterator itr = mGuild.find(guildId);
 	if(itr == mGuild.end())
 		return NULL;
+
 	return itr->second;
 }
 
@@ -1239,7 +1193,6 @@ Guild* ObjectMgr::GetGuildByGuildName(std::string guildName)
 	return NULL;
 }
 
-
 void ObjectMgr::AddGMTicket(GM_Ticket* ticket, bool startup)
 {
 	ARCPRO_ASSERT(ticket  != NULL);
@@ -1260,13 +1213,9 @@ void ObjectMgr::DeleteGMTicketPermanently(uint64 ticketGuid)
 	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
 	{
 		if((*i)->guid == ticketGuid)
-		{
 			i = GM_TicketList.erase(i);
-		}
 		else
-		{
 			++i;
-		}
 	}
 
 	// kill from db
@@ -1278,13 +1227,9 @@ void ObjectMgr::DeleteAllRemovedGMTickets()
 	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
 	{
 		if((*i)->deleted)
-		{
 			i = GM_TicketList.erase(i);
-		}
 		else
-		{
 			++i;
-		}
 	}
 
 	CharacterDatabase.Execute("DELETE FROM gm_tickets WHERE deleted=1");
@@ -1292,74 +1237,63 @@ void ObjectMgr::DeleteAllRemovedGMTickets()
 
 void ObjectMgr::RemoveGMTicketByPlayer(uint64 playerGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
 	{
 		if((*i)->playerGuid == playerGuid && !(*i)->deleted)
 		{
 			(*i)->deleted = true;
 			SaveGMTicket((*i), NULL);
 		}
-		++i;
 	}
 }
 
 void ObjectMgr::RemoveGMTicket(uint64 ticketGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
 	{
 		if((*i)->guid == ticketGuid && !(*i)->deleted)
 		{
 			(*i)->deleted = true;
 			SaveGMTicket((*i), NULL);
 		}
-		++i;
 	}
 }
 
 GM_Ticket* ObjectMgr::GetGMTicketByPlayer(uint64 playerGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
 	{
 		if((*i)->playerGuid == playerGuid && !(*i)->deleted)
-		{
 			return (*i);
-		}
-		++i;
 	}
 	return NULL;
 }
 
 GM_Ticket* ObjectMgr::GetGMTicket(uint64 ticketGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
 	{
 		if((*i)->guid == ticketGuid)
-		{
 			return (*i);
-		}
-		++i;
 	}
 	return NULL;
 }
 
-//std::list<GM_Ticket*>* ObjectMgr::GetGMTicketsByPlayer(uint64 playerGuid)
-//{
-//	std::list<GM_Ticket*>* list = new std::list<GM_Ticket*>();
-//	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end();)
-//	{
-//		if((*i)->playerGuid == playerGuid)
-//		{
-//			list->push_back((*i));
-//		}
-//		++i;
-//	}
-//	return list;
-//}
+/*std::list<GM_Ticket*>* ObjectMgr::GetGMTicketsByPlayer(uint64 playerGuid)
+{
+	std::list<GM_Ticket*>* list = new std::list<GM_Ticket*>();
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	{
+		if((*i)->playerGuid == playerGuid)
+			list->push_back((*i));
+	}
+	return list;
+}*/
 
 void ObjectMgr::LoadVendors()
 {
 	HM_NAMESPACE::hash_map<uint32, std::vector<CreatureItem>*>::const_iterator itr;
-	std::vector<CreatureItem> *items;
+	std::vector< CreatureItem > *items;
 	CreatureItem itm;
 
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM vendors");
@@ -1372,9 +1306,7 @@ void ObjectMgr::LoadVendors()
 			return;
 		}
 		else if(result->GetFieldCount() > 6)
-		{
 			Log.Notice("ObjectMgr", "Invalid format in vendors (%u/6) columns, loading anyway because we have enough data", result->GetFieldCount());
-		}
 
 		ItemExtendedCostEntry* ec = NULL;
 		do
@@ -1389,9 +1321,7 @@ void ObjectMgr::LoadVendors()
 				mVendors[fields[0].GetUInt32()] = items;
 			}
 			else
-			{
 				items = itr->second;
-			}
 
 			itm.itemid = fields[1].GetUInt32();
 			itm.amount = fields[2].GetUInt32();
@@ -1422,7 +1352,7 @@ void ObjectMgr::ReloadVendors()
 	LoadVendors();
 }
 
-std::vector<CreatureItem>* ObjectMgr::GetVendorList(uint32 entry)
+std::vector< CreatureItem >* ObjectMgr::GetVendorList(uint32 entry)
 {
 	return mVendors[entry];
 }
@@ -1432,9 +1362,7 @@ void ObjectMgr::LoadAIThreatToSpellId()
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM ai_threattospellid");
 
 	if(!result)
-	{
 		return;
-	}
 
 	SpellEntry* sp;
 
@@ -1479,9 +1407,7 @@ void ObjectMgr::LoadSpellProcs()
 							break;
 
 					if(x != 3)
-					{
 						sp->ProcOnNameHash[x] = spe_NameHash;
-					}
 					else
 						LOG_ERROR("Wrong ProcOnNameHash for Spell: %u!", spe_spellId);
 
@@ -1550,8 +1476,8 @@ void ObjectMgr::LoadSpellEffectsOverride()
 					if(seo_ApplyAuraName)
 						sp->EffectApplyAuraName[seo_EffectId] = seo_ApplyAuraName;
 
-//					if( seo_SpellGroupRelation )
-//						sp->EffectSpellGroupRelation[seo_EffectId] = seo_SpellGroupRelation;
+					/*if(seo_SpellGroupRelation)
+						sp->EffectSpellGroupRelation[seo_EffectId] = seo_SpellGroupRelation;*/
 
 					if(seo_MiscValue)
 						sp->EffectMiscValue[seo_EffectId] = seo_MiscValue;
@@ -1569,9 +1495,7 @@ void ObjectMgr::LoadSpellEffectsOverride()
 						sp->EffectCustomFlag[ seo_Effect ] = seo_EffectCustomFlag;
 				}
 				else
-				{
 					Log.Error("ObjectMgr", "Tried to load a spell effect override for a nonexistant spell: %u", seo_SpellId);
-				}
 			}
 
 		}
@@ -1583,7 +1507,8 @@ void ObjectMgr::LoadSpellEffectsOverride()
 Item* ObjectMgr::CreateItem(uint32 entry, Player* owner)
 {
 	ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(entry);
-	if(proto == NULL) return 0;
+	if(proto == NULL)
+		return 0;
 
 	if(proto->InventoryType == INVTYPE_BAG)
 	{
@@ -1688,6 +1613,7 @@ void ObjectMgr::LoadAchievementCriteriaList()
 	}
 }
 #endif
+
 std::list<ItemPrototype*>* ObjectMgr::GetListForItemSet(uint32 setid)
 {
 	return mItemSets[setid];
@@ -1717,10 +1643,7 @@ void ObjectMgr::CorpseCollectorUnload()
 	_corpseslock.Release();
 }
 
-GossipMenu::GossipMenu(uint64 Creature_Guid, uint32 Text_Id) : TextId(Text_Id), CreatureGuid(Creature_Guid)
-{
-
-}
+GossipMenu::GossipMenu(uint64 Creature_Guid, uint32 Text_Id) : TextId(Text_Id), CreatureGuid(Creature_Guid) {}
 
 void GossipMenu::AddItem(uint8 Icon, const char* Text, int32 Id /* = -1 */, int8 Extra /* = 0 */)
 {
@@ -1768,8 +1691,7 @@ void GossipMenu::BuildPacket(WorldPacket & Packet)
 	Packet << TextId;
 	Packet << uint32(Menu.size());
 
-	for(std::vector<GossipMenuItem>::iterator iter = Menu.begin();
-	        iter != Menu.end(); ++iter)
+	for(std::vector< GossipMenuItem >::iterator iter = Menu.begin(); iter != Menu.end(); ++iter)
 	{
 		Packet << iter->Id;
 		Packet << iter->Icon;
@@ -1818,9 +1740,7 @@ GossipMenuItem GossipMenu::GetItem(uint32 Id)
 		return k;
 	}
 	else
-	{
 		return Menu[Id];
-	}
 }
 
 uint32 ObjectMgr::GetGossipTextForNpc(uint32 ID)
@@ -1840,7 +1760,6 @@ void ObjectMgr::LoadTrainers()
 
 	if(!result)
 		return;
-
 
 	do
 	{
@@ -1935,9 +1854,7 @@ void ObjectMgr::LoadTrainers()
 				}
 
 				if(LearnSpellID != 0)
-				{
 					ts.pLearnSpell = dbcSpell.LookupEntryForced(LearnSpellID);
-				}
 
 				if(ts.pCastSpell == NULL && ts.pLearnSpell == NULL)
 				{
@@ -2059,103 +1976,174 @@ void ObjectMgr::GenerateLevelUpInfo()
 				switch(Class)
 				{
 					case WARRIOR:
-						if(Level < 13)TotalHealthGain += 19;
-						else if(Level < 36) TotalHealthGain += Level + 6;
-//					else if(Level >60) TotalHealthGain+=Level+100;
-						else if(Level > 60) TotalHealthGain += Level + 206;
-						else TotalHealthGain += 2 * Level - 30;
-						break;
+						if(Level < 13)
+							TotalHealthGain += 19;
+						else if(Level < 36)
+							TotalHealthGain += Level + 6;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 100;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 206;
+						else
+							TotalHealthGain += 2 * Level - 30;
+					break;
 					case HUNTER:
-						if(Level < 13)TotalHealthGain += 17;
-//					else if(Level >60) TotalHealthGain+=Level+45;
-						else if(Level > 60) TotalHealthGain += Level + 161;
-						else TotalHealthGain += Level + 4;
+						if(Level < 13)
+							TotalHealthGain += 17;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 45;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 161;
+						else
+							TotalHealthGain += Level + 4;
 
-						if(Level < 11)TotalManaGain += 29;
-						else if(Level < 27)TotalManaGain += Level + 18;
-//					else if(Level>60)TotalManaGain+=Level+20;
-						else if(Level > 60)TotalManaGain += Level + 150;
-						else TotalManaGain += 45;
-						break;
+						if(Level < 11)
+							TotalManaGain += 29;
+						else if(Level < 27)
+							TotalManaGain += Level + 18;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 20;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 150;
+						else
+							TotalManaGain += 45;
+					break;
 					case ROGUE:
-						if(Level < 15)TotalHealthGain += 17;
-//					else if(Level >60) TotalHealthGain+=Level+110;
-						else if(Level > 60) TotalHealthGain += Level + 191;
-						else TotalHealthGain += Level + 2;
-						break;
+						if(Level < 15)
+							TotalHealthGain += 17;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 110;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 191;
+						else
+							TotalHealthGain += Level + 2;
+					break;
 					case DRUID:
-						if(Level < 17)TotalHealthGain += 17;
-//					else if(Level >60) TotalHealthGain+=Level+55;
-						else if(Level > 60) TotalHealthGain += Level + 176;
-						else TotalHealthGain += Level;
+						if(Level < 17)
+							TotalHealthGain += 17;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 55;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 176;
+						else
+							TotalHealthGain += Level;
 
-						if(Level < 26)TotalManaGain += Level + 20;
-//					else if(Level>60)TotalManaGain+=Level+25;
-						else if(Level > 60)TotalManaGain += Level + 150;
-						else TotalManaGain += 45;
-						break;
+						if(Level < 26)
+							TotalManaGain += Level + 20;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 25;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 150;
+						else
+							TotalManaGain += 45;
+					break;
 					case MAGE:
-						if(Level < 23)TotalHealthGain += 15;
-//					else if(Level >60) TotalHealthGain+=Level+40;
-						else if(Level > 60) TotalHealthGain += Level + 190;
-						else TotalHealthGain += Level - 8;
+						if(Level < 23)
+							TotalHealthGain += 15;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 40;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 190;
+						else
+							TotalHealthGain += Level - 8;
 
-						if(Level < 28)TotalManaGain += Level + 23;
-//					else if(Level>60)TotalManaGain+=Level+26;
-						else if(Level > 60)TotalManaGain += Level + 115;
-						else TotalManaGain += 51;
-						break;
+						if(Level < 28)
+							TotalManaGain += Level + 23;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 26;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 115;
+						else
+							TotalManaGain += 51;
+					break;
 					case SHAMAN:
-						if(Level < 16)TotalHealthGain += 17;
-//					else if(Level >60) TotalHealthGain+=Level+75;
-						else if(Level > 60) TotalHealthGain += Level + 157;
-						else TotalHealthGain += Level + 1;
+						if(Level < 16)
+							TotalHealthGain += 17;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 75;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 157;
+						else
+							TotalHealthGain += Level + 1;
 
-						if(Level < 22)TotalManaGain += Level + 19;
-//					else if(Level>60)TotalManaGain+=Level+70;
-						else if(Level > 60)TotalManaGain += Level + 175;
-						else TotalManaGain += 49;
-						break;
+						if(Level < 22)
+							TotalManaGain += Level + 19;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 70;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 175;
+						else
+							TotalManaGain += 49;
+					break;
 					case WARLOCK:
-						if(Level < 17)TotalHealthGain += 17;
-//					else if(Level >60) TotalHealthGain+=Level+50;
-						else if(Level > 60) TotalHealthGain += Level + 192;
-						else TotalHealthGain += Level - 2;
+						if(Level < 17)
+							TotalHealthGain += 17;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 50;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 192;
+						else
+							TotalHealthGain += Level - 2;
 
-						if(Level < 30)TotalManaGain += Level + 21;
-//					else if(Level>60)TotalManaGain+=Level+25;
-						else if(Level > 60)TotalManaGain += Level + 121;
-						else TotalManaGain += 51;
-						break;
+						if(Level < 30)
+							TotalManaGain += Level + 21;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 25;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 121;
+						else
+							TotalManaGain += 51;
+					break;
 					case PALADIN:
-						if(Level < 14)TotalHealthGain += 18;
-//					else if(Level >60) TotalHealthGain+=Level+55;
-						else if(Level > 60) TotalHealthGain += Level + 167;
-						else TotalHealthGain += Level + 4;
+						if(Level < 14)
+							TotalHealthGain += 18;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 55;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 167;
+						else
+							TotalHealthGain += Level + 4;
 
-						if(Level < 30)TotalManaGain += Level + 17;
-//					else if(Level>60)TotalManaGain+=Level+100;
-						else if(Level > 60)TotalManaGain += Level + 131;
-						else TotalManaGain += 42;
-						break;
+						if(Level < 30)
+							TotalManaGain += Level + 17;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 100;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 131;
+						else
+							TotalManaGain += 42;
+					break;
 					case PRIEST:
-						if(Level < 21)TotalHealthGain += 15;
-//					else if(Level >60) TotalHealthGain+=Level+40;
-						else if(Level > 60) TotalHealthGain += Level + 157;
-						else TotalHealthGain += Level - 6;
+						if(Level < 21)
+							TotalHealthGain += 15;
+						/*else if(Level > 60)
+							TotalHealthGain += Level + 40;*/
+						else if(Level > 60)
+							TotalHealthGain += Level + 157;
+						else
+							TotalHealthGain += Level - 6;
 
-						if(Level < 22)TotalManaGain += Level + 22;
-						else if(Level < 32)TotalManaGain += Level + 37;
-//					else if(Level>60)TotalManaGain+=Level+35;
-						else if(Level > 60)TotalManaGain += Level + 207;
-						else TotalManaGain += 54;
-						break;
+						if(Level < 22)
+							TotalManaGain += Level + 22;
+						else if(Level < 32)
+							TotalManaGain += Level + 37;
+						/*else if(Level > 60)
+							TotalManaGain += Level + 35;*/
+						else if(Level > 60)
+							TotalManaGain += Level + 207;
+						else
+							TotalManaGain += 54;
+					break;
 					case DEATHKNIGHT: // Based on 55-56 more testing will be done.
-						if(Level < 60)TotalHealthGain += 92;
-						/*else if(Level <60) TotalHealthGain+=??;
-						else if(Level <70) TotalHealthGain+=??;*/
-						else TotalHealthGain += 92;
-						break;
+						if(Level < 60)
+							TotalHealthGain += 92;
+						/*else if(Level < 60)
+							TotalHealthGain += ??;
+						else if(Level < 70)
+							TotalHealthGain += ??;*/
+						else
+							TotalHealthGain += 92;
+					break;
 				}
 
 				// Apply HP/Mana
@@ -2164,32 +2152,22 @@ void ObjectMgr::GenerateLevelUpInfo()
 
 				// Calculate next level XP
 				uint32 nextLvlXP = 0;
-				/*				if( Level > 0 && Level <= 30 )
-								{
-									nextLvlXP = ((int)((((double)(8 * Level * ((Level * 5) + 45)))/100)+0.5))*100;
-								}
-								else if( Level == 31 )
-								{
-									nextLvlXP = ((int)((((double)(((8 * Level) + 3) * ((Level * 5) + 45)))/100)+0.5))*100;
-								}
-								else if( Level == 32 )
-								{
-									nextLvlXP = ((int)((((double)(((8 * Level) + 6) * ((Level * 5) + 45)))/100)+0.5))*100;
-								}
-								else
-								{
-									nextLvlXP = ((int)((((double)(((8 * Level) + ((Level - 30) * 5)) * ((Level * 5) + 45)))/100)+0.5))*100;
-								}*/
+				/*if(Level > 0 && Level <= 30)
+					nextLvlXP = ((int)((((double)(8 * Level * ((Level * 5) + 45)))/100)+0.5))*100;
+				else if(Level == 31)
+					nextLvlXP = ((int)((((double)(((8 * Level) + 3) * ((Level * 5) + 45)))/100)+0.5))*100;
+				else if(Level == 32)
+					nextLvlXP = ((int)((((double)(((8 * Level) + 6) * ((Level * 5) + 45)))/100)+0.5))*100;
+				else
+					nextLvlXP = ((int)((((double)(((8 * Level) + ((Level - 30) * 5)) * ((Level * 5) + 45)))/100)+0.5))*100;*/
 
 				//this is a fixed table taken from 2.3.0 wow. This can;t get more blizzlike with the "if" cases ;)
 				if((Level - 1) < MAX_PREDEFINED_NEXTLEVELXP)
-				{
 					nextLvlXP = NextLevelXp[(Level - 1)];
-				}
 				else
 				{
 					// 2.2
-					//double MXP = 45 + ( 5 * level );
+					//double MXP = 45 + (5 * level);
 					// 2.3
 					double MXP = 235 + (5 * Level);
 					double DIFF = Level < 29 ? 0.0 : Level < 30 ? 1.0 : Level < 31 ? 3.0 : Level < 32 ? 6.0 : 5.0 * (double(Level) - 30.0);
@@ -2259,7 +2237,7 @@ void ObjectMgr::LoadDefaultPetSpells()
 					itr->second.insert(sp);
 				else
 				{
-					set<SpellEntry*> s;
+					set< SpellEntry* > s;
 					s.insert(sp);
 					mDefaultPetSpells[Entry] = s;
 				}
@@ -2317,7 +2295,7 @@ uint32 ObjectMgr::GetPetSpellCooldown(uint32 SpellId)
 		return itr->second;
 
 	SpellEntry* sp = dbcSpell.LookupEntry(SpellId);
-	if( sp->RecoveryTime > sp->CategoryRecoveryTime )
+	if(sp->RecoveryTime > sp->CategoryRecoveryTime)
 		return sp->RecoveryTime;
 	else
 		return sp->CategoryRecoveryTime;
@@ -2330,9 +2308,7 @@ void ObjectMgr::LoadSpellOverride()
 	QueryResult* result = WorldDatabase.Query("SELECT DISTINCT overrideId FROM spelloverride");
 
 	if(!result)
-	{
 		return;
-	}
 
 //	int num = 0;
 //	uint32 total =(uint32) result->GetRowCount();
@@ -2346,7 +2322,7 @@ void ObjectMgr::LoadSpellOverride()
 		query << "SELECT spellId FROM spelloverride WHERE overrideId = ";
 		query << fields[0].GetUInt32();
 		QueryResult* resultIn = WorldDatabase.Query(query.str().c_str());
-		std::list<SpellEntry*>* list = new std::list<SpellEntry*>;
+		std::list< SpellEntry* >* list = new std::list< SpellEntry* >;
 		if(resultIn)
 		{
 			do
@@ -2371,7 +2347,7 @@ void ObjectMgr::LoadSpellOverride()
 	Log.Success("ObjectMgr", "%u spell overrides loaded.", mOverrideIdMap.size());
 }
 
-void ObjectMgr::SetVendorList(uint32 Entry, std::vector<CreatureItem>* list_)
+void ObjectMgr::SetVendorList(uint32 Entry, std::vector< CreatureItem >* list_)
 {
 	mVendors[Entry] = list_;
 }
@@ -2379,7 +2355,8 @@ void ObjectMgr::SetVendorList(uint32 Entry, std::vector<CreatureItem>* list_)
 void ObjectMgr::LoadCreatureTimedEmotes()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM creature_timed_emotes order by rowid asc");
-	if(!result)return;
+	if(!result)
+		return;
 
 	do
 	{
@@ -2399,7 +2376,7 @@ void ObjectMgr::LoadCreatureTimedEmotes()
 		te->msg_lang = static_cast<uint8>(fields[6].GetUInt32());
 		te->expire_after = fields[7].GetUInt32();
 
-		HM_NAMESPACE::hash_map<uint32, TimedEmoteList*>::const_iterator i;
+		HM_NAMESPACE::hash_map< uint32, TimedEmoteList* >::const_iterator i;
 		uint32 spawnid = fields[0].GetUInt32();
 		i = m_timedemotes.find(spawnid);
 		if(i == m_timedemotes.end())
@@ -2409,9 +2386,7 @@ void ObjectMgr::LoadCreatureTimedEmotes()
 			m_timedemotes[spawnid] = m;
 		}
 		else
-		{
 			i->second->push_back(te);
-		}
 	}
 	while(result->NextRow());
 
@@ -2421,7 +2396,7 @@ void ObjectMgr::LoadCreatureTimedEmotes()
 
 TimedEmoteList* ObjectMgr::GetTimedEmoteList(uint32 spawnid)
 {
-	HM_NAMESPACE::hash_map<uint32, TimedEmoteList*>::const_iterator i;
+	HM_NAMESPACE::hash_map< uint32, TimedEmoteList* >::const_iterator i;
 	i = m_timedemotes.find(spawnid);
 	if(i != m_timedemotes.end())
 	{
@@ -2434,7 +2409,8 @@ TimedEmoteList* ObjectMgr::GetTimedEmoteList(uint32 spawnid)
 void ObjectMgr::LoadCreatureWaypoints()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM creature_waypoints");
-	if(!result)return;
+	if(!result)
+		return;
 
 	do
 	{
@@ -2453,7 +2429,7 @@ void ObjectMgr::LoadCreatureWaypoints()
 		wp->forwardskinid = fields[11].GetUInt32();
 		wp->backwardskinid = fields[12].GetUInt32();
 
-		HM_NAMESPACE::hash_map<uint32, WayPointMap*>::const_iterator i;
+		HM_NAMESPACE::hash_map< uint32, WayPointMap* >::const_iterator i;
 		uint32 spawnid = fields[0].GetUInt32();
 		i = m_waypoints.find(spawnid);
 		if(i == m_waypoints.end())
@@ -2515,34 +2491,34 @@ Player* ObjectMgr::CreatePlayer(uint8 _class)
 	{
 		case WARRIOR:
 			result = new Warrior(guid);
-			break;
+		break;
 		case PALADIN:
 			result = new Paladin(guid);
-			break;
+		break;
 		case HUNTER:
 			result = new Hunter(guid);
-			break;
+		break;
 		case ROGUE:
 			result = new Rogue(guid);
-			break;
+		break;
 		case PRIEST:
 			result = new Priest(guid);
-			break;
+		break;
 		case DEATHKNIGHT:
 			result = new DeathKnight(guid);
-			break;
+		break;
 		case SHAMAN:
 			result = new Shaman(guid);
-			break;
+		break;
 		case MAGE:
 			result = new Mage(guid);
-			break;
+		break;
 		case WARLOCK:
 			result = new Warlock(guid);
-			break;
+		break;
 		case DRUID:
 			result = new Druid(guid);
-			break;
+		break;
 	}
 
 	return result;
@@ -2560,7 +2536,6 @@ void ObjectMgr::RemovePlayer(Player* p)
 	_playerslock.AcquireWriteLock();
 	_players.erase(p->GetLowGUID());
 	_playerslock.ReleaseWriteLock();
-
 }
 
 Corpse* ObjectMgr::CreateCorpse()
@@ -2600,7 +2575,7 @@ Transporter* ObjectMgr::GetTransporter(uint32 guid)
 {
 	Transporter* rv;
 	_TransportLock.Acquire();
-	HM_NAMESPACE::hash_map<uint32, Transporter*>::const_iterator itr = mTransports.find(guid);
+	HM_NAMESPACE::hash_map< uint32, Transporter* >::const_iterator itr = mTransports.find(guid);
 	rv = (itr != mTransports.end()) ? itr->second : 0;
 	_TransportLock.Release();
 	return rv;
@@ -2617,7 +2592,7 @@ Transporter* ObjectMgr::GetTransporterByEntry(uint32 entry)
 {
 	Transporter* rv = 0;
 	_TransportLock.Acquire();
-	HM_NAMESPACE::hash_map<uint32, Transporter*>::iterator itr = mTransports.begin();
+	HM_NAMESPACE::hash_map< uint32, Transporter* >::iterator itr = mTransports.begin();
 	for(; itr != mTransports.end(); ++itr)
 	{
 		if(itr->second->GetEntry() == entry)
@@ -2650,7 +2625,7 @@ void ObjectMgr::LoadGuildCharters()
 Charter* ObjectMgr::GetCharter(uint32 CharterId, CharterTypes Type)
 {
 	Charter* rv;
-	HM_NAMESPACE::hash_map<uint32, Charter*>::iterator itr;
+	HM_NAMESPACE::hash_map< uint32, Charter* >::iterator itr;
 	m_charterLock.AcquireReadLock();
 	itr = m_charters[Type].find(CharterId);
 	rv = (itr == m_charters[Type].end()) ? 0 : itr->second;
@@ -2660,7 +2635,6 @@ Charter* ObjectMgr::GetCharter(uint32 CharterId, CharterTypes Type)
 
 Charter* ObjectMgr::CreateCharter(uint32 LeaderGuid, CharterTypes Type)
 {
-
 	uint32 charterid = 0;
 
 	charterid = ++m_hiCharterId;
@@ -2723,7 +2697,6 @@ void Charter::RemoveSignature(uint32 PlayerGuid)
 		}
 	}
 }
-
 
 void Charter::Destroy()
 {
@@ -2789,7 +2762,7 @@ Charter* ObjectMgr::GetCharterByItemGuid(uint64 guid)
 	m_charterLock.AcquireReadLock();
 	for(int i = 0; i < NUM_CHARTER_TYPES; ++i)
 	{
-		HM_NAMESPACE::hash_map<uint32, Charter*>::iterator itr = m_charters[i].begin();
+		HM_NAMESPACE::hash_map< uint32, Charter* >::iterator itr = m_charters[i].begin();
 		for(; itr != m_charters[i].end(); ++itr)
 		{
 			if(itr->second->ItemGuid == guid)
@@ -2806,7 +2779,7 @@ Charter* ObjectMgr::GetCharterByItemGuid(uint64 guid)
 Charter* ObjectMgr::GetCharterByGuid(uint64 playerguid, CharterTypes type)
 {
 	m_charterLock.AcquireReadLock();
-	HM_NAMESPACE::hash_map<uint32, Charter*>::iterator itr = m_charters[type].begin();
+	HM_NAMESPACE::hash_map< uint32, Charter* >::iterator itr = m_charters[type].begin();
 	for(; itr != m_charters[type].end(); ++itr)
 	{
 		if(playerguid == itr->second->LeaderGuid)
@@ -2832,7 +2805,7 @@ Charter* ObjectMgr::GetCharterByName(string & charter_name, CharterTypes Type)
 {
 	Charter* rv = 0;
 	m_charterLock.AcquireReadLock();
-	HM_NAMESPACE::hash_map<uint32, Charter*>::iterator itr = m_charters[Type].begin();
+	HM_NAMESPACE::hash_map< uint32, Charter* >::iterator itr = m_charters[Type].begin();
 	for(; itr != m_charters[Type].end(); ++itr)
 	{
 		if(itr->second->GuildName == charter_name)
@@ -2850,6 +2823,7 @@ void ObjectMgr::RemoveCharter(Charter* c)
 {
 	if(c == NULL)
 		return;
+
 	if(c->CharterType >= NUM_CHARTER_TYPES)
 	{
 		Log.Notice("ObjectMgr", "Charter %u cannot be destroyed as type %u is not a sane type value.", c->CharterId, c->CharterType);
@@ -2885,9 +2859,7 @@ void ObjectMgr::LoadReputationModifierTable(const char* tablename, ReputationMod
 				dmap->insert(ReputationModMap::value_type(result->Fetch()[0].GetUInt32(), modifier));
 			}
 			else
-			{
 				itr->second->mods.push_back(mod);
-			}
 		}
 		while(result->NextRow());
 		delete result;
@@ -2921,7 +2893,8 @@ ReputationModifier* ObjectMgr::GetReputationModifier(uint32 entry_id, uint32 fac
 void ObjectMgr::LoadMonsterSay()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM npc_monstersay");
-	if(!result) return;
+	if(!result)
+		return;
 
 	uint32 Entry, Event;
 	Field* fields = result->Fetch();
@@ -2952,7 +2925,8 @@ void ObjectMgr::LoadMonsterSay()
 		for(uint32 i = 0; i < 5; ++i)
 		{
 			text = (char*)fields[6 + i].GetString();
-			if(!text) continue;
+			if(!text)
+				continue;
 			if(strlen(fields[6 + i].GetString()) < 5)
 				continue;
 
@@ -2996,7 +2970,8 @@ NpcMonsterSay* ObjectMgr::HasMonsterSay(uint32 Entry, MONSTER_SAY_EVENTS Event)
 void ObjectMgr::LoadInstanceReputationModifiers()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM reputation_instance_onkill");
-	if(!result) return;
+	if(!result)
+		return;
 
 	do
 	{
@@ -3010,7 +2985,7 @@ void ObjectMgr::LoadInstanceReputationModifiers()
 		mod.faction[0] = fields[5].GetUInt32();
 		mod.faction[1] = fields[6].GetUInt32();
 
-		HM_NAMESPACE::hash_map<uint32, InstanceReputationModifier*>::iterator itr = m_reputation_instance.find(mod.mapid);
+		HM_NAMESPACE::hash_map< uint32, InstanceReputationModifier* >::iterator itr = m_reputation_instance.find(mod.mapid);
 		if(itr == m_reputation_instance.end())
 		{
 			InstanceReputationModifier* m = new InstanceReputationModifier;
@@ -3034,19 +3009,19 @@ bool ObjectMgr::HandleInstanceReputationModifiers(Player* pPlayer, Unit* pVictim
 	if(!pVictim->IsCreature())
 		return false;
 
-	HM_NAMESPACE::hash_map<uint32, InstanceReputationModifier*>::iterator itr = m_reputation_instance.find(pVictim->GetMapId());
+	HM_NAMESPACE::hash_map< uint32, InstanceReputationModifier* >::iterator itr = m_reputation_instance.find(pVictim->GetMapId());
 	if(itr == m_reputation_instance.end())
 		return false;
 
-	is_boss = false;//TO< Creature* >( pVictim )->GetCreatureInfo() ? ((Creature*)pVictim)->GetCreatureInfo()->Rank : 0;
-	if(TO< Creature* >(pVictim)->GetProto()->boss)
+	is_boss = false;//TO<Creature*>(pVictim)->GetCreatureInfo() ? ((Creature*)pVictim)->GetCreatureInfo()->Rank : 0;
+	if(TO<Creature*>(pVictim)->GetProto()->boss)
 		is_boss = true;
 
 	// Apply the bonuses as normal.
 	int32 replimit;
 	int32 value;
 
-	for(vector<InstanceReputationMod>::iterator i = itr->second->mods.begin(); i !=  itr->second->mods.end(); ++i)
+	for(vector< InstanceReputationMod >::iterator i = itr->second->mods.begin(); i !=  itr->second->mods.end(); ++i)
 	{
 		if(!(*i).faction[team])
 			continue;
@@ -3146,7 +3121,7 @@ void ObjectMgr::LoadArenaTeams()
 ArenaTeam* ObjectMgr::GetArenaTeamByGuid(uint32 guid, uint32 Type)
 {
 	m_arenaTeamLock.Acquire();
-	for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeamMap[Type].begin(); itr != m_arenaTeamMap[Type].end(); ++itr)
+	for(HM_NAMESPACE::hash_map< uint32, ArenaTeam* >::iterator itr = m_arenaTeamMap[Type].begin(); itr != m_arenaTeamMap[Type].end(); ++itr)
 	{
 		if(itr->second->HasMember(guid))
 		{
@@ -3170,7 +3145,7 @@ ArenaTeam* ObjectMgr::GetArenaTeamById(uint32 id)
 ArenaTeam* ObjectMgr::GetArenaTeamByName(string & name, uint32 Type)
 {
 	m_arenaTeamLock.Acquire();
-	for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeams.begin(); itr != m_arenaTeams.end(); ++itr)
+	for(HM_NAMESPACE::hash_map< uint32, ArenaTeam* >::iterator itr = m_arenaTeams.begin(); itr != m_arenaTeams.end(); ++itr)
 	{
 		if(!strnicmp(itr->second->m_name.c_str(), name.c_str(), name.size()))
 		{
@@ -3200,15 +3175,15 @@ void ObjectMgr::AddArenaTeam(ArenaTeam* team)
 
 class ArenaSorter
 {
-	public:
-		bool operator()(ArenaTeam* const & a, ArenaTeam* const & b)
-		{
-			return (a->m_stat_rating > b->m_stat_rating);
-		}
-		bool operator()(ArenaTeam*& a, ArenaTeam*& b)
-		{
-			return (a->m_stat_rating > b->m_stat_rating);
-		}
+public:
+	bool operator()(ArenaTeam* const & a, ArenaTeam* const & b)
+	{
+		return (a->m_stat_rating > b->m_stat_rating);
+	}
+	bool operator()(ArenaTeam*& a, ArenaTeam*& b)
+	{
+		return (a->m_stat_rating > b->m_stat_rating);
+	}
 };
 
 void ObjectMgr::UpdateArenaTeamRankings()
@@ -3218,7 +3193,7 @@ void ObjectMgr::UpdateArenaTeamRankings()
 	{
 		vector<ArenaTeam*> ranking;
 
-		for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeamMap[i].begin(); itr != m_arenaTeamMap[i].end(); ++itr)
+		for(HM_NAMESPACE::hash_map< uint32, ArenaTeam* >::iterator itr = m_arenaTeamMap[i].begin(); itr != m_arenaTeamMap[i].end(); ++itr)
 			ranking.push_back(itr->second);
 
 		std::sort(ranking.begin(), ranking.end(), ArenaSorter());
@@ -3274,7 +3249,7 @@ void ObjectMgr::UpdateArenaTeamWeekly()
 	m_arenaTeamLock.Acquire();
 	for(uint32 i = 0; i < NUM_ARENA_TEAM_TYPES; ++i)
 	{
-		for(HM_NAMESPACE::hash_map<uint32, ArenaTeam*>::iterator itr = m_arenaTeamMap[i].begin(); itr != m_arenaTeamMap[i].end(); ++itr)
+		for(HM_NAMESPACE::hash_map< uint32, ArenaTeam* >::iterator itr = m_arenaTeamMap[i].begin(); itr != m_arenaTeamMap[i].end(); ++itr)
 		{
 			ArenaTeam* team = itr->second;
 			if(team)
@@ -3495,95 +3470,101 @@ PlayerCache* ObjectMgr::GetPlayerCache(const char* name, bool caseSensitive /*= 
 	return ret;
 }
 
-void ObjectMgr::LoadVehicleAccessories(){
-	QueryResult *result = WorldDatabase.Query( "SELECT creature_entry, accessory_entry, seat FROM vehicle_accessories;" );
+void ObjectMgr::LoadVehicleAccessories()
+{
+	QueryResult*  result = WorldDatabase.Query("SELECT creature_entry, accessory_entry, seat FROM vehicle_accessories;");
 
-	if( result != NULL ){
-		
-		do{
-			Field *row = result->Fetch();
-			VehicleAccessoryEntry *entry = new VehicleAccessoryEntry();
+	if(result != NULL)
+	{
+		do
+		{
+			Field* row = result->Fetch();
+			VehicleAccessoryEntry* entry = new VehicleAccessoryEntry();
 			uint32 creature_entry = 0;
 			
-			creature_entry = row[ 0 ].GetUInt32();
-			entry->accessory_entry = row[ 1 ].GetUInt32();
-			entry->seat = row[ 2 ].GetUInt32();
+			creature_entry = row[0].GetUInt32();
+			entry->accessory_entry = row[1].GetUInt32();
+			entry->seat = row[2].GetUInt32();
 			
-			std::map< uint32, std::vector< VehicleAccessoryEntry* >* >::iterator itr
-				= vehicle_accessories.find( creature_entry );
+			std::map<uint32, std::vector<VehicleAccessoryEntry*>*>::iterator itr = vehicle_accessories.find(creature_entry);
 
-			if( itr != vehicle_accessories.end() ){
-				itr->second->push_back( entry );
-			}else{
-				std::vector< VehicleAccessoryEntry* >* v = new std::vector< VehicleAccessoryEntry* >();
-				v->push_back( entry );
-				vehicle_accessories.insert( std::make_pair( creature_entry, v ) );
+			if(itr != vehicle_accessories.end())
+				itr->second->push_back(entry);
+			else
+			{
+				std::vector<VehicleAccessoryEntry*>* v = new std::vector<VehicleAccessoryEntry*>();
+				v->push_back(entry);
+				vehicle_accessories.insert(std::make_pair(creature_entry, v));
 			}
 		
-		}while( result->NextRow() );
-
+		}
+		while(result->NextRow());
 		delete result;
 	}
 }
 
-std::vector< VehicleAccessoryEntry* >* ObjectMgr::GetVehicleAccessories( uint32 creature_entry ){
-	std::map< uint32, std::vector< VehicleAccessoryEntry* >* >::iterator itr =
-		vehicle_accessories.find( creature_entry );
+std::vector<VehicleAccessoryEntry*>* ObjectMgr::GetVehicleAccessories(uint32 creature_entry)
+{
+	std::map<uint32, std::vector<VehicleAccessoryEntry*>*>::iterator itr = vehicle_accessories.find(creature_entry);
 	
-	if( itr == vehicle_accessories.end() )
+	if(itr == vehicle_accessories.end())
 		return NULL;
 	else
 		return itr->second;
 }
 
-void ObjectMgr::LoadWorldStateTemplates(){
-	QueryResult *result = WorldDatabase.QueryNA( "SELECT DISTINCT map FROM worldstate_templates ORDER BY map;" );
+void ObjectMgr::LoadWorldStateTemplates()
+{
+	QueryResult* result = WorldDatabase.QueryNA("SELECT DISTINCT map FROM worldstate_templates ORDER BY map;");
 
-	if( result == NULL )
+	if(result == NULL)
 		return;
 
-	do{
-		Field *row = result->Fetch();
-		uint32 mapid = row[ 0 ].GetUInt32();
+	do
+	{
+		Field* row = result->Fetch();
+		uint32 mapid = row[0].GetUInt32();
 		
-		worldstate_templates.insert( std::make_pair( mapid, new std::multimap< uint32, WorldState >() ) );
+		worldstate_templates.insert(std::make_pair(mapid, new std::multimap<uint32, WorldState>()));
 
-	}while( result->NextRow() );
+	}
+	while(result->NextRow());
 
 	delete result;
 
-	result = WorldDatabase.QueryNA( "SELECT map, zone, field, value FROM worldstate_templates;" );
+	result = WorldDatabase.QueryNA("SELECT map, zone, field, value FROM worldstate_templates;");
 
-	if( result == NULL )
+	if(result == NULL)
 		return;
 
-	do{
-		Field *row = result->Fetch();
+	do
+	{
+		Field* row = result->Fetch();
 		WorldState ws;
 
-		uint32 mapid = row[ 0 ].GetUInt32();
-		uint32 zone  = row[ 1 ].GetUInt32();
-		ws.field = row[ 2 ].GetUInt32();
-		ws.value = row[ 3 ].GetUInt32();
+		uint32 mapid = row[0].GetUInt32();
+		uint32 zone  = row[1].GetUInt32();
+		ws.field = row[2].GetUInt32();
+		ws.value = row[3].GetUInt32();
 
-		std::map< uint32, std::multimap< uint32, WorldState >* >::iterator itr
-			= worldstate_templates.find( mapid );
+		std::map< uint32, std::multimap<uint32, WorldState>*>::iterator itr
+			= worldstate_templates.find(mapid);
 
-		if( itr == worldstate_templates.end() )
+		if(itr == worldstate_templates.end())
 			continue;
 
-		itr->second->insert( std::make_pair( zone, ws ) );
+		itr->second->insert(std::make_pair(zone, ws));
 
-	}while( result->NextRow() );
-
+	}
+	while(result->NextRow());
 	delete result;
 }
 
-std::multimap< uint32, WorldState >* ObjectMgr::GetWorldStatesForMap( uint32 map ) const{
-	std::map< uint32, std::multimap< uint32, WorldState >* >::const_iterator itr =
-		worldstate_templates.find( map );
+std::multimap<uint32, WorldState>* ObjectMgr::GetWorldStatesForMap(uint32 map) const
+{
+	std::map<uint32, std::multimap<uint32, WorldState>*>::const_iterator itr = worldstate_templates.find(map);
 
-	if( itr == worldstate_templates.end() )
+	if(itr == worldstate_templates.end())
 		return NULL;
 	else
 		return itr->second;

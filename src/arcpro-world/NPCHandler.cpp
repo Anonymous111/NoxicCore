@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,25 +23,23 @@
 
 trainertype trainer_types[TRAINER_TYPE_MAX] =
 {
-	{	"Warrior",			   0 },
-	{	"Paladin",			   0 },
-	{	"Rogue"  ,			   0 },
-	{	"Warlock",			   0 },
-	{	"Mage",				  0 },
-	{	"Shaman",				0 },
-	{	"Priest",				0 },
-	{	"Hunter",				0 },
-	{	"Druid",				 0 },
-	{	"Leatherwork",		   2 },
-	{	"Skinning",			  2 },
-	{	"Fishing",			   2 },
-	{	"First Aid",			 2 },
-	{	"Physician",			 2 },
-	{	"Engineer",			  2 },
-	{	"Weapon Master",		 0 },
+	{	"Warrior", 0 },
+	{	"Paladin", 0 },
+	{	"Rogue" , 0 },
+	{	"Warlock", 0 },
+	{	"Mage", 0 },
+	{	"Shaman", 0 },
+	{	"Priest", 0 },
+	{	"Hunter", 0 },
+	{	"Druid", 0 },
+	{	"Leatherwork", 2 },
+	{	"Skinning", 2 },
+	{	"Fishing", 2 },
+	{	"First Aid", 2 },
+	{	"Physician", 2 },
+	{	"Engineer", 2 },
+	{	"Weapon Master", 0 },
 };
-
-
 
 //////////////////////////////////////////////////////////////
 /// This function handles MSG_TABARDVENDOR_ACTIVATE:
@@ -53,7 +51,8 @@ void WorldSession::HandleTabardVendorActivateOpcode(WorldPacket & recv_data)
 	uint64 guid;
 	recv_data >> guid;
 	Creature* pCreature = _player->GetMapMgr()->GetCreature(GET_LOWGUID_PART(guid));
-	if(!pCreature) return;
+	if(!pCreature)
+		return;
 
 	SendTabardHelp(pCreature);
 }
@@ -65,7 +64,6 @@ void WorldSession::SendTabardHelp(Creature* pCreature)
 	data << pCreature->GetGUID();
 	SendPacket(&data);
 }
-
 
 //////////////////////////////////////////////////////////////
 /// This function handles CMSG_BANKER_ACTIVATE:
@@ -85,7 +83,6 @@ void WorldSession::HandleBankerActivateOpcode(WorldPacket & recv_data)
 
 void WorldSession::SendBankerList(Creature* pCreature)
 {
-
 	WorldPacket data(8);
 	data.Initialize(SMSG_SHOW_BANK);
 	data << pCreature->GetGUID();
@@ -106,7 +103,8 @@ void WorldSession::HandleTrainerListOpcode(WorldPacket & recv_data)
 	uint64 guid;
 	recv_data >> guid;
 	Creature* train = GetPlayer()->GetMapMgr()->GetCreature(GET_LOWGUID_PART(guid));
-	if(!train) return;
+	if(!train)
+		return;
 
 	_player->Reputation_OnTalk(train->m_factionDBC);
 	SendTrainerList(train);
@@ -168,7 +166,6 @@ void WorldSession::SendTrainerList(Creature* pCreature)
 	}
 }
 
-
 void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recvPacket)
 {
 	CHECK_INWORLD_ASSERT;
@@ -200,13 +197,10 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recvPacket)
 
 	// Check if the trainer offers that spell
 	TrainerSpell* pSpell = NULL;
-	for(vector<TrainerSpell>::iterator itr = pTrainer->Spells.begin(); itr != pTrainer->Spells.end(); ++itr)
+	for(vector< TrainerSpell >::iterator itr = pTrainer->Spells.begin(); itr != pTrainer->Spells.end(); ++itr)
 	{
-		if((itr->pCastSpell && itr->pCastSpell->Id == TeachingSpellID) ||
-		        (itr->pLearnSpell && itr->pLearnSpell->Id == TeachingSpellID))
-		{
+		if((itr->pCastSpell && itr->pCastSpell->Id == TeachingSpellID) || (itr->pLearnSpell && itr->pLearnSpell->Id == TeachingSpellID))
 			pSpell = &(*itr);
-		}
 	}
 
 	// If the trainer doesn't offer it, this is probably some packet mangling
@@ -223,13 +217,10 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recvPacket)
 		return;
 
 //////////////////////////////////////////// Teaching ////////////////////////////////////
-
 	_player->ModGold(-(int32)pSpell->Cost);
 
 	if(pSpell->pCastSpell)
-	{
 		_player->CastSpell(_player, pSpell->pCastSpell->Id, true);
-	}
 	else
 	{
 /////////////////////////////////////// Showing the learning spellvisuals//////////////
@@ -292,7 +283,7 @@ uint8 WorldSession::TrainerGetSpellStatus(TrainerSpell* pSpell)
 	        || (pSpell->Cost && !_player->HasGold(pSpell->Cost))
 	        || (pSpell->RequiredSkillLine && _player->_GetSkillLineCurrent(pSpell->RequiredSkillLine, true) < pSpell->RequiredSkillLineValue)
 	        || (pSpell->IsProfession && _player->GetPrimaryProfessionPoints() == 0)//check level 1 professions if we can learn a new profession
-	  )
+	)
 		return TRAINER_STATUS_NOT_LEARNABLE;
 	return TRAINER_STATUS_LEARNABLE;
 }
@@ -586,15 +577,15 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
 	{
 		for(uint8 i= 0; i < 8; i++)
 		{
-			data << float(1.0f);		// Prob
+			data << float(1.0f); // Prob
 			data << _player->GetSession()->LocalizedWorldSrv(70);
 			data << _player->GetSession()->LocalizedWorldSrv(70);
-			data << uint32(0x00);		// Language
+			data << uint32(0x00); // Language
 
 			for(int e = 0; e < GOSSIP_EMOTE_COUNT; e++)
 			{
-				data << uint32(0x00);		// Emote delay
-				data << uint32(0x00);		// Emote
+				data << uint32(0x00); // Emote delay
+				data << uint32(0x00); // Emote
 			}
 		}
 	}
@@ -610,7 +601,8 @@ void WorldSession::HandleBinderActivateOpcode(WorldPacket & recv_data)
 	recv_data >> guid;
 
 	Creature* pC = _player->GetMapMgr()->GetCreature(GET_LOWGUID_PART(guid));
-	if(!pC) return;
+	if(!pC)
+		return;
 
 	SendInnkeeperBind(pC);
 }
@@ -657,7 +649,7 @@ void WorldSession::SendStabledPetList(uint64 npcguid)
 
 	data << uint8(_player->m_Pets.size());
 	data << uint8(_player->m_StableSlotCount);
-	for(std::map<uint32, PlayerPet*>::iterator itr = _player->m_Pets.begin(); itr != _player->m_Pets.end(); ++itr)
+	for(std::map< uint32, PlayerPet* >::iterator itr = _player->m_Pets.begin(); itr != _player->m_Pets.end(); ++itr)
 	{
 		data << uint32(itr->first);			// pet no
 		data << uint32(itr->second->entry);	// entryid
@@ -666,9 +658,7 @@ void WorldSession::SendStabledPetList(uint64 npcguid)
 		if(itr->second->stablestate == STABLE_STATE_ACTIVE)
 			data << uint8(STABLE_STATE_ACTIVE);
 		else
-		{
 			data << uint8(STABLE_STATE_PASSIVE + 1);
-		}
 	}
 
 	SendPacket(&data);

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,40 +24,40 @@
 
 enum GOSSIP_SPECIAL
 {
-    GOSSIP_NO_SPECIAL		   = 0x00,
-    GOSSIP_POI				  = 0x01,
-    GOSSIP_SPIRIT_HEALER_ACTIVE = 0x02,
-    GOSSIP_VENDOR			   = 0x03,
-    GOSSIP_TRAINER			  = 0x04,
-    GOSSIP_TABARD_VENDOR		= 0x05,
-    GOSSIP_INNKEEPER			= 0x06,
-    GOSSIP_PETITIONER		   = 0x07,
-    GOSSIP_TAXI				 = 0x08,
-    GOSSIP_TEXT				 = 0x09,
-    GOSSIP_MENU				 = 0x0A,
-    GOSSIP_BATTLEMASTER		 = 0x0B,
-    GOSSIP_BANKER			  = 0x0C,
+	GOSSIP_NO_SPECIAL			= 0x00,
+	GOSSIP_POI					= 0x01,
+	GOSSIP_SPIRIT_HEALER_ACTIVE	= 0x02,
+	GOSSIP_VENDOR				= 0x03,
+	GOSSIP_TRAINER				= 0x04,
+	GOSSIP_TABARD_VENDOR		= 0x05,
+	GOSSIP_INNKEEPER			= 0x06,
+	GOSSIP_PETITIONER			= 0x07,
+	GOSSIP_TAXI					= 0x08,
+	GOSSIP_TEXT					= 0x09,
+	GOSSIP_MENU					= 0x0A,
+	GOSSIP_BATTLEMASTER			= 0x0B,
+	GOSSIP_BANKER				= 0x0C,
 };
 
 enum TrainerServiceType
 {
-    TRAINER_SERVICE_AVAILABLE		= 0x0,
-    TRAINER_SERVICE_UNAVAILABLE	  = 0x1,
-    TRAINER_SERVICE_USED			 = 0x2,
-    TRAINER_SERVICE_NOT_SHOWN		= 0x3,
-    TRAINER_SERVICE_NEVER			= 0x4,
-    TRAINER_SERVICE_NO_PET		   = 0x5
+	TRAINER_SERVICE_AVAILABLE	= 0x0,
+	TRAINER_SERVICE_UNAVAILABLE	= 0x1,
+	TRAINER_SERVICE_USED		= 0x2,
+	TRAINER_SERVICE_NOT_SHOWN	= 0x3,
+	TRAINER_SERVICE_NEVER		= 0x4,
+	TRAINER_SERVICE_NO_PET		= 0x5
 };
-#define NUM_TRAINER_SERVICE_TYPES		0x6
+#define NUM_TRAINER_SERVICE_TYPES 0x6
 
 enum TrainerType
 {
-    TRAINER_TYPE_GENERAL			 = 0x0,
-    TRAINER_TYPE_TALENTS			 = 0x1,
-    TRAINER_TYPE_TRADESKILLS		 = 0x2,
-    TRAINER_TYPE_PET				 = 0x3
+	TRAINER_TYPE_GENERAL		= 0x0,
+	TRAINER_TYPE_TALENTS		= 0x1,
+	TRAINER_TYPE_TRADESKILLS	= 0x2,
+	TRAINER_TYPE_PET			= 0x3
 };
-#define NUM_TRAINER_TYPES				0x4
+#define NUM_TRAINER_TYPES 0x4
 
 #pragma pack(push,1)
 struct GossipEmote
@@ -101,7 +101,7 @@ struct GossipOptions
 
 struct GossipNpc
 {
-	GossipNpc() { pOptions = NULL;  }
+	GossipNpc() { pOptions = NULL; }
 	uint32 ID;
 	uint32 EntryId;
 	uint32 TextID;

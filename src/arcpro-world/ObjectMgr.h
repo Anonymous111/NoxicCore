@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -168,7 +168,7 @@ struct TrainerSpell
 struct Trainer
 {
 	uint32 SpellCount;
-	vector<TrainerSpell> Spells;
+	vector< TrainerSpell > Spells;
 	char*	UIMessage;
 	uint32 RequiredSkill;
 	uint32 RequiredSkillLine;
@@ -209,13 +209,13 @@ struct InstanceReputationMod
 struct ReputationModifier
 {
 	uint32 entry;
-	vector<ReputationMod> mods;
+	vector< ReputationMod > mods;
 };
 
 struct InstanceReputationModifier
 {
 	uint32 mapid;
-	vector<InstanceReputationMod> mods;
+	vector< InstanceReputationMod > mods;
 };
 
 enum AREATABLE_FLAGS
@@ -268,7 +268,7 @@ class SERVER_DECL GossipMenu
 	protected:
 		uint32 TextId;
 		uint64 CreatureGuid;
-		std::vector<GossipMenuItem> Menu;
+		std::vector< GossipMenuItem > Menu;
 };
 
 class Charter
@@ -341,12 +341,12 @@ class Charter
 		ARCPRO_INLINE bool IsFull() { return (SignatureCount == Slots); }
 };
 
-typedef std::map<uint32, std::list<SpellEntry*>* >                  OverrideIdMap;
-typedef HM_NAMESPACE::hash_map<uint32, Player*>                     PlayerStorageMap;
-typedef std::list<GM_Ticket*>                                       GmTicketList;
-typedef std::map<uint32, InstanceBossInfo*>                         InstanceBossInfoMap;
+typedef std::map< uint32, std::list< SpellEntry* >* >                  OverrideIdMap;
+typedef HM_NAMESPACE::hash_map< uint32, Player* >                     PlayerStorageMap;
+typedef std::list< GM_Ticket* >                                       GmTicketList;
+typedef std::map< uint32, InstanceBossInfo* >                         InstanceBossInfoMap;
 #ifdef ENABLE_ACHIEVEMENTS
-typedef std::list<const AchievementCriteriaEntry*>					AchievementCriteriaEntryList;
+typedef std::list< const AchievementCriteriaEntry* >					AchievementCriteriaEntryList;
 #endif
 
 #ifndef WIN32
@@ -354,15 +354,15 @@ typedef std::list<const AchievementCriteriaEntry*>					AchievementCriteriaEntryL
 #ifdef arcpro_USE_MAP_PLAYER_INDEX
 
 // you can use the string map (slower)
-typedef map<string, PlayerInfo*> PlayerNameStringIndexMap;
+typedef map< string, PlayerInfo* > PlayerNameStringIndexMap;
 
 
 #else			// or
 
 // gcc has no default hash for string type,
 // so we have to make an explicit hash template here
-template<>
-struct __gnu_cxx::hash<string>
+template< >
+struct __gnu_cxx::hash< string >
 {
 	size_t operator()(string & tbh) const
 	{
@@ -371,13 +371,13 @@ struct __gnu_cxx::hash<string>
 	}
 }
 
-typedef HM_NAMESPACE::hash_map<string, PlayerInfo*> PlayerNameStringIndexMap;
+typedef HM_NAMESPACE::hash_map< string, PlayerInfo* > PlayerNameStringIndexMap;
 
 #endif
 #else
 
 // vc++ has the type for a string hash already, so we don't need to do anything special
-typedef HM_NAMESPACE::hash_map<string, PlayerInfo*> PlayerNameStringIndexMap;
+typedef HM_NAMESPACE::hash_map< string, PlayerInfo* > PlayerNameStringIndexMap;
 
 #endif
 
@@ -395,29 +395,29 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		// other objects
 
 		// Set typedef's
-		typedef HM_NAMESPACE::hash_map<uint32, Group*>						GroupMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Group* >						GroupMap;
 
 		// HashMap typedef's
-		typedef HM_NAMESPACE::hash_map<uint64, Item*>                       ItemMap;
-		typedef HM_NAMESPACE::hash_map<uint32, CorpseData*>                 CorpseCollectorMap;
-		typedef HM_NAMESPACE::hash_map<uint32, PlayerInfo*>                 PlayerNameMap;
-		typedef HM_NAMESPACE::hash_map<uint32, PlayerCreateInfo*>           PlayerCreateInfoMap;
-		typedef HM_NAMESPACE::hash_map<uint32, Guild*>                      GuildMap;
-		typedef HM_NAMESPACE::hash_map<uint32, skilllinespell*>             SLMap;
-		typedef HM_NAMESPACE::hash_map<uint32, std::vector<CreatureItem>*>  VendorMap;
-		typedef HM_NAMESPACE::hash_map<uint32, Transporter*>                TransportMap;
-		typedef HM_NAMESPACE::hash_map<uint32, Trainer*>                    TrainerMap;
-		typedef HM_NAMESPACE::hash_map<uint32, std::vector<TrainerSpell*> > TrainerSpellMap;
-		typedef HM_NAMESPACE::hash_map<uint32, ReputationModifier*>         ReputationModMap;
-		typedef HM_NAMESPACE::hash_map<uint32, Corpse*>                     CorpseMap;
-		typedef HM_NAMESPACE::hash_map<uint32, PlayerCache*>				PlayerCacheMap;
+		typedef HM_NAMESPACE::hash_map< uint64, Item* >                       ItemMap;
+		typedef HM_NAMESPACE::hash_map< uint32, CorpseData* >                 CorpseCollectorMap;
+		typedef HM_NAMESPACE::hash_map< uint32, PlayerInfo* >                 PlayerNameMap;
+		typedef HM_NAMESPACE::hash_map< uint32, PlayerCreateInfo* >           PlayerCreateInfoMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Guild* >                      GuildMap;
+		typedef HM_NAMESPACE::hash_map< uint32, skilllinespell* >             SLMap;
+		typedef HM_NAMESPACE::hash_map< uint32, std::vector< CreatureItem >* >  VendorMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Transporter* >                TransportMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Trainer* >                    TrainerMap;
+		typedef HM_NAMESPACE::hash_map< uint32, std::vector< TrainerSpell* >> TrainerSpellMap;
+		typedef HM_NAMESPACE::hash_map< uint32, ReputationModifier* >         ReputationModMap;
+		typedef HM_NAMESPACE::hash_map< uint32, Corpse* >                     CorpseMap;
+		typedef HM_NAMESPACE::hash_map< uint32, PlayerCache* >				PlayerCacheMap;
 
 		// Map typedef's
-		typedef std::map<uint32, LevelInfo*>                                LevelMap;
-		typedef std::map<pair<uint32, uint32>, LevelMap* >                  LevelInfoMap;
-		typedef std::map<uint32, std::list<ItemPrototype*>* >               ItemSetContentMap;
+		typedef std::map< uint32, LevelInfo* >                                LevelMap;
+		typedef std::map< pair<uint32, uint32>, LevelMap* >                  LevelInfoMap;
+		typedef std::map< uint32, std::list< ItemPrototype* >* >               ItemSetContentMap;
 		typedef std::map<uint32, uint32>                                    NpcToGossipTextMap;
-		typedef std::map<uint32, set<SpellEntry*> >                         PetDefaultSpellMap;
+		typedef std::map< uint32, set< SpellEntry* >>                         PetDefaultSpellMap;
 		typedef std::map<uint32, uint32>                                    PetSpellCooldownMap;
 		typedef std::multimap <uint32, uint32>                               BCEntryStorage;
 		typedef std::map< uint32, SpellTargetConstraint* >					SpellTargetConstraintMap;
@@ -507,16 +507,16 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		void DeleteAllRemovedGMTickets();
 		GM_Ticket* GetGMTicket(uint64 ticketGuid);
 		GM_Ticket* GetGMTicketByPlayer(uint64 playerGuid);
-		//std::list<GM_Ticket*>* GetGMTicketsByPlayer(uint64 playerGuid);
+		//std::list< GM_Ticket* >* GetGMTicketsByPlayer(uint64 playerGuid);
 
 		skilllinespell* GetSpellSkill(uint32 id);
 		SpellEntry* GetNextSpellRank(SpellEntry* sp, uint32 level);
 
 		//Vendors
-		std::vector<CreatureItem> *GetVendorList(uint32 entry);
-		void SetVendorList(uint32 Entry, std::vector<CreatureItem>* list_);
+		std::vector< CreatureItem > *GetVendorList(uint32 entry);
+		void SetVendorList(uint32 Entry, std::vector< CreatureItem >* list_);
 
-		std::list<ItemPrototype*>* GetListForItemSet(uint32 setid);
+		std::list< ItemPrototype* >* GetListForItemSet(uint32 setid);
 
 		Pet* CreatePet(uint32 entry);
 
@@ -581,7 +581,7 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		LevelInfo* GetLevelInfo(uint32 Race, uint32 Class, uint32 Level);
 		void GenerateLevelUpInfo();
 		void LoadDefaultPetSpells();
-		set<SpellEntry*>* GetDefaultPetSpells(uint32 Entry);
+		set< SpellEntry* >* GetDefaultPetSpells(uint32 Entry);
 		uint32 GetPetSpellCooldown(uint32 SpellId);
 		void LoadPetSpellCooldowns();
 		WayPointMap* GetWayPointMap(uint32 spawnid);
@@ -610,13 +610,13 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		void UpdateArenaTeamWeekly();
 		void ResetArenaTeamRatings();
 		void LoadArenaTeams();
-		HM_NAMESPACE::hash_map<uint32, ArenaTeam*> m_arenaTeamMap[3];
-		HM_NAMESPACE::hash_map<uint32, ArenaTeam*> m_arenaTeams;
+		HM_NAMESPACE::hash_map< uint32, ArenaTeam* > m_arenaTeamMap[3];
+		HM_NAMESPACE::hash_map< uint32, ArenaTeam* > m_arenaTeams;
 		void RemoveArenaTeam(ArenaTeam* team);
 		void AddArenaTeam(ArenaTeam* team);
 		Mutex m_arenaTeamLock;
 
-		typedef HM_NAMESPACE::hash_map<uint32, NpcMonsterSay*> MonsterSayMap;
+		typedef HM_NAMESPACE::hash_map< uint32, NpcMonsterSay* > MonsterSayMap;
 		MonsterSayMap mMonsterSays[NUM_MONSTER_SAY_EVENTS];
 
 		NpcMonsterSay* HasMonsterSay(uint32 Entry, MONSTER_SAY_EVENTS Event);
@@ -641,7 +641,7 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		ARCPRO_INLINE GuildMap::iterator GetGuildsBegin() { return mGuild.begin(); }
 		ARCPRO_INLINE GuildMap::iterator GetGuildsEnd() { return mGuild.end(); }
 
-		std::set<ProfessionDiscovery*> ProfessionDiscoveryTable;
+		std::set< ProfessionDiscovery* > ProfessionDiscoveryTable;
 
 		// cebernic: This is a perfect Broadcast system,multi-lang supported also.
 		ARCPRO_INLINE uint32 GetBCGroupCountByKey(uint32 Key) { return (uint32)m_BCEntryStorage.count(Key); }
@@ -674,9 +674,9 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 #endif
 
 		void LoadVehicleAccessories();
-		std::vector< VehicleAccessoryEntry* >* GetVehicleAccessories( uint32 creature_entry );
+		std::vector< VehicleAccessoryEntry* >* GetVehicleAccessories(uint32 creature_entry);
 		void LoadWorldStateTemplates();
-		std::multimap< uint32, WorldState >* GetWorldStatesForMap( uint32 map ) const;
+		std::multimap< uint32, WorldState >* GetWorldStatesForMap(uint32 map) const;
 
 #undef ENABLE_ALWAYS_SERIOUS_MODE_GCC_STL_HACK
 
@@ -693,8 +693,8 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 		//////////////////////////////////////////////////////////////////////////////
 		// I've been asked if there was an easter egg in the source code
 		// No there isn't really, but now here's this easter octagon instead, enjoy!
-		// ( if you are artistic, female, blue eyed with good imagination, and
-		//   at least some sense of humor, this might even look like an egg. :P )
+		// (if you are artistic, female, blue eyed with good imagination, and
+		//   at least some sense of humor, this might even look like an egg. :P)
 		//
 		//                  ---------
 		//                 /         \
@@ -748,18 +748,18 @@ class SERVER_DECL ObjectMgr : public Singleton < ObjectMgr >, public EventableOb
 
 		ReputationModMap m_reputation_faction;
 		ReputationModMap m_reputation_creature;
-		HM_NAMESPACE::hash_map<uint32, InstanceReputationModifier*> m_reputation_instance;
+		HM_NAMESPACE::hash_map< uint32, InstanceReputationModifier* > m_reputation_instance;
 
-		HM_NAMESPACE::hash_map<uint32, Charter*> m_charters[NUM_CHARTER_TYPES];
+		HM_NAMESPACE::hash_map< uint32, Charter* > m_charters[NUM_CHARTER_TYPES];
 
 		set<uint32> m_disabled_spells;
 
 		uint64 TransportersCount;
-		HM_NAMESPACE::hash_map<uint32, PlayerInfo*> m_playersinfo;
+		HM_NAMESPACE::hash_map< uint32, PlayerInfo* > m_playersinfo;
 		PlayerNameStringIndexMap m_playersInfoByName;
 
-		HM_NAMESPACE::hash_map<uint32, WayPointMap*> m_waypoints; //stored by spawnid
-		HM_NAMESPACE::hash_map<uint32, TimedEmoteList*> m_timedemotes; //stored by spawnid
+		HM_NAMESPACE::hash_map< uint32, WayPointMap* > m_waypoints; //stored by spawnid
+		HM_NAMESPACE::hash_map< uint32, TimedEmoteList* > m_timedemotes; //stored by spawnid
 
 
 		///// Object Tables ////

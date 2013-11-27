@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -169,7 +169,7 @@ void AddonMgr::SendAddonInfoPacket(WorldPacket* source, uint32 pos, WorldSession
 		unpacked >> unknown;
 
 		// Hacky fix, Yea I know its a hacky fix I will make a proper handler one's I got the crc crap
-		/*		if (crc != 0x4C1C776D) // CRC of public key version 2.0.1
+		/*		if(crc != 0x4C1C776D) // CRC of public key version 2.0.1
 					returnpacket.append(PublicKey,264); // part of the hacky fix
 				else
 					returnpacket << uint8(0x02) << uint8(0x01) << uint8(0x00) << uint32(0) << uint8(0);*/

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -251,11 +251,11 @@ struct SplinePoint
 
 /*
 #if ENABLE_SHITTY_STL_HACKS == 1
-typedef HM_NAMESPACE::hash_map<Unit*, int32> TargetMap;
+typedef HM_NAMESPACE::hash_map< Unit*, int32 > TargetMap;
 #else
 namespace HM_NAMESPACE
 {
-	template <>
+	template < >
 	struct hash<Unit*>
 	{
 		union __vp {
@@ -272,13 +272,13 @@ namespace HM_NAMESPACE
 	};
 };
 
-typedef HM_NAMESPACE::hash_map<Unit*, int32, HM_NAMESPACE::hash<Unit*> > TargetMap;
+typedef HM_NAMESPACE::hash_map< Unit*, int32, HM_NAMESPACE::hash<Unit*>> TargetMap;
 #endif
 */
-typedef HM_NAMESPACE::hash_map<uint64, int32> TargetMap;
+typedef HM_NAMESPACE::hash_map< uint64, int32 > TargetMap;
 
 typedef std::set<Unit*> AssistTargetSet;
-typedef std::map<uint32, AI_Spell*> SpellMap;
+typedef std::map< uint32, AI_Spell* > SpellMap;
 
 class SERVER_DECL AIInterface
 {
@@ -402,7 +402,7 @@ class SERVER_DECL AIInterface
 
 		// Movement
 		void SendMoveToPacket();
-		//void SendMoveToSplinesPacket(std::list<Waypoint> wp, bool run);
+		//void SendMoveToSplinesPacket(std::list< Waypoint > wp, bool run);
 		bool MoveTo(float x, float y, float z, float o);
 		void UpdateSpeeds();
 
@@ -495,7 +495,7 @@ class SERVER_DECL AIInterface
 		/*ARCPRO_INLINE void ResetProcCounts()
 		{
 			AI_Spell * sp;
-			for(list<AI_Spell*>::iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
+			for(list< AI_Spell* >::iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
 					{
 						sp = *itr;
 						sp->procCount =sp->procCountDB;
@@ -511,7 +511,7 @@ class SERVER_DECL AIInterface
 		TimedEmoteList*		timed_emotes;
 		ARCPRO_INLINE void SetPetOwner(Unit* owner) { m_PetOwner = owner; }
 
-		list<AI_Spell*> m_spells;
+		list< AI_Spell* > m_spells;
 
 		bool disable_combat;
 
@@ -586,7 +586,7 @@ class SERVER_DECL AIInterface
 		float FollowDistance_backup;
 		float m_fallowAngle;
 
-		//std::set<AI_Target> m_aiTargets;
+		//std::set< AI_Target > m_aiTargets;
 		Mutex m_aiTargetsLock;
 		TargetMap m_aiTargets;
 		AssistTargetSet m_assistTargets;
@@ -615,7 +615,7 @@ class SERVER_DECL AIInterface
 		Note: First element in the spline (m_currentMoveSpline[0]) is always the position the creature started moving from.
 		Index is always set to 1 when movement is started, as index 0 is referenced for first move.
 		*/
-		std::vector<SplinePoint> m_currentMoveSpline;
+		std::vector< SplinePoint > m_currentMoveSpline;
 		uint32 m_currentMoveSplineIndex;
 		uint32 m_currentSplineUpdateCounter;
 		float m_currentSplineFinalOrientation;
@@ -635,7 +635,7 @@ class SERVER_DECL AIInterface
 
 		float m_lastFollowX;
 		float m_lastFollowY;
-		//typedef std::map<uint32, WayPoint*> WayPointMap;
+		//typedef std::map< uint32, WayPoint* > WayPointMap;
 
 		uint64 m_UnitToFollow;
 		uint64 m_UnitToFollow_backup;//used unly when forcing creature to wander (blind spell) so when effect wears off we can follow our master again (guardian)
@@ -651,7 +651,7 @@ class SERVER_DECL AIInterface
 		MovementState m_MovementState;
 		uint32 m_guardTimer;
 		int32 m_currentHighestThreat;
-		std::list<spawn_timed_emotes*>::iterator	next_timed_emote;
+		std::list< spawn_timed_emotes* >::iterator	next_timed_emote;
 		uint32										timed_emote_expire;
 	private:
 		//specifies if m_waypoints was loaded from DB, so shared between other AIInterface instances.

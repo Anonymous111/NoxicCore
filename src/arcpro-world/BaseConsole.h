@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -26,23 +26,23 @@ class ConsoleSocket;
 
 class BaseConsole
 {
-	public:
-		virtual ~BaseConsole() {}
-		virtual void Write(const char* Format, ...) = 0;
+public:
+	virtual ~BaseConsole() {}
+	virtual void Write(const char* Format, ...) = 0;
 };
 
 class RemoteConsole : public BaseConsole
 {
-		ConsoleSocket* m_pSocket;
-	public:
-		RemoteConsole(ConsoleSocket* pSocket);
-		void Write(const char* Format, ...);
+	ConsoleSocket* m_pSocket;
+public:
+	RemoteConsole(ConsoleSocket* pSocket);
+	void Write(const char* Format, ...);
 };
 
 class LocalConsole : public BaseConsole
 {
-	public:
-		void Write(const char* Format, ...);
+public:
+	void Write(const char* Format, ...);
 };
 
 void HandleConsoleInput(BaseConsole* pConsole, const char* szInput);

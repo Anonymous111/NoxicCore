@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -29,7 +29,7 @@
 class Map;
 
 #define MAP_CELL_DEFAULT_UNLOAD_TIME 300
-#define MAKE_CELL_EVENT(x,y) ( ((x) * 1000) + 200 + y )
+#define MAKE_CELL_EVENT(x,y) (((x) * 1000) + 200 + y)
 #define DECODE_CELL_EVENT(dest_x, dest_y, ev) (dest_x) = ((ev-200)/1000); (dest_y) = ((ev-200)%1000);
 
 class SERVER_DECL MapCell
@@ -95,7 +95,7 @@ class SERVER_DECL MapCell
 		void CheckUnload();
 
 		//keep track of active corpses so we don't unload a MapCell with an active corpse (otherwise players will not be able to resurrect)
-		std::list< Object* > _corpses;
+		std::list<Object*> _corpses;
 
 		MapMgr* _mapmgr;
 
