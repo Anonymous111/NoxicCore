@@ -22,8 +22,8 @@
 class BarrelOfFilth : public GameObjectAIScript
 {
 public:
-	Telathion_the_Impure_Object(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-	static GameObjectAIScript* Create(GameObject* GO) { return new Telathion_the_Impure_Object(GO); }
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(BarrelOfFilth)
+	BarrelOfFilth(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 
 	void OnActivate(Player* pPlayer)
 	{

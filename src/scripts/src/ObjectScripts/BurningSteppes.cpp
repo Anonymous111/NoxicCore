@@ -27,8 +27,8 @@ public:
 
 	void OnActivate(Player* pPlayer)
 	{
-		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(3821);
-		if(qle == NULL)
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(3821);
+		if(pQuest == NULL)
 			return;
 
 		Creature* shaghost = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 9136);
@@ -49,11 +49,11 @@ public:
 
 	void OnActivate(Player* pPlayer)
 	{
-		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(4296);
-		if(qle == NULL)
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(4296);
+		if(pQuest == NULL)
 			return;
 
-		_gameobject->CastSpell(pPlayer, 15065, true); // Cast spell: "Create Tablet Transcript".
+		pPlayer->CastSpell(pPlayer, 15065, true); // Cast spell: "Create Tablet Transcript".
 		/*if(pPlayer->GetItemInterface()->GetItemCount(11470, 0) < 1)
 			sEAS.AddItem(11470, pPlayer);*/
 	}

@@ -148,7 +148,7 @@ public:
 	{
 		if(pPlayer->HasQuest(10584))
 		{
-			Creature* Elec = sEAS.SpawnCreature(pPlayer, 21729, _gameobject->GetPositionNC(), 1000);
+			Creature* Elec = sEAS.SpawnCreature(pPlayer, 21729, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), _gameobject->GetOrientation(), 1000);
 			Elec->GetAIInterface()->AttackReaction(pPlayer, 1);
 		}
 		_gameobject->Despawn(0, 1000);
@@ -158,22 +158,20 @@ public:
 class NetherEgg : public GameObjectAIScript
 {
 public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(NetherEgg)
 	NetherEgg(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new NetherEgg(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(pPlayer->HasQuest(10609))
-		{
-			uint32 itemcount = pPlayer->GetItemInterface()->GetItemCount(30743, true);
-			itemcount += pPlayer->GetItemInterface()->GetItemCount(30782, true);
-			itemcount += pPlayer->GetItemInterface()->GetItemCount(30783, true);
-			if(itemcount <= 9 && itemcount == (rand()%itemcount + 9))
-				sEAS.SpawnCreature(_gameobject, 21823, _gameobject->GetPositionNC(), 1000);
-			else
-				_gameobject->CastSpell(_gameobject, 36326, true);
-		}
-		_gameobject->Despawn(0, 1000);
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(10609);
+		if(pQuest == NULL)
+			return;
+
+		Creature* whelp = sEAS.SpawnCreature(pPlayer, 20021, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), 0, 0);
+		if(whelp != NULL)
+			whelp->Despawn(5 * 60 * 1000, 0);
+
+		_gameobject->Despawn(300000, 0);
 	}
 };
 
