@@ -5544,6 +5544,12 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 71905;
 	}
+	sp = CheckAndReturnSpellEntry(71905);
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_DUMMY;
+	}
 
 	//Compact Harvest Reaper
 	sp = CheckAndReturnSpellEntry(4078);
