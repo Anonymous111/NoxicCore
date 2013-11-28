@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -29,11 +29,11 @@
 
 void ParseBanArgs(char* args, char** BanDuration, char** BanReason)
 {
-	// Usage: .ban character <char> [duration] [reason]
-	//        .ban ip <ipaddr> [duration] [reason]
-	//        .ban account <acct> [duration] [reason]
-	//        .ban all <char> [duration] [reason]
-	// Duration must be a number optionally followed by a character representing the calendar subdivision to use (h>hours, d>days, w>weeks, m>months, y>years, default minutes)
+	// Usage: .ban character < char > [duration] [reason]
+	//        .ban ip < ipaddr > [duration] [reason]
+	//        .ban account < acct > [duration] [reason]
+	//        .ban all < char > [duration] [reason]
+	// Duration must be a number optionally followed by a character representing the calendar subdivision to use (h >hours, d >days, w >weeks, m >months, y >years, default minutes)
 	// Lack of duration results in a permanent ban.
 	char* pBanDuration = strchr(args, ' ');
 	char* pReason = NULL;
@@ -69,9 +69,7 @@ int32 GetSpellIDFromLink(const char* spelllink)
 
 	const char* ptr = strstr(spelllink, "|Hspell:");
 	if(ptr == NULL)
-	{
 		return 0;
-	}
 
 	return atol(ptr + 8); // spell id is just past "|Hspell:" (8 bytes)
 }
@@ -94,17 +92,13 @@ bool ChatHandler::HandleWorldPortCommand(const char* args, WorldSession* m_sessi
 bool ChatHandler::HandlePortToCreatureSpawnCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
-	{
 		return false;
-	}
 
 	uint32 spawn_id, spawn_map;
 	float spawn_x, spawn_y, spawn_z;
 
 	if(sscanf(args, "%u", (unsigned int*)&spawn_id) != 1)
-	{
 		return false;
-	}
 	QueryResult* QR = WorldDatabase.Query("SELECT * FROM creature_spawns WHERE id=%u", spawn_id);
 	if(!QR)
 	{
@@ -124,17 +118,13 @@ bool ChatHandler::HandlePortToCreatureSpawnCommand(const char* args, WorldSessio
 bool ChatHandler::HandlePortToGameObjectSpawnCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
-	{
 		return false;
-	}
 
 	uint32 spawn_id, spawn_map;
 	float spawn_x, spawn_y, spawn_z;
 
 	if(sscanf(args, "%u", (unsigned int*)&spawn_id) != 1)
-	{
 		return false;
-	}
 	QueryResult* QR = WorldDatabase.Query("SELECT * FROM gameobject_spawns WHERE id=%u", spawn_id);
 	if(!QR)
 	{
@@ -164,9 +154,7 @@ bool ChatHandler::HandleClearCooldownsCommand(const char* args, WorldSession* m_
 	if(!plr) return false;
 
 	if(plr != m_session->GetPlayer())
-	{
 		sGMLog.writefromsession(m_session, "Cleared all cooldowns for player %s", plr->GetName());
-	}
 
 	if(plr->getClass() == WARRIOR)
 	{
@@ -254,9 +242,7 @@ bool ChatHandler::HandleClearCooldownsCommand(const char* args, WorldSession* m_
 bool ChatHandler::HandleLearnCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
-	{
 		return false;
-	}
 
 	Player* plr = getSelectedChar(m_session, true);
 	if(!plr)
@@ -266,9 +252,7 @@ bool ChatHandler::HandleLearnCommand(const char* args, WorldSession* m_session)
 	}
 
 	if(!plr)
-	{
 		return false;
-	}
 
 	if(stricmp(args, "all") == 0)
 	{
@@ -292,9 +276,7 @@ bool ChatHandler::HandleLearnCommand(const char* args, WorldSession* m_session)
 
 		uint32 c = plr->getClass();
 		for(uint32 i = 0; spellarray[c][i] != 0; ++i)
-		{
 			plr->addSpell(spellarray[c][i]);
-		}
 
 		static uint32 paladinspellarray[RACE_DRAENEI + 1][5] =
 		{
@@ -349,28 +331,26 @@ bool ChatHandler::HandleLearnCommand(const char* args, WorldSession* m_session)
 				{
 					plr->addSpell(paladinspellarray[r][i]);
 				}
-				break;
+			break;
 			case MAGE:
 				for(uint32 i = 0; magespellarray[r][i] != 0; ++i)
 				{
 					plr->addSpell(magespellarray[r][i]);
 				}
-				break;
+			break;
 			case SHAMAN:
 				for(uint32 i = 0; shamanspellarray[r][i] != 0; ++i)
 				{
 					plr->addSpell(shamanspellarray[r][i]);
 				}
-				break;
+			break;
 		}
 		return true;
 	}
 
 	uint32 spell = atol((char*)args);
 	if(spell == 0)
-	{
 		spell = GetSpellIDFromLink(args);
-	}
 
 	SpellEntry* sp = dbcSpell.LookupEntryForced(spell);
 	if(!sp)
@@ -414,7 +394,6 @@ bool ChatHandler::HandleReviveCommand(const char* args, WorldSession* m_session)
 	SelectedPlayer->SetPower(POWER_TYPE_MANA, SelectedPlayer->GetMaxPower(POWER_TYPE_MANA));
 	SelectedPlayer->SetPower(POWER_TYPE_ENERGY, SelectedPlayer->GetMaxPower(POWER_TYPE_ENERGY));
 
-
 	if(SelectedPlayer != m_session->GetPlayer())
 		sGMLog.writefromsession(m_session, "revived player %s", SelectedPlayer->GetName());
 
@@ -451,13 +430,9 @@ bool ChatHandler::HandleExploreCheatCommand(const char* args, WorldSession* m_se
 	for(uint8 i = 0; i < PLAYER_EXPLORED_ZONES_LENGTH; ++i)
 	{
 		if(stricmp(args, "on") == 0)
-		{
 			chr->SetFlag(PLAYER_EXPLORED_ZONES_1 + i, 0xFFFFFFFF);
-		}
 		else if(stricmp(args, "off") == 0)
-		{
 			chr->RemoveFlag(PLAYER_EXPLORED_ZONES_1 + i, 0xFFFFFFFF);
-		}
 	}
 #ifdef ENABLE_ACHIEVEMENTS
 	chr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EXPLORE_AREA); // update
@@ -494,8 +469,7 @@ bool ChatHandler::HandleBanCharacterCommand(const char* args, WorldSession* m_se
 		}
 		SystemMessage(m_session, "Banning player '%s' in database for '%s'.", pCharacter, (pReason == NULL) ? "No reason." : pReason);
 		string escaped_reason = (pReason == NULL) ? "No reason." : CharacterDatabase.EscapeString(string(pReason));
-		CharacterDatabase.Execute("UPDATE characters SET banned = %u, banReason = '%s' WHERE guid = %u",
-		                          BanTime ? BanTime + (uint32)UNIXTIME : 1, escaped_reason.c_str(), pInfo->guid);
+		CharacterDatabase.Execute("UPDATE characters SET banned = %u, banReason = '%s' WHERE guid = %u", BanTime ? BanTime + (uint32)UNIXTIME : 1, escaped_reason.c_str(), pInfo->guid);
 	}
 	else
 	{
@@ -512,9 +486,7 @@ bool ChatHandler::HandleBanCharacterCommand(const char* args, WorldSession* m_se
 	snprintf(msg, 200, "%sGM: %s has been banned by %s for %s. Reason: %s", MSG_COLOR_RED, pCharacter, m_session->GetPlayer()->GetName(), BanTime ? ConvertTimeStampToString(BanTime).c_str() : "ever", (pReason == NULL) ? "No reason." : pReason);
 	sWorld.SendWorldText(msg, NULL);
 	if(sWorld.m_banTable && pInfo)
-	{
 		CharacterDatabase.Execute("INSERT INTO %s VALUES('%s', '%s', %u, %u, '%s')", sWorld.m_banTable, m_session->GetPlayer()->GetName(), pInfo->name, (uint32)UNIXTIME, (uint32)UNIXTIME + BanTime, (pReason == NULL) ? "No reason." : CharacterDatabase.EscapeString(string(pReason)).c_str());
-	}
 
 	if(pPlayer)
 	{
@@ -611,9 +583,7 @@ bool ChatHandler::HandleUnBanCharacterCommand(const char* args, WorldSession* m_
 		pPlayer->UnSetBanned();
 	}
 	else
-	{
 		GreenSystemMessage(m_session, "Player %s not found ingame.", Character);
-	}
 
 	// Ban in database
 	CharacterDatabase.Execute("UPDATE characters SET banned = 0 WHERE name = '%s'", CharacterDatabase.EscapeString(string(Character)).c_str());
@@ -794,7 +764,6 @@ static const PetFlagNames PetFlagToName[] =
 
 static const uint32 numpetflags = sizeof(PetFlagToName) / sizeof(PetFlagNames);
 
-
 bool ChatHandler::HandleNpcInfoCommand(const char* args, WorldSession* m_session)
 {
 
@@ -838,8 +807,8 @@ bool ChatHandler::HandleNpcInfoCommand(const char* args, WorldSession* m_session
 
 		SystemMessage(m_session, "NPCFlags: %d%s", crt->GetUInt32Value(UNIT_NPC_FLAGS), s.c_str());
 	}
-	SystemMessage(m_session, "DisplayID: %u", crt->GetDisplayId() );
-	SystemMessage(m_session, "VehicleID: %u", crt->GetProto()->vehicleid );
+	SystemMessage(m_session, "DisplayID: %u", crt->GetDisplayId());
+	SystemMessage(m_session, "VehicleID: %u", crt->GetProto()->vehicleid);
 
 	if(crt->m_faction)
 		SystemMessage(m_session, "Combat Support: 0x%.3X", crt->m_faction->FriendlyMask);
@@ -896,16 +865,16 @@ bool ChatHandler::HandleNpcInfoCommand(const char* args, WorldSession* m_session
 	SystemMessage(m_session, "PvP flags: %u", pvpflags);
 
 	for(uint32 i = 0; i < numpvpflags; i++)
-		if((pvpflags & UnitPvPFlagToName[ i ].Flag) != 0)
-			SystemMessage(m_session, "%s", UnitPvPFlagToName[ i ].Name);
+		if((pvpflags & UnitPvPFlagToName[i].Flag) != 0)
+			SystemMessage(m_session, "%s", UnitPvPFlagToName[i].Name);
 
 	uint8 petflags = crt->GetByte(UNIT_FIELD_BYTES_2, 2);
 
 	SystemMessage(m_session, "Pet flags: %u", petflags);
 
 	for(uint32 i = 0; i < numpetflags; i++)
-		if((petflags & PetFlagToName[ i ].Flag) != 0)
-			SystemMessage(m_session, "%s", PetFlagToName[ i ].Name);
+		if((petflags & PetFlagToName[i].Flag) != 0)
+			SystemMessage(m_session, "%s", PetFlagToName[i].Name);
 
 	if(crt->CombatStatus.IsInCombat())
 		SystemMessage(m_session, "Creature is in combat");
@@ -931,22 +900,20 @@ bool ChatHandler::HandleNpcInfoCommand(const char* args, WorldSession* m_session
 	SystemMessage(m_session, "Charmer GUID: %u", Arcpro::Util::GUID_LOPART(crt->GetCharmedByGUID()));
 	SystemMessage(m_session, "Creator Spell: %u", Arcpro::Util::GUID_LOPART(crt->GetCreatedBySpell()));
 
-
-
 	uint32 unitflags = crt->GetUInt32Value(UNIT_FIELD_FLAGS);
 
 	SystemMessage(m_session, "Unit flags: %u", unitflags);
 
 	for(uint32 i = 0; i < numflags; i++)
-		if((unitflags & UnitFlagToName[ i ].Flag) != 0)
-			SystemMessage(m_session, "%s", UnitFlagToName[ i ].Name);
+		if((unitflags & UnitFlagToName[i].Flag) != 0)
+			SystemMessage(m_session, "%s", UnitFlagToName[i].Name);
 
 	uint32 dynflags = crt->GetUInt32Value(UNIT_DYNAMIC_FLAGS);
 	SystemMessage(m_session, "Unit dynamic flags: %u", dynflags);
 
 	for(uint32 i = 0; i < numdynflags; i++)
-		if((dynflags & UnitDynFlagToName[ i ].Flag) != 0)
-			SystemMessage(m_session, "%s", UnitDynFlagToName[ i ].Name);
+		if((dynflags & UnitDynFlagToName[i].Flag) != 0)
+			SystemMessage(m_session, "%s", UnitDynFlagToName[i].Name);
 
 	return true;
 }
@@ -997,8 +964,10 @@ bool ChatHandler::HandleIncreaseWeaponSkill(const char* args, WorldSession* m_se
 	Player* pr = getSelectedChar(m_session, true);
 
 	uint32 SubClassSkill = 0;
-	if(!pr) pr = m_session->GetPlayer();
-	if(!pr) return false;
+	if(!pr)
+		pr = m_session->GetPlayer();
+	if(!pr)
+		return false;
 	Item* it = pr->GetItemInterface()->GetInventoryItem(EQUIPMENT_SLOT_MAINHAND);
 	ItemPrototype* proto = NULL;
 	if(!it)
@@ -1009,70 +978,68 @@ bool ChatHandler::HandleIncreaseWeaponSkill(const char* args, WorldSession* m_se
 	{
 		switch(proto->SubClass)
 		{
-				// Weapons
+			// Weapons
 			case 0:	// 1 handed axes
 				SubClassSkill = SKILL_AXES;
-				break;
+			break;
 			case 1:	// 2 handed axes
 				SubClassSkill = SKILL_2H_AXES;
-				break;
+			break;
 			case 2:	// bows
 				SubClassSkill = SKILL_BOWS;
-				break;
+			break;
 			case 3:	// guns
 				SubClassSkill = SKILL_GUNS;
-				break;
+			break;
 			case 4:	// 1 handed mace
 				SubClassSkill = SKILL_MACES;
-				break;
+			break;
 			case 5:	// 2 handed mace
 				SubClassSkill = SKILL_2H_MACES;
-				break;
+			break;
 			case 6:	// polearms
 				SubClassSkill = SKILL_POLEARMS;
-				break;
+			break;
 			case 7: // 1 handed sword
 				SubClassSkill = SKILL_SWORDS;
-				break;
+			break;
 			case 8: // 2 handed sword
 				SubClassSkill = SKILL_2H_SWORDS;
-				break;
+			break;
 			case 9: // obsolete
 				SubClassSkill = 136;
-				break;
+			break;
 			case 10: //1 handed exotic
 				SubClassSkill = 136;
-				break;
+			break;
 			case 11: // 2 handed exotic
 				SubClassSkill = 0;
-				break;
+			break;
 			case 12: // fist
 				SubClassSkill = SKILL_FIST_WEAPONS;
-				break;
+			break;
 			case 13: // misc
 				SubClassSkill = 0;
-				break;
+			break;
 			case 15: // daggers
 				SubClassSkill = SKILL_DAGGERS;
-				break;
+			break;
 			case 16: // thrown
 				SubClassSkill = SKILL_THROWN;
-				break;
+			break;
 			case 18: // crossbows
 				SubClassSkill = SKILL_CROSSBOWS;
-				break;
+			break;
 			case 19: // wands
 				SubClassSkill = SKILL_WANDS;
-				break;
+			break;
 			case 20: // fishing
 				SubClassSkill = SKILL_FISHING;
-				break;
+			break;
 		}
 	}
 	else
-	{
 		SubClassSkill = 162;
-	}
 
 	if(!SubClassSkill)
 	{
@@ -1091,9 +1058,8 @@ bool ChatHandler::HandleIncreaseWeaponSkill(const char* args, WorldSession* m_se
 		pr->_AddSkillLine(skill, 1, 450);
 	}
 	else
-	{
 		pr->_AdvanceSkillLine(skill, cnt);
-	}
+
 	return true;
 }
 
@@ -1101,7 +1067,8 @@ bool ChatHandler::HandleIncreaseWeaponSkill(const char* args, WorldSession* m_se
 bool ChatHandler::HandleResetTalentsCommand(const char* args, WorldSession* m_session)
 {
 	Player* plr = this->getSelectedChar(m_session);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 
 	plr->Reset_Talents();
 
@@ -1114,7 +1081,8 @@ bool ChatHandler::HandleResetTalentsCommand(const char* args, WorldSession* m_se
 bool ChatHandler::HandleResetSpellsCommand(const char* args, WorldSession* m_session)
 {
 	Player* plr = this->getSelectedChar(m_session);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 
 	plr->Reset_Spells();
 
@@ -1126,7 +1094,8 @@ bool ChatHandler::HandleResetSpellsCommand(const char* args, WorldSession* m_ses
 
 bool ChatHandler::HandleAccountLevelCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	char account[100];
 	char gmlevel[100];
@@ -1144,7 +1113,8 @@ bool ChatHandler::HandleAccountLevelCommand(const char* args, WorldSession* m_se
 
 bool ChatHandler::HandleAccountUnbanCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 	char* pAccount = (char*)args;
 
 	sLogonCommHandler.Account_SetBanned(pAccount, 0, "");
@@ -1192,7 +1162,8 @@ bool ChatHandler::HandleAccountBannedCommand(const char* args, WorldSession* m_s
 
 bool ChatHandler::HandleAccountMuteCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	char* pAccount = (char*)args;
 	char* pDuration = strchr(pAccount, ' ');
@@ -1210,8 +1181,7 @@ bool ChatHandler::HandleAccountMuteCommand(const char* args, WorldSession* m_ses
 	sLogonCommHandler.Account_SetMute(pAccount, banned);
 
 	string tsstr = ConvertTimeStampToDataTime(timeperiod + (uint32)UNIXTIME);
-	GreenSystemMessage(m_session, "Account '%s' has been muted until %s. The change will be effective immediately.", pAccount,
-	                   tsstr.c_str());
+	GreenSystemMessage(m_session, "Account '%s' has been muted until %s. The change will be effective immediately.", pAccount, tsstr.c_str());
 
 	sGMLog.writefromsession(m_session, "mutex account %s until %s", pAccount, ConvertTimeStampToDataTime(timeperiod + (uint32)UNIXTIME).c_str());
 
@@ -1271,13 +1241,12 @@ bool ChatHandler::HandleGetTransporterTime(const char* args, WorldSession* m_ses
 bool ChatHandler::HandleRemoveAurasCommand(const char* args, WorldSession* m_session)
 {
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return false;
+	if(!plr)
+		return false;
 
 	BlueSystemMessage(m_session, "Removing all auras...");
 	for(uint32 i = MAX_REMOVABLE_AURAS_START; i < MAX_REMOVABLE_AURAS_END; ++i)
-	{
 		if(plr->m_auras[i] != 0) plr->m_auras[i]->Remove();
-	}
 	if(plr != m_session->GetPlayer())
 		sGMLog.writefromsession(m_session, "Removed all of %s's auras.", plr->GetName());
 	return true;
@@ -1286,7 +1255,8 @@ bool ChatHandler::HandleRemoveAurasCommand(const char* args, WorldSession* m_ses
 bool ChatHandler::HandleRemoveRessurectionSickessAuraCommand(const char* args, WorldSession* m_session)
 {
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return false;
+	if(!plr)
+		return false;
 
 	BlueSystemMessage(m_session, "Removing resurrection sickness...");
 	plr->RemoveAura(15007);
@@ -1307,8 +1277,8 @@ bool ChatHandler::HandleParalyzeCommand(const char* args, WorldSession* m_sessio
 	}
 
 	BlueSystemMessage(m_session, "Rooting target.");
-	BlueSystemMessageToPlr(TO< Player* >(plr), "You have been rooted by %s.", m_session->GetPlayer()->GetName());
-	sGMLog.writefromsession(m_session, "rooted player %s", TO< Player* >(plr)->GetName());
+	BlueSystemMessageToPlr(TO<Player*>(plr), "You have been rooted by %s.", m_session->GetPlayer()->GetName());
+	sGMLog.writefromsession(m_session, "rooted player %s", TO<Player*>(plr)->GetName());
 	WorldPacket data;
 	data.Initialize(SMSG_FORCE_MOVE_ROOT);
 	data << plr->GetNewGUID();
@@ -1330,8 +1300,8 @@ bool ChatHandler::HandleUnParalyzeCommand(const char* args, WorldSession* m_sess
 	}
 
 	BlueSystemMessage(m_session, "Unrooting target.");
-	BlueSystemMessageToPlr(TO< Player* >(plr), "You have been unrooted by %s.", m_session->GetPlayer()->GetName());
-	sGMLog.writefromsession(m_session, "unrooted player %s", TO< Player* >(plr)->GetName());
+	BlueSystemMessageToPlr(TO<Player*>(plr), "You have been unrooted by %s.", m_session->GetPlayer()->GetName());
+	sGMLog.writefromsession(m_session, "unrooted player %s", TO<Player*>(plr)->GetName());
 	WorldPacket data;
 	data.Initialize(SMSG_FORCE_MOVE_UNROOT);
 	data << plr->GetNewGUID();
@@ -1372,7 +1342,7 @@ bool ChatHandler::HandleAddItemSetCommand(const char* args, WorldSession* m_sess
 	}
 
 	ItemSetEntry* entry = dbcItemSet.LookupEntryForced(setid);
-	std::list<ItemPrototype*>* l = objmgr.GetListForItemSet(setid);
+	std::list< ItemPrototype* >* l = objmgr.GetListForItemSet(setid);
 	if(!entry || !l)
 	{
 		RedSystemMessage(m_session, "Invalid item set.");
@@ -1382,7 +1352,7 @@ bool ChatHandler::HandleAddItemSetCommand(const char* args, WorldSession* m_sess
 	BlueSystemMessage(m_session, "Searching item set %u...", setid);
 	uint32 start = getMSTime();
 	sGMLog.writefromsession(m_session, "used add item set command, set %u, target %s", setid, chr->GetName());
-	for(std::list<ItemPrototype*>::iterator itr = l->begin(); itr != l->end(); ++itr)
+	for(std::list< ItemPrototype* >::iterator itr = l->begin(); itr != l->end(); ++itr)
 	{
 		Item* itm = objmgr.CreateItem((*itr)->ItemId, m_session->GetPlayer());
 		if(!itm) continue;
@@ -1629,40 +1599,34 @@ bool ChatHandler::HandleFlyCommand(const char* args, WorldSession* m_session)
 
 bool ChatHandler::HandleDBReloadCommand(const char* args, WorldSession* m_session)
 {
-
 	sWorld.SendWorldText("Support for reloading tables on the fly was disabled in ArcPro revision 3621. You are seeing this message because apparently reading SVN changelog or using forums search is way over the head of some of our users.", 0);
 	return true;
 
-	/*
-
-	char str[200];
+	/*char str[200];
 	int ret = 0;
 
 	if(!*args || strlen(args) < 3)
 		return false;
-
 
 	uint32 mstime = getMSTime();
 	snprintf(str, 200, "%s%s initiated server-side reload of table `%s`. The server may experience some lag while this occurs.",
 		MSG_COLOR_LIGHTRED, m_session->GetPlayer()->GetName(), args);
 	sWorld.SendWorldText(str, 0);
 
-	if (0 == stricmp(args, "spell_disable"))
+	if(0 == stricmp(args, "spell_disable"))
 	{
 		objmgr.ReloadDisabledSpells();
 		ret = 1;
 	} else
-	if (0 == stricmp(args, "vendors"))
+	if(0 == stricmp(args, "vendors"))
 	{
 		objmgr.ReloadVendors();
 		ret = 1;
 	}
 	else
-	{
 		ret = Storage_ReloadTable(args);
-	}
 
-	if (ret == 0)
+	if(ret == 0)
 		snprintf(str, 200, "%sDatabase reload failed.", MSG_COLOR_LIGHTRED);
 	else
 		snprintf(str, 200, "%sDatabase reload completed in %u ms.", MSG_COLOR_LIGHTBLUE, getMSTime() - mstime);
@@ -1813,21 +1777,19 @@ bool ChatHandler::HandlePetSpawnAIBot(const char* args, WorldSession* m_session)
 	new_interface->Init(newguard, AITYPE_PET, MOVEMENTTYPE_NONE, plr);
 	newguard->ReplaceAIInterface((AIInterface*) new_interface);
 
-	/*	Pet *old_tame = plr->GetSummon();
+	/*Pet* old_tame = plr->GetSummon();
 		if(old_tame != NULL)
-		{
 			old_tame->Dismiss(true);
-		}
 
 		// create a pet from this creature
-		Pet * pPet = objmgr.CreatePet( Entry );
+		Pet * pPet = objmgr.CreatePet(Entry);
 		pPet->SetInstanceID(plr->GetInstanceID());
 		pPet->SetMapId(plr->GetMapId());
 
-		pPet->SetFloatValue ( OBJECT_FIELD_SCALE_X, pTemplate->Scale / 2); //we do not wish to block visually other players
-		AiAgentHealSupport *new_interface = new AiAgentHealSupport;
-		pPet->ReplaceAIInterface( (AIInterface *) new_interface );
-	//	new_interface->Init(pPet,AITYPE_PET,MOVEMENTTYPE_NONE,plr); // i think this will get called automatically for pet
+		pPet->SetFloatValue (OBJECT_FIELD_SCALE_X, pTemplate->Scale / 2); //we do not wish to block visually other players
+		AiAgentHealSupport* new_interface = new AiAgentHealSupport;
+		pPet->ReplaceAIInterface((AIInterface *) new_interface);
+		//new_interface->Init(pPet,AITYPE_PET,MOVEMENTTYPE_NONE,plr); // i think this will get called automatically for pet
 
 		pPet->CreateAsSummon(Entry, pCreatureInfo, pCreature, plr, NULL, 0x2, 0);
 
@@ -1877,9 +1839,8 @@ bool ChatHandler::HandleAddPetSpellCommand(const char* args, WorldSession* m_ses
 
 	std::list<Pet*> summons = plr->GetSummons();
 	for(std::list<Pet*>::iterator itr = summons.begin(); itr != summons.end(); ++itr)
-	{
 		(*itr)->AddSpell(spell, true);
-	}
+
 	GreenSystemMessage(m_session, "Added spell %u to %s's pet.", SpellId, plr->GetName());
 	return true;
 }
@@ -1906,9 +1867,8 @@ bool ChatHandler::HandleRemovePetSpellCommand(const char* args, WorldSession* m_
 
 	std::list<Pet*> summons = plr->GetSummons();
 	for(std::list<Pet*>::iterator itr = summons.begin(); itr != summons.end(); ++itr)
-	{
 		(*itr)->RemoveSpell(SpellId);
-	}
+
 	GreenSystemMessage(m_session, "Removed spell %u from %s's pet.", SpellId, plr->GetName());
 	return true;
 }
@@ -1946,9 +1906,7 @@ bool ChatHandler::HandleDismissPetCommand(const char* args, WorldSession* m_sess
 			return true;
 		}
 		else
-		{
 			plr->DismissActivePets();
-		}
 	}
 	else
 	{
@@ -1960,9 +1918,7 @@ bool ChatHandler::HandleDismissPetCommand(const char* args, WorldSession* m_sess
 			return false;
 		}
 		if(pCrt->IsPet())
-		{
-			pPet = TO< Pet* >(pCrt);
-		}
+			pPet = TO<Pet*>(pCrt);
 		if(!pPet)
 		{
 			RedSystemMessage(m_session, "No player or pet selected.");
@@ -1980,15 +1936,11 @@ bool ChatHandler::HandleDismissPetCommand(const char* args, WorldSession* m_sess
 bool ChatHandler::HandlePetLevelCommand(const char* args, WorldSession* m_session)
 {
 	if(!args)
-	{
 		return false;
-	}
 
 	int32 newLevel = atol(args);
 	if(newLevel < 1)
-	{
 		return false;
-	}
 
 	Player* plr = getSelectedChar(m_session, false);
 	Pet* pPet = NULL;
@@ -2011,9 +1963,7 @@ bool ChatHandler::HandlePetLevelCommand(const char* args, WorldSession* m_sessio
 			return false;
 		}
 		if(pCrt->IsPet())
-		{
-			pPet = TO< Pet* >(pCrt);
-		}
+			pPet = TO<Pet*>(pCrt);
 		if(!pPet)
 		{
 			RedSystemMessage(m_session, "No player or pet selected.");
@@ -2024,9 +1974,7 @@ bool ChatHandler::HandlePetLevelCommand(const char* args, WorldSession* m_sessio
 
 	// Should GMs be allowed to set a pet higher than its owner?  I don't think so
 	if((uint32)newLevel > plr->getLevel())
-	{
 		newLevel = plr->getLevel();
-	}
 
 	//support for only 1 pet
 	pPet->setLevel(newLevel);
@@ -2049,8 +1997,7 @@ bool ChatHandler::HandleShutdownCommand(const char* args, WorldSession* m_sessio
 		shutdowntime = atol(args);
 
 	char msg[500];
-	snprintf(msg, 500, "%sServer shutdown initiated by %s, shutting down in %u seconds.", MSG_COLOR_LIGHTBLUE,
-	         m_session->GetPlayer()->GetName(), (unsigned int)shutdowntime);
+	snprintf(msg, 500, "%sServer shutdown initiated by %s, shutting down in %u seconds.", MSG_COLOR_LIGHTBLUE, m_session->GetPlayer()->GetName(), (unsigned int)shutdowntime);
 
 	sWorld.SendWorldText(msg);
 	sGMLog.writefromsession(m_session, "initiated server shutdown timer %u sec", shutdowntime);
@@ -2070,8 +2017,7 @@ bool ChatHandler::HandleShutdownRestartCommand(const char* args, WorldSession* m
 		shutdowntime = atol(args);
 
 	char msg[500];
-	snprintf(msg, 500, "%sServer restart initiated by %s, shutting down in %u seconds.", MSG_COLOR_LIGHTBLUE,
-	         m_session->GetPlayer()->GetName(), (unsigned int)shutdowntime);
+	snprintf(msg, 500, "%sServer restart initiated by %s, shutting down in %u seconds.", MSG_COLOR_LIGHTBLUE, m_session->GetPlayer()->GetName(), (unsigned int)shutdowntime);
 
 	sGMLog.writefromsession(m_session, "initiated server restart timer %u sec", shutdowntime);
 	sWorld.SendWorldText(msg);
@@ -2146,7 +2092,6 @@ bool ChatHandler::HandleAdvanceAllSkillsCommand(const char* args, WorldSession* 
 	if(!plr)
 		return true;
 
-
 	plr->_AdvanceAllSkills(amt);
 	GreenSystemMessageToPlr(plr, "Advanced all your skill lines by %u points.", amt);
 	sGMLog.writefromsession(m_session, "advanced all skills by %u on %s", amt, plr->GetName());
@@ -2210,7 +2155,8 @@ bool ChatHandler::HandleMassSummonCommand(const char* args, WorldSession* m_sess
 		faction = 1;
 		snprintf(Buffer, 170, "%s%s Has requested a mass summon of all Horde players. Do not feel obliged to accept the summon, as it is most likely for an event or a test of sorts", MSG_COLOR_GOLD, m_session->GetPlayer()->GetName());
 	}
-	else  snprintf(Buffer, 170, "%s%s Has requested a mass summon of all players. Do not feel obliged to accept the summon, as it is most likely for an event or a test of sorts", MSG_COLOR_GOLD, m_session->GetPlayer()->GetName());
+	else
+		snprintf(Buffer, 170, "%s%s Has requested a mass summon of all players. Do not feel obliged to accept the summon, as it is most likely for an event or a test of sorts", MSG_COLOR_GOLD, m_session->GetPlayer()->GetName());
 
 	uint32 c = 0;
 
@@ -2276,9 +2222,7 @@ bool ChatHandler::HandleCastAllCommand(const char* args, WorldSession* m_session
 		if(plr->GetSession() && plr->IsInWorld())
 		{
 			if(plr->GetMapMgr() != m_session->GetPlayer()->GetMapMgr())
-			{
-				sEventMgr.AddEvent(TO< Unit* >(plr), &Unit::EventCastSpell, TO< Unit* >(plr), info, EVENT_PLAYER_CHECKFORCHEATS, 100, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-			}
+				sEventMgr.AddEvent(TO<Unit*>(plr), &Unit::EventCastSpell, TO<Unit*>(plr), info, EVENT_PLAYER_CHECKFORCHEATS, 100, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 			else
 			{
 				Spell* sp = sSpellFactoryMgr.NewSpell(plr, info, true, 0);
@@ -2296,7 +2240,8 @@ bool ChatHandler::HandleCastAllCommand(const char* args, WorldSession* m_session
 bool ChatHandler::HandleNpcReturnCommand(const char* args, WorldSession* m_session)
 {
 	Creature* creature = getSelectedCreature(m_session);
-	if(!creature || !creature->m_spawn) return true;
+	if(!creature || !creature->m_spawn)
+		return true;
 
 	// return to respawn coords
 	float x = creature->m_spawn->x;
@@ -2364,7 +2309,8 @@ bool ChatHandler::HandleFormationLink2Command(const char* args, WorldSession* m_
 	}
 
 	Creature* slave = getSelectedCreature(m_session, true);
-	if(slave == 0) return true;
+	if(slave == 0)
+		return true;
 
 	slave->GetAIInterface()->m_formationFollowDistance = dist;
 	slave->GetAIInterface()->m_formationFollowAngle = ang;
@@ -2373,11 +2319,9 @@ bool ChatHandler::HandleFormationLink2Command(const char* args, WorldSession* m_
 	slave->GetAIInterface()->SetUnitToFollowAngle(ang);
 
 	// add to db
-	WorldDatabase.Execute("INSERT INTO creature_formations VALUES(%u, %u, '%f', '%f')",
-	                      slave->GetSQL_id(), slave->GetAIInterface()->m_formationLinkSqlId, ang, dist);
+	WorldDatabase.Execute("INSERT INTO creature_formations VALUES(%u, %u, '%f', '%f')", slave->GetSQL_id(), slave->GetAIInterface()->m_formationLinkSqlId, ang, dist);
 
-	BlueSystemMessage(m_session, "%s linked up to %s with a distance of %f at %f radians.", slave->GetCreatureInfo()->Name,
-	                  m_session->GetPlayer()->linkTarget->GetCreatureInfo()->Name, dist, ang);
+	BlueSystemMessage(m_session, "%s linked up to %s with a distance of %f at %f radians.", slave->GetCreatureInfo()->Name, m_session->GetPlayer()->linkTarget->GetCreatureInfo()->Name, dist, ang);
 
 	return true;
 }
@@ -2441,9 +2385,7 @@ bool ChatHandler::HandleItemStackCheatCommand(const char* args, WorldSession* m_
 	BlueSystemMessage(m_session, "%s the item stack cheat on %s.", (turnCheatOn) ? "activated" : "deactivated", p->GetName());
 	GreenSystemMessageToPlr(p, "%s %s the item stack cheat on you.%s", m_session->GetPlayer()->GetName(), (turnCheatOn) ? "activated" : "deactivated", (turnCheatOn) ? "" : "  WARNING!!! Make sure all your item stacks are normal (if possible) before logging off, or else you may lose some items!");
 	if(p != m_session->GetPlayer())
-	{
 		sGMLog.writefromsession(m_session, "item stack cheat on %s set to %s", p->GetName(), (turnCheatOn) ? "on" : "off");
-	}
 	return true;
 }
 
@@ -2520,13 +2462,15 @@ bool ChatHandler::HandleResetSkillsCommand(const char* args, WorldSession* m_ses
 {
 	skilllineentry* se;
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 
 	plr->_RemoveAllSkills();
 
 	// Load skills from create info.
 	PlayerCreateInfo* info = objmgr.GetPlayerCreateInfo(plr->getRace(), plr->getClass());
-	if(!info) return true;
+	if(!info)
+		return true;
 
 	for(std::list<CreateInfo_SkillStruct>::iterator ss = info->skills.begin(); ss != info->skills.end(); ++ss)
 	{
@@ -2559,7 +2503,8 @@ bool ChatHandler::HandlePlayerInfo(const char* args, WorldSession* m_session)
 	else
 		plr = getSelectedChar(m_session, true);
 
-	if(!plr) return true;
+	if(!plr)
+		return true;
 	if(!plr->GetSession())
 	{
 		RedSystemMessage(m_session, "ERROR: this player hasn't got any session !");
@@ -2637,14 +2582,12 @@ bool ChatHandler::HandlePlayerInfo(const char* args, WorldSession* m_session)
 	}
 	snprintf(playedTotal, 64, "[%d days, %d hours, %d minutes, %d seconds]", days, hours, mins, seconds);
 
-	GreenSystemMessage(m_session, "%s is a %s %s %s", plr->GetName(),
-	                   (plr->getGender() ? "Female" : "Male"), races[plr->getRace()], classes[plr->getClass()]);
+	GreenSystemMessage(m_session, "%s is a %s %s %s", plr->GetName(), (plr->getGender() ? "Female" : "Male"), races[plr->getRace()], classes[plr->getClass()]);
 
 	BlueSystemMessage(m_session, "%s has played %s at this level", (plr->getGender() ? "She" : "He"), playedLevel);
 	BlueSystemMessage(m_session, "and %s overall", playedTotal);
 
-	BlueSystemMessage(m_session, "%s is connecting from account '%s'[%u] with permissions '%s'",
-	                  (plr->getGender() ? "She" : "He"), sess->GetAccountName().c_str(), sess->GetAccountId(), sess->GetPermissions());
+	BlueSystemMessage(m_session, "%s is connecting from account '%s'[%u] with permissions '%s'", (plr->getGender() ? "She" : "He"), sess->GetAccountName().c_str(), sess->GetAccountId(), sess->GetPermissions());
 
 	const char* client;
 
@@ -2658,11 +2601,9 @@ bool ChatHandler::HandlePlayerInfo(const char* args, WorldSession* m_session)
 	else
 		client = "WoW";
 
-	BlueSystemMessage(m_session, "%s uses %s (build %u)", (plr->getGender() ? "She" : "He"),
-	                  client, sess->GetClientBuild());
+	BlueSystemMessage(m_session, "%s uses %s (build %u)", (plr->getGender() ? "She" : "He"), client, sess->GetClientBuild());
 
-	BlueSystemMessage(m_session, "%s IP is '%s', and has a latency of %ums", (plr->getGender() ? "Her" : "His"),
-	                  sess->GetSocket()->GetRemoteIP().c_str(), sess->GetLatency());
+	BlueSystemMessage(m_session, "%s IP is '%s', and has a latency of %ums", (plr->getGender() ? "Her" : "His"), sess->GetSocket()->GetRemoteIP().c_str(), sess->GetLatency());
 
 	return true;
 }
@@ -2698,8 +2639,7 @@ bool ChatHandler::HandleIPBanCommand(const char* args, WorldSession* m_session)
 	}
 
 	uint32 o1, o2, o3, o4;
-	if(sscanf(pIp, "%3u.%3u.%3u.%3u", (unsigned int*)&o1, (unsigned int*)&o2, (unsigned int*)&o3, (unsigned int*)&o4) != 4
-	        || o1 > 255 || o2 > 255 || o3 > 255 || o4 > 255)
+	if(sscanf(pIp, "%3u.%3u.%3u.%3u", (unsigned int*)&o1, (unsigned int*)&o2, (unsigned int*)&o3, (unsigned int*)&o4) != 4 || o1 > 255 || o2 > 255 || o3 > 255 || o4 > 255)
 	{
 		RedSystemMessage(m_session, "Invalid IPv4 address [%s]", pIp);
 		return true;	// error in syntax, but we wont remind client of command usage
@@ -2808,17 +2748,14 @@ bool ChatHandler::HandleCreatureSpawnCommand(const char* args, WorldSession* m_s
 	uint32 y = m_session->GetPlayer()->GetMapMgr()->GetPosY(m_session->GetPlayer()->GetPositionY());
 
 	// Add spawn to map
-	m_session->GetPlayer()->GetMapMgr()->GetBaseMap()->GetSpawnsListAndCreate(
-	    x,
-	    y)->CreatureSpawns.push_back(sp);
+	m_session->GetPlayer()->GetMapMgr()->GetBaseMap()->GetSpawnsListAndCreate(x, y)->CreatureSpawns.push_back(sp);
 
 	MapCell* mCell = m_session->GetPlayer()->GetMapMgr()->GetCell(x, y);
 
 	if(mCell != NULL)
 		mCell->SetLoaded();
 
-	BlueSystemMessage(m_session, "Spawned a creature `%s` with entry %u at %f %f %f on map %u", info->Name,
-	                  entry, sp->x, sp->y, sp->z, m_session->GetPlayer()->GetMapId());
+	BlueSystemMessage(m_session, "Spawned a creature `%s` with entry %u at %f %f %f on map %u", info->Name, entry, sp->x, sp->y, sp->z, m_session->GetPlayer()->GetMapId());
 
 	// Save it to the database.
 	p->SaveToDB();
@@ -2836,12 +2773,8 @@ bool ChatHandler::HandleCreatureRespawnCommand(const char* args, WorldSession* m
 	{
 		sEventMgr.RemoveEvents(cCorpse, EVENT_CREATURE_RESPAWN);
 
-		BlueSystemMessage(m_session, "Respawning a Creature: `%s` with entry: %u on map: %u sqlid: %u", cCorpse->GetCreatureInfo()->Name,
-		                  cCorpse->GetEntry(), cCorpse->GetMapMgr()->GetMapId(), cCorpse->GetSQL_id());
-
-		sGMLog.writefromsession(m_session, "Respawned a Creature: `%s` with entry: %u on map: %u sqlid: %u", cCorpse->GetCreatureInfo()->Name,
-		                        cCorpse->GetEntry(), cCorpse->GetMapMgr()->GetMapId(), cCorpse->GetSQL_id());
-
+		BlueSystemMessage(m_session, "Respawning a Creature: `%s` with entry: %u on map: %u sqlid: %u", cCorpse->GetCreatureInfo()->Name, cCorpse->GetEntry(), cCorpse->GetMapMgr()->GetMapId(), cCorpse->GetSQL_id());
+		sGMLog.writefromsession(m_session, "Respawned a Creature: `%s` with entry: %u on map: %u sqlid: %u", cCorpse->GetCreatureInfo()->Name, cCorpse->GetEntry(), cCorpse->GetMapMgr()->GetMapId(), cCorpse->GetSQL_id());
 		cCorpse->Despawn(0, 1000);
 		return true;
 	}
@@ -2919,7 +2852,7 @@ bool ChatHandler::HandleRemoveItemCommand(const char* args, WorldSession* m_sess
 	if(count > start_count)
 		count = start_count;
 
-	while(start_count >= count && (count > 0) && loop_count < 20)	 // Prevent a loop here.
+	while(start_count >= count && (count > 0) && loop_count < 20) // Prevent a loop here.
 	{
 		plr->GetItemInterface()->RemoveItemAmt(item_id, count);
 		start_count2 = plr->GetItemInterface()->GetItemCount(item_id, true);
@@ -2957,9 +2890,7 @@ bool ChatHandler::HandleForceRenameCommand(const char* args, WorldSession* m_ses
 
 	Player* plr = objmgr.GetPlayer((uint32)pi->guid);
 	if(plr == 0)
-	{
 		CharacterDatabase.Execute("UPDATE characters SET forced_rename_pending = 1 WHERE guid = %u", (uint32)pi->guid);
-	}
 	else
 	{
 		plr->rename_pending = true;
@@ -2977,7 +2908,8 @@ bool ChatHandler::HandleGetStandingCommand(const char* args, WorldSession* m_ses
 {
 	uint32 faction = atoi(args);
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 
 	int32 standing = plr->GetStanding(faction);
 	int32 bstanding = plr->GetBaseStanding(faction);
@@ -2995,7 +2927,8 @@ bool ChatHandler::HandleSetStandingCommand(const char* args, WorldSession* m_ses
 	if(sscanf(args, "%u %d", (unsigned int*)&faction, (unsigned int*)&standing) != 2)
 		return false;
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 
 	BlueSystemMessage(m_session, "Setting standing of %u to %d on %s.", faction, standing, plr->GetName());
 	plr->SetStanding(faction, standing);
@@ -3021,7 +2954,8 @@ void ChatHandler::SendHighlightedName(WorldSession* m_session, const char* prefi
 	strcat(message, MSG_COLOR_LIGHTRED);
 	strncat(message, (fullname.c_str() + offset), hlen);
 	strcat(message, MSG_COLOR_WHITE);
-	if(remaining > 0) strncat(message, (fullname.c_str() + offset + hlen), remaining);
+	if(remaining > 0)
+		strncat(message, (fullname.c_str() + offset + hlen), remaining);
 
 	SystemMessage(m_session, message);
 }
@@ -3038,31 +2972,24 @@ void ChatHandler::SendItemLinkToPlayer(ItemPrototype* iProto, WorldSession* pSes
 		int8 count = static_cast<int8>(owner->GetItemInterface()->GetItemCount(iProto->ItemId, true));
 		//int8 slot = owner->GetItemInterface()->GetInventorySlotById(iProto->ItemId); //DISABLED due to being a retarded concept
 		if(iProto->ContainerSlots > 0)
-		{
 			SystemMessage(pSession, "Item %u %s Count %u ContainerSlots %u", iProto->ItemId, GetItemLinkByProto(iProto, language).c_str(), count, iProto->ContainerSlots);
-		}
 		else
-		{
 			SystemMessage(pSession, "Item %u %s Count %u", iProto->ItemId, GetItemLinkByProto(iProto, language).c_str(), count);
-		}
 	}
 	else
 	{
 		if(iProto->ContainerSlots > 0)
-		{
 			SystemMessage(pSession, "Item %u %s ContainerSlots %u", iProto->ItemId, GetItemLinkByProto(iProto, language).c_str(), iProto->ContainerSlots);
-		}
 		else
-		{
 			SystemMessage(pSession, "Item %u %s", iProto->ItemId, GetItemLinkByProto(iProto, language).c_str());
-		}
 	}
 }
 
 
 bool ChatHandler::HandleLookupItemCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
@@ -3077,7 +3004,7 @@ bool ChatHandler::HandleLookupItemCommand(const char* args, WorldSession* m_sess
 	ItemPrototype* it;
 	uint32 count = 0;
 
-	StorageContainerIterator<ItemPrototype> * itr = ItemPrototypeStorage.MakeIterator();
+	StorageContainerIterator< ItemPrototype > * itr = ItemPrototypeStorage.MakeIterator();
 
 	while(!itr->AtEnd())
 	{
@@ -3121,7 +3048,7 @@ bool ChatHandler::HandleLookupObjectCommand(const char* args, WorldSession* m_se
 	string x = string(args);
 	arcpro_TOLOWER(x);
 
-	StorageContainerIterator<GameObjectInfo> * itr = GameObjectNameStorage.MakeIterator();
+	StorageContainerIterator< GameObjectInfo > * itr = GameObjectNameStorage.MakeIterator();
 
 	GreenSystemMessage(m_session, "Starting search of object `%s`...", x.c_str());
 	uint32 t = getMSTime();
@@ -3171,7 +3098,8 @@ bool ChatHandler::HandleLookupObjectCommand(const char* args, WorldSession* m_se
 }
 bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
@@ -3181,7 +3109,7 @@ bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_
 		return true;
 	}
 
-	StorageContainerIterator<CreatureInfo> * itr = CreatureNameStorage.MakeIterator();
+	StorageContainerIterator< CreatureInfo > * itr = CreatureNameStorage.MakeIterator();
 
 	GreenSystemMessage(m_session, "Starting search of creature `%s`...", x.c_str());
 	uint32 t = getMSTime();
@@ -3223,7 +3151,8 @@ bool ChatHandler::HandleLookupCreatureCommand(const char* args, WorldSession* m_
 
 bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
@@ -3258,9 +3187,7 @@ bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_ses
 
 			std::string::size_type pos = recout.find('%');
 			if(pos != std::string::npos)
-			{
 				recout.insert(pos + 1, "%");
-			}
 
 			SendMultilineMessage(m_session, recout.c_str());
 
@@ -3279,7 +3206,8 @@ bool ChatHandler::HandleLookupSpellCommand(const char* args, WorldSession* m_ses
 
 bool ChatHandler::HandleLookupSkillCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
@@ -3316,7 +3244,8 @@ bool ChatHandler::HandleLookupSkillCommand(const char* args, WorldSession* m_ses
 
 bool ChatHandler::HandleLookupFactionCommand(const char* args, WorldSession* m_session)
 {
-	if(!*args) return false;
+	if(!*args)
+		return false;
 
 	string x = string(args);
 	arcpro_TOLOWER(x);
@@ -3355,7 +3284,8 @@ bool ChatHandler::HandleGORotate(const char* args, WorldSession* m_session)
 {
 	char Axis;
 	float deg;
-	if(sscanf(args, "%c %f", &Axis, &deg) < 1) return false;
+	if(sscanf(args, "%c %f", &Axis, &deg) < 1)
+		return false;
 	GameObject* go = m_session->GetPlayer()->GetSelectedGo();
 	if(!go)
 	{
@@ -3368,11 +3298,11 @@ bool ChatHandler::HandleGORotate(const char* args, WorldSession* m_session)
 	switch(tolower(Axis))
 	{
 		case 'x':
-//		go->ModFloatValue(GAMEOBJECT_ROTATION, rad);
-			break;
+			//go->ModFloatValue(GAMEOBJECT_ROTATION, rad);
+		break;
 		case 'y':
-//		go->ModFloatValue(GAMEOBJECT_ROTATION_01, rad);
-			break;
+			//go->ModFloatValue(GAMEOBJECT_ROTATION_01, rad);
+		break;
 		case 'o':
 			if(m_session->GetPlayer())
 			{
@@ -3382,10 +3312,11 @@ bool ChatHandler::HandleGORotate(const char* args, WorldSession* m_session)
 				go->SetOrientation(ori);
 				go->UpdateRotation();
 			}
-			break;
+		break;
 		default:
 			RedSystemMessage(m_session, "Invalid Axis, Please use x, y, or o.");
 			return true;
+		break;
 	}
 
 	uint32 NewGuid = m_session->GetPlayer()->GetMapMgr()->GenerateGameobjectGuid();
@@ -3417,9 +3348,9 @@ bool ChatHandler::HandleGOMove(const char* args, WorldSession* m_session)
 
 	go->RemoveFromWorld(true);
 	go->SetPosition(x, y, z, o);
-//	go->SetFloatValue(GAMEOBJECT_POS_X, x);
-//	go->SetFloatValue(GAMEOBJECT_POS_Y, y);
-//	go->SetFloatValue(GAMEOBJECT_POS_Z, z);
+	//go->SetFloatValue(GAMEOBJECT_POS_X, x);
+	//go->SetFloatValue(GAMEOBJECT_POS_Y, y);
+	//go->SetFloatValue(GAMEOBJECT_POS_Z, z);
 	uint32 NewGuid = m_session->GetPlayer()->GetMapMgr()->GenerateGameobjectGuid();
 	go->SetNewGuid(NewGuid);
 	go->PushToWorld(m_session->GetPlayer()->GetMapMgr());
@@ -3449,11 +3380,11 @@ bool ChatHandler::HandleNpcPossessCommand(const char* args, WorldSession* m_sess
 	switch(pTarget->GetTypeId())
 	{
 		case TYPEID_PLAYER:
-			sGMLog.writefromsession(m_session, "used possess command on PLAYER %s", TO< Player* >(pTarget)->GetName());
-			break;
+			sGMLog.writefromsession(m_session, "used possess command on PLAYER %s", TO<Player*>(pTarget)->GetName());
+		break;
 		case TYPEID_UNIT:
-			sGMLog.writefromsession(m_session, "used possess command on CREATURE %s, sqlid %u", TO< Creature* >(pTarget)->GetCreatureInfo()->Name, TO< Creature* >(pTarget)->GetSQL_id());
-			break;
+			sGMLog.writefromsession(m_session, "used possess command on CREATURE %s, sqlid %u", TO<Creature*>(pTarget)->GetCreatureInfo()->Name, TO<Creature*>(pTarget)->GetSQL_id());
+		break;
 	}
 	return true;
 }
@@ -3487,9 +3418,7 @@ bool ChatHandler::HandleNpcUnPossessCommand(const char* args, WorldSession* m_se
 
 bool ChatHandler::HandleRehashCommand(const char* args, WorldSession* m_session)
 {
-	/*
-	rehashes
-	*/
+	// rehashes
 	char msg[250];
 	snprintf(msg, 250, "%s is rehashing config file.", m_session->GetPlayer()->GetName());
 	sWorld.SendWorldWideScreenText(msg, 0);
@@ -3510,7 +3439,8 @@ map<uint32, spell_thingo> aiagent_extra;
 bool ChatHandler::HandleAIAgentDebugBegin(const char* args, WorldSession* m_session)
 {
 	QueryResult* result = WorldDatabase.Query("SELECT DISTINCT spell FROM ai_agents");
-	if(!result) return false;
+	if(!result)
+		return false;
 
 	do
 	{
@@ -3574,10 +3504,12 @@ SpellCastTargets SetTargets(SpellEntry* sp, uint32 type, uint32 targettype, Unit
 bool ChatHandler::HandleAIAgentDebugContinue(const char* args, WorldSession* m_session)
 {
 	uint32 count = atoi(args);
-	if(!count) return false;
+	if(!count)
+		return false;
 
 	Creature* pCreature = getSelectedCreature(m_session, true);
-	if(!pCreature) return true;
+	if(!pCreature)
+		return true;
 
 	Player* pPlayer = m_session->GetPlayer();
 
@@ -3590,7 +3522,7 @@ bool ChatHandler::HandleAIAgentDebugContinue(const char* args, WorldSession* m_s
 		aiagent_spells.erase(aiagent_spells.begin());
 		BlueSystemMessage(m_session, "Casting %u, " MSG_COLOR_SUBWHITE "%u remaining.", sp->Id, aiagent_spells.size());
 
-		map<uint32, spell_thingo>::iterator it = aiagent_extra.find(sp->Id);
+		map< uint32, spell_thingo >::iterator it = aiagent_extra.find(sp->Id);
 		ARCPRO_ASSERT(it != aiagent_extra.end());
 
 		SpellCastTargets targets;
@@ -3680,7 +3612,8 @@ bool ChatHandler::HandleGuildJoinCommand(const char* args, WorldSession* m_sessi
 		return false;
 
 	Player* ptarget = getSelectedChar(m_session);
-	if(!ptarget) return false;
+	if(!ptarget)
+		return false;
 
 	if(ptarget->IsInGuild())
 	{
@@ -3697,8 +3630,9 @@ bool ChatHandler::HandleGuildJoinCommand(const char* args, WorldSession* m_sessi
 		uint32 memberCount = pGuild->GetNumMembers();
 		pGuild->getLock().Release();
 		
-		if( memberCount >= MAX_GUILD_MEMBERS ){
-			m_session->SystemMessage( "That guild is full." );
+		if(memberCount >= MAX_GUILD_MEMBERS)
+		{
+			m_session->SystemMessage("That guild is full.");
 			return true;
 		}
 
@@ -3747,16 +3681,17 @@ bool ChatHandler::HandleArenaCreateTeamCommand(const char* args, WorldSession* m
 	{
 		case 2:
 			real_type = 0;
-			break;
+		break;
 		case 3:
 			real_type = 1;
-			break;
+		break;
 		case 5:
 			real_type = 2;
-			break;
+		break;
 		default:
 			SystemMessage(m_session, "Invalid arena team type specified.");
 			return true;
+		break;
 	}
 
 	if(!plr)
@@ -3797,16 +3732,17 @@ bool ChatHandler::HandleArenaSetTeamLeaderCommand(const char* args, WorldSession
 	{
 		case 2:
 			real_type = 0;
-			break;
+		break;
 		case 3:
 			real_type = 1;
-			break;
+		break;
 		case 5:
 			real_type = 2;
-			break;
+		break;
 		default:
 			SystemMessage(m_session, "Invalid arena team type specified.");
 			return true;
+		break;
 	}
 
 	if(!plr)
@@ -3845,7 +3781,7 @@ bool ChatHandler::HandleGenderChanger(const char* args, WorldSession* m_session)
 	Player* target = objmgr.GetPlayer((uint32)m_session->GetPlayer()->GetSelection());
 	if(target == NULL)
 	{
-		SystemMessage(m_session, "Select A Player first.");
+		SystemMessage(m_session, "Select a player first.");
 		return true;
 	}
 	uint32 displayId = target->GetNativeDisplayId();
@@ -3900,13 +3836,9 @@ bool ChatHandler::HandleDispelAllCommand(const char* args, WorldSession* m_sessi
 		if(plr->GetSession() && plr->IsInWorld())
 		{
 			if(plr->GetMapMgr() != m_session->GetPlayer()->GetMapMgr())
-			{
-				sEventMgr.AddEvent(TO< Unit* >(plr), &Unit::DispelAll, pos ? true : false, EVENT_PLAYER_CHECKFORCHEATS, 100, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-			}
+				sEventMgr.AddEvent(TO<Unit*>(plr), &Unit::DispelAll, pos ? true : false, EVENT_PLAYER_CHECKFORCHEATS, 100, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 			else
-			{
 				plr->DispelAll(pos ? true : false);
-			}
 		}
 	}
 	sGMLog.writefromsession(m_session, "used mass dispel");
@@ -3920,7 +3852,8 @@ bool ChatHandler::HandleShowItems(const char* args, WorldSession* m_session)
 {
 	string q;
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return true;
+	if(!plr)
+		return true;
 	BlueSystemMessage(m_session, "Listing items for player %s", plr->GetName());
 	int itemcount = 0;
 	ItemIterator itr(plr->GetItemInterface());
@@ -4022,7 +3955,6 @@ bool ChatHandler::HandleGetDeathState(const char* args, WorldSession* m_session)
 	return true;
 }
 
-
 bool ChatHandler::HandleCollisionGetHeight(const char* args, WorldSession* m_session)
 {
 	if(sWorld.Collision)
@@ -4117,9 +4049,7 @@ bool ChatHandler::HandleFixScaleCommand(const char* args, WorldSession* m_sessio
 
 	float sc = (float)atof(args);
 	if(sc < 0.1f)
-	{
 		return false;
-	}
 
 	pCreature->SetScale(sc);
 	pCreature->GetProto()->Scale = sc;
@@ -4172,8 +4102,7 @@ bool ChatHandler::HandleAddTrainerSpellCommand(const char* args, WorldSession* m
 
 	SystemMessage(m_session, "Added spell %u (%s) to trainer.", pSpell->Id, pSpell->Name);
 	sGMLog.writefromsession(m_session, "added spell %u to trainer %u", spellid, pCreature->GetEntry());
-	WorldDatabase.Execute("INSERT INTO trainer_spells VALUES(%u, %u, %u, %u, %u, %u, %u, %u, %u, %u)",
-	                      pCreature->GetEntry(), (int)0, pSpell->Id, cost, reqspell, (int)0, (int)0, reqlevel, delspell, (int)0);
+	WorldDatabase.Execute("INSERT INTO trainer_spells VALUES(%u, %u, %u, %u, %u, %u, %u, %u, %u, %u)", pCreature->GetEntry(), (int)0, pSpell->Id, cost, reqspell, (int)0, (int)0, reqlevel, delspell, (int)0);
 
 	return true;
 }
@@ -4219,9 +4148,7 @@ bool ChatHandler::HandleNPCLootCommand(const char* args, WorldSession* m_session
 {
 	Creature* pCreature = getSelectedCreature(m_session, true);
 	if(pCreature == NULL)
-	{
 		return false;
-	}
 
 	QueryResult* _result = WorldDatabase.Query("SELECT itemid, normal10percentchance, heroic10percentchance, normal25percentchance, heroic25percentchance, mincount, maxcount FROM loot_creatures WHERE entryid=%u;", pCreature->GetEntry());
 	if(_result != NULL)
@@ -4234,9 +4161,7 @@ bool ChatHandler::HandleNPCLootCommand(const char* args, WorldSession* m_session
 		uint8 numFound = 0;
 
 		if(*args)
-		{
 			minQuality = atol(args);
-		}
 
 		do
 		{
@@ -4244,9 +4169,7 @@ bool ChatHandler::HandleNPCLootCommand(const char* args, WorldSession* m_session
 			ss.str("");
 			proto = ItemPrototypeStorage.LookupEntry(_field[0].GetUInt32());
 			if(proto == NULL || (int32)proto->Quality < minQuality)
-			{
 				continue;
-			}
 			++numFound;
 			ss << "(N10 " << _field[1].GetFloat() << "%%) (N25 " << _field[3].GetFloat() << "%%) (H10 " << _field[2].GetFloat() << "%%) (H25 " << _field[4].GetFloat() << "%%): ";
 
@@ -4254,31 +4177,31 @@ bool ChatHandler::HandleNPCLootCommand(const char* args, WorldSession* m_session
 			{
 				case 0: //Poor,gray
 					color = "cff9d9d9d";
-					break;
+				break;
 				case 1: //Common,white
 					color = "cffffffff";
-					break;
+				break;
 				case 2: //Uncommon,green
 					color = "cff1eff00";
-					break;
+				break;
 				case 3: //Rare,blue
 					color = "cff0070dd";
-					break;
+				break;
 				case 4: //Epic,purple
 					color = "cffa335ee";
-					break;
+				break;
 				case 5: //Legendary,orange
 					color = "cffff8000";
-					break;
+				break;
 				case 6: //Artifact,pale gold
 					color = "c00fce080";
-					break;
+				break;
 				case 7: //Heirloom,pale gold
 					color = "c00fce080";
-					break;
+				break;
 				default:
 					color = "cff9d9d9d";
-					break;
+				break;
 			}
 
 			ss << "|" << color.c_str() << "|Hitem:" << proto->ItemId << ":0:0:0:0:0:0:0|h[" << proto->Name1;
@@ -4288,18 +4211,12 @@ bool ChatHandler::HandleNPCLootCommand(const char* args, WorldSession* m_session
 		while(_result->NextRow() && (numFound <= 25));
 		delete _result;
 		if(numFound > 25)
-		{
 			SystemMessage(m_session, "More than 25 results found.");
-		}
 		else
-		{
 			SystemMessage(m_session, "%lu results found.", numFound);
-		}
 	}
 	else
-	{
 		SystemMessage(m_session, "0 results found.");
-	}
 	return true;
 }
 
@@ -4320,7 +4237,7 @@ bool ChatHandler::HandleNPCCastCommand(const char* args, WorldSession* m_session
 	if(sp == NULL)
 		return false;
 
-	c->CastSpell(reinterpret_cast< Unit* >(NULL), sp, false);
+	c->CastSpell(reinterpret_cast<Unit*>(NULL), sp, false);
 
 	return true;
 }
