@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -73,9 +73,9 @@ bool ChatHandler::HandleAnnounceCommand(const char* args, WorldSession* m_sessio
 	if(sWorld.GMAdminTag)
 	{
 		if(m_session->CanUseCommand('z'))
-			input2 += "<Admin>";
+			input2 += "< Admin >";
 		else if(m_session->GetPermissionCount())
-			input2 += "<GM>";
+			input2 += "< GM >";
 	}
 	if(sWorld.NameinAnnounce)
 	{
@@ -121,8 +121,8 @@ bool ChatHandler::HandleWAnnounceCommand(const char* args, WorldSession* m_sessi
 	input3 += sWorld.ann_gmtagcolor;
 	if(sWorld.GMAdminTag)
 	{
-		if(m_session->CanUseCommand('z')) input3 += "<Admin>";
-		else if(m_session->GetPermissionCount()) input3 += "<GM>";
+		if(m_session->CanUseCommand('z')) input3 += "< Admin >";
+		else if(m_session->GetPermissionCount()) input3 += "< GM >";
 	}
 	if(sWorld.NameinWAnnounce)
 	{
@@ -147,7 +147,7 @@ bool ChatHandler::HandleGMOnCommand(const char* args, WorldSession* m_session)
 		RedSystemMessage(m_session, "GM Flag is already set on. Use .gm off to disable it.");
 	else
 	{
-		_player->SetFlag(PLAYER_FLAGS, PLAYER_FLAG_GM);	// <GM>
+		_player->SetFlag(PLAYER_FLAGS, PLAYER_FLAG_GM);	// < GM >
 
 		_player->SetFaction(35);
 		_player->RemovePvPFlag();
@@ -167,7 +167,6 @@ bool ChatHandler::HandleGMOnCommand(const char* args, WorldSession* m_session)
 	return true;
 }
 
-
 bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 {
 	Player* _player = m_session->GetPlayer();
@@ -175,7 +174,7 @@ bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 	if(_player->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_GM))
 	{
 
-		_player->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAG_GM);	// <GM>
+		_player->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAG_GM);	// < GM >
 
 		_player->SetFaction(_player->GetInitialFactionId());
 		_player->UpdatePvPArea();
@@ -187,7 +186,7 @@ bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 		uint32 newphase = atoi(sPhase);
 		_player->Phase(PHASE_RESET, newphase);
 
-		BlueSystemMessage(m_session, "GM Flag Removed. <GM> Will no longer show in chat messages or above your name.");
+		BlueSystemMessage(m_session, "GM Flag Removed. < GM > Will no longer show in chat messages or above your name.");
 
 		_player->UpdateVisibility();
 	}
@@ -238,13 +237,13 @@ bool ChatHandler::HandleGPSCommand(const char* args, WorldSession* m_session)
 	if(!at)
 	{
 		snprintf((char*)buf, 328, "|cff00ff00Current Position: |cffffffffMap: |cff00ff00%d |cffffffffX: |cff00ff00%f |cffffffffY: |cff00ff00%f |cffffffffZ: |cff00ff00%f |cffffffffOrientation: |cff00ff00%f|r",
-		         (unsigned int)obj->GetMapId(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation());
+				(unsigned int)obj->GetMapId(), obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation());
 		SystemMessage(m_session, buf);
 		return true;
 	}
 
 	snprintf((char*)buf, 328, "|cff00ff00Current Position: |cffffffffMap: |cff00ff00%d |cffffffffZone: |cff00ff00%u |cffffffffArea: |cff00ff00%u  |cffffffffX: |cff00ff00%f |cffffffffY: |cff00ff00%f |cffffffffZ: |cff00ff00%f |cffffffffOrientation: |cff00ff00%f |cffffffffArea Name: |cff00ff00%s |r",
-	         (unsigned int)obj->GetMapId(), at->ZoneId, at->AreaId, obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(), at->name);
+			(unsigned int)obj->GetMapId(), at->ZoneId, at->AreaId, obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(), at->name);
 
 
 	SystemMessage(m_session, buf);
@@ -324,9 +323,7 @@ bool ChatHandler::HandleAddInvItemCommand(const char* args, WorldSession* m_sess
 	int32 numadded = 0;
 
 	if(strlen(args) < 1)
-	{
 		return false;
-	}
 
 	if(sscanf(args, "%u %u %d", &itemid, &count, &randomprop) < 1)
 	{
@@ -351,13 +348,9 @@ bool ChatHandler::HandleAddInvItemCommand(const char* args, WorldSession* m_sess
 		if(result == true)
 		{
 			if(count == 0)
-			{
 				sGMLog.writefromsession(m_session, "used add item command, item id %u [%s], quantity %u, to %s", it->ItemId, it->Name1, numadded, chr->GetName());
-			}
 			else
-			{
 				sGMLog.writefromsession(m_session, "used add item command, item id %u [%s], quantity %u (only %lu added due to full inventory), to %s", it->ItemId, it->Name1, numadded, numadded, chr->GetName());
-			}
 
 			char messagetext[512];
 
@@ -369,9 +362,8 @@ bool ChatHandler::HandleAddInvItemCommand(const char* args, WorldSession* m_sess
 			SystemMessageToPlr(chr,  messagetext);
 		}
 		else
-		{
 			SystemMessageToPlr(chr, "Failed to add item.");
-		}
+
 		return true;
 
 	}
@@ -391,9 +383,7 @@ bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 	if(!stricmp(args, "on"))
 	{
 		if(m_session->GetPlayer()->IsSummonDisabled())
-		{
 			BlueSystemMessage(m_session, "Summon blocking is already enabled.");
-		}
 		else
 		{
 			m_session->GetPlayer()->DisableSummon(true);
@@ -409,9 +399,8 @@ bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 			GreenSystemMessage(m_session, "Summon blocking is now disabled.");
 		}
 		else
-		{
 			BlueSystemMessage(m_session, "Summon blocking is already disabled.");
-		}
+
 		return true;
 	}
 
@@ -457,9 +446,7 @@ bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 		if(plr->GetMapMgr() == chr->GetMapMgr())
 			chr->_Relocate(plr->GetMapId(), plr->GetPosition(), false, false, plr->GetInstanceID());
 		else
-		{
 			sEventMgr.AddEvent(chr, &Player::EventPortToGM, plr, 0, 1, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-		}
 	}
 	else
 	{
@@ -498,9 +485,7 @@ bool ChatHandler::HandleAppearCommand(const char* args, WorldSession* m_session)
 	if(!stricmp(args, "on"))
 	{
 		if(m_session->GetPlayer()->IsAppearDisabled())
-		{
 			BlueSystemMessage(m_session, "Appear blocking is already enabled.");
-		}
 		else
 		{
 			m_session->GetPlayer()->DisableAppear(true);
@@ -516,9 +501,8 @@ bool ChatHandler::HandleAppearCommand(const char* args, WorldSession* m_session)
 			GreenSystemMessage(m_session, "Appear blocking is now disabled.");
 		}
 		else
-		{
 			BlueSystemMessage(m_session, "Appear blocking is already disabled.");
-		}
+
 		return true;
 	}
 
@@ -593,13 +577,9 @@ bool ChatHandler::HandleTaxiCheatCommand(const char* args, WorldSession* m_sessi
 	for(uint8 i = 0; i < 12; i++)
 	{
 		if(stricmp(args, "on") == 0)
-		{
 			chr->SetTaximask(i, 0xFFFFFFFF);
-		}
 		else if(stricmp(args, "off") == 0)
-		{
 			chr->SetTaximask(i, 0);
-		}
 	}
 	return true;
 }
@@ -625,7 +605,6 @@ bool ChatHandler::HandleModifySpeedCommand(const char* args, WorldSession* m_ses
 
 	if(chr != m_session->GetPlayer())
 		sGMLog.writefromsession(m_session, "modified speed of %s to %2.2f.", chr->GetName(), Speed);
-
 
 	char buf[256];
 
@@ -665,13 +644,13 @@ bool ChatHandler::HandleLearnSkillCommand(const char* args, WorldSession* m_sess
 			max = atol(pMax);
 	}
 	else
-	{
 		return false;
-	}
 
 	Player* plr = getSelectedChar(m_session, true);
-	if(!plr) return false;
-	if(!plr->IsPlayer()) return false;
+	if(!plr)
+		return false;
+	if(!plr->IsPlayer())
+		return false;
 	sGMLog.writefromsession(m_session, "used add skill of %u %u %u on %s", skill, min, max, plr->GetName());
 
 	plr->_AddSkillLine(skill, min, max);
@@ -711,9 +690,7 @@ bool ChatHandler::HandleModifySkillCommand(const char* args, WorldSession* m_ses
 		plr->_AddSkillLine(skill, 1, 300);
 	}
 	else
-	{
 		plr->_AdvanceSkillLine(skill, cnt);
-	}
 
 	return true;
 }
@@ -765,7 +742,7 @@ bool ChatHandler::HandleGetSkillsInfoCommand(const char* args, WorldSession* m_s
 	if(!plr) return false;
 
 	uint32 nobonus = 0;
-	int32  bonus = 0;
+	int32 bonus = 0;
 	uint32 max = 0;
 
 	BlueSystemMessage(m_session, "Player: %s has skills", plr->GetName());
@@ -811,9 +788,8 @@ bool ChatHandler::HandleRemoveSkillCommand(const char* args, WorldSession* m_ses
 		SystemMessageToPlr(plr, "%s removed skill line %d from you. ", m_session->GetPlayer()->GetName(), skill);
 	}
 	else
-	{
 		BlueSystemMessage(m_session, "Player doesn't have skill line %d", skill);
-	}
+
 	return true;
 }
 
@@ -822,8 +798,10 @@ bool ChatHandler::HandleEmoteCommand(const char* args, WorldSession* m_session)
 {
 	uint32 emote = atoi((char*)args);
 	Unit* target = this->getSelectedCreature(m_session);
-	if(!target) return false;
-	if(target) target->SetEmoteState(emote);
+	if(!target)
+		return false;
+	if(target)
+		target->SetEmoteState(emote);
 
 	return true;
 }
@@ -861,25 +839,15 @@ bool ChatHandler::HandleModifyGoldCommand(const char* args, WorldSession* m_sess
 	{
 		if(total >= 0)
 		{
-			BlueSystemMessage(m_session,
-			                  "Adding %u gold, %u silver, %u copper to %s's backpack...",
-			                  gold, silver, copper,
-			                  chr->GetName());
+			BlueSystemMessage(m_session, "Adding %u gold, %u silver, %u copper to %s's backpack...", gold, silver, copper, chr->GetName());
 
-			GreenSystemMessageToPlr(chr, "%s added %u gold, %u silver, %u copper to your backpack.",
-			                        m_session->GetPlayer()->GetName(),
-			                        gold, silver, copper);
+			GreenSystemMessageToPlr(chr, "%s added %u gold, %u silver, %u copper to your backpack.", m_session->GetPlayer()->GetName(), gold, silver, copper);
 		}
 		else
 		{
-			BlueSystemMessage(m_session,
-			                  "Taking %u gold, %u silver, %u copper from %s's backpack...",
-			                  gold, silver, copper,
-			                  chr->GetName());
+			BlueSystemMessage(m_session, "Taking %u gold, %u silver, %u copper from %s's backpack...", gold, silver, copper, chr->GetName());
 
-			GreenSystemMessageToPlr(chr, "%s took %u gold, %u silver, %u copper from your backpack.",
-			                        m_session->GetPlayer()->GetName(),
-			                        gold, silver, copper);
+			GreenSystemMessageToPlr(chr, "%s took %u gold, %u silver, %u copper from your backpack.", m_session->GetPlayer()->GetName(), gold, silver, copper);
 		}
 	}
 
@@ -920,11 +888,9 @@ bool ChatHandler::HandleTriggerCommand(const char* args, WorldSession* m_session
 		return true;
 	}
 
-	m_session->GetPlayer()->SafeTeleport(entry->mapid, instance_id, LocationVector(entry->x, entry->y,
-	                                     entry->z, entry->o));
+	m_session->GetPlayer()->SafeTeleport(entry->mapid, instance_id, LocationVector(entry->x, entry->y, entry->z, entry->o));
 
-	BlueSystemMessage(m_session, "Teleported to trigger %u on [%u][%.2f][%.2f][%.2f]", entry->id,
-	                  entry->mapid, entry->x, entry->y, entry->z);
+	BlueSystemMessage(m_session, "Teleported to trigger %u on [%u][%.2f][%.2f][%.2f]", entry->id, entry->mapid, entry->x, entry->y, entry->z);
 	return true;
 }
 
@@ -954,9 +920,7 @@ bool ChatHandler::HandleUnlearnCommand(const char* args, WorldSession* m_session
 		plr->removeSpell(SpellId, false, false, 0);
 	}
 	else
-	{
 		RedSystemMessage(m_session, "That player does not have spell %u learnt.", SpellId);
-	}
 
 	return true;
 }
@@ -977,9 +941,7 @@ bool ChatHandler::HandleNpcSpawnLinkCommand(const char* args, WorldSession* m_se
 		BlueSystemMessage(m_session, "Spawn linking for this NPC has been updated: %u", id);
 	}
 	else
-	{
 		RedSystemMessage(m_session, "Sql entry invalid %u", id);
-	}
 
 	return true;
 }
@@ -998,13 +960,13 @@ bool ChatHandler::HandleModifyTPsCommand(const char* args, WorldSession* m_sessi
 
 	uint32 TP1 = 0;
 	uint32 TP2 = 0;
-	std::stringstream ss( args );
+	std::stringstream ss(args);
 
 	ss >> TP1;
 	ss >> TP2;
 
-	Pl->m_specs[SPEC_PRIMARY].SetTP( TP1 );
-	Pl->m_specs[SPEC_SECONDARY].SetTP( TP2 );
+	Pl->m_specs[SPEC_PRIMARY].SetTP(TP1);
+	Pl->m_specs[SPEC_SECONDARY].SetTP(TP2);
 	Pl->smsg_TalentsInfo(false);
 	return true;
 }
@@ -1012,7 +974,7 @@ bool ChatHandler::HandleModifyTPsCommand(const char* args, WorldSession* m_sessi
 #ifdef ENABLE_ACHIEVEMENTS
 /**
 	Handles .achieve complete
-	.achieve complete id                : completes achievement "id" (can be an achievement link) for the selected player
+	.achieve complete id : completes achievement "id" (can be an achievement link) for the selected player
 */
 bool ChatHandler::HandleAchievementCompleteCommand(const char* args, WorldSession* m_session)
 {
@@ -1053,7 +1015,7 @@ bool ChatHandler::HandleAchievementCompleteCommand(const char* args, WorldSessio
 
 /**
 	Handles .achieve criteria
-	.achieve criteria id                : completes achievement criteria "id" for the selected player
+	.achieve criteria id : completes achievement criteria "id" for the selected player
 */
 bool ChatHandler::HandleAchievementCriteriaCommand(const char* args, WorldSession* m_session)
 {
@@ -1090,9 +1052,9 @@ bool ChatHandler::HandleAchievementCriteriaCommand(const char* args, WorldSessio
 
 /**
 	Handles .achieve reset
-	.achieve reset id                   : removes achievement "id" (can be an achievement link) from the selected player
-	.achieve reset criteria id          : removes achievement criteria "id" from the selected player
-	.achieve reset all                  : removes all achievement and criteria data from the selected player
+	.achieve reset id : removes achievement "id" (can be an achievement link) from the selected player
+	.achieve reset criteria id : removes achievement criteria "id" from the selected player
+	.achieve reset all : removes all achievement and criteria data from the selected player
 */
 bool ChatHandler::HandleAchievementResetCommand(const char* args, WorldSession* m_session)
 {
@@ -1114,9 +1076,8 @@ bool ChatHandler::HandleAchievementResetCommand(const char* args, WorldSession* 
 		if(achievement_id == 0)
 		{
 			if(stricmp(args + 9, "all") != 0)
-			{
 				return false;
-			}
+
 			achievement_id = -1;
 		}
 		resetCri = true;
@@ -1148,11 +1109,11 @@ bool ChatHandler::HandleAchievementResetCommand(const char* args, WorldSession* 
 /**
 	Handles .lookup achievement
 	GM achievement lookup command usage:
-	.lookup achievement string          : searches for "string" in achievement name
-	.lookup achievement desc string     : searches for "string" in achievement description
-	.lookup achievement reward string   : searches for "string" in achievement reward name
+	.lookup achievement string : searches for "string" in achievement name
+	.lookup achievement desc string : searches for "string" in achievement description
+	.lookup achievement reward string : searches for "string" in achievement reward name
 	.lookup achievement criteria string : searches for "string" in achievement criteria name
-	.lookup achievement all string      : searches for "string" in achievement name, description, reward, and critiera
+	.lookup achievement all string : searches for "string" in achievement name, description, reward, and critiera
 */
 bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_session)
 {
@@ -1162,9 +1123,7 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 	string x;
 	bool lookupname = true, lookupdesc = false, lookupcriteria = false, lookupreward = false;
 	if(strnicmp(args, "name ", 5) == 0)
-	{
 		x = string(args + 5);
-	}
 	else if(strnicmp(args, "desc ", 5) == 0)
 	{
 		lookupname = false;
@@ -1191,9 +1150,8 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 		x = string(args + 4);
 	}
 	else
-	{
 		x = string(args);
-	}
+
 	if(x.length() < 3)
 	{
 		RedSystemMessage(m_session, "Your search string must be at least 3 characters long.");
@@ -1242,9 +1200,8 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 					foundmatch = FindXinYString(x, y);
 				}
 				if(!foundmatch)
-				{
 					continue;
-				}
+
 				foundList.insert(achievement->ID);
 				std::stringstream strm;
 				strm << achievement->ID;
@@ -1272,9 +1229,7 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 				}
 				recout += achievement->name;
 				if(!lookupreward)
-				{
 					recout += "]|h|r";
-				}
 				else
 				{
 					recout += "]|h |cffffffff";
@@ -1309,9 +1264,8 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 				y = string(criteria->name);
 				arcpro_TOLOWER(y);
 				if(!FindXinYString(x, y))
-				{
 					continue;
-				}
+
 				foundList.insert(criteria->ID);
 				std::stringstream strm;
 				strm << criteria->ID;
@@ -1348,9 +1302,7 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 					}
 					recout += achievement->name;
 					if(!lookupreward)
-					{
 						recout += "]|h|r";
-					}
 					else
 					{
 						recout += "]|h |cffffffff";
@@ -1380,59 +1332,66 @@ bool ChatHandler::HandleLookupAchievementCmd(const char* args, WorldSession* m_s
 	return true;
 }
 
-
-
 #endif
 
-bool ChatHandler::HandleVehicleEjectPassengerCommand( const char *args, WorldSession *session ){
+bool ChatHandler::HandleVehicleEjectPassengerCommand(const char *args, WorldSession *session)
+{
 	uint32 seat = 0;
 
-	std::stringstream ss( args );
+	std::stringstream ss(args);
 	ss >> seat;
-	if( ss.fail() ){
-		RedSystemMessage( session, "You need to specify a seat number." );
+	if(ss.fail())
+	{
+		RedSystemMessage(session, "You need to specify a seat number.");
 		return false;
 	}
 
-	Player *p = session->GetPlayer();
+	Player* p = session->GetPlayer();
 
-	if( p->GetTargetGUID() == 0 ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(p->GetTargetGUID() == 0)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	Unit *u = p->GetMapMgr()->GetUnit( p->GetTargetGUID() );
-	if( u == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	Unit* u = p->GetMapMgr()->GetUnit(p->GetTargetGUID());
+	if(u == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( u->GetVehicleComponent() == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(u->GetVehicleComponent() == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	u->GetVehicleComponent()->EjectPassengerFromSeat( seat );
+	u->GetVehicleComponent()->EjectPassengerFromSeat(seat);
 
 	return true;
 }
 
-bool ChatHandler::HandleVehicleEjectAllPassengersCommand( const char *args, WorldSession *session ){
-	Player *p = session->GetPlayer();
+bool ChatHandler::HandleVehicleEjectAllPassengersCommand(const char *args, WorldSession *session)
+{
+	Player* p = session->GetPlayer();
 
-	if( p->GetTargetGUID() == 0 ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(p->GetTargetGUID() == 0)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	Unit *u = p->GetMapMgr()->GetUnit( p->GetTargetGUID() );
-	if( u == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	Unit* u = p->GetMapMgr()->GetUnit(p->GetTargetGUID());
+	if(u == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( u->GetVehicleComponent() == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(u->GetVehicleComponent() == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
@@ -1441,22 +1400,26 @@ bool ChatHandler::HandleVehicleEjectAllPassengersCommand( const char *args, Worl
 	return true;
 }
 
-bool ChatHandler::HandleVehicleInstallAccessoriesCommand( const char *args, WorldSession *session ){
-	Player *p = session->GetPlayer();
+bool ChatHandler::HandleVehicleInstallAccessoriesCommand(const char *args, WorldSession *session)
+{
+	Player* p = session->GetPlayer();
 
-	if( p->GetTargetGUID() == 0 ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(p->GetTargetGUID() == 0)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	Unit *u = p->GetMapMgr()->GetUnit( p->GetTargetGUID() );
-	if( u == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	Unit* u = p->GetMapMgr()->GetUnit(p->GetTargetGUID());
+	if(u == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( u->GetVehicleComponent() == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(u->GetVehicleComponent() == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
@@ -1465,22 +1428,26 @@ bool ChatHandler::HandleVehicleInstallAccessoriesCommand( const char *args, Worl
 	return true;
 }
 
-bool ChatHandler::HandleVehicleRemoveAccessoriesCommand( const char *args, WorldSession *session ){
-	Player *p = session->GetPlayer();
+bool ChatHandler::HandleVehicleRemoveAccessoriesCommand(const char *args, WorldSession *session)
+{
+	Player* p = session->GetPlayer();
 
-	if( p->GetTargetGUID() == 0 ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(p->GetTargetGUID() == 0)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	Unit *u = p->GetMapMgr()->GetUnit( p->GetTargetGUID() );
-	if( u == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	Unit* u = p->GetMapMgr()->GetUnit(p->GetTargetGUID());
+	if(u == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( u->GetVehicleComponent() == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(u->GetVehicleComponent() == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
@@ -1490,50 +1457,55 @@ bool ChatHandler::HandleVehicleRemoveAccessoriesCommand( const char *args, World
 	return true;
 }
 
-bool ChatHandler::HandleVehicleAddPassengerCommand(const char *args, WorldSession *session){
-	std::stringstream ss( args );
+bool ChatHandler::HandleVehicleAddPassengerCommand(const char *args, WorldSession *session)
+{
+	std::stringstream ss(args);
 
 	uint32 creature_entry;
 
 	ss >> creature_entry;
-	if( ss.fail() ){
-		RedSystemMessage( session, "You need to specify a creature id." );
+	if(ss.fail()){
+		RedSystemMessage(session, "You need to specify a creature id.");
 		return false;
 	}
 
-	if( session->GetPlayer()->GetTargetGUID() == 0 ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(session->GetPlayer()->GetTargetGUID() == 0)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	Unit *u = session->GetPlayer()->GetMapMgr()->GetUnit( session->GetPlayer()->GetTargetGUID() );
-	if( u == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	Unit* u = session->GetPlayer()->GetMapMgr()->GetUnit(session->GetPlayer()->GetTargetGUID());
+	if(u == NULL)
+	{
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( u->GetVehicleComponent() == NULL ){
-		RedSystemMessage( session, "You need to select a vehicle." );
+	if(u->GetVehicleComponent() == NULL){
+		RedSystemMessage(session, "You need to select a vehicle.");
 		return false;
 	}
 
-	if( !u->GetVehicleComponent()->HasEmptySeat() ){
-		RedSystemMessage( session, "That vehicle has no more empty seats." );
+	if(!u->GetVehicleComponent()->HasEmptySeat())
+	{
+		RedSystemMessage(session, "That vehicle has no more empty seats.");
 		return false;
 	}
 	
-	CreatureInfo  *ci = CreatureNameStorage.LookupEntry( creature_entry );
-	CreatureProto *cp = CreatureProtoStorage.LookupEntry( creature_entry );
+	CreatureInfo* ci = CreatureNameStorage.LookupEntry(creature_entry);
+	CreatureProto* cp = CreatureProtoStorage.LookupEntry(creature_entry);
 
-	if( ( ci == NULL ) || ( cp == NULL ) ){
-		RedSystemMessage( session, "Creature %u doesn't exist in the database", creature_entry );
+	if((ci == NULL) || (cp == NULL))
+	{
+		RedSystemMessage(session, "Creature %u doesn't exist in the database", creature_entry);
 		return false;
 	}
 	
-	Creature *c = u->GetMapMgr()->CreateCreature( creature_entry );
-	c->Load( cp, u->GetPositionX(), u->GetPositionY(), u->GetPositionZ(), u->GetOrientation() );
-	c->PushToWorld( u->GetMapMgr() );	
-	c->EnterVehicle( u->GetGUID(), 1 );
+	Creature* c = u->GetMapMgr()->CreateCreature(creature_entry);
+	c->Load(cp, u->GetPositionX(), u->GetPositionY(), u->GetPositionZ(), u->GetOrientation());
+	c->PushToWorld(u->GetMapMgr());	
+	c->EnterVehicle(u->GetGUID(), 1);
 
 	return true;
 }
