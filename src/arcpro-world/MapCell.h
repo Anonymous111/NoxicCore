@@ -19,10 +19,6 @@
  *
  */
 
-//
-// MapCell.h
-//
-
 #ifndef __MAP_CELL_H
 #define __MAP_CELL_H
 
@@ -34,73 +30,72 @@ class Map;
 
 class SERVER_DECL MapCell
 {
-		friend class MapMgr;
-	public:
-		MapCell() {};
-		~MapCell();
+	friend class MapMgr;
 
-		typedef std::set<Object*> ObjectSet;
+public:
+	MapCell() {};
+	~MapCell();
 
-		//Init
-		void Init(uint32 x, uint32 y, MapMgr* mapmgr);
+	typedef std::set<Object*> ObjectSet;
 
-		//Object Managing
-		void AddObject(Object* obj);
-		void RemoveObject(Object* obj);
-		bool HasObject(Object* obj) { return (_objects.find(obj) != _objects.end()); }
-		bool HasPlayers() { return ((_playerCount > 0) ? true : false); }
-		ARCPRO_INLINE size_t GetObjectCount() { return _objects.size(); }
-		void RemoveObjects();
-		ARCPRO_INLINE ObjectSet::iterator Begin() { return _objects.begin(); }
-		ARCPRO_INLINE ObjectSet::iterator End() { return _objects.end(); }
+	//Init
+	void Init(uint32 x, uint32 y, MapMgr* mapmgr);
 
-		//State Related
-		void SetActivity(bool state);
+	//Object Managing
+	void AddObject(Object* obj);
+	void RemoveObject(Object* obj);
+	bool HasObject(Object* obj) { return (_objects.find(obj) != _objects.end()); }
+	bool HasPlayers() { return ((_playerCount > 0) ? true : false); }
+	ARCPRO_INLINE size_t GetObjectCount() { return _objects.size(); }
+	void RemoveObjects();
+	ARCPRO_INLINE ObjectSet::iterator Begin() { return _objects.begin(); }
+	ARCPRO_INLINE ObjectSet::iterator End() { return _objects.end(); }
 
-		ARCPRO_INLINE bool IsActive() { return _active; }
-		ARCPRO_INLINE bool IsLoaded() { return _loaded; }
-		ARCPRO_INLINE void SetLoaded(bool Loaded = true) { _loaded = Loaded; }
+	//State Related
+	void SetActivity(bool state);
+	ARCPRO_INLINE bool IsActive() { return _active; }
+	ARCPRO_INLINE bool IsLoaded() { return _loaded; }
+	ARCPRO_INLINE void SetLoaded(bool Loaded = true) { _loaded = Loaded; }
 
-		//Object Loading Managing
-		void LoadObjects(CellSpawns* sp);
-		ARCPRO_INLINE uint32 GetPlayerCount() { return _playerCount; }
+	//Object Loading Managing
+	void LoadObjects(CellSpawns* sp);
+	ARCPRO_INLINE uint32 GetPlayerCount() { return _playerCount; }
 
-		ARCPRO_INLINE bool IsUnloadPending() { return _unloadpending; }
-		ARCPRO_INLINE void SetUnloadPending(bool up) { _unloadpending = up; }
-		void QueueUnloadPending();
-		void CancelPendingUnload();
-		void Unload();
-		ARCPRO_INLINE uint16 GetPositionX() { return _x; }
-		ARCPRO_INLINE uint16 GetPositionY() { return _y; }
+	ARCPRO_INLINE bool IsUnloadPending() { return _unloadpending; }
+	ARCPRO_INLINE void SetUnloadPending(bool up) { _unloadpending = up; }
+	void QueueUnloadPending();
+	void CancelPendingUnload();
+	void Unload();
+	ARCPRO_INLINE uint16 GetPositionX() { return _x; }
+	ARCPRO_INLINE uint16 GetPositionY() { return _y; }
 
-		ObjectSet _respawnObjects;
-		ObjectSet::iterator objects_iterator;//required by MapCell::RemoveObjects() removing Creatures which will remove their guardians and corrupt itr.
+	ObjectSet _respawnObjects;
+	ObjectSet::iterator objects_iterator; //required by MapCell::RemoveObjects() removing Creatures which will remove their guardians and corrupt itr.
 
-		//the corpse has no more an owner (like if he resurrected) so it can be despawned and
-		//the MapCell can be unloaded(if CanUnload() returns true)
-		void CorpseGoneIdle(Object* corpse);
+	//the corpse has no more an owner (like if he resurrected) so it can be despawned and
+	//the MapCell can be unloaded(if CanUnload() returns true)
+	void CorpseGoneIdle(Object* corpse);
 
-	private:
-		uint16 _x, _y;
-		ObjectSet _objects;
-		bool _active, _loaded;
-		bool _unloadpending;
+private:
+	uint16 _x, _y;
+	ObjectSet _objects;
+	bool _active, _loaded;
+	bool _unloadpending;
 
-		uint16 _playerCount;
+	uint16 _playerCount;
 
-		//checks if the MapCell can be unloaded, based on _corpses and if it's in a battleground
-		bool CanUnload();
-		//checks if the MapCell can be unloaded and if so it queues it for unload.
-		//this MUST be called when a corpse goes idle
-		void CheckUnload();
+	//checks if the MapCell can be unloaded, based on _corpses and if it's in a battleground
+	bool CanUnload();
+	//checks if the MapCell can be unloaded and if so it queues it for unload.
+	//this MUST be called when a corpse goes idle
+	void CheckUnload();
 
-		//keep track of active corpses so we don't unload a MapCell with an active corpse (otherwise players will not be able to resurrect)
-		std::list<Object*> _corpses;
+	//keep track of active corpses so we don't unload a MapCell with an active corpse (otherwise players will not be able to resurrect)
+	std::list<Object*> _corpses;
 
-		MapMgr* _mapmgr;
+	MapMgr* _mapmgr;
 
-		Mutex m_objectlock;
+	Mutex m_objectlock;
 };
 
 #endif
-

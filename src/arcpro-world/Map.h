@@ -11,17 +11,13 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-//
-// Map.h
-//
 
 #ifndef __MAP_H
 #define __MAP_H
@@ -36,12 +32,12 @@ struct Formation;
 
 typedef struct
 {
-	uint32	id;//spawn ID
-	uint32	entry;
-	float	x;
-	float	y;
-	float	z;
-	float	o;
+	uint32 id;//spawn ID
+	uint32 entry;
+	float x;
+	float y;
+	float z;
+	float o;
 	Formation* form;
 	uint8 movetype;
 	uint32 displayid;
@@ -67,7 +63,6 @@ typedef struct
 	/* sets one of the bytes of an uint32 */
 	uint32 setbyte(uint32 buffer, uint8 index, uint32 byte)
 	{
-
 		/* We don't want a segfault, now do we? */
 		if(index >= 4)
 			return buffer;
@@ -77,29 +72,29 @@ typedef struct
 
 		return buffer;
 	}
-} CreatureSpawn;
+}CreatureSpawn;
 
 typedef struct
 {
-	uint32	id;//spawn ID
-	uint32	entry;
-	float	x;
-	float	y;
-	float	z;
-	float	o;
-	float	o1;
-	float	o2;
-	float	o3;
-	float	facing;
-	uint32	flags;
-	uint32	state;
-	uint32	faction;
+	uint32 id;//spawn ID
+	uint32 entry;
+	float x;
+	float y;
+	float z;
+	float o;
+	float o1;
+	float o2;
+	float o3;
+	float facing;
+	uint32 flags;
+	uint32 state;
+	uint32 faction;
 	//uint32 level;
 	float scale;
 	//uint32 stateNpcLink;
 	uint32 phase;
 	uint32 overrides;
-} GOSpawn;
+}GOSpawn;
 
 typedef std::vector<CreatureSpawn*> CreatureSpawnList;
 typedef std::vector<GOSpawn*> GOSpawnList;
@@ -108,63 +103,60 @@ typedef struct
 {
 	CreatureSpawnList CreatureSpawns;
 	GOSpawnList GOSpawns;
-} CellSpawns;
+}CellSpawns;
 
 class SERVER_DECL Map
 {
-	public:
-		Map(uint32 mapid, MapInfo* inf);
-		~Map();
+public:
+	Map(uint32 mapid, MapInfo* inf);
+	~Map();
 
-		ARCPRO_INLINE string GetNameString() { return name; }
-		ARCPRO_INLINE const char* GetName() { return name.c_str(); }
-		ARCPRO_INLINE MapEntry* GetDBCEntry() { return me; }
+	ARCPRO_INLINE string GetNameString() { return name; }
+	ARCPRO_INLINE const char* GetName() { return name.c_str(); }
+	ARCPRO_INLINE MapEntry* GetDBCEntry() { return me; }
 
-		ARCPRO_INLINE CellSpawns* GetSpawnsList(uint32 cellx, uint32 celly)
+	ARCPRO_INLINE CellSpawns* GetSpawnsList(uint32 cellx, uint32 celly)
+	{
+		ARCPRO_ASSERT(cellx < _sizeX);
+		ARCPRO_ASSERT(celly < _sizeY);
+		if(spawns[cellx] == NULL)
+			return NULL;
+
+		return spawns[cellx][celly];
+	}
+	ARCPRO_INLINE CellSpawns* GetSpawnsListAndCreate(uint32 cellx, uint32 celly)
+	{
+		ARCPRO_ASSERT(cellx < _sizeX);
+		ARCPRO_ASSERT(celly < _sizeY);
+		if(spawns[cellx] == NULL)
 		{
-			ARCPRO_ASSERT(cellx < _sizeX);
-			ARCPRO_ASSERT(celly < _sizeY);
-			if(spawns[cellx] == NULL) return NULL;
-
-			return spawns[cellx][celly];
-		}
-		ARCPRO_INLINE CellSpawns* GetSpawnsListAndCreate(uint32 cellx, uint32 celly)
-		{
-			ARCPRO_ASSERT(cellx < _sizeX);
-			ARCPRO_ASSERT(celly < _sizeY);
-			if(spawns[cellx] == NULL)
-			{
-				spawns[cellx] = new CellSpawns*[_sizeY];
-				memset(spawns[cellx], 0, sizeof(CellSpawns*)*_sizeY);
-			}
-
-			if(spawns[cellx][celly] == 0)
-				spawns[cellx][celly] = new CellSpawns;
-			return spawns[cellx][celly];
+			spawns[cellx] = new CellSpawns*[_sizeY];
+			memset(spawns[cellx], 0, sizeof(CellSpawns*)*_sizeY);
 		}
 
-		void LoadSpawns(bool reload);//set to true to make clean up
-		uint32 CreatureSpawnCount;
-		uint32 GameObjectSpawnCount;
+		if(spawns[cellx][celly] == 0)
+			spawns[cellx][celly] = new CellSpawns;
+		return spawns[cellx][celly];
+	}
 
-		ARCPRO_INLINE void CellGoneActive(uint32 x, uint32 y)
-		{
-		}
+	void LoadSpawns(bool reload); //set to true to make clean up
+	uint32 CreatureSpawnCount;
+	uint32 GameObjectSpawnCount;
 
-		ARCPRO_INLINE void CellGoneIdle(uint32 x, uint32 y)
-		{
-		}
+	ARCPRO_INLINE void CellGoneActive(uint32 x, uint32 y) {}
 
-	private:
-		MapInfo* 	   _mapInfo;
-		uint32 _mapId;
-		string name;
-		MapEntry* me;
+	ARCPRO_INLINE void CellGoneIdle(uint32 x, uint32 y) {}
 
-		//new stuff
-		CellSpawns** spawns[_sizeX];
-	public:
-		CellSpawns staticSpawns;
+private:
+	MapInfo* 	   _mapInfo;
+	uint32 _mapId;
+	string name;
+	MapEntry* me;
+
+	//new stuff
+	CellSpawns** spawns[_sizeX];
+public:
+	CellSpawns staticSpawns;
 };
 
 #endif

@@ -11,17 +11,14 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-//
-// MapCell.cpp
-//
 #include "StdAfx.h"
 
 extern bool bServerShutdown;
@@ -87,9 +84,7 @@ void MapCell::SetActivity(bool state)
 			CancelPendingUnload();
 
 		if(sWorld.Collision)
-		{
 			CollideInterface.ActivateTile(_mapmgr->GetMapId(), _x / 8, _y / 8);
-		}
 	}
 	else if(_active && !state)
 	{
@@ -104,9 +99,7 @@ void MapCell::SetActivity(bool state)
 			QueueUnloadPending();
 
 		if(sWorld.Collision)
-		{
 			CollideInterface.DeactivateTile(_mapmgr->GetMapId(), _x / 8, _y / 8);
-		}
 	}
 
 	_active = state;
@@ -130,15 +123,15 @@ void MapCell::RemoveObjects()
 				if(!(*itr)->IsPet())
 				{
 					_mapmgr->_reusable_guids_creature.push_back((*itr)->GetUIdFromGUID());
-					TO< Creature* >(*itr)->m_respawnCell = NULL;
-					delete TO< Creature* >(*itr);
+					TO<Creature*>(*itr)->m_respawnCell = NULL;
+					delete TO<Creature*>(*itr);
 				}
-				break;
+			break;
 			case TYPEID_GAMEOBJECT:
 				_mapmgr->_reusable_guids_gameobject.push_back((*itr)->GetUIdFromGUID());
-				TO< GameObject* >(*itr)->m_respawnCell = NULL;
-				delete TO< GameObject* >(*itr);
-				break;
+				TO<GameObject*>(*itr)->m_respawnCell = NULL;
+				delete TO<GameObject*>(*itr);
+			break;
 		}
 	}
 	_respawnObjects.clear();
@@ -151,7 +144,7 @@ void MapCell::RemoveObjects()
 		objects_iterator++;
 
 		//If MapUnloadTime is non-zero, a transport could get deleted here (when it arrives to a cell that's scheduled to be unloaded because players left from it), so don't delete it! - By: VLack aka. VLsoft
-		if(!bServerShutdown && obj->IsGameObject() && TO< GameObject* >(obj)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT)
+		if(!bServerShutdown && obj->IsGameObject() && TO<GameObject*>(obj)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT)
 			continue;
 
 		if(obj->IsActive())
@@ -167,7 +160,6 @@ void MapCell::RemoveObjects()
 	_playerCount = 0;
 	_loaded = false;
 }
-
 
 void MapCell::LoadObjects(CellSpawns* sp)
 {
@@ -211,9 +203,7 @@ void MapCell::LoadObjects(CellSpawns* sp)
 					for(InstanceBossInfoMap::iterator bossInfo = bossInfoMap->begin(); bossInfo != bossInfoMap->end(); ++bossInfo)
 					{
 						if(pInstance->m_killedNpcs.find(bossInfo->second->creatureid) == pInstance->m_killedNpcs.end() && bossInfo->second->trash.find((*i)->id) != bossInfo->second->trash.end())
-						{
 							respawnTimeOverride = bossInfo->second->trashRespawnOverride;
-						}
 					}
 				}
 				else
@@ -231,9 +221,7 @@ void MapCell::LoadObjects(CellSpawns* sp)
 				c->m_respawnTimeOverride = respawnTimeOverride;
 
 			if(c->Load(*i, _mapmgr->iInstanceMode, _mapmgr->GetMapInfo()) && c->CanAddToWorld())
-			{
 				c->PushToWorld(_mapmgr);
-			}
 			else
 			{
 				CreatureSpawn* spawn = (*i);
@@ -253,11 +241,8 @@ void MapCell::LoadObjects(CellSpawns* sp)
 				//uint32 state = go->GetByte(GAMEOBJECT_BYTES_1, 0);
 
 				// FIX ME - burlex
-				/*
-				if(pInstance && pInstance->FindObject((*i)->stateNpcLink))
-				{
-					go->SetByte(GAMEOBJECT_BYTES_1, 0, (state ? 0 : 1));
-				}*/
+				/*if(pInstance && pInstance->FindObject((*i)->stateNpcLink))
+					go->SetByte(GAMEOBJECT_BYTES_1, 0, (state ? 0 : 1));*/
 
 				go->m_loadedFromDB = true;
 				go->PushToWorld(_mapmgr);
@@ -271,7 +256,6 @@ void MapCell::LoadObjects(CellSpawns* sp)
 		}
 	}
 }
-
 
 void MapCell::QueueUnloadPending()
 {
@@ -311,7 +295,7 @@ void MapCell::Unload()
 	//in CellHandler. ~MapCell is called, RemoveObjects() is called and despawns A which despawns B, calling Object::RemoveFromWorld()
 	//which calls MapMgr::RemoveObject(B) which calls cell->RemoveObject(obj) ONLY if cell is not NULL, but in this case is NULL, leaving
 	//a reference to a deleted Object in MapCell::_objects, iterated in RemoveObjects(). Calling it here fixes this issue.
-	//Note: RemoveObjects() is still called in ~MapCell, due to fancy ArcPro behaviors, like the in-game command ".mapcell delete <x> <y>
+	//Note: RemoveObjects() is still called in ~MapCell, due to fancy ArcPro behaviors, like the in-game command ".mapcell delete < x > < y >
 
 	RemoveObjects();
 

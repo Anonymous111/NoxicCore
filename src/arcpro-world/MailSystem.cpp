@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -91,7 +91,7 @@ WorldPacket* Mailbox::BuildMailboxListingPacket()
 	}
 
 	data->put<uint32>(0, realcount);
-	data->put<uint8>(4, static_cast< uint8 >(count));
+	data->put<uint8>(4, static_cast<uint8>(count));
 
 	// do cleanup on request mail
 	CleanupExpiredMessages();
@@ -107,9 +107,7 @@ void Mailbox::CleanupExpiredMessages()
 	{
 		it2 = itr++;
 		if(it2->second.expire_time && it2->second.expire_time < curtime)
-		{
 			Messages.erase(it2);
-		}
 	}
 }
 
@@ -140,16 +138,16 @@ bool MailMessage::AddMessageDataToPacket(WorldPacket & data)
 	{
 		case NORMAL:
 			data << uint64(sender_guid);
-			break;
+		break;
 		case COD:
 		case AUCTION:
 		case GAMEOBJECT:
 		case ITEM:
 			data << uint32(Arcpro::Util::GUID_LOPART(sender_guid));
-			break;
+		break;
 		case CREATURE:
-			data << uint32( Arcpro::Util::GET_CREATURE_ENTRY_FROM_GUID(sender_guid));
-			break;
+			data << uint32(Arcpro::Util::GET_CREATURE_ENTRY_FROM_GUID(sender_guid));
+		break;
 	}
 
 	data << uint32(cod);			// cod
@@ -204,7 +202,6 @@ void MailSystem::SaveMessageToSQL(MailMessage* message)
 {
 	stringstream ss;
 
-
 	ss << "DELETE FROM mailbox WHERE message_id = ";
 	ss << message->message_id;
 	ss << ";";
@@ -213,7 +210,7 @@ void MailSystem::SaveMessageToSQL(MailMessage* message)
 
 	ss.rdbuf()->str("");
 
-	vector< uint32 >::iterator itr;
+	vector<uint32>::iterator itr;
 	ss << "INSERT INTO mailbox VALUES("
 	   << message->message_id << ","
 	   << message->message_type << ","
@@ -248,8 +245,8 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
 	uint8 itemslot;
 	uint8 i;
 	uint64 itemguid;
-	vector< Item* > items;
-	vector< Item* >::iterator itr;
+	vector<Item*> items;
+	vector<Item*>::iterator itr;
 	string recepient;
 	Item* pItem;
 	//uint32 err = MAIL_OK;
@@ -306,9 +303,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
 
 	bool interfaction = false;
 	if(sMailSystem.MailOption(MAIL_FLAG_CAN_SEND_TO_OPPOSITE_FACTION) || (HasGMPermissions() && sMailSystem.MailOption(MAIL_FLAG_CAN_SEND_TO_OPPOSITE_FACTION_GM)))
-	{
 		interfaction = true;
-	}
 
 	// Check we're sending to the same faction (disable this for testing)
 	if(player->team != _player->GetTeam() && !interfaction)
@@ -474,7 +469,7 @@ void WorldSession::HandleTakeItem(WorldPacket & recv_data)
 	uint64 mailbox;
 	uint32 message_id;
 	uint32 lowguid;
-	vector< uint32 >::iterator itr;
+	vector<uint32>::iterator itr;
 
 	recv_data >> mailbox >> message_id >> lowguid;
 
@@ -705,8 +700,8 @@ void WorldSession::HandleMailCreateTextItem(WorldPacket & recv_data)
 	if(pItem == NULL)
 		return;
 
-	pItem->SetFlag( ITEM_FIELD_FLAGS, ITEM_FLAG_WRAP_GIFT ); // the flag is probably misnamed
-	pItem->SetText( message->body );
+	pItem->SetFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAP_GIFT); // the flag is probably misnamed
+	pItem->SetText(message->body);
 
 	if(_player->GetItemInterface()->AddItemToFreeSlot(pItem))
 	{
@@ -714,9 +709,7 @@ void WorldSession::HandleMailCreateTextItem(WorldPacket & recv_data)
 		SendPacket(&data);
 	}
 	else
-	{
 		pItem->DeleteMe();
-	}
 }
 
 void WorldSession::HandleItemTextQuery(WorldPacket & recv_data)
@@ -727,7 +720,7 @@ void WorldSession::HandleItemTextQuery(WorldPacket & recv_data)
 	recv_data >> itemGuid;
 
 	Item* pItem = _player->GetItemInterface()->GetItemByGUID(itemGuid);
-	WorldPacket data(SMSG_ITEM_TEXT_QUERY_RESPONSE, pItem->GetText().size() + 9 );
+	WorldPacket data(SMSG_ITEM_TEXT_QUERY_RESPONSE, pItem->GetText().size() + 9);
 	if(!pItem)
 		data << uint8(1);
 	else
@@ -765,15 +758,9 @@ void Mailbox::FillTimePacket(WorldPacket & data)
 	}
 
 	if(c == 0)
-	{
-
 		*(uint32*)(&data.contents()[0]) = 0xc7a8c000;
-	}
 	else
-	{
-
 		*(uint32*)(&data.contents()[4]) = c;
-	}
 }
 
 void WorldSession::HandleMailTime(WorldPacket & recv_data)
@@ -812,8 +799,7 @@ void MailSystem::RemoveMessageIfDeleted(uint32 message_id, Player* plr)
 		plr->m_mailBox.DeleteMessage(message_id, true);   // wipe the message
 }
 
-void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receiver, string subject, string body,
-                                      uint32 money, uint32 cod, vector<uint64> &item_guids, uint32 stationery, MailCheckMask checked, uint32 deliverdelay)
+void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receiver, string subject, string body, uint32 money, uint32 cod, vector< uint64 > &item_guids, uint32 stationery, MailCheckMask checked, uint32 deliverdelay)
 {
 	// This is for sending automated messages, for example from an auction house.
 	MailMessage msg;
@@ -824,7 +810,7 @@ void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receive
 	msg.body = body;
 	msg.money = money;
 	msg.cod = cod;
-	for(vector<uint64>::iterator itr = item_guids.begin(); itr != item_guids.end(); ++itr)
+	for(vector< uint64 >::iterator itr = item_guids.begin(); itr != item_guids.end(); ++itr)
 		msg.items.push_back(Arcpro::Util::GUID_LOPART(*itr));
 
 	msg.stationery = stationery;
@@ -844,10 +830,9 @@ void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receive
 }
 
 //overload to keep backward compatibility (passing just 1 item guid instead of a vector)
-void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receiver, string subject, string body, uint32 money,
-                                      uint32 cod, uint64 item_guid, uint32 stationery, MailCheckMask checked, uint32 deliverdelay)
+void MailSystem::SendAutomatedMessage(uint32 type, uint64 sender, uint64 receiver, string subject, string body, uint32 money, uint32 cod, uint64 item_guid, uint32 stationery, MailCheckMask checked, uint32 deliverdelay)
 {
-	vector<uint64> item_guids;
+	vector< uint64 > item_guids;
 	if(item_guid != 0)
 		item_guids.push_back(item_guid);
 	SendAutomatedMessage(type, sender, receiver, subject, body, money, cod, item_guids, stationery, checked, deliverdelay);

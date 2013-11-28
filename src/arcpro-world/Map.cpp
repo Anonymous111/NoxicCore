@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -87,8 +87,8 @@ bool CheckResultLengthCreatures(QueryResult* res)
 		{
 			first_table_warning = false;
 			Log.LargeErrorMessage("One of your creature_spawns table has the wrong column count.",
-			                      "ArcPro has skipped loading this table in order to avoid crashing.",
-			                      "Please correct this, if you do not no spawns will show.", NULL);
+									"ArcPro has skipped loading this table in order to avoid crashing.",
+									"Please correct this, if you do not no spawns will show.", NULL);
 		}
 
 		return false;
@@ -106,8 +106,8 @@ bool CheckResultLengthGameObject(QueryResult* res)
 		{
 			first_table_warningg = false;
 			Log.LargeErrorMessage("One of your gameobject_spawns table has the wrong column count.",
-			                      "ArcPro has skipped loading this table in order to avoid crashing.",
-			                      "Please correct this, if you do not no spawns will show.", NULL);
+									"ArcPro has skipped loading this table in order to avoid crashing.",
+									"Please correct this, if you do not no spawns will show.", NULL);
 		}
 
 		return false;
@@ -136,7 +136,7 @@ void Map::LoadSpawns(bool reload)
 				}
 
 	QueryResult* result;
-	set<string>::iterator tableiterator;
+	set< string >::iterator tableiterator;
 	for(tableiterator = ExtraMapCreatureTables.begin(); tableiterator != ExtraMapCreatureTables.end(); ++tableiterator)
 	{
 		result = WorldDatabase.Query("SELECT * FROM %s WHERE Map = %u", (*tableiterator).c_str(), this->_mapId);
@@ -157,8 +157,8 @@ void Map::LoadSpawns(bool reload)
 					cspawn->o = fields[6].GetFloat();
 					/*uint32 cellx=float2int32(((_maxX-cspawn->x)/_cellSize));
 					uint32 celly=float2int32(((_maxY-cspawn->y)/_cellSize));*/
-					uint32 cellx = CellHandler<MapMgr>::GetPosX(cspawn->x);
-					uint32 celly = CellHandler<MapMgr>::GetPosY(cspawn->y);
+					uint32 cellx = CellHandler< MapMgr >::GetPosX(cspawn->x);
+					uint32 celly = CellHandler< MapMgr >::GetPosY(cspawn->y);
 					if(spawns[cellx] == NULL)
 					{
 						spawns[cellx] = new CellSpawns*[_sizeY];
@@ -187,7 +187,8 @@ void Map::LoadSpawns(bool reload)
 					cspawn->Item3SlotDisplay = fields[24].GetUInt32();
 					cspawn->CanFly = fields[25].GetUInt32();
 					cspawn->phase = fields[26].GetUInt32();
-					if(cspawn->phase == 0) cspawn->phase = 0xFFFFFFFF;
+					if(cspawn->phase == 0)
+						cspawn->phase = 0xFFFFFFFF;
 
 					spawns[cellx][celly]->CreatureSpawns.push_back(cspawn);
 					++CreatureSpawnCount;
@@ -235,7 +236,8 @@ void Map::LoadSpawns(bool reload)
 				cspawn->Item3SlotDisplay = fields[24].GetUInt32();
 				cspawn->CanFly = fields[25].GetUInt32();
 				cspawn->phase = fields[26].GetUInt32();
-				if(cspawn->phase == 0) cspawn->phase = 0xFFFFFFFF;
+				if(cspawn->phase == 0)
+					cspawn->phase = 0xFFFFFFFF;
 				staticSpawns.CreatureSpawns.push_back(cspawn);
 				++CreatureSpawnCount;
 			}
@@ -271,7 +273,8 @@ void Map::LoadSpawns(bool reload)
 				gspawn->scale = fields[14].GetFloat();
 				//gspawn->stateNpcLink = fields[15].GetUInt32();
 				gspawn->phase = fields[16].GetUInt32();
-				if(gspawn->phase == 0) gspawn->phase = 0xFFFFFFFF;
+				if(gspawn->phase == 0)
+					gspawn->phase = 0xFFFFFFFF;
 				gspawn->overrides = fields[17].GetUInt32();
 				staticSpawns.GOSpawns.push_back(gspawn);
 				++GameObjectSpawnCount;
@@ -309,7 +312,8 @@ void Map::LoadSpawns(bool reload)
 					gspawn->scale = fields[14].GetFloat();
 					//gspawn->stateNpcLink = fields[15].GetUInt32();
 					gspawn->phase = fields[16].GetUInt32();
-					if(gspawn->phase == 0) gspawn->phase = 0xFFFFFFFF;
+					if(gspawn->phase == 0)
+						gspawn->phase = 0xFFFFFFFF;
 					gspawn->overrides = fields[17].GetUInt32();
 
 					if(gspawn->overrides & GAMEOBJECT_MAPWIDE)
@@ -321,8 +325,8 @@ void Map::LoadSpawns(bool reload)
 					{
 						//uint32 cellx=float2int32(((_maxX-gspawn->x)/_cellSize));
 						//uint32 celly=float2int32(((_maxY-gspawn->y)/_cellSize));
-						uint32 cellx = CellHandler<MapMgr>::GetPosX(gspawn->x);
-						uint32 celly = CellHandler<MapMgr>::GetPosY(gspawn->y);
+						uint32 cellx = CellHandler< MapMgr >::GetPosX(gspawn->x);
+						uint32 celly = CellHandler< MapMgr >::GetPosY(gspawn->y);
 						if(spawns[cellx] == NULL)
 						{
 							spawns[cellx] = new CellSpawns*[_sizeY];

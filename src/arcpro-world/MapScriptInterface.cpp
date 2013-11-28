@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -65,11 +65,8 @@ uint32 MapScriptInterface::GetPlayerCountInRadius(float x, float y, float z /* =
 
 			for(; iter != iter_end; ++iter)
 			{
-				if((*iter)->IsPlayer() &&
-				        (*iter)->CalcDistance(x, y, (z == 0.0f ? (*iter)->GetPositionZ() : z)) < radius)
-				{
+				if((*iter)->IsPlayer() && (*iter)->CalcDistance(x, y, (z == 0.0f ? (*iter)->GetPositionZ() : z)) < radius)
 					++PlayerCount;
-				}
 			}
 		}
 	}
@@ -118,9 +115,7 @@ Creature* MapScriptInterface::SpawnCreature(uint32 Entry, float cX, float cY, fl
 	CreatureProto* proto = CreatureProtoStorage.LookupEntry(Entry);
 	CreatureInfo* info = CreatureNameStorage.LookupEntry(Entry);
 	if(proto == NULL || info == NULL)
-	{
 		return 0;
-	}
 
 	CreatureSpawn* sp = new CreatureSpawn;
 	sp->entry = Entry;
@@ -171,9 +166,7 @@ Creature* MapScriptInterface::SpawnCreature(CreatureSpawn* sp, bool AddToWorld)
 	CreatureProto* proto = CreatureProtoStorage.LookupEntry(sp->entry);
 	CreatureInfo* info = CreatureNameStorage.LookupEntry(sp->entry);
 	if(proto == NULL || info == NULL)
-	{
 		return 0;
-	}
 
 	uint8 Gender = info->GenerateModelId(&sp->displayid);
 	Creature* p = this->mapMgr.CreateCreature(sp->entry);
