@@ -765,9 +765,7 @@ void ApplyNormalFixes()
 		//more triggered spell ids are wrong. I think blizz is trying to outsmart us :S
 		//Chain Heal all ranks %50 heal value (49 + 1)
 		else if(strstr(sp->Name, "Chain Heal"))
-		{
 			sp->EffectDieSides[0] = 49;
-		}
 		else if(strstr(sp->Name, "Touch of Weakness"))
 		{
 			//check if we can find in the description
@@ -882,11 +880,8 @@ void ApplyNormalFixes()
 		if(namehash == SPELL_HASH_SEAL_FATE)
 			sp->procFlags = 0;
 
-		if(((sp->Attributes & ATTRIBUTES_TRIGGER_COOLDOWN) && (sp->AttributesEx & ATTRIBUTESEX_NOT_BREAK_STEALTH)) //rogue cold blood
-			|| ((sp->Attributes & ATTRIBUTES_TRIGGER_COOLDOWN) && (!sp->AttributesEx || sp->AttributesEx & ATTRIBUTESEX_REMAIN_OOC)))
-		{
+		if(((sp->Attributes & ATTRIBUTES_TRIGGER_COOLDOWN) && (sp->AttributesEx & ATTRIBUTESEX_NOT_BREAK_STEALTH)) /*rogue cold blood*/ || ((sp->Attributes & ATTRIBUTES_TRIGGER_COOLDOWN) && (!sp->AttributesEx || sp->AttributesEx & ATTRIBUTESEX_REMAIN_OOC)))
 			sp->c_is_flags |= SPELL_FLAG_IS_REQUIRECOOLDOWNUPDATE;
-		}
 
 		if(namehash == SPELL_HASH_SHRED || namehash == SPELL_HASH_BACKSTAB || namehash == SPELL_HASH_AMBUSH || namehash == SPELL_HASH_GARROTE || namehash == SPELL_HASH_RAVAGE)
 		{
@@ -5537,6 +5532,18 @@ void ApplyNormalFixes()
 	//////////////////////////////////////////
 
 	// Insert items spell fixes here
+	
+	sp = CheckAndReturnSpellEntry(71903); // Shadowmourne
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->procFlags = PROC_ON_MELEE_ATTACK | PROC_ON_PHYSICAL_ATTACK | PROC_ON_CRIT_ATTACK;
+		sp->procChance = 20;
+		sp->Effect[1] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 71905;
+	}
 
 	//Compact Harvest Reaper
 	sp = CheckAndReturnSpellEntry(4078);
