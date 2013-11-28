@@ -137,6 +137,22 @@ class TheRootofAllEvil : public GameObjectAIScript
 		}
 };
 
+class TitanRelic : public GameObjectAIScript
+{
+public:
+	TitanRelic(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript * Create(GameObject* GO) { return new TitanRelic(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		if(pPlayer->m_bg && pPlayer->m_bg->GetType() == BATTLEGROUND_STRAND_OF_THE_ANCIENTS)
+		{
+			GameObject* sota = (GameObject*)pPlayer->m_bg;
+			sota->Rebuild();
+		}
+	}
+};
+
 void SetupMiscGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(173232, &Blacksmithing_Plans_Use::Create);
@@ -145,4 +161,5 @@ void SetupMiscGameobjects(ScriptMgr* mgr)
 	mgr->register_gameobject_script(190942, &DeathGate3::Create);
 	mgr->register_gameobject_script(181281, &ManaThistle::Create);
 	mgr->register_gameobject_script(180672, &TheRootofAllEvil::Create);
+	mgr->register_gameobject_script(192829, &TitanRelic::Create);
 }
