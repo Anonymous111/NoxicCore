@@ -22,8 +22,8 @@
 class BrazierOfEverfount : public GameObjectAIScript
 {
 public:
-	Corrupt_Minor_Manifestation_Water_Object(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-	static GameObjectAIScript* Create(GameObject* GO) { return new Corrupt_Minor_Manifestation_Water_Object(GO); }
+	BrazierOfEverfount(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new BrazierOfEverfount(GO); }
 
 	void OnActivate(Player* pPlayer)
 	{

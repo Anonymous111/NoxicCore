@@ -43,10 +43,10 @@ public:
 	HaaleshiAltar(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
 	static GameObjectAIScript* Create(GameObject* GO) { return new HaaleshiAltar(GO); }
 
-	void OnActivate(Player* plr)
+	void OnActivate(Player* pPlayer)
 	{
-		if(plr->HasQuest(9418))
-			sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000, 1, 14);
+		if(pPlayer->HasQuest(9418))
+			sEAS.SpawnCreature(pPlayer, 17085, -1323.14f, 4042.12f, 117.0f, pPlayer->GetOrientation()+float(M_PI), 360000);
 	}
 };
 
