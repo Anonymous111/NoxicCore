@@ -21,13 +21,9 @@
 
 #include "../../StdAfx.h"
 
-WildSummon::WildSummon(uint64 GUID) : Summon(GUID)
-{
-}
+WildSummon::WildSummon(uint64 GUID) : Summon(GUID) {}
 
-WildSummon::~WildSummon()
-{
-}
+WildSummon::~WildSummon() {}
 
 void WildSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot)
 {
@@ -45,6 +41,3 @@ void WildSummon::OnPreRemoveFromWorld()
 {
 	Summon::OnPreRemoveFromWorld();
 }
-
-
-

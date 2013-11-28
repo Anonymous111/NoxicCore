@@ -28,27 +28,18 @@
 //  Wild summonned creatures don't follow or protect their owner,
 //  however they can be hostile, and attack ( not the owner )
 //
-//
 ////////////////////////////////////////////////////////////////////
 class WildSummon : public Summon
 {
-	public:
-		WildSummon(uint64 GUID);
+public:
+	WildSummon(uint64 GUID);
+	~WildSummon();
 
+	void Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot);
+	void OnPushToWorld();
+	void OnPreRemoveFromWorld();
 
-		~WildSummon();
-
-
-		void Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot);
-
-
-		void OnPushToWorld();
-
-
-		void OnPreRemoveFromWorld();
-
-
-	private:
+private:
 };
 
 #endif

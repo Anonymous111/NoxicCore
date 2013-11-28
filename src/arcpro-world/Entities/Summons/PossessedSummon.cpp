@@ -21,13 +21,9 @@
 
 #include "../../StdAfx.h"
 
-PossessedSummon::PossessedSummon(uint64 GUID) : Summon(GUID)
-{
-}
+PossessedSummon::PossessedSummon(uint64 GUID) : Summon(GUID) {}
 
-PossessedSummon::~PossessedSummon()
-{
-}
+PossessedSummon::~PossessedSummon() {}
 
 void PossessedSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot)
 {
@@ -47,5 +43,3 @@ void PossessedSummon::OnPreRemoveFromWorld()
 {
 	Summon::OnPreRemoveFromWorld();
 }
-
-

@@ -21,13 +21,9 @@
 
 #include "../../StdAfx.h"
 
-CompanionSummon::CompanionSummon(uint64 GUID) : Summon(GUID)
-{
-}
+CompanionSummon::CompanionSummon(uint64 GUID) : Summon(GUID) {}
 
-CompanionSummon::~CompanionSummon()
-{
-}
+CompanionSummon::~CompanionSummon() {}
 
 void CompanionSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot)
 {
@@ -55,4 +51,3 @@ void CompanionSummon::OnPreRemoveFromWorld()
 {
 	Summon::OnPreRemoveFromWorld();
 }
-

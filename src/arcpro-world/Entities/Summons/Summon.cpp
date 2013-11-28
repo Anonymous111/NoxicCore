@@ -26,9 +26,7 @@ Summon::Summon(uint64 GUID) : Creature(GUID)
 	summonslot = -1;
 }
 
-Summon::~Summon()
-{
-}
+Summon::~Summon() {}
 
 void Summon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot)
 {
@@ -68,7 +66,6 @@ void Summon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, 
 
 	if(owner->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE))
 		SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
-
 }
 
 void Summon::OnPushToWorld()
@@ -79,7 +76,6 @@ void Summon::OnPushToWorld()
 		owner->summonhandler.AddSummon(this);
 
 	Creature::OnPushToWorld();
-
 }
 
 void Summon::OnPreRemoveFromWorld()
@@ -99,7 +95,6 @@ void Summon::OnPreRemoveFromWorld()
 	owner = NULL;
 
 	SendDestroyObject();
-
 }
 
 Object* Summon::GetPlayerOwner()
@@ -132,7 +127,6 @@ void Summon::Die(Unit* pAttacker, uint32 damage, uint32 spellid)
 
 void Summon::OnRemoveInRangeObject(Object* object)
 {
-
 	if((owner != NULL) && (object->GetGUID() == owner->GetGUID()))
 		Despawn(1, 0);
 

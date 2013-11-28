@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -92,9 +92,7 @@ void WorldSession::HandleDuelCancelled(WorldPacket & recv_data)
 	for(uint32 x = MAX_NEGATIVE_AURAS_EXTEDED_START; x < MAX_NEGATIVE_AURAS_EXTEDED_END; x++)
 	{
 		if(_player->m_auras[x])
-		{
 			_player->m_auras[x]->Remove();
-		}
 	}
 	std::list<Pet*> summons = _player->GetSummons();
 	for(std::list<Pet*>::iterator itr = summons.begin(); itr != summons.end(); ++itr)

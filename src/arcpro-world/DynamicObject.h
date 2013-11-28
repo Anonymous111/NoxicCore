@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -28,28 +28,26 @@ typedef std::set<uint64>  DynamicObjectList;
 
 class SERVER_DECL DynamicObject : public Object
 {
-	public:
-		DynamicObject(uint32 high, uint32 low);
-		~DynamicObject();
+public:
+	DynamicObject(uint32 high, uint32 low);
+	~DynamicObject();
 
-		void Create(Unit* caster, Spell* pSpell, float x, float y, float z, uint32 duration, float radius);
-		void UpdateTargets();
+	void Create(Unit* caster, Spell* pSpell, float x, float y, float z, uint32 duration, float radius);
+	void UpdateTargets();
 
-		void AddInRangeObject(Object* pObj);
-		void OnRemoveInRangeObject(Object* pObj);
-		void Remove();
+	void AddInRangeObject(Object* pObj);
+	void OnRemoveInRangeObject(Object* pObj);
+	void Remove();
 
-	protected:
+protected:
+	SpellEntry* m_spellProto;
+	Unit* u_caster;
+	Player* p_caster;
+	Spell* m_parentSpell;
+	DynamicObjectList targets;
 
-		SpellEntry* m_spellProto;
-		Unit* u_caster;
-		Player* p_caster;
-		Spell* m_parentSpell;
-		DynamicObjectList targets;
-
-		uint32 m_aliveDuration;
-		uint32 _fields[DYNAMICOBJECT_END];
+	uint32 m_aliveDuration;
+	uint32 _fields[DYNAMICOBJECT_END];
 };
 
 #endif
-

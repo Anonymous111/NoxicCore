@@ -9,11 +9,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,10 +34,10 @@
 #define ENABLE_NAGLE_ALGORITHM				0		//nagle can reduce huge overhead for some packets. Might also create a lot of lag in case he has nothing else to group up packets with
 #define CLIENT_TIMESPEED_CHEAT_TRIGGER_DC	3		//if ping packets will come with a higher rate then normal then there is a chance that client is using timespeed cheat ?
 
-#define CATACLYSM_SUPPORT					1		//disable this in case i forget about it. This will be used to force emu to try to support basic cataclysm support
+#define CATACLYSM_SUPPORT					0		//disable this in case I forget about it. This will be used to force emu to try to support basic cataclysm support
 
 //#define USE_HACK_TO_ENABLE_ACHIEVEMENTS		1
-#define FORCE_DISABLE_CREATURE_PROTO_PERIODIC_AURAS 1//because i met the case when some fire was casting every few seconds a spell. And there were lots of fires...= doomed
+#define FORCE_DISABLE_CREATURE_PROTO_PERIODIC_AURAS 1 //because I met the case when some fire was casting every few seconds a spell. And there were lots of fires...= doomed
 #define SOCIAL_BONUSES_ADDON				1		// when people chat a lot, or get in places with lots of places, they receive buffs. The idea is to award people that socialize a lot
 #define SOCIAL_BONUS_DROPRATE_CHANCE_PER_5_MAN	5	//for every 5 man drop rate chance increases by N%
 

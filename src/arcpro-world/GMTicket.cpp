@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,16 +23,16 @@
 
 enum GMticketType
 {
-    GM_TICKET_TYPE_STUCK				= 1,
-    GM_TICKET_TYPE_BEHAVIOR_HARASSMENT	= 2,
-    GM_TICKET_TYPE_GUILD				= 3,
-    GM_TICKET_TYPE_ITEM					= 4,
-    GM_TICKET_TYPE_ENVIRONMENTAL		= 5,
-    GM_TICKET_TYPE_NON_QUEST_CREEP		= 6,
-    GM_TICKET_TYPE_QUEST_QUEST_NPC		= 7,
-    GM_TICKET_TYPE_TECHNICAL			= 8,
-    GM_TICKET_TYPE_ACCOUNT_BILLING		= 9,
-    GM_TICKET_TYPE_CHARACTER			= 10,
+	GM_TICKET_TYPE_STUCK				= 1,
+	GM_TICKET_TYPE_BEHAVIOR_HARASSMENT	= 2,
+	GM_TICKET_TYPE_GUILD				= 3,
+	GM_TICKET_TYPE_ITEM					= 4,
+	GM_TICKET_TYPE_ENVIRONMENTAL		= 5,
+	GM_TICKET_TYPE_NON_QUEST_CREEP		= 6,
+	GM_TICKET_TYPE_QUEST_QUEST_NPC		= 7,
+	GM_TICKET_TYPE_TECHNICAL			= 8,
+	GM_TICKET_TYPE_ACCOUNT_BILLING		= 9,
+	GM_TICKET_TYPE_CHARACTER			= 10,
 };
 
 void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
@@ -192,13 +192,11 @@ void WorldSession::HandleGMTicketGetTicketOpcode(WorldPacket & recv_data)
 	SendPacket(&data);
 }
 
-
 void WorldSession::HandleGMTicketSystemStatusOpcode(WorldPacket & recv_data)
 {
 	WorldPacket data(SMSG_GMTICKET_SYSTEMSTATUS, 4);
 
 	// no data
-
 	// Response - System is working Fine
 	if(sWorld.getGMTicketStatus())
 		data << uint32(1);

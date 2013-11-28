@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -22,7 +22,6 @@
 
 namespace Arcpro
 {
-
 	EquipmentSetMgr::~EquipmentSetMgr()
 	{
 		for(EquipmentSetStorage::iterator itr = EquipmentSets.begin(); itr != EquipmentSets.end(); ++itr)
@@ -43,17 +42,14 @@ namespace Arcpro
 			return NULL;
 	}
 
-
-
 	bool EquipmentSetMgr::AddEquipmentSet(uint32 setGUID, EquipmentSet* set)
 	{
-		std::pair< EquipmentSetStorage::iterator, bool > retval;
+		std::pair<EquipmentSetStorage::iterator, bool> retval;
 
-		retval = EquipmentSets.insert(std::pair< uint32, EquipmentSet* >(setGUID, set));
+		retval = EquipmentSets.insert(std::pair<uint32, EquipmentSet*>(setGUID, set));
 
 		return retval.second;
 	}
-
 
 	bool EquipmentSetMgr::DeleteEquipmentSet(uint32 setGUID)
 	{
@@ -75,7 +71,6 @@ namespace Arcpro
 			return false;
 	}
 
-
 	bool EquipmentSetMgr::LoadfromDB(QueryResult* result)
 	{
 		if(result == NULL)
@@ -87,7 +82,6 @@ namespace Arcpro
 
 		do
 		{
-
 			if(setcount >= 10)
 			{
 				LOG_ERROR("There were more than 10 equipment sets for GUID: %u", ownerGUID);
@@ -106,7 +100,7 @@ namespace Arcpro
 			set->IconName = fields[ 4 ].GetString();
 
 			for(uint32 i = 0; i < set->ItemGUID.size(); ++i)
-				set->ItemGUID[ i ] = fields[ 5 + i ].GetUInt32();
+				set->ItemGUID[i] = fields[ 5 + i ].GetUInt32();
 
 			EquipmentSets.insert(std::pair< uint32, EquipmentSet* >(set->SetGUID, set));
 			set = NULL;
@@ -175,9 +169,7 @@ namespace Arcpro
 			data << std::string(set->IconName);
 
 			for(uint32 i = 0; i < set->ItemGUID.size(); ++i)
-			{
-				data << WoWGuid(uint64(Arcpro::Util::MAKE_ITEM_GUID(set->ItemGUID[ i ])));
-			}
+				data << WoWGuid(uint64(Arcpro::Util::MAKE_ITEM_GUID(set->ItemGUID[i])));
 		}
 	}
 }

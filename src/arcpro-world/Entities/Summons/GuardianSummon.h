@@ -31,23 +31,15 @@
 ////////////////////////////////////////////////////////////
 class GuardianSummon : public Summon
 {
-	public:
-		GuardianSummon(uint64 GUID);
+public:
+	GuardianSummon(uint64 GUID);
+	~GuardianSummon();
 
+	void Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot);
+	void OnPushToWorld();
+	void OnPreRemoveFromWorld();
 
-		~GuardianSummon();
-
-
-		void Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot);
-
-
-		void OnPushToWorld();
-
-
-		void OnPreRemoveFromWorld();
-
-
-	private:
+private:
 };
 
 #endif

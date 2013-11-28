@@ -21,13 +21,9 @@
 
 #include "../../StdAfx.h"
 
-TotemSummon::TotemSummon(uint64 GUID) : Summon(GUID)
-{
-}
+TotemSummon::TotemSummon(uint64 GUID) : Summon(GUID) {}
 
-TotemSummon::~TotemSummon()
-{
-}
+TotemSummon::~TotemSummon() {}
 
 void TotemSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & position, uint32 spellid, int32 summonslot)
 {
@@ -42,15 +38,13 @@ void TotemSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & posit
 		{
 			case RACE_DRAENEI:
 				displayID = totemdisplay->DraeneiId;
-				break;
-
+			break;
 			case RACE_TROLL:
 				displayID = totemdisplay->TrollId;
-				break;
-
+			break;
 			case RACE_ORC:
 				displayID = totemdisplay->OrcId;
-				break;
+			break;
 		}
 	}
 
@@ -78,8 +72,8 @@ void TotemSummon::Load(CreatureProto* proto, Unit* owner, LocationVector & posit
 
 	for(uint8 school = 0; school < SCHOOL_COUNT; school++)
 	{
-		ModDamageDone[ school ] = owner->GetDamageDoneMod(school);
-		HealDoneMod[ school ] = owner->HealDoneMod[ school ];
+		ModDamageDone[school] = owner->GetDamageDoneMod(school);
+		HealDoneMod[school] = owner->HealDoneMod[school];
 	}
 
 	m_aiInterface->Init(this, AITYPE_TOTEM, MOVEMENTTYPE_NONE, owner);
@@ -123,10 +117,8 @@ void TotemSummon::SetupSpells()
 	// Set up AI, depending on our spells.
 	bool castingtotem = true;
 
-	if(TotemSpell->HasEffect(SPELL_EFFECT_SUMMON) ||
-	        TotemSpell->HasEffect(SPELL_EFFECT_APPLY_GROUP_AREA_AURA) ||
-	        TotemSpell->HasEffect(SPELL_EFFECT_APPLY_RAID_AREA_AURA)  ||
-	        TotemSpell->HasEffect(SPELL_EFFECT_PERSISTENT_AREA_AURA)  ||
+	if(TotemSpell->HasEffect(SPELL_EFFECT_SUMMON) || TotemSpell->HasEffect(SPELL_EFFECT_APPLY_GROUP_AREA_AURA) ||
+	        TotemSpell->HasEffect(SPELL_EFFECT_APPLY_RAID_AREA_AURA) || TotemSpell->HasEffect(SPELL_EFFECT_PERSISTENT_AREA_AURA) ||
 	        (TotemSpell->HasEffect(SPELL_EFFECT_APPLY_AURA) && TotemSpell->AppliesAura(SPELL_AURA_PERIODIC_TRIGGER_SPELL)))
 		castingtotem = false;
 

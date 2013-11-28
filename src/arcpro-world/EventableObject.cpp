@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -59,9 +59,8 @@ void EventableObject::event_AddEvent(TimedEvent* ptr)
 
 		if(m_holder == NULL)
 		{
-
 			///////////////////////////////////////// this is for me for debugging purposes - dfighter ////////////////////////////
-			// ARCPRO_ASSERT( false );
+			// ARCPRO_ASSERT(false);
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			// We still couldn't find an eventholder for us so let's run in WorldRunnable
@@ -81,7 +80,7 @@ void EventableObject::event_AddEvent(TimedEvent* ptr)
 		delete ptr;
 
 		///////////////////////////////////////// this is for me for debugging purposes - dfighter ////////////////////////////
-		// ARCPRO_ASSERT( false );
+		// ARCPRO_ASSERT(false);
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		m_lock.Release();
 		return;
@@ -89,7 +88,7 @@ void EventableObject::event_AddEvent(TimedEvent* ptr)
 
 	ptr->IncRef();
 	ptr->instanceId = m_event_Instanceid;
-	pair<uint32, TimedEvent*> p(ptr->eventType, ptr);
+	pair< uint32, TimedEvent* > p(ptr->eventType, ptr);
 	m_events.insert(p);
 	m_lock.Release();
 
@@ -117,7 +116,6 @@ void EventableObject::event_RemoveByPointer(TimedEvent* ev)
 				m_lock.Release();
 				return;
 			}
-
 		}
 		while(itr != m_events.upper_bound(ev->eventType));
 	}
@@ -156,7 +154,6 @@ void EventableObject::event_RemoveEvents(uint32 EventType)
 				it2->second->deleted = true;
 				it2->second->DecRef();
 				m_events.erase(it2);
-
 			}
 			while(itr != m_events.upper_bound(EventType));
 		}
@@ -330,7 +327,7 @@ EventableObjectHolder::~EventableObjectHolder()
 
 void EventableObjectHolder::Update(time_t time_difference)
 {
-	m_lock.Acquire();			// <<<<
+	m_lock.Acquire(); // << << 
 
 	/* Insert any pending objects in the insert pool. */
 	m_insertPoolLock.Acquire();
@@ -388,7 +385,7 @@ void EventableObjectHolder::Update(time_t time_difference)
 			// check if the event is expired now.
 			if(ev->repeats && --ev->repeats == 0)
 			{
-				// Event expired :>
+				// Event expired : >
 
 				/* remove the event from the object */
 				/*obj = (EventableObject*)ev->obj;
@@ -430,7 +427,7 @@ void EventableObject::event_Relocate()
 	EventableObjectHolder* nh = sEventMgr.GetEventHolder(event_GetInstanceID());
 	if(nh != m_holder)
 	{
-		// whee, we changed event holder :>
+		// whee, we changed event holder : >
 		// doing this will change the instanceid on all the events, as well as add to the new holder.
 
 		//If nh is NULL then we were removed from world. There's no reason to be added to WORLD_INSTANCE EventMgr, let's just wait till something will add us again to world.
@@ -438,9 +435,8 @@ void EventableObject::event_Relocate()
 		{
 			//set instaceId to 0 to each event of this EventableObject, so EventableObjectHolder::Update() will remove them from its EventList.
 			for(EventMap::iterator itr = m_events.begin(); itr != m_events.end(); ++itr)
-			{
 				itr->second->instanceId = 0;
-			}
+
 			// reset our instance id.
 			m_event_Instanceid = 0;
 		}

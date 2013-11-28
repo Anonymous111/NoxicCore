@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,7 +34,6 @@ DynamicObject::DynamicObject(uint32 high, uint32 low)
 	m_wowGuid.Init(GetGUID());
 	SetScale(1);
 
-
 	m_parentSpell = NULL;
 	m_aliveDuration = 0;
 	u_caster = NULL;
@@ -52,14 +51,12 @@ void DynamicObject::Create(Unit* caster, Spell* pSpell, float x, float y, float 
 {
 	Object::_Create(caster->GetMapId(), x, y, z, 0);
 	if(pSpell->g_caster)
-	{
 		m_parentSpell = pSpell;
-	}
 	if(pSpell->p_caster == NULL)
 	{
 		// try to find player caster here
 		if(caster->IsPlayer())
-			p_caster = TO< Player* >(caster);
+			p_caster = TO<Player*>(caster);
 	}
 	else
 		p_caster = pSpell->p_caster;
@@ -75,7 +72,6 @@ void DynamicObject::Create(Unit* caster, Spell* pSpell, float x, float y, float 
 	m_position.x = x; //m_floatValues[DYNAMICOBJECT_POS_X]  = x;
 	m_position.y = y; //m_floatValues[DYNAMICOBJECT_POS_Y]  = y;
 	m_position.z = z; //m_floatValues[DYNAMICOBJECT_POS_Z]  = z;
-
 
 	m_aliveDuration = duration;
 	u_caster = caster;
@@ -107,9 +103,8 @@ void DynamicObject::AddInRangeObject(Object* pObj)
 void DynamicObject::OnRemoveInRangeObject(Object* pObj)
 {
 	if(pObj->IsUnit())
-	{
 		targets.erase(pObj->GetGUID());
-	}
+
 	Object::OnRemoveInRangeObject(pObj);
 }
 
@@ -126,14 +121,14 @@ void DynamicObject::UpdateTargets()
 		float radius = m_floatValues[ DYNAMICOBJECT_RADIUS ] * m_floatValues[ DYNAMICOBJECT_RADIUS ];
 
 		// Looking for targets in the Object set
-		for(std::set< Object* >::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
+		for(std::set<Object*>::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
 		{
 			Object* o = *itr;
 
-			if(!o->IsUnit() || !TO< Unit* >(o)->isAlive())
+			if(!o->IsUnit() || !TO<Unit*>(o)->isAlive())
 				continue;
 
-			target = TO< Unit* >(o);
+			target = TO<Unit*>(o);
 
 			if(!isAttackable(u_caster, target, !(m_spellProto->c_is_flags & SPELL_FLAG_IS_TARGETINGSTEALTHED)))
 				continue;
@@ -187,14 +182,10 @@ void DynamicObject::UpdateTargets()
 		m_aliveDuration -= 100;
 	}
 	else
-	{
 		m_aliveDuration = 0;
-	}
 
 	if(m_aliveDuration == 0)
-	{
 		Remove();
-	}
 }
 
 void DynamicObject::Remove()
@@ -208,9 +199,8 @@ void DynamicObject::Remove()
 		return;
 	}
 
-	for(std::set< uint64 >::iterator itr = targets.begin(); itr != targets.end(); ++itr)
+	for(std::set<uint64>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
 	{
-
 		uint64 TargetGUID = *itr;
 
 		target = m_mapMgr->GetUnit(TargetGUID);
@@ -235,6 +225,3 @@ void DynamicObject::Remove()
 
 	delete this;
 }
-
-
-

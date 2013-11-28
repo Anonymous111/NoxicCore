@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,9 +49,9 @@ bool isHostile(Object* objA, Object* objB)
 	if((objA->m_phase & objB->m_phase) == 0)     //What you can't see, can't be hostile!
 		return false;
 
-	if(objA->IsPlayer() && objA->HasFlag(PLAYER_FLAGS, 0x100) && objB->IsCreature() && TO< Unit* >(objB)->GetAIInterface()->m_isNeutralGuard)
+	if(objA->IsPlayer() && objA->HasFlag(PLAYER_FLAGS, 0x100) && objB->IsCreature() && TO<Unit*>(objB)->GetAIInterface()->m_isNeutralGuard)
 		return true;
-	if(objB->IsPlayer() && objB->HasFlag(PLAYER_FLAGS, 0x100) && objA->IsCreature() && TO< Unit* >(objA)->GetAIInterface()->m_isNeutralGuard)
+	if(objB->IsPlayer() && objB->HasFlag(PLAYER_FLAGS, 0x100) && objA->IsCreature() && TO<Unit*>(objA)->GetAIInterface()->m_isNeutralGuard)
 		return true;
 
 	if(objB->IsUnit() && objB->HasFlag(UNIT_FIELD_FLAGS, 2 | 128 | 256 | 65536))
@@ -72,13 +72,13 @@ bool isHostile(Object* objA, Object* objB)
 	// check friend/enemy list
 	for(uint32 i = 0; i < 4; i++)
 	{
-		if(objA->m_faction->EnemyFactions[ i ] == objB->m_faction->Faction)
+		if(objA->m_faction->EnemyFactions[i] == objB->m_faction->Faction)
 		{
 			hostile = true;
 			break;
 		}
 
-		if(objA->m_faction->FriendlyFactions[ i ] == objB->m_faction->Faction)
+		if(objA->m_faction->FriendlyFactions[i] == objB->m_faction->Faction)
 		{
 			hostile = false;
 			break;
@@ -88,19 +88,19 @@ bool isHostile(Object* objA, Object* objB)
 	// Reputation System Checks
 	if(objA->IsPlayer() && !objB->IsPlayer())
 		if(objB->m_factionDBC->RepListId >= 0)
-			hostile = TO< Player* >(objA)->IsHostileBasedOnReputation(objB->m_factionDBC);
+			hostile = TO<Player*>(objA)->IsHostileBasedOnReputation(objB->m_factionDBC);
 
 	if(objB->IsPlayer() && !objA->IsPlayer())
 		if(objA->m_factionDBC->RepListId >= 0)
-			hostile = TO< Player* >(objB)->IsHostileBasedOnReputation(objA->m_factionDBC);
+			hostile = TO<Player*>(objB)->IsHostileBasedOnReputation(objA->m_factionDBC);
 
 	// PvP Flag System Checks
 	// We check this after the normal isHostile test, that way if we're
 	// on the opposite team we'll already know :p
 	if((objA->GetPlayerOwner() != NULL) && (objB->GetPlayerOwner() != NULL))
 	{
-		Player* a = TO< Player* >(objA->GetPlayerOwner());
-		Player* b = TO< Player* >(objB->GetPlayerOwner());
+		Player* a = TO<Player*>(objA->GetPlayerOwner());
+		Player* b = TO<Player*>(objB->GetPlayerOwner());
 
 		AreaTable* atA = dbcArea.LookupEntry(a->GetAreaID());
 		AreaTable* atB = dbcArea.LookupEntry(b->GetAreaID());
@@ -153,14 +153,14 @@ bool isAttackable(Object* objA, Object* objB, bool CheckStealth)
 		/// we cannot attack shealthed units. Maybe checked in other places too ?
 		/// !! warning, this presumes that objA is attacking ObjB
 		/// Capt: Added the possibility to disregard this (regarding the spell class)
-		if(TO< Unit* >(objB)->IsStealth() && CheckStealth)
+		if(TO<Unit*>(objB)->IsStealth() && CheckStealth)
 			return false;
 	}
 
 	if((objA->GetPlayerOwner() != NULL) && (objB->GetPlayerOwner() != NULL))
 	{
-		Player* a = TO< Player* >(objA->GetPlayerOwner());
-		Player* b = TO< Player* >(objB->GetPlayerOwner());
+		Player* a = TO<Player*>(objA->GetPlayerOwner());
+		Player* b = TO<Player*>(objB->GetPlayerOwner());
 
 		if((a->DuelingWith == b) && (a->GetDuelState() == DUEL_STATE_STARTED))
 			return true;
@@ -250,9 +250,7 @@ bool isAlliance(Object* objA)// A is alliance?
 {
 	FactionTemplateDBC* m_sw_faction = dbcFactionTemplate.LookupEntry(11);
 	FactionDBC* m_sw_factionDBC = dbcFaction.LookupEntry(72);
-	if(!objA
-//		|| objA->m_factionDBC == NULL || objA->m_faction == NULL
-	  )
+	if(!objA /*|| objA->m_factionDBC == NULL || objA->m_faction == NULL*/)
 		return true;
 
 	if(m_sw_faction == objA->m_faction || m_sw_factionDBC == objA->m_factionDBC)
@@ -287,4 +285,3 @@ bool isAlliance(Object* objA)// A is alliance?
 
 	return true;
 }
-

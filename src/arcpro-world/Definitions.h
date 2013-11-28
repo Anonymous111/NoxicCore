@@ -11,37 +11,34 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #ifndef WOWSERVER_DEFINITION_H
 #define WOWSERVER_DEFINITION_H
 
-
 const unsigned NUM_MAPS = 800;
 const unsigned NUM_INSTANCE_MODES = 4;
-
 
 // Sorry...need this enumeration in Player.*
 enum INSTANCE_MODE
 {
-    MODE_NORMAL = 0,
-    MODE_HEROIC = 1
+	MODE_NORMAL	= 0,
+	MODE_HEROIC	= 1
 };
 
 enum RAID_MODE
 {
-    MODE_NORMAL_10MEN	=	0,
-    MODE_NORMAL_25MEN	=	1,
-    MODE_HEROIC_10MEN	=	2,
-    MODE_HEROIC_25MEN	=	3,
-    TOTAL_RAID_MODES    =   4
+	MODE_NORMAL_10MEN	= 0,
+	MODE_NORMAL_25MEN	= 1,
+	MODE_HEROIC_10MEN	= 2,
+	MODE_HEROIC_25MEN	= 3,
+	TOTAL_RAID_MODES	= 4
 };
-
 
 #endif

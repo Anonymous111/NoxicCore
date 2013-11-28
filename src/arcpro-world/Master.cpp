@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -57,7 +57,7 @@ void Master::_OnSignal(int s)
 #ifndef WIN32
 		case SIGHUP:
 			sWorld.Rehash(true);
-			break;
+		break;
 #endif
 		case SIGINT:
 		case SIGTERM:
@@ -66,7 +66,7 @@ void Master::_OnSignal(int s)
 		case SIGBREAK:
 #endif
 			Master::m_stopEvent = true;
-			break;
+		break;
 	}
 
 	signal(s, _OnSignal);
@@ -79,9 +79,7 @@ Master::Master()
 	m_restartEvent = false;
 }
 
-Master::~Master()
-{
-}
+Master::~Master() {}
 
 struct Addr
 {
@@ -139,20 +137,19 @@ bool Master::Run(int argc, char** argv)
 			case 'c':
 				config_file = new char[strlen(arcpro_optarg)];
 				strcpy(config_file, arcpro_optarg);
-				break;
-
+			break;
 			case 'r':
 				realm_config_file = new char[strlen(arcpro_optarg)];
 				strcpy(realm_config_file, arcpro_optarg);
-				break;
-
+			break;
 			case 0:
-				break;
+			break;
 			default:
 				sLog.Init(0, WORLD_LOG);
-				printf("Usage: %s [--checkconf] [--fileloglevel <level>] [--conf <filename>] [--realmconf <filename>] [--version] [--databasecleanup] [--cheatercheck]\n", argv[0]);
+				printf("Usage: %s [--checkconf] [--fileloglevel < level >] [--conf < filename >] [--realmconf < filename >] [--version] [--databasecleanup] [--cheatercheck]\n", argv[0]);
 				sLog.Close();
 				return true;
+			break;
 		}
 	}
 
@@ -211,28 +208,28 @@ bool Master::Run(int argc, char** argv)
 
 	Log.Success("Config", "Loading Config Files...");
 	if(Config.MainConfig.SetSource(config_file))
-		Log.Notice("Config", ">> " CONFDIR "/arcpro-world.conf loaded");
+		Log.Notice("Config", " >> " CONFDIR "/arcpro-world.conf loaded");
 	else
 	{
-		sLog.Error("Config", ">> error occurred loading " CONFDIR "/arcpro-world.conf");
+		sLog.Error("Config", " >> error occurred loading " CONFDIR "/arcpro-world.conf");
 		sLog.Close();
 		return false;
 	}
 
 	if(Config.OptionalConfig.SetSource(optional_config_file))
-		Log.Notice("Config", ">> " CONFDIR "/arcpro-optional.conf loaded");
+		Log.Notice("Config", " >> " CONFDIR "/arcpro-optional.conf loaded");
 	else
 	{
-		sLog.Error("Config", ">> error occurred loading " CONFDIR "/arcpro-optional.conf");
+		sLog.Error("Config", " >> error occurred loading " CONFDIR "/arcpro-optional.conf");
 		sLog.Close();
 		return false;
 	}
 
 	if(Config.RealmConfig.SetSource(realm_config_file))
-		Log.Notice("Config", ">> " CONFDIR "/arcpro-realms.conf loaded");
+		Log.Notice("Config", " >> " CONFDIR "/arcpro-realms.conf loaded");
 	else
 	{
-		sLog.Error("Config", ">> error occurred loading " CONFDIR "/arcpro-realms.conf");
+		sLog.Error("Config", " >> error occurred loading " CONFDIR "/arcpro-realms.conf");
 		sLog.Close();
 		return false;
 	}
@@ -351,10 +348,7 @@ bool Master::Run(int argc, char** argv)
 		Log.Notice("RemoteConsole", "Now open.");
 	}
 	else
-	{
 		Log.Warning("RemoteConsole", "Not enabled or failed listen.");
-	}
-
 
 	/* write pid file */
 	FILE* fPid = fopen("arcpro.pid", "w");
@@ -378,7 +372,7 @@ bool Master::Run(int argc, char** argv)
 	sLogonCommHandler.Startup();
 
 	// Create listener
-	ListenSocket<WorldSocket> * ls = new ListenSocket<WorldSocket>(host.c_str(), wsport);
+	ListenSocket< WorldSocket > * ls = new ListenSocket< WorldSocket >(host.c_str(), wsport);
 	bool listnersockcreate = ls->IsOpen();
 #ifdef WIN32
 	if(listnersockcreate)
@@ -467,11 +461,7 @@ bool Master::Run(int argc, char** argv)
 		}
 
 		if(50 > etime)
-		{
-
 			Arcpro::Sleep(50 - etime);
-
-		}
 	}
 	_UnhookSignals();
 
@@ -570,15 +560,15 @@ bool Master::Run(int argc, char** argv)
 }
 
 static const char *REQUIRED_CHAR_DB_VERSION  = "2011-11-16_22-00_saved_mail";
-static const char *REQUIRED_WORLD_DB_VERSION = "2012-08-14_21-25_worldmap_info";
+static const char *REQUIRED_WORLD_DB_VERSION = "2013-11-24_01_creature_spawns";
 
 bool Master::CheckDBVersion()
 {
-	QueryResult* wqr = WorldDatabase.QueryNA( "SELECT LastUpdate FROM world_db_version;" );
+	QueryResult* wqr = WorldDatabase.QueryNA("SELECT LastUpdate FROM world_db_version;");
 	if(wqr == NULL)
 	{
 		Log.Error("Database", "World database is missing the table `world_db_version` OR the table doesn't contain any rows. Can't validate database version. Exiting.");
-		Log.Error( "Database","You may need to update your database" );
+		Log.Error("Database","You may need to update your database");
 		return false;
 	}
 
@@ -586,15 +576,17 @@ bool Master::CheckDBVersion()
 	const char *WorldDBVersion = f->GetString();
 
 	Log.Notice("Database", "Last world database update: %s", WorldDBVersion);
-	int result = strcmp( WorldDBVersion, REQUIRED_WORLD_DB_VERSION );
-	if( result != 0 )
+	int result = strcmp(WorldDBVersion, REQUIRED_WORLD_DB_VERSION);
+	if(result != 0)
 	{
 		Log.Error("Database", "Last world database update doesn't match the required one which is %s.", REQUIRED_WORLD_DB_VERSION);
 		
-		if( result < 0 ){
+		if(result < 0)
+		{
 			Log.Error("Database", "You need to apply the world update queries that are newer than %s. Exiting.", WorldDBVersion);
-			Log.Error( "Database", "You can find the world update queries in the sql/world_updates sub-directory of your ArcPro source directory." );
-		}else
+			Log.Error("Database", "You can find the world update queries in the sql/world_updates sub-directory of your ArcPro source directory.");
+		}
+		else
 			Log.Error("Database", "Your world database is probably too new for this ArcPro version, you need to update your server. Exiting.");
 
 		delete wqr;
@@ -603,11 +595,11 @@ bool Master::CheckDBVersion()
 
 	delete wqr;
 
-	QueryResult* cqr = CharacterDatabase.QueryNA( "SELECT LastUpdate FROM character_db_version;" );
+	QueryResult* cqr = CharacterDatabase.QueryNA("SELECT LastUpdate FROM character_db_version;");
 	if(cqr == NULL)
 	{
 		Log.Error("Database", "Character database is missing the table `character_db_version` OR the table doesn't contain any rows. Can't validate database version. Exiting.");
-		Log.Error( "Database","You may need to update your database" );
+		Log.Error("Database","You may need to update your database");
 		return false;
 	}
 
@@ -615,14 +607,16 @@ bool Master::CheckDBVersion()
 	const char *CharDBVersion = f->GetString();
 
 	Log.Notice("Database", "Last character database update: %s", CharDBVersion);
-	result = strcmp( CharDBVersion, REQUIRED_CHAR_DB_VERSION );
-	if( result != 0 )
+	result = strcmp(CharDBVersion, REQUIRED_CHAR_DB_VERSION);
+	if(result != 0)
 	{
 		Log.Error("Database", "Last character database update doesn't match the required one which is %s.", REQUIRED_CHAR_DB_VERSION);
-		if( result < 0 ){
+		if(result < 0)
+		{
 			Log.Error("Database", "You need to apply the character update queries that are newer than %s. Exiting.", CharDBVersion);
-			Log.Error( "Database", "You can find the character update queries in the sql/character_updates sub-directory of your ArcPro source directory." );
-		}else
+			Log.Error("Database", "You can find the character update queries in the sql/character_updates sub-directory of your ArcPro source directory.");
+		}
+		else
 			Log.Error("Database", "Your character database is too new for this ArcPro version, you need to update your server. Exiting.");
 
 		delete cqr;
@@ -659,7 +653,7 @@ bool Master::_StartDB()
 
 	// Initialize it
 	if(!WorldDatabase.Initialize(hostname.c_str(), (unsigned int)port, username.c_str(),
-	                             password.c_str(), database.c_str(), Config.MainConfig.GetIntDefault("WorldDatabase", "ConnectionCount", 3), 16384))
+								password.c_str(), database.c_str(), Config.MainConfig.GetIntDefault("WorldDatabase", "ConnectionCount", 3), 16384))
 	{
 		Log.Error("sql", "Main database initialization failed. Exiting.");
 		return false;
@@ -681,7 +675,7 @@ bool Master::_StartDB()
 
 	// Initialize it
 	if(!CharacterDatabase.Initialize(hostname.c_str(), (unsigned int)port, username.c_str(),
-	                                 password.c_str(), database.c_str(), Config.MainConfig.GetIntDefault("CharacterDatabase", "ConnectionCount", 5), 16384))
+									password.c_str(), database.c_str(), Config.MainConfig.GetIntDefault("CharacterDatabase", "ConnectionCount", 5), 16384))
 	{
 		Log.Error("sql", "Main database initialization failed. Exiting.");
 		return false;
@@ -722,7 +716,6 @@ void Master::_UnhookSignals()
 #else
 	signal(SIGHUP, 0);
 #endif
-
 }
 
 #ifdef WIN32

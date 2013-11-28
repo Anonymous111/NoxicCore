@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -29,19 +29,19 @@
 #include "MainServerDefines.h"
 
 #ifndef _VERSION
-# define _VERSION "3.3.5a"
+	#define _VERSION "3.3.5a"
 #endif
 
 #if PLATFORM == PLATFORM_WIN32
-# define _FULLVERSION _VERSION "-SVN (Win32)"
+	#define _FULLVERSION _VERSION "-SVN (Win32)"
 #else
-# define _FULLVERSION _VERSION "-SVN (Unix)"
+	#define _FULLVERSION _VERSION "-SVN (Unix)"
 #endif
 
 #ifdef _DEBUG
-#define BUILDTYPE "Debug"
+	#define BUILDTYPE "Debug"
 #else
-#define BUILDTYPE "Release"
+	#define BUILDTYPE "Release"
 #endif
 
 #define DEFAULT_LOOP_TIME 0 /* 0 milliseconds - instant */
@@ -55,29 +55,29 @@
 #define DEFAULT_DROP_RATE 1
 #define DEFAULT_REST_XP_RATE 1
 #define DEFAULT_QUEST_XP_RATE 1
-#define DEFAULT_SAVE_RATE 300000	// 5mins
+#define DEFAULT_SAVE_RATE 300000 // 5 minutes
 
-class Master : public Singleton<Master>
+class Master : public Singleton< Master >
 {
-	public:
-		Master();
-		~Master();
-		bool Run(int argc, char** argv);
-		bool m_ShutdownEvent;
-		uint32 m_ShutdownTimer;
+public:
+	Master();
+	~Master();
+	bool Run(int argc, char** argv);
+	bool m_ShutdownEvent;
+	uint32 m_ShutdownTimer;
 
-		static volatile bool m_stopEvent;
-		bool m_restartEvent;
+	static volatile bool m_stopEvent;
+	bool m_restartEvent;
 
-	private:
-		bool _StartDB();
-		void _StopDB();
-		bool CheckDBVersion();
+private:
+	bool _StartDB();
+	void _StopDB();
+	bool CheckDBVersion();
 
-		void _HookSignals();
-		void _UnhookSignals();
+	void _HookSignals();
+	void _UnhookSignals();
 
-		static void _OnSignal(int s);
+	static void _OnSignal(int s);
 };
 
 #define sMaster Master::getSingleton()

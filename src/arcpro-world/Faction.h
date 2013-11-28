@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -29,9 +29,8 @@ SERVER_DECL bool isAttackable(Object* objA, Object* objB, bool CheckStealth = tr
 SERVER_DECL bool isCombatSupport(Object* objA, Object* objB); // B combat supports A?;
 SERVER_DECL bool isAlliance(Object* objA); // A is alliance?
 
-
 //////////////////////////////////////////////////////////////////
-//bool isNeutral( Object *a, Object *b )
+//bool isNeutral(Object *a, Object *b)
 //  Tells if 2 Objects are neutral to each others based on
 //  their faction.
 //

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -96,7 +96,6 @@ Object::~Object()
 	sEventMgr.RemoveEvents(this);
 }
 
-
 void Object::_Create(uint32 mapid, float x, float y, float z, float ang)
 {
 	m_mapId = mapid;
@@ -113,7 +112,7 @@ uint32 Object::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* target)
 	uint8 updatetype = UPDATETYPE_CREATE_OBJECT;
 	if(IsCorpse())
 	{
-		if(TO< Corpse* >(this)->GetDisplayId() == 0)
+		if(TO<Corpse*>(this)->GetDisplayId() == 0)
 			return 0;
 		updatetype = UPDATETYPE_CREATE_YOURSELF;
 	}
@@ -121,35 +120,30 @@ uint32 Object::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* target)
 	// any other case
 	switch(m_objectTypeId)
 	{
-			// items + containers: 0x8
+		// items + containers: 0x8
 		case TYPEID_ITEM:
 		case TYPEID_CONTAINER:
 			flags = 0x10;
-			break;
-
-			// player/unit: 0x68 (except self)
+		break;
+		// player/unit: 0x68 (except self)
 		case TYPEID_UNIT:
 			flags = 0x70;
-			break;
-
+		break;
 		case TYPEID_PLAYER:
 			flags = 0x70;
-			break;
-
-			// gameobject/dynamicobject
+		break;
+		// gameobject/dynamicobject
 		case TYPEID_GAMEOBJECT:
 			flags = 0x0350;
-			if(TO< GameObject* >(this)->GetDisplayId() == 3831) flags = 0x0252; //Deeprun Tram proper flags as of 3.2.0.
-			break;
-
+			if(TO<GameObject*>(this)->GetDisplayId() == 3831) flags = 0x0252; //Deeprun Tram proper flags as of 3.2.0.
+		break;
 		case TYPEID_DYNAMICOBJECT:
 			flags = 0x0150;
-			break;
-
+		break;
 		case TYPEID_CORPSE:
 			flags = 0x0150;
-			break;
-			// anyone else can get fucked and die!
+		break;
+		// anyone else can get fucked and die!
 	}
 
 	if(target == this)
@@ -159,44 +153,37 @@ uint32 Object::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* target)
 		updatetype = UPDATETYPE_CREATE_YOURSELF;
 	}
 
-	
-
 	// gameobject stuff
 	if(IsGameObject())
 	{
-//		switch( GetByte(GAMEOBJECT_BYTES_1,GAMEOBJECT_BYTES_TYPEID) )
+//		switch(GetByte(GAMEOBJECT_BYTES_1,GAMEOBJECT_BYTES_TYPEID))
 		switch(m_uint32Values[GAMEOBJECT_BYTES_1])
 		{
 			case GAMEOBJECT_TYPE_MO_TRANSPORT:
-				{
-					if(GetTypeFromGUID() != HIGHGUID_TYPE_TRANSPORTER)
-						return 0;   // bad transporter
-					else
-						flags = 0x0352;
-				}
-				break;
-
+			{
+				if(GetTypeFromGUID() != HIGHGUID_TYPE_TRANSPORTER)
+					return 0;   // bad transporter
+				else
+					flags = 0x0352;
+			}break;
 			case GAMEOBJECT_TYPE_TRANSPORT:
-				{
-					/* deeprun tram, etc */
-					flags = 0x252;
-				}
-				break;
-
+			{
+				/* deeprun tram, etc */
+				flags = 0x252;
+			}break;
 			case GAMEOBJECT_TYPE_DUEL_ARBITER:
-				{
-					// duel flags have to stay as updatetype 3, otherwise
-					// it won't animate
-					updatetype = UPDATETYPE_CREATE_YOURSELF;
-				}
-				break;
+			{
+				// duel flags have to stay as updatetype 3, otherwise
+				// it won't animate
+				updatetype = UPDATETYPE_CREATE_YOURSELF;
+			}break;
 		}
 		//The above 3 checks FAIL to identify transports, thus their flags remain 0x58, and this is BAAAAAAD! Later they don't get position x,y,z,o updates, so they appear randomly by a client-calculated path, they always face north, etc... By: VLack
-		if(flags != 0x0352 && IsGameObject() && TO< GameObject* >(this)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT && !(TO< GameObject* >(this)->GetOverrides() & GAMEOBJECT_OVERRIDE_PARENTROT))
+		if(flags != 0x0352 && IsGameObject() && TO<GameObject*>(this)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT && !(TO<GameObject*>(this)->GetOverrides() & GAMEOBJECT_OVERRIDE_PARENTROT))
 			flags = 0x0352;
 	}
 
-	if( IsVehicle() )
+	if(IsVehicle())
 		flags |= UPDATEFLAG_VEHICLE;
 
 	// build our actual update
@@ -215,7 +202,7 @@ uint32 Object::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* target)
 	updateMask.SetCount(m_valuesCount);
 	_SetCreateBits(&updateMask, target);
 
-	if(IsGameObject() && (TO< GameObject* >(this)->GetOverrides() & GAMEOBJECT_OVERRIDE_PARENTROT))
+	if(IsGameObject() && (TO<GameObject*>(this)->GetOverrides() & GAMEOBJECT_OVERRIDE_PARENTROT))
 	{
 		updateMask.SetBit(GAMEOBJECT_PARENTROTATION_02);
 		updateMask.SetBit(GAMEOBJECT_PARENTROTATION_03);
@@ -227,7 +214,6 @@ uint32 Object::BuildCreateUpdateBlockForPlayer(ByteBuffer* data, Player* target)
 	// update count: 1 ;)
 	return 1;
 }
-
 
 //That is dirty fix it actually creates update of 1 field with
 //the given value ignoring existing changes in fields and so on
@@ -348,14 +334,14 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 	}
 
 	uint16 moveflags2 = 0; // mostly seem to be used by vehicles to control what kind of movement is allowed
-	if( IsVehicle() ){
-		Unit *u = static_cast< Unit* >( this );
-		if( u->GetVehicleComponent() != NULL )
+	if(IsVehicle()){
+		Unit *u = static_cast<Unit*>(this);
+		if(u->GetVehicleComponent() != NULL)
 			moveflags2 |= u->GetVehicleComponent()->GetMoveFlags2();
 
-		if( IsCreature() ){
-			if( static_cast< Unit* >( this )->HasAuraWithName( SPELL_AURA_ENABLE_FLIGHT ) )
-				flags2 |= ( MOVEFLAG_NO_COLLISION | MOVEFLAG_AIR_SWIMMING );
+		if(IsCreature()){
+			if(static_cast<Unit*>(this)->HasAuraWithName(SPELL_AURA_ENABLE_FLIGHT))
+				flags2 |= (MOVEFLAG_NO_COLLISION | MOVEFLAG_AIR_SWIMMING);
 		}
 
 	}
@@ -366,7 +352,7 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 	MovementInfo* moveinfo = NULL;
 	if(IsPlayer())
 	{
-		pThis = TO< Player* >(this);
+		pThis = TO<Player*>(this);
 		if(pThis->GetSession())
 			moveinfo = pThis->GetSession()->GetMovementInfo();
 		if(target == this)
@@ -377,7 +363,7 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 	}
 	Creature* uThis = NULL;
 	if(IsCreature())
-		uThis = TO< Creature* >(this);
+		uThis = TO<Creature*>(this);
 
 	if(flags & UPDATEFLAG_LIVING)  //0x20
 	{
@@ -386,9 +372,9 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 		else if(uThis != NULL && transporter_info.guid != 0 && uThis->transporter_info.guid != 0)
 			flags2 |= MOVEFLAG_TRANSPORT; //0x200
 
-		if( ( pThis != NULL ) && pThis->isRooted() )
+		if((pThis != NULL) && pThis->isRooted())
 			flags2 |= MOVEFLAG_ROOTED;
-		else if( ( uThis != NULL ) && uThis->isRooted() )
+		else if((uThis != NULL) && uThis->isRooted())
 			flags2 |= MOVEFLAG_ROOTED;
 
 		if(uThis != NULL)
@@ -400,10 +386,9 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 				case 6491:  // Spirit Healer
 				case 13116: // Alliance Spirit Guide
 				case 13117: // Horde Spirit Guide
-					{
-						flags2 |= MOVEFLAG_WATER_WALK; //0x10000000
-					}
-					break;
+				{
+					flags2 |= MOVEFLAG_WATER_WALK; //0x10000000
+				}break;
 			}
 
 			if(uThis->GetAIInterface()->IsFlying())
@@ -413,7 +398,7 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 			if(uThis->GetProto()->extra_a9_flags)
 			{
 //do not send shit we can't honor
-#define UNKNOWN_FLAGS2 ( 0x00002000 | 0x04000000 | 0x08000000 )
+#define UNKNOWN_FLAGS2 (0x00002000 | 0x04000000 | 0x08000000)
 				uint32 inherit = uThis->GetProto()->extra_a9_flags & UNKNOWN_FLAGS2;
 				flags2 |= inherit;
 			}
@@ -439,15 +424,14 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 
 		if(flags2 & MOVEFLAG_TRANSPORT) //0x0200
 		{
-			*data << WoWGuid( transporter_info.guid );
-			*data << float( transporter_info.x );
-			*data << float( transporter_info.y );
-			*data << float( transporter_info.z );
-			*data << float( transporter_info.o );
-			*data << uint32( transporter_info.flags );
-			*data << uint8( transporter_info.seat );
+			*data << WoWGuid(transporter_info.guid);
+			*data << float(transporter_info.x);
+			*data << float(transporter_info.y);
+			*data << float(transporter_info.z);
+			*data << float(transporter_info.o);
+			*data << uint32(transporter_info.flags);
+			*data << uint8(transporter_info.seat);
 		}
-
 
 		if((flags2 & (MOVEFLAG_SWIMMING | MOVEFLAG_AIR_SWIMMING)) || (moveflags2 & MOVEFLAG2_ALLOW_PITCHING))   // 0x2000000+0x0200000 flying/swimming, || sflags & SMOVE_FLAG_ENABLE_PITCH
 		{
@@ -541,7 +525,6 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 		}
 	}
 
-
 	if(flags & UPDATEFLAG_LOWGUID)   //0x08
 		*data << GetLowGUID();
 
@@ -556,33 +539,31 @@ void Object::_BuildMovementUpdate(ByteBuffer* data, uint16 flags, uint32 flags2,
 			*data << uint64(0);
 	}
 
-
 	if(flags & UPDATEFLAG_TRANSPORT)   //0x2
 	{
         *data << getMSTime();
     }
-	if( flags & UPDATEFLAG_VEHICLE ){
+	if(flags & UPDATEFLAG_VEHICLE){
 		uint32 vehicleid = 0;
 
-		if( IsCreature() )
-			vehicleid = TO< Creature* >( this )->GetProto()->vehicleid;
+		if(IsCreature())
+			vehicleid = TO<Creature*>(this)->GetProto()->vehicleid;
 		else
-		if( IsPlayer() )
-			vehicleid = TO< Player* >( this )->mountvehicleid;
+		if(IsPlayer())
+			vehicleid = TO<Player*>(this)->mountvehicleid;
 
-		*data << uint32( vehicleid );
-		*data << float( GetOrientation() );
+		*data << uint32(vehicleid);
+		*data << float(GetOrientation());
 	}
 
 	if(flags & UPDATEFLAG_ROTATION)   //0x0200
 	{
 		if(IsGameObject())
-			*data << TO< GameObject* >(this)->m_rotation;
+			*data << TO<GameObject*>(this)->m_rotation;
 		else
 			*data << uint64(0);   //?
 	}
 }
-
 
 //=======================================================================================
 //  Creates an update block with the values of this object as
@@ -594,11 +575,11 @@ void Object::_BuildValuesUpdate(ByteBuffer* data, UpdateMask* updateMask, Player
 	bool reset = false;
 	uint32 oldflags = 0;
 
-	if(updateMask->GetBit(OBJECT_FIELD_GUID) && target)	   // We're creating.
+	if(updateMask->GetBit(OBJECT_FIELD_GUID) && target) // We're creating.
 	{
 		if(IsCreature())
 		{
-			Creature* pThis = TO< Creature* >(this);
+			Creature* pThis = TO<Creature*>(this);
 			if(pThis->IsTagged() && (pThis->loot.gold || pThis->loot.items.size()))
 			{
 				// Let's see if we're the tagger or not.
@@ -644,7 +625,7 @@ void Object::_BuildValuesUpdate(ByteBuffer* data, UpdateMask* updateMask, Player
 			GameObjectInfo* info;
 			if(go->HasQuests())
 			{
-				std::list<QuestRelation*>::iterator itr;
+				std::list< QuestRelation* >::iterator itr;
 				for(itr = go->QuestsBegin(); itr != go->QuestsEnd(); ++itr)
 				{
 					QuestRelation* qr = (*itr);
@@ -653,9 +634,7 @@ void Object::_BuildValuesUpdate(ByteBuffer* data, UpdateMask* updateMask, Player
 						Quest* qst = qr->qst;
 						if(qst != NULL)
 						{
-							if((qr->type & QUESTGIVER_QUEST_START && !target->HasQuest(qst->id))
-							        ||	(qr->type & QUESTGIVER_QUEST_END && target->HasQuest(qst->id))
-							  )
+							if((qr->type & QUESTGIVER_QUEST_START && !target->HasQuest(qst->id)) ||	(qr->type & QUESTGIVER_QUEST_END && target->HasQuest(qst->id)))
 							{
 								activate_quest_object = true;
 								break;
@@ -691,13 +670,9 @@ void Object::_BuildValuesUpdate(ByteBuffer* data, UpdateMask* updateMask, Player
 
 					if(!activate_quest_object)
 					{
-						for(GameObjectItemMap::iterator itr = go->GetInfo()->itemMap.begin();
-						        itr != go->GetInfo()->itemMap.end();
-						        ++itr)
+						for(GameObjectItemMap::iterator itr = go->GetInfo()->itemMap.begin(); itr != go->GetInfo()->itemMap.end(); ++itr)
 						{
-							for(std::map<uint32, uint32>::iterator it2 = itr->second.begin();
-							        it2 != itr->second.end();
-							        ++it2)
+							for(std::map<uint32, uint32>::iterator it2 = itr->second.begin(); it2 != itr->second.end(); ++it2)
 							{
 								if((qle = target->GetQuestLogForEntry(itr->first->id)) != 0)
 								{
@@ -734,7 +709,6 @@ void Object::_BuildValuesUpdate(ByteBuffer* data, UpdateMask* updateMask, Player
 	{
 		bc = updateMask->GetUpdateBlockCount();
 		values_count = min<uint32>(bc * 32, m_valuesCount);
-
 	}
 	else
 	{
@@ -774,7 +748,7 @@ void Object::BuildHeartBeatMsg(WorldPacket* data) const
 	*data << GetGUID();
 
 	*data << uint32(0); // flags
-//	*data << uint32(0); // mysterious value #1
+	//*data << uint32(0); // mysterious value #1
 	*data << getMSTime();
 	*data << m_position;
 	*data << m_position.o;
@@ -787,7 +761,7 @@ bool Object::SetPosition(const LocationVector & v, bool allowPorting /* = false 
 	if(m_position.x != v.x || m_position.y != v.y)
 		updateMap = true;
 
-	m_position = const_cast<LocationVector &>(v);
+	m_position = const_cast< LocationVector & >(v);
 
 	if(!allowPorting && v.z < -500)
 	{
@@ -798,9 +772,7 @@ bool Object::SetPosition(const LocationVector & v, bool allowPorting /* = false 
 	}
 
 	if(IsInWorld() && updateMap)
-	{
 		m_mapMgr->ChangeObjectLocation(this);
-	}
 
 	return result;
 }
@@ -812,10 +784,10 @@ bool Object::SetPosition(float newX, float newY, float newZ, float newOrientatio
 	ARCPRO_ASSERT(!isnan(newX) && !isnan(newY) && !isnan(newOrientation));
 
 	//It's a good idea to push through EVERY transport position change, no matter how small they are. By: VLack aka. VLsoft
-	if(IsGameObject() && TO< GameObject* >(this)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT)
+	if(IsGameObject() && TO<GameObject*>(this)->GetInfo()->Type == GAMEOBJECT_TYPE_TRANSPORT)
 		updateMap = true;
 
-	//if (m_position.x != newX || m_position.y != newY)
+	//if(m_position.x != newX || m_position.y != newY)
 	//updateMap = true;
 	if(m_lastMapUpdatePosition.Distance2DSq(newX, newY) > 4.0f)		/* 2.0f */
 		updateMap = true;
@@ -835,16 +807,15 @@ bool Object::SetPosition(float newX, float newY, float newZ, float newOrientatio
 		m_lastMapUpdatePosition.ChangeCoords(newX, newY, newZ, newOrientation);
 		m_mapMgr->ChangeObjectLocation(this);
 
-		if(IsPlayer() && TO< Player* >(this)->GetGroup() && TO< Player* >(this)->m_last_group_position.Distance2DSq(m_position) > 25.0f)       // distance of 5.0
-		{
-			TO< Player* >(this)->GetGroup()->HandlePartialChange(PARTY_UPDATE_FLAG_POSITION, TO< Player* >(this));
-		}
+		if(IsPlayer() && TO<Player*>(this)->GetGroup() && TO<Player*>(this)->m_last_group_position.Distance2DSq(m_position) > 25.0f)       // distance of 5.0
+			TO<Player*>(this)->GetGroup()->HandlePartialChange(PARTY_UPDATE_FLAG_POSITION, TO<Player*>(this));
 	}
 
-	if( IsUnit() ){
-		Unit *u = static_cast< Unit* >( this );
-		if( u->GetVehicleComponent() != NULL )
-			u->GetVehicleComponent()->MovePassengers( newX, newY, newZ, newOrientation );
+	if(IsUnit())
+	{
+		Unit* u = static_cast<Unit*>(this);
+		if(u->GetVehicleComponent() != NULL)
+			u->GetVehicleComponent()->MovePassengers(newX, newY, newZ, newOrientation);
 	}
 
 	return result;
@@ -863,9 +834,7 @@ void Object::LoadValues(const char* data)
 	{
 		// prevent overflow
 		if(index >= m_valuesCount)
-		{
 			break;
-		}
 		pos = ndata.find(" ", last_pos);
 		val = atol(ndata.substr(last_pos, (pos - last_pos)).c_str());
 		if(m_uint32Values[index] == 0)
@@ -881,10 +850,8 @@ void Object::_SetUpdateBits(UpdateMask* updateMask, Player* target) const
 	*updateMask = m_updateMask;
 }
 
-
 void Object::_SetCreateBits(UpdateMask* updateMask, Player* target) const
 {
-
 	for(uint32 i = 0; i < m_valuesCount; ++i)
 		if(m_uint32Values[i] != 0)
 			updateMask->SetBit(i);
@@ -901,7 +868,7 @@ void Object::AddToWorld()
 
 	if(IsPlayer())
 	{
-		Player* plr = TO< Player* >(this);
+		Player* plr = TO<Player*>(this);
 		if(mapMgr->pInstance != NULL && !plr->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_GM))
 		{
 			// Player limit?
@@ -1033,8 +1000,6 @@ void Object::RemoveFromWorld(bool free_guid)
 	event_Relocate();
 }
 
-
-
 //! Set uint32 property
 void Object::SetUInt32Value(const uint32 index, const uint32 value)
 {
@@ -1043,7 +1008,7 @@ void Object::SetUInt32Value(const uint32 index, const uint32 value)
 	if(m_uint32Values[index] == value)
 		return;
 
-	m_uint32Values[ index ] = value;
+	m_uint32Values[index] = value;
 
 	if(IsInWorld())
 	{
@@ -1062,9 +1027,9 @@ void Object::SetUInt32Value(const uint32 index, const uint32 value)
 		TO_PLAYER(this)->HandleUpdateFieldChanged(index);
 		if(IsInWorld())
 		{
-			Group* pGroup = TO< Player* >(this)->GetGroup();
+			Group* pGroup = TO<Player*>(this)->GetGroup();
 			if(pGroup != NULL)
-				pGroup->HandleUpdateFieldChange(index, TO< Player* >(this));
+				pGroup->HandleUpdateFieldChange(index, TO<Player*>(this));
 		}
 
 		switch(index)
@@ -1073,10 +1038,10 @@ void Object::SetUInt32Value(const uint32 index, const uint32 value)
 			case UNIT_FIELD_POWER2:
 			case UNIT_FIELD_POWER4:
 			case UNIT_FIELD_POWER7:
-				TO< Unit* >(this)->SendPowerUpdate(true);
-				break;
+				TO<Unit*>(this)->SendPowerUpdate(true);
+			break;
 			default:
-				break;
+			break;
 		}
 	}
 	else if(IsCreature())
@@ -1089,9 +1054,9 @@ void Object::SetUInt32Value(const uint32 index, const uint32 value)
 			case UNIT_FIELD_POWER4:
 			case UNIT_FIELD_POWER7:
 				TO_CREATURE(this)->SendPowerUpdate(false);
-				break;
+			break;
 			default:
-				break;
+			break;
 		}
 	}
 }
@@ -1109,7 +1074,7 @@ void Object::ModUnsigned32Value(uint32 index, int32 mod)
 	if(mod == 0)
 		return;
 
-	m_uint32Values[ index ] += mod;
+	m_uint32Values[index] += mod;
 	if((int32)m_uint32Values[index] < 0)
 		m_uint32Values[index] = 0;
 
@@ -1132,10 +1097,10 @@ void Object::ModUnsigned32Value(uint32 index, int32 mod)
 			case UNIT_FIELD_POWER2:
 			case UNIT_FIELD_POWER4:
 			case UNIT_FIELD_POWER7:
-				TO< Unit* >(this)->SendPowerUpdate(true);
-				break;
+				TO<Unit*>(this)->SendPowerUpdate(true);
+			break;
 			default:
-				break;
+			break;
 		}
 	}
 	else if(IsCreature())
@@ -1148,9 +1113,9 @@ void Object::ModUnsigned32Value(uint32 index, int32 mod)
 			case UNIT_FIELD_POWER4:
 			case UNIT_FIELD_POWER7:
 				TO_CREATURE(this)->SendPowerUpdate(false);
-				break;
+			break;
 			default:
-				break;
+			break;
 		}
 	}
 }
@@ -1161,7 +1126,7 @@ void Object::ModSignedInt32Value(uint32 index, int32 value)
 	if(value == 0)
 		return;
 
-	m_uint32Values[ index ] += value;
+	m_uint32Values[index] += value;
 	if(IsInWorld())
 	{
 		m_updateMask.SetBit(index);
@@ -1177,7 +1142,7 @@ void Object::ModSignedInt32Value(uint32 index, int32 value)
 void Object::ModFloatValue(const uint32 index, const float value)
 {
 	ARCPRO_ASSERT(index < m_valuesCount);
-	m_floatValues[ index ] += value;
+	m_floatValues[index] += value;
 
 	if(IsInWorld())
 	{
@@ -1194,9 +1159,9 @@ void Object::ModFloatValueByPCT(const uint32 index, int32 byPct)
 {
 	ARCPRO_ASSERT(index < m_valuesCount);
 	if(byPct > 0)
-		m_floatValues[ index ] *= 1.0f + byPct / 100.0f;
+		m_floatValues[index] *= 1.0f + byPct / 100.0f;
 	else
-		m_floatValues[ index ] /= 1.0f - byPct / 100.0f;
+		m_floatValues[index] /= 1.0f - byPct / 100.0f;
 
 
 	if(IsInWorld())
@@ -1216,7 +1181,7 @@ void Object::SetUInt64Value(const uint32 index, const uint64 value)
 {
 	ARCPRO_ASSERT(index + 1 < m_valuesCount);
 
-	uint64* p = reinterpret_cast< uint64* >(&m_uint32Values[ index ]);
+	uint64* p = reinterpret_cast<uint64*>(&m_uint32Values[index]);
 
 	if(*p == value)
 		return;
@@ -1243,7 +1208,7 @@ void Object::SetFloatValue(const uint32 index, const float value)
 	if(m_floatValues[index] == value)
 		return;
 
-	m_floatValues[ index ] = value;
+	m_floatValues[index] = value;
 
 	if(IsInWorld())
 	{
@@ -1257,12 +1222,10 @@ void Object::SetFloatValue(const uint32 index, const float value)
 	}
 }
 
-
 void Object::SetFlag(const uint32 index, uint32 newFlag)
 {
 	SetUInt32Value(index, GetUInt32Value(index) | newFlag);
 }
-
 
 void Object::RemoveFlag(const uint32 index, uint32 oldFlag)
 {
@@ -1276,16 +1239,19 @@ float Object::CalcDistance(Object* Ob)
 	ARCPRO_ASSERT(Ob != NULL);
 	return CalcDistance(this->GetPositionX(), this->GetPositionY(), this->GetPositionZ(), Ob->GetPositionX(), Ob->GetPositionY(), Ob->GetPositionZ());
 }
+
 float Object::CalcDistance(float ObX, float ObY, float ObZ)
 {
 	return CalcDistance(this->GetPositionX(), this->GetPositionY(), this->GetPositionZ(), ObX, ObY, ObZ);
 }
+
 float Object::CalcDistance(Object* Oa, Object* Ob)
 {
 	ARCPRO_ASSERT(Oa != NULL);
 	ARCPRO_ASSERT(Ob != NULL);
 	return CalcDistance(Oa->GetPositionX(), Oa->GetPositionY(), Oa->GetPositionZ(), Ob->GetPositionX(), Ob->GetPositionY(), Ob->GetPositionZ());
 }
+
 float Object::CalcDistance(Object* Oa, float ObX, float ObY, float ObZ)
 {
 	ARCPRO_ASSERT(Oa != NULL);
@@ -1324,13 +1290,9 @@ bool Object::IsWithinLOS(LocationVector location)
 	location2 = GetPosition();
 
 	if(sWorld.Collision)
-	{
 		return CollideInterface.CheckLOS(GetMapId(), location2.x, location2.y, location2.z + 2.0f, location.x, location.y, location.z + 2.0f);
-	}
 	else
-	{
 		return true;
-	}
 }
 
 
@@ -1414,13 +1376,11 @@ float Object::calcRadAngle(float Position1X, float Position1Y, float Position2X,
 float Object::getEasyAngle(float angle)
 {
 	while(angle < 0)
-	{
 		angle = angle + 360;
-	}
+
 	while(angle >= 360)
-	{
 		angle = angle - 360;
-	}
+
 	return angle;
 }
 
@@ -1431,18 +1391,14 @@ bool Object::inArc(float Position1X, float Position1Y, float FOV, float Orientat
 	float rborder = getEasyAngle((Orientation + (FOV * 0.5f/*/2*/)));
 	//LOG_DEBUG("Orientation: %f Angle: %f LeftBorder: %f RightBorder %f",Orientation,angle,lborder,rborder);
 	if(((angle >= lborder) && (angle <= rborder)) || ((lborder > rborder) && ((angle < rborder) || (angle > lborder))))
-	{
 		return true;
-	}
 	else
-	{
 		return false;
-	}
 }
 
 bool Object::isInFront(Object* target)
 {
-	// check if we facing something ( is the object within a 180 degree slice of our positive y axis )
+	// check if we facing something (is the object within a 180 degree slice of our positive y axis)
 
 	double x = target->GetPositionX() - m_position.x;
 	double y = target->GetPositionY() - m_position.y;
@@ -1467,7 +1423,7 @@ bool Object::isInFront(Object* target)
 
 bool Object::isInBack(Object* target)
 {
-	// check if we are behind something ( is the object within a 180 degree slice of our negative y axis )
+	// check if we are behind something (is the object within a 180 degree slice of our negative y axis)
 
 	double x = m_position.x - target->GetPositionX();
 	double y = m_position.y - target->GetPositionY();
@@ -1529,9 +1485,9 @@ void Object::_setFaction()
 	}
 	else if(IsGameObject())
 	{
-		factT = dbcFactionTemplate.LookupEntryForced(TO< GameObject* >(this)->GetFaction());
+		factT = dbcFactionTemplate.LookupEntryForced(TO<GameObject*>(this)->GetFaction());
 		if(!factT)
-			LOG_ERROR("Game Object does not have a valid faction. It will make him act stupid in world. Don't blame us, blame yourself for not checking :P, faction %u set to entry %u", TO< GameObject* >(this)->GetFaction(), GetEntry());
+			LOG_ERROR("Game Object does not have a valid faction. It will make him act stupid in world. Don't blame us, blame yourself for not checking :P, faction %u set to entry %u", TO<GameObject*>(this)->GetFaction(), GetEntry());
 	}
 
 	if(!factT)
@@ -1550,7 +1506,7 @@ void Object::UpdateOppFactionSet()
 {
 	m_oppFactsInRange.clear();
 
-	for(std::set< Object* >::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
+	for(std::set<Object*>::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
 	{
 		Object* i = *itr;
 
@@ -1580,7 +1536,7 @@ void Object::UpdateSameFactionSet()
 	m_sameFactsInRange.clear();
 
 
-	for(std::set< Object* >::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
+	for(std::set<Object*>::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
 	{
 		Object* i = *itr;
 
@@ -1593,7 +1549,6 @@ void Object::UpdateSameFactionSet()
 
 				if(!IsInRangeOppFactSet(i))
 					m_sameFactsInRange.insert(i);
-
 			}
 			else
 			{
@@ -1612,9 +1567,7 @@ void Object::EventSetUInt32Value(uint32 index, uint32 value)
 	SetUInt32Value(index, value);
 }
 
-void Object::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint32 unitEvent, uint32 spellId, bool no_remove_auras)
-{
-}
+void Object::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint32 unitEvent, uint32 spellId, bool no_remove_auras) {}
 
 void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage, bool allowProc, bool static_damage, bool no_remove_auras)
 {
@@ -1628,12 +1581,12 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 	if(spellInfo == NULL)
 		return;
 
-	if(this->IsPlayer() && ! TO< Player* >(this)->canCast(spellInfo))
+	if(this->IsPlayer() && ! TO<Player*>(this)->canCast(spellInfo))
 		return;
 //==========================================================================================
 //==============================Variables Initialization====================================
 //==========================================================================================
-	float res = static_cast< float >(damage);
+	float res = static_cast<float>(damage);
 	bool critical = false;
 
 	uint32 aproc = PROC_ON_ANY_HOSTILE_ACTION; /*| PROC_ON_SPELL_HIT;*/
@@ -1643,25 +1596,20 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 	switch(spellInfo->Spell_Dmg_Type)
 	{
 		case SPELL_DMG_TYPE_RANGED:
-			{
-				aproc |= PROC_ON_RANGED_ATTACK;
-				vproc |= PROC_ON_RANGED_ATTACK_VICTIM;
-			}
-			break;
-
+		{
+			aproc |= PROC_ON_RANGED_ATTACK;
+			vproc |= PROC_ON_RANGED_ATTACK_VICTIM;
+		}break;
 		case SPELL_DMG_TYPE_MELEE:
-			{
-				aproc |= PROC_ON_MELEE_ATTACK;
-				vproc |= PROC_ON_MELEE_ATTACK_VICTIM;
-			}
-			break;
-
+		{
+			aproc |= PROC_ON_MELEE_ATTACK;
+			vproc |= PROC_ON_MELEE_ATTACK_VICTIM;
+		}break;
 		case SPELL_DMG_TYPE_MAGIC:
-			{
-				aproc |= PROC_ON_SPELL_HIT;
-				vproc |= PROC_ON_SPELL_HIT_VICTIM;
-			}
-			break;
+		{
+			aproc |= PROC_ON_SPELL_HIT;
+			vproc |= PROC_ON_SPELL_HIT_VICTIM;
+		}break;
 	}
 
 //==========================================================================================
@@ -1670,11 +1618,11 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 //------------------------------by stats----------------------------------------------------
 	if(IsUnit() && !static_damage)
 	{
-		Unit* caster = TO< Unit* >(this);
+		Unit* caster = TO<Unit*>(this);
 
 		caster->RemoveAurasByInterruptFlag(AURA_INTERRUPT_ON_START_ATTACK);
 
-		res += static_cast< float >( caster->GetSpellDmgBonus(pVictim, spellInfo, damage, false) );
+		res += static_cast<float>(caster->GetSpellDmgBonus(pVictim, spellInfo, damage, false));
 
 		if(res < 0.0f)
 			res = 0.0f;
@@ -1682,7 +1630,7 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 //==========================================================================================
 //==============================Post +SpellDamage Bonus Modifications=======================
 //==========================================================================================
-	if( res > 0.0f && !(spellInfo->AttributesExB & ATTRIBUTESEXB_CANT_CRIT) )
+	if(res > 0.0f && !(spellInfo->AttributesExB & ATTRIBUTESEXB_CANT_CRIT))
 	{
 		critical = this->IsCriticalDamageForSpell(pVictim, spellInfo);
 
@@ -1696,25 +1644,21 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 			switch(spellInfo->Spell_Dmg_Type)
 			{
 				case SPELL_DMG_TYPE_RANGED:
-					{
-						aproc |= PROC_ON_RANGED_CRIT_ATTACK;
-						vproc |= PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
-					}
-					break;
-
+				{
+					aproc |= PROC_ON_RANGED_CRIT_ATTACK;
+					vproc |= PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
+				}break;
 				case SPELL_DMG_TYPE_MELEE:
-					{
-						aproc |= PROC_ON_CRIT_ATTACK;
-						vproc |= PROC_ON_CRIT_HIT_VICTIM;
-					}
-					break;
+				{
+					aproc |= PROC_ON_CRIT_ATTACK;
+					vproc |= PROC_ON_CRIT_HIT_VICTIM;
+				}break;
 
 				case SPELL_DMG_TYPE_MAGIC:
-					{
-						aproc |= PROC_ON_SPELL_CRIT_HIT;
-						vproc |= PROC_ON_SPELL_CRIT_HIT_VICTIM;
-					}
-					break;
+				{
+					aproc |= PROC_ON_SPELL_CRIT_HIT;
+					vproc |= PROC_ON_SPELL_CRIT_HIT_VICTIM;
+				}break;
 			}
 		}
 	}
@@ -1724,10 +1668,10 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 //==========================================================================================
 
 //------------------------------damage reduction--------------------------------------------
-	if( this->IsUnit() )
-		res += TO< Unit* >(this)->CalcSpellDamageReduction(pVictim, spellInfo, res);
+	if(this->IsUnit())
+		res += TO<Unit*>(this)->CalcSpellDamageReduction(pVictim, spellInfo, res);
 //------------------------------absorption--------------------------------------------------
-	uint32 ress = static_cast< uint32 >(res);
+	uint32 ress = static_cast<uint32>(res);
 	uint32 abs_dmg = pVictim->AbsorbDamage(spellInfo->School, &ress);
 	uint32 ms_abs_dmg = pVictim->ManaShieldAbsorb(ress);
 	if(ms_abs_dmg)
@@ -1744,10 +1688,10 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 		vproc |= PROC_ON_ABSORB;
 
 	// Incanter's Absorption
-	if( pVictim->IsPlayer() && pVictim->HasAurasWithNameHash(SPELL_HASH_INCANTER_S_ABSORPTION) )
+	if(pVictim->IsPlayer() && pVictim->HasAurasWithNameHash(SPELL_HASH_INCANTER_S_ABSORPTION))
 	{
 		float pctmod = 0.0f;
-		Player* pl = TO< Player* >(pVictim);
+		Player* pl = TO<Player*>(pVictim);
 		if(pl->HasAura(44394))
 			pctmod = 0.05f;
 		else if(pl->HasAura(44395))
@@ -1755,8 +1699,8 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 		else if(pl->HasAura(44396))
 			pctmod = 0.15f;
 
-		uint32 hp = static_cast< uint32 >( 0.05f * pl->GetUInt32Value(UNIT_FIELD_MAXHEALTH) );
-		uint32 spellpower = static_cast< uint32 >( pctmod * pl->GetPosDamageDoneMod(SCHOOL_NORMAL) );
+		uint32 hp = static_cast<uint32>(0.05f * pl->GetUInt32Value(UNIT_FIELD_MAXHEALTH));
+		uint32 spellpower = static_cast<uint32>(pctmod * pl->GetPosDamageDoneMod(SCHOOL_NORMAL));
 
 		if(spellpower > hp)
 			spellpower = hp;
@@ -1772,9 +1716,10 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 		sp->prepare(&targets);
 	}
 
-	if(ress < 0) ress = 0;
+	if(ress < 0)
+		ress = 0;
 
-	res = static_cast< float >(ress);
+	res = static_cast<float>(ress);
 	dealdamage dmg;
 	dmg.school_type = spellInfo->School;
 	dmg.full_damage = ress;
@@ -1786,44 +1731,40 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 	//------------------------------resistance reducing-----------------------------------------
 	if(res > 0 && this->IsUnit())
 	{
-		TO< Unit* >(this)->CalculateResistanceReduction(pVictim, &dmg, spellInfo, 0);
+		TO<Unit*>(this)->CalculateResistanceReduction(pVictim, &dmg, spellInfo, 0);
 		if((int32)dmg.resisted_damage > dmg.full_damage)
 			res = 0;
 		else
-			res = static_cast< float >(dmg.full_damage - dmg.resisted_damage);
+			res = static_cast<float>(dmg.full_damage - dmg.resisted_damage);
 	}
 	//------------------------------special states----------------------------------------------
-	if(pVictim->IsPlayer() && TO< Player* >(pVictim)->GodModeCheat == true)
+	if(pVictim->IsPlayer() && TO<Player*>(pVictim)->GodModeCheat == true)
 	{
-		res = static_cast< float >(dmg.full_damage);
+		res = static_cast<float>(dmg.full_damage);
 		dmg.resisted_damage = dmg.full_damage;
 	}
 
 	// Paladin: Blessing of Sacrifice, and Warlock: Soul Link
 	if(pVictim->m_damageSplitTarget)
-	{
 		res = (float)pVictim->DoDamageSplitTarget((uint32)res, spellInfo->School, false);
-	}
 
 //==========================================================================================
 //==============================Data Sending ProcHandling===================================
 //==========================================================================================
-	SendSpellNonMeleeDamageLog(this, pVictim, spellID, static_cast< int32 >(res), static_cast< uint8 >(spellInfo->School), abs_dmg, dmg.resisted_damage, false, 0, critical, IsPlayer());
-	DealDamage(pVictim, static_cast< int32 >(res), 2, 0, spellID);
+	SendSpellNonMeleeDamageLog(this, pVictim, spellID, static_cast<int32>(res), static_cast<uint8>(spellInfo->School), abs_dmg, dmg.resisted_damage, false, 0, critical, IsPlayer());
+	DealDamage(pVictim, static_cast<int32>(res), 2, 0, spellID);
 
 	if(IsUnit())
 	{
-		int32 dmg2 = static_cast< int32 >(res);
+		int32 dmg2 = static_cast<int32>(res);
 
-		pVictim->HandleProc(vproc, TO< Unit* >(this), spellInfo, !allowProc, dmg2, abs_dmg);
+		pVictim->HandleProc(vproc, TO<Unit*>(this), spellInfo, !allowProc, dmg2, abs_dmg);
 		pVictim->m_procCounter = 0;
-		TO< Unit* >(this)->HandleProc(aproc, pVictim, spellInfo, !allowProc, dmg2, abs_dmg);
-		TO< Unit* >(this)->m_procCounter = 0;
+		TO<Unit*>(this)->HandleProc(aproc, pVictim, spellInfo, !allowProc, dmg2, abs_dmg);
+		TO<Unit*>(this)->m_procCounter = 0;
 	}
 	if(this->IsPlayer())
-	{
-		TO< Player* >(this)->m_casted_amount[spellInfo->School] = (uint32)res;
-	}
+		TO<Player*>(this)->m_casted_amount[spellInfo->School] = (uint32)res;
 
 	if(!(dmg.full_damage == 0 && abs_dmg))
 	{
@@ -1840,20 +1781,20 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 		//Magic Absorption
 		if(pVictim->IsPlayer())
 		{
-			if(TO< Player* >(pVictim)->m_RegenManaOnSpellResist)
+			if(TO<Player*>(pVictim)->m_RegenManaOnSpellResist)
 			{
-				Player* pl = TO< Player* >(pVictim);
+				Player* pl = TO<Player*>(pVictim);
 
 				uint32 maxmana = pl->GetMaxPower(POWER_TYPE_MANA);
-				uint32 amount = static_cast< uint32 >(maxmana * pl->m_RegenManaOnSpellResist);
+				uint32 amount = static_cast<uint32>(maxmana * pl->m_RegenManaOnSpellResist);
 
 				pVictim->Energize(pVictim, 29442, amount, POWER_TYPE_MANA);
 			}
 			// we still stay in combat dude
-			TO< Player* >(pVictim)->CombatStatusHandler_ResetPvPTimeout();
+			TO<Player*>(pVictim)->CombatStatusHandler_ResetPvPTimeout();
 		}
 		if(IsPlayer())
-			TO< Player* >(this)->CombatStatusHandler_ResetPvPTimeout();
+			TO<Player*>(this)->CombatStatusHandler_ResetPvPTimeout();
 	}
 	if(spellInfo->School == SCHOOL_SHADOW)
 	{
@@ -1862,10 +1803,10 @@ void Object::SpellNonMeleeDamageLog(Unit* pVictim, uint32 spellID, uint32 damage
 			//Shadow Word:Death
 			if(spellID == 32379 || spellID == 32996 || spellID == 48157 || spellID == 48158)
 			{
-				uint32 damage2 = static_cast< uint32 >(res + abs_dmg);
-				uint32 absorbed = TO< Unit* >(this)->AbsorbDamage(spellInfo->School, &damage2);
-				DealDamage(TO< Unit* >(this), damage2, 2, 0, spellID);
-				SendSpellNonMeleeDamageLog(this, this, spellID, damage2, static_cast< uint8 >(spellInfo->School), absorbed, 0, false, 0, false, IsPlayer());
+				uint32 damage2 = static_cast<uint32>(res + abs_dmg);
+				uint32 absorbed = TO<Unit*>(this)->AbsorbDamage(spellInfo->School, &damage2);
+				DealDamage(TO<Unit*>(this), damage2, 2, 0, spellID);
+				SendSpellNonMeleeDamageLog(this, this, spellID, damage2, static_cast<uint8>(spellInfo->School), absorbed, 0, false, 0, false, IsPlayer());
 			}
 		}
 	}
@@ -1880,7 +1821,6 @@ void Object::SendSpellLog(Object* Caster, Object* Target, uint32 Ability, uint8 
 	if(Caster == NULL || Target == NULL || Ability == 0)
 		return;
 
-
 	WorldPacket data(SMSG_SPELLLOGMISS, 26);
 
 	data << uint32(Ability);					// spellid
@@ -1892,7 +1832,6 @@ void Object::SendSpellLog(Object* Caster, Object* Target, uint32 Ability, uint8 
 
 	Caster->SendMessageToSet(&data, true);
 }
-
 
 void Object::SendSpellNonMeleeDamageLog(Object* Caster, Object* Target, uint32 SpellID, uint32 Damage, uint8 School, uint32 AbsorbedDamage, uint32 ResistedDamage, bool PhysicalDamage, uint32 BlockedDamage, bool CriticalHit, bool bToset)
 {
@@ -1908,15 +1847,15 @@ void Object::SendSpellNonMeleeDamageLog(Object* Caster, Object* Target, uint32 S
 
 	data << Target->GetNewGUID();
 	data << Caster->GetNewGUID();
-	data << uint32(SpellID);                      // SpellID / AbilityID
-	data << uint32(Damage);                       // All Damage
-	data << uint32(Overkill);					// Overkill
-	data << uint8(g_spellSchoolConversionTable[School]);     // School
-	data << uint32(AbsorbedDamage);               // Absorbed Damage
-	data << uint32(ResistedDamage);               // Resisted Damage
-	data << uint8(PhysicalDamage);        // Physical Damage (true/false)
-	data << uint8(0);                     // unknown or it binds with Physical Damage
-	data << uint32(BlockedDamage);		       // Physical Damage (true/false)
+	data << uint32(SpellID); // SpellID / AbilityID
+	data << uint32(Damage); // All Damage
+	data << uint32(Overkill); // Overkill
+	data << uint8(g_spellSchoolConversionTable[School]); // School
+	data << uint32(AbsorbedDamage); // Absorbed Damage
+	data << uint32(ResistedDamage); // Resisted Damage
+	data << uint8(PhysicalDamage); // Physical Damage (true/false)
+	data << uint8(0); // unknown or it binds with Physical Damage
+	data << uint32(BlockedDamage); // Physical Damage (true/false)
 
 	// unknown const
 	if(CriticalHit)
@@ -1945,38 +1884,29 @@ void Object::SendAttackerStateUpdate(Object* Caster, Object* Target, dealdamage*
 	data << Caster->GetNewGUID();
 	data << Target->GetNewGUID();
 
-	data << uint32(Damage);						// Realdamage
-	data << uint32(Overkill);					// Overkill
-	data << uint8(1);					// Damage type counter / swing type
+	data << uint32(Damage); // Realdamage
+	data << uint32(Overkill); // Overkill
+	data << uint8(1); // Damage type counter / swing type
 
-	data << uint32(g_spellSchoolConversionTable[Dmg->school_type]);				    // Damage school
-	data << float(Dmg->full_damage);	// Damage float
-	data << uint32(Dmg->full_damage);	// Damage amount
+	data << uint32(g_spellSchoolConversionTable[Dmg->school_type]); // Damage school
+	data << float(Dmg->full_damage); // Damage float
+	data << uint32(Dmg->full_damage); // Damage amount
 
 	if(HitStatus & HITSTATUS_ABSORBED)
-	{
-		data << uint32(Abs);				// Damage absorbed
-	}
+		data << uint32(Abs); // Damage absorbed
 
 	if(HitStatus & HITSTATUS_RESIST)
-	{
-		data << uint32(Dmg->resisted_damage);	// Damage resisted
-	}
+		data << uint32(Dmg->resisted_damage); // Damage resisted
 
 	data << uint8(VState);
-	data << uint32(0);				// can be 0,1000 or -1
+	data << uint32(0); // can be 0,1000 or -1
 	data << uint32(0);
 
 	if(HitStatus & HITSTATUS_BLOCK)
-	{
-		data << uint32(BlockedDamage);		// Damage amount blocked
-	}
-
+		data << uint32(BlockedDamage); // Damage amount blocked
 
 	if(HitStatus & HITSTATUS_UNK2)
-	{
-		data << uint32(0);				// unknown
-	}
+		data << uint32(0); // unknown
 
 	if(HitStatus & HITSTATUS_UNK)
 	{
@@ -1990,8 +1920,8 @@ void Object::SendAttackerStateUpdate(Object* Caster, Object* Target, dealdamage*
 		data << float(0);
 		data << float(0);
 
-		data << float(0);   // Found in loop
-		data << float(0);	// Found in loop
+		data << float(0); // Found in loop
+		data << float(0); // Found in loop
 		data << uint32(0);
 	}
 
@@ -2023,18 +1953,15 @@ bool Object::CanActivate()
 	switch(m_objectTypeId)
 	{
 		case TYPEID_UNIT:
-			{
-				if(!IsPet())
-					return true;
-			}
-			break;
-
+		{
+			if(!IsPet())
+				return true;
+		}break;
 		case TYPEID_GAMEOBJECT:
-			{
-				if(TO_GAMEOBJECT(this)->HasAI() && TO_GAMEOBJECT(this)->GetType() != GAMEOBJECT_TYPE_TRAP)
-					return true;
-			}
-			break;
+		{
+			if(TO_GAMEOBJECT(this)->HasAI() && TO_GAMEOBJECT(this)->GetType() != GAMEOBJECT_TYPE_TRAP)
+				return true;
+		}break;
 	}
 
 	return false;
@@ -2046,11 +1973,10 @@ void Object::Activate(MapMgr* mgr)
 	{
 		case TYPEID_UNIT:
 			mgr->activeCreatures.insert(TO_CREATURE(this));
-			break;
-
+		break;
 		case TYPEID_GAMEOBJECT:
 			mgr->activeGameObjects.insert(TO_GAMEOBJECT(this));
-			break;
+		break;
 	}
 	// Objects are active so set to true.
 	Active = true;
@@ -2064,15 +1990,16 @@ void Object::Deactivate(MapMgr* mgr)
 	switch(m_objectTypeId)
 	{
 		case TYPEID_UNIT:
+		{
 			// check iterator
 			if(mgr->creature_iterator != mgr->activeCreatures.end() && (*mgr->creature_iterator)->GetGUID() == GetGUID())
 				++mgr->creature_iterator;
-			mgr->activeCreatures.erase(TO_CREATURE(this));
-			break;
 
+			mgr->activeCreatures.erase(TO_CREATURE(this));
+		}break;
 		case TYPEID_GAMEOBJECT:
 			mgr->activeGameObjects.erase(TO_GAMEOBJECT(this));
-			break;
+		break;
 	}
 	Active = false;
 }
@@ -2107,11 +2034,11 @@ void Object::SetByteFlag(uint16 index, uint8 offset, uint8 newFlag)
 	ARCPRO_ASSERT(index < m_valuesCount);
 	ARCPRO_ASSERT(offset < 4);
 
-	offset <<= 3;
+	offset << = 3;
 
-	if(!(uint8(m_uint32Values[ index ] >> offset) & newFlag))
+	if(!(uint8(m_uint32Values[index] >> offset) & newFlag))
 	{
-		m_uint32Values[ index ] |= uint32(uint32(newFlag) << offset);
+		m_uint32Values[index] |= uint32(uint32(newFlag) << offset);
 
 		if(IsInWorld())
 		{
@@ -2131,11 +2058,11 @@ void Object::RemoveByteFlag(uint16 index, uint8 offset, uint8 oldFlag)
 	ARCPRO_ASSERT(index < m_valuesCount);
 	ARCPRO_ASSERT(offset < 4);
 
-	offset <<= 3;
+	offset << = 3;
 
-	if(uint8(m_uint32Values[ index ] >> offset) & oldFlag)
+	if(uint8(m_uint32Values[index] >> offset) & oldFlag)
 	{
-		m_uint32Values[ index ] &= ~uint32(uint32(oldFlag) << offset);
+		m_uint32Values[index] &= ~uint32(uint32(oldFlag) << offset);
 
 		if(IsInWorld())
 		{
@@ -2183,9 +2110,7 @@ bool Object::IsInBg()
 	MapInfo* pMapinfo = WorldMapInfoStorage.LookupEntry(GetMapId());
 
 	if(pMapinfo != NULL)
-	{
 		return (pMapinfo->type == INSTANCE_BATTLEGROUND);
-	}
 
 	return false;
 }
@@ -2210,7 +2135,7 @@ uint32 Object::GetTeam()
 		break;
 	}
 
-	return static_cast< uint32 >(-1);
+	return static_cast<uint32>(-1);
 }
 
 //Manipulates the phase value, see "enum PHASECOMMANDS" in Object.h for a longer explanation!
@@ -2235,6 +2160,7 @@ void Object::Phase(uint8 command, uint32 newphase)
 		break;
 		default:
 			ARCPRO_ASSERT(false);
+		break;
 	}
 
 	return;
@@ -2242,7 +2168,6 @@ void Object::Phase(uint8 command, uint32 newphase)
 
 void Object::AddInRangeObject(Object* pObj)
 {
-
 	ARCPRO_ASSERT(pObj != NULL);
 
 	if(pObj == this)
@@ -2260,7 +2185,7 @@ void Object::OutPacketToSet(uint16 Opcode, uint16 Len, const void* Data, bool se
 		return;
 
 	// We are on Object level, which means we can't send it to ourselves so we only send to Players inrange
-	for(std::set< Object* >::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
+	for(std::set<Object*>::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
 	{
 		Object* o = *itr;
 
@@ -2274,7 +2199,7 @@ void Object::SendMessageToSet(WorldPacket* data, bool bToSelf, bool myteam_only)
 		return;
 
 	uint32 myphase = GetPhase();
-	for(std::set< Object* >::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
+	for(std::set<Object*>::iterator itr = m_inRangePlayers.begin(); itr != m_inRangePlayers.end(); ++itr)
 	{
 		Object* o = *itr;
 		if((o->GetPhase() & myphase) != 0)
@@ -2287,9 +2212,7 @@ void Object::RemoveInRangeObject(Object* pObj)
 	ARCPRO_ASSERT(pObj != NULL);
 
 	if(pObj->IsPlayer())
-	{
 		ARCPRO_ASSERT(m_inRangePlayers.erase(pObj) == 1);
-	}
 
 	ARCPRO_ASSERT(m_objectsInRange.erase(pObj) == 1);
 
@@ -2298,7 +2221,7 @@ void Object::RemoveInRangeObject(Object* pObj)
 
 void Object::RemoveSelfFromInrangeSets()
 {
-	std::set< Object* >::iterator itr;
+	std::set<Object*>::iterator itr;
 
 	for(itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
 	{
@@ -2307,17 +2230,13 @@ void Object::RemoveSelfFromInrangeSets()
 		ARCPRO_ASSERT(o != NULL);
 
 		o->RemoveInRangeObject(this);
-
 	}
-
 }
-
 
 void Object::OnRemoveInRangeObject(Object* pObj)
 {
 	/* This method will remain empty for now, don't remove it!
-	-dfighter
-	*/
+	-dfighter*/
 }
 
 Object* Object::GetMapMgrObject(const uint64 & guid)
@@ -2421,6 +2340,7 @@ bool Object::GetPoint(float angle, float rad, float & outx, float & outy, float 
 {
 	if(!IsInWorld())
 		return false;
+
 	outx = GetPositionX() + rad * cos(angle);
 	outy = GetPositionY() + rad * sin(angle);
 	outz = GetMapMgr()->GetLandHeight(outx, outy, GetPositionZ() + 2);
@@ -2453,9 +2373,9 @@ bool Object::GetPoint(float angle, float rad, float & outx, float & outy, float 
 
 			dtStatus rayresult = nav->query->raycast(startref, start, end, &filter, &point, &pointNormal, visited, &numvisited, MAX_PATH_LENGTH);
 
-			if (point <= 1.0f)
+			if(point <= 1.0f)
 			{
-				if (numvisited == 0 || rayresult == DT_FAILURE)
+				if(numvisited == 0 || rayresult == DT_FAILURE)
 				{
 					result[0] = start[0];
 					result[1] = start[1];
