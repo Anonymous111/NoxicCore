@@ -43,7 +43,7 @@ CBattlegroundManager::~CBattlegroundManager() {}
 
 void CBattlegroundManager::RegisterBgFactory(uint32 map, BattlegroundFactoryMethod method)
 {
-	std::map< uint32, BattlegroundFactoryMethod >::iterator itr = bgFactories.find(map);
+	std::map<uint32, BattlegroundFactoryMethod>::iterator itr = bgFactories.find(map);
 	if(itr != bgFactories.end())
 		return;
 

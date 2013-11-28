@@ -29,9 +29,7 @@ class MapMgr;
 class Player;
 class Map;
 class Group;
-// AV - Corpse
 class Corpse;
-
 
 enum BattlegroundDbcIndex
 {
@@ -58,7 +56,11 @@ enum BattleGroundTypes
 	BATTLEGROUND_ARENA_3V3				= 5,
 	BATTLEGROUND_ARENA_5V5				= 6,
 	BATTLEGROUND_EYE_OF_THE_STORM		= 7,
+	BATTLEGROUND_ARENA					= 8,
 	BATTLEGROUND_STRAND_OF_THE_ANCIENT	= 9,
+	BATTLEGROUND_STRAND_OF_THE_ANCIENTS	= 9,
+	BATTLEGROUND_UNK1					= 10,
+	BATTLEGROUND_UNK2					= 11,
 	BATTLEGROUND_ISLE_OF_CONQUEST		= 30,
 	BATTLEGROUND_RANDOM					= 32,
 	BATTLEGROUND_NUM_TYPES				= 33, //Based on BattlemasterList.dbc, make the storage arrays big enough! On 3.1.3 the last one was 11 The Ring of Valor, so 12 was enough here, but on 3.2.0 there is 32 All Battlegrounds!
@@ -114,7 +116,7 @@ struct BGScore
 		BonusHonor = 0;
 		DamageDone = 0;
 		HealingDone = 0;
-		std::fill(&MiscData[ 0 ], &MiscData[ 5 ], 0);
+		std::fill(&MiscData[0], &MiscData[5], 0);
 	}
 };
 
@@ -145,10 +147,11 @@ struct BGScore
 #define SOUND_HORDE_BGALMOSTEND 0x2108
 #define SOUND_ALLIANCE_BGALMOSTEND 0x2109
 
-#define BG_PREPARATION 44521
-#define BG_REVIVE_PREPARATION 44535
 #define RESURRECT_SPELL 21074 // Spirit Healer Res
 #define BG_DESERTER 26013
+#define BG_RECENTLY_DROPPED_FLAG 42792
+#define BG_PREPARATION 44521
+#define BG_REVIVE_PREPARATION 44535
 
 /* get level grouping for player */
 static inline uint32 GetLevelGrouping(uint32 level)
@@ -205,7 +208,6 @@ class Arena;
 typedef CBattleground* (*BattlegroundFactoryMethod)(MapMgr* mgr, uint32 iid, uint32 group, uint32 type);
 typedef CBattleground* (*ArenaFactoryMethod)(MapMgr *mgr, uint32 iid, uint32 group, uint32 type, uint32 players_per_side);
 
-
 class SERVER_DECL CBattlegroundManager : public Singleton<CBattlegroundManager>, public EventableObject
 {
 	/* Battleground Instance Map */
@@ -216,10 +218,10 @@ class SERVER_DECL CBattlegroundManager : public Singleton<CBattlegroundManager>,
 	uint32 m_maxBattlegroundId[BATTLEGROUND_NUM_TYPES];
 
 	/* Queue System */
-	// Instance Id -> list< Player guid > [ BattlegroundType ] (instance 0 - first available)
+	// Instance Id -> list<Player guid> [ BattlegroundType ] (instance 0 - first available)
 	list<uint32> m_queuedPlayers[BATTLEGROUND_NUM_TYPES][MAX_LEVEL_GROUP];
 
-	// Instance Id -> list< Group id > [BattlegroundType][LevelGroup]
+	// Instance Id -> list<Group id> [BattlegroundType][LevelGroup]
 	list<uint32> m_queuedGroups[BATTLEGROUND_NUM_TYPES];
 
 	Mutex m_queueLock;
