@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -196,7 +196,6 @@ void LogonCommClientSocket::SendPacket(WorldPacket* data, bool no_crypto)
 	header.size = (uint32)data->size();
 	swap32(&header.size);
 
-
 	if(use_crypto && !no_crypto)
 		_sendCrypto.Process((unsigned char*)&header, (unsigned char*)&header, 6);
 
@@ -223,9 +222,7 @@ void LogonCommClientSocket::OnDisconnect()
 	}
 }
 
-LogonCommClientSocket::~LogonCommClientSocket()
-{
-}
+LogonCommClientSocket::~LogonCommClientSocket() {}
 
 void LogonCommClientSocket::SendChallenge()
 {
@@ -247,13 +244,9 @@ void LogonCommClientSocket::HandleAuthResponse(WorldPacket & recvData)
 	uint8 result;
 	recvData >> result;
 	if(result != 1)
-	{
 		authenticated = 0xFFFFFFFF;
-	}
 	else
-	{
 		authenticated = 1;
-	}
 }
 
 void LogonCommClientSocket::UpdateAccountCount(uint32 account_id, uint8 add)
@@ -275,8 +268,8 @@ void LogonCommClientSocket::HandleRequestAccountMapping(WorldPacket & recvData)
 	uint32 realm_id;
 	uint32 account_id;
 	QueryResult* result;
-	map<uint32, uint8> mapping_to_send;
-	map<uint32, uint8>::iterator itr;
+	map< uint32, uint8 > mapping_to_send;
+	map< uint32, uint8 >::iterator itr;
 
 	// grab the realm id
 	recvData >> realm_id;
@@ -362,8 +355,7 @@ void LogonCommClientSocket::CompressAndSend(ByteBuffer & uncompressed)
 	stream.avail_in  = (uInt)uncompressed.size();
 
 	// call the actual process
-	if(deflate(&stream, Z_NO_FLUSH) != Z_OK ||
-	        stream.avail_in != 0)
+	if(deflate(&stream, Z_NO_FLUSH) != Z_OK || stream.avail_in != 0)
 	{
 		LOG_ERROR("deflate failed.");
 		return;
@@ -400,6 +392,7 @@ void LogonCommClientSocket::HandleDisconnectAccount(WorldPacket & recvData)
 }
 
 void ConsoleAuthCallback(uint32 request, uint32 result);
+
 void LogonCommClientSocket::HandleConsoleAuthResult(WorldPacket & recvData)
 {
 	uint32 requestid, result;
@@ -407,6 +400,7 @@ void LogonCommClientSocket::HandleConsoleAuthResult(WorldPacket & recvData)
 
 	ConsoleAuthCallback(requestid, result);
 }
+
 void LogonCommClientSocket::HandlePopulationRequest(WorldPacket & recvData)
 {
 	uint32 realmId;

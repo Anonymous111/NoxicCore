@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,22 +49,22 @@ LogonCommHandler::LogonCommHandler()
 
 LogonCommHandler::~LogonCommHandler()
 {
-	for(set<LogonServer*>::iterator i = servers.begin(); i != servers.end(); ++i)
+	for(set< LogonServer* >::iterator i = servers.begin(); i != servers.end(); ++i)
 		delete(*i);
 
-	for(set<Realm*>::iterator i = realms.begin(); i != realms.end(); ++i)
+	for(set< Realm* >::iterator i = realms.begin(); i != realms.end(); ++i)
 		delete(*i);
 }
 
 LogonCommClientSocket* LogonCommHandler::ConnectToLogon(string Address, uint32 Port)
 {
-	LogonCommClientSocket* conn = ConnectTCPSocket<LogonCommClientSocket>(Address.c_str(), static_cast<u_short>(Port));
+	LogonCommClientSocket* conn = ConnectTCPSocket< LogonCommClientSocket >(Address.c_str(), static_cast< u_short >(Port));
 	return conn;
 }
 
 void LogonCommHandler::RequestAddition(LogonCommClientSocket* Socket)
 {
-	set<Realm*>::iterator itr = realms.begin();
+	set< Realm* >::iterator itr = realms.begin();
 
 	for(; itr != realms.end(); ++itr)
 	{
@@ -85,41 +85,32 @@ void LogonCommHandler::RequestAddition(LogonCommClientSocket* Socket)
 
 class LogonCommWatcherThread : public ThreadBase
 {
-		bool running;
+	bool running;
+	Arcpro::Threading::ConditionVariable cond;
 
-		Arcpro::Threading::ConditionVariable cond;
+public:
+	LogonCommWatcherThread() { running = true; }
+	~LogonCommWatcherThread() {}
 
-	public:
+	void OnShutdown()
+	{
+		running = false;
 
-		LogonCommWatcherThread()
+		cond.Signal();
+	}
+
+	bool run()
+	{
+		sLogonCommHandler.ConnectAll();
+		while(running)
 		{
-			running = true;
+			sLogonCommHandler.UpdateSockets();
+
+			cond.Wait(5000);
 		}
 
-		~LogonCommWatcherThread()
-		{
-
-		}
-
-		void OnShutdown()
-		{
-			running = false;
-
-			cond.Signal();
-		}
-
-		bool run()
-		{
-			sLogonCommHandler.ConnectAll();
-			while(running)
-			{
-				sLogonCommHandler.UpdateSockets();
-
-				cond.Wait(5000);
-			}
-
-			return true;
-		}
+		return true;
+	}
 };
 
 void LogonCommHandler::Startup()
@@ -239,7 +230,7 @@ void LogonCommHandler::Connect(LogonServer* server)
 
 void LogonCommHandler::AdditionAck(uint32 ID, uint32 ServID)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	for(; itr != logons.end(); ++itr)
 	{
 		if(itr->first->ID == ID)
@@ -263,7 +254,8 @@ void LogonCommHandler::UpdateSockets()
 		cs = itr->second;
 		if(cs != 0)
 		{
-			if(!pings) continue;
+			if(!pings)
+				continue;
 
 			if(cs->IsDeleted() || !cs->IsConnected())
 			{
@@ -292,9 +284,7 @@ void LogonCommHandler::UpdateSockets()
 		{
 			// check retry time
 			if(t >= itr->first->RetryTime)
-			{
 				Connect(itr->first);
-			}
 		}
 	}
 	mapLock.Release();
@@ -303,7 +293,7 @@ void LogonCommHandler::UpdateSockets()
 void LogonCommHandler::ConnectionDropped(uint32 ID)
 {
 	mapLock.Acquire();
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	for(; itr != logons.end(); ++itr)
 	{
 		if(itr->first->ID == ID && itr->second != 0)
@@ -324,7 +314,7 @@ uint32 LogonCommHandler::ClientConnected(string AccountName, WorldSocket* Socket
 	LOG_DEBUG(" >> sending request for account information: `%s` (request %u).", AccountName.c_str(), request_id);
 
 	// Send request packet to server.
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0)
 	{
 		// No valid logonserver is connected.
@@ -377,9 +367,7 @@ void LogonCommHandler::LoadRealmConfiguration()
 
 	uint32 realmcount = Config.RealmConfig.GetIntDefault("LogonServer", "RealmCount", 1);
 	if(realmcount == 0)
-	{
-		LOG_ERROR("   >> no realms found. this server will not be online anywhere!");
-	}
+		LOG_ERROR("  >> no realms found. this server will not be online anywhere!");
 	else
 	{
 		for(uint32 i = 1; i < realmcount + 1; ++i)
@@ -415,7 +403,7 @@ void LogonCommHandler::LoadRealmConfiguration()
 void LogonCommHandler::UpdateAccountCount(uint32 account_id, uint8 add)
 {
 	// Send request packet to server.
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -436,7 +424,7 @@ void LogonCommHandler::TestConsoleLogon(string & username, string & password, ui
 	srpstr = newuser + ":" + newpass;
 
 	// Send request packet to server.
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -458,7 +446,7 @@ void LogonCommHandler::TestConsoleLogon(string & username, string & password, ui
 // db funcs
 void LogonCommHandler::Account_SetBanned(const char* account, uint32 banned, const char* reason)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -475,7 +463,7 @@ void LogonCommHandler::Account_SetBanned(const char* account, uint32 banned, con
 
 void LogonCommHandler::Account_SetGM(const char* account, const char* flags)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -491,7 +479,7 @@ void LogonCommHandler::Account_SetGM(const char* account, const char* flags)
 
 void LogonCommHandler::Account_SetMute(const char* account, uint32 muted)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -507,7 +495,7 @@ void LogonCommHandler::Account_SetMute(const char* account, uint32 muted)
 
 void LogonCommHandler::IPBan_Add(const char* ip, uint32 duration, const char* reason)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -524,7 +512,7 @@ void LogonCommHandler::IPBan_Add(const char* ip, uint32 duration, const char* re
 
 void LogonCommHandler::IPBan_Remove(const char* ip)
 {
-	map<LogonServer*, LogonCommClientSocket*>::iterator itr = logons.begin();
+	map< LogonServer*, LogonCommClientSocket* >::iterator itr = logons.begin();
 	if(logons.size() == 0 || itr->second == 0)
 	{
 		// No valid logonserver is connected.
@@ -539,7 +527,7 @@ void LogonCommHandler::IPBan_Remove(const char* ip)
 
 void LogonCommHandler::RefreshRealmPop()
 {
-	// Get realm player limit, it's better that we get the player limit once and save it! <-done
+	// Get realm player limit, it's better that we get the player limit once and save it! < -done
 	// Calc pop: 0 >= low, 1 >= med, 2 >= hig, 3 >= full
 	server_population = sWorld.getPlayerCount() * 3.0f / pLimit;
 }
