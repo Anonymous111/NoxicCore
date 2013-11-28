@@ -24,46 +24,47 @@
 
 class WarsongGulch : public CBattleground
 {
-		GameObject* m_buffs[6];
-		GameObject* m_homeFlags[2];
-		GameObject* m_dropFlags[2];
-		uint32 m_flagHolders[2];
-		list<GameObject*> m_gates;
-		uint8 m_scores[2];
-		uint32 m_lgroup;
-		uint8 m_timeElapsed;
-	public:
-		WarsongGulch(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t);
-		~WarsongGulch();
+	GameObject* m_buffs[6];
+	GameObject* m_homeFlags[2];
+	GameObject* m_dropFlags[2];
+	uint32 m_flagHolders[2];
+	list<GameObject*> m_gates;
+	uint8 m_scores[2];
+	uint32 m_lgroup;
+	uint8 m_timeElapsed;
 
-		void HookOnPlayerDeath(Player* plr);
-		void HookFlagDrop(Player* plr, GameObject* obj);
-		void HookFlagStand(Player* plr, GameObject* obj);
-		void HookOnMount(Player* plr);
-		void HookOnAreaTrigger(Player* plr, uint32 id);
-		bool HookHandleRepop(Player* plr);
-		void OnAddPlayer(Player* plr);
-		void OnRemovePlayer(Player* plr);
-		void OnCreate();
-		void HookOnPlayerKill(Player* plr, Player* pVictim);
-		void HookOnUnitKill(Player* plr, Unit* pVictim);
-		void HookOnHK(Player* plr);
-		void HookOnShadowSight();
-		void HookGenerateLoot(Player* plr, Object* pCorpse);
-		void SpawnBuff(uint32 x);
-		LocationVector GetStartingCoords(uint32 Team);
-		void HookOnFlagDrop(Player* plr);
-		void ReturnFlag(uint8 team);
+public:
+	WarsongGulch(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t);
+	~WarsongGulch();
 
-		void EventReturnFlags();
+	void HookOnPlayerDeath(Player* plr);
+	void HookFlagDrop(Player* plr, GameObject* obj);
+	void HookFlagStand(Player* plr, GameObject* obj);
+	void HookOnMount(Player* plr);
+	void HookOnAreaTrigger(Player* plr, uint32 id);
+	bool HookHandleRepop(Player* plr);
+	void OnAddPlayer(Player* plr);
+	void OnRemovePlayer(Player* plr);
+	void OnCreate();
+	void HookOnPlayerKill(Player* plr, Player* pVictim);
+	void HookOnUnitKill(Player* plr, Unit* pVictim);
+	void HookOnHK(Player* plr);
+	void HookOnShadowSight();
+	void HookGenerateLoot(Player* plr, Object* pCorpse);
+	void SpawnBuff(uint32 x);
+	LocationVector GetStartingCoords(uint32 Team);
+	void HookOnFlagDrop(Player* plr);
+	void ReturnFlag(uint8 team);
 
-		static CBattleground* Create(MapMgr* m, uint32 i, uint32 l, uint32 t) { return new WarsongGulch(m, i, l, t); }
+	void EventReturnFlags();
 
-		uint32 GetNameID() { return 39; }
-		uint64 GetFlagHolderGUID( uint32 faction ) const{ return m_flagHolders[ faction ]; }
-		void OnStart();
+	static CBattleground* Create(MapMgr* m, uint32 i, uint32 l, uint32 t) { return new WarsongGulch(m, i, l, t); }
 
-		void SetIsWeekend(bool isweekend);
-		void DespawnGates(uint32 delay);
-		void WarsongGulch::TimerTick();
+	uint32 GetNameID() { return 39; }
+	uint64 GetFlagHolderGUID( uint32 faction ) const{ return m_flagHolders[ faction ]; }
+	void OnStart();
+
+	void SetIsWeekend(bool isweekend);
+	void DespawnGates(uint32 delay);
+	void WarsongGulch::TimerTick();
 };

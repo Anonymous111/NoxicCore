@@ -108,24 +108,24 @@ void WarsongGulch::HookOnAreaTrigger(Player* plr, uint32 id)
 	int32 buffslot = -1;
 	switch(id)
 	{
-		case 3686:	  // Speed
+		case 3686: // Speed
 			buffslot = 0;
-			break;
-		case 3687:	  // Speed (Horde)
+		break;
+		case 3687: // Speed (Horde)
 			buffslot = 1;
-			break;
-		case 3706:	  // Restoration
+		break;
+		case 3706: // Restoration
 			buffslot = 2;
-			break;
-		case 3708:	  // Restoration (Horde)
+		break;
+		case 3708: // Restoration (Horde)
 			buffslot = 3;
-			break;
-		case 3707:	  // Berserking
+		break;
+		case 3707: // Berserking
 			buffslot = 4;
-			break;
-		case 3709:	  // Berserking (Horde)
+		break;
+		case 3709: // Berserking (Horde)
 			buffslot = 5;
-			break;
+		break;
 	}
 
 	if(buffslot >= 0)
@@ -248,10 +248,10 @@ void WarsongGulch::HookOnFlagDrop(Player* plr)
 
 	/* drop the flag! */
 	m_dropFlags[plr->GetTeam()]->SetPosition(plr->GetPosition());
-//	m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_X, plr->GetPositionX());
-//	m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_Y, plr->GetPositionY());
-//	m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_Z, plr->GetPositionZ());
-//	m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_FACING, plr->GetOrientation());
+	//m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_X, plr->GetPositionX());
+	//m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_Y, plr->GetPositionY());
+	//m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_POS_Z, plr->GetPositionZ());
+	//m_dropFlags[plr->GetTeam()]->SetFloatValue(GAMEOBJECT_FACING, plr->GetOrientation());
 	m_dropFlags[plr->GetTeam()]->PushToWorld(m_mapMgr);
 
 	m_flagHolders[plr->GetTeam()] = 0;
@@ -467,7 +467,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 		case 1:
 			m_buffs[x] = SpawnGameObject(179899, 489, 1005.17071533203f, 1447.94567871094f, 335.903228759766f, 1.64060950279236f, 0, 114, 1);
 			m_buffs[x]->SetParentRotation(2, 0.73135370016098f);
@@ -475,7 +475,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 		case 2:
 			m_buffs[x] = SpawnGameObject(179904, 489, 1317.50573730469f, 1550.85070800781f, 313.234375f, -0.26179963350296f, 0, 114, 1);
 			m_buffs[x]->SetParentRotation(2, 0.130526319146156f);
@@ -483,7 +483,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 		case 3:
 			m_buffs[x] = SpawnGameObject(179906, 489, 1110.45129394531f, 1353.65563964844f, 316.518096923828f, -0.68067866563797f, 0, 114, 1);
 			m_buffs[x]->SetParentRotation(2, 0.333806991577148f);
@@ -491,7 +491,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 		case 4:
 			m_buffs[x] = SpawnGameObject(179905, 489, 1320.09375f, 1378.78967285156f, 314.753234863281f, 1.18682384490967f, 0, 114, 1);
 			m_buffs[x]->SetParentRotation(2, 0.559192895889282f);
@@ -499,7 +499,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 		case 5:
 			m_buffs[x] = SpawnGameObject(179907, 489, 1139.68774414063f, 1560.28771972656f, 306.843170166016f, -2.4434609413147f, 0, 114, 1);
 			m_buffs[x]->SetParentRotation(2, 0.939692616462708f);
@@ -507,7 +507,7 @@ void WarsongGulch::SpawnBuff(uint32 x)
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 0, 1);
 			m_buffs[x]->SetType(GAMEOBJECT_TYPE_TRAP);
 			m_buffs[x]->SetByte(GAMEOBJECT_BYTES_1, 3, 100);
-			break;
+		break;
 	}
 }
 
@@ -626,17 +626,11 @@ void WarsongGulch::OnStart()
 	m_started = true;
 }
 
-void WarsongGulch::HookOnShadowSight()
-{
-}
+void WarsongGulch::HookOnShadowSight() {}
 
-void WarsongGulch::HookGenerateLoot(Player* plr, Object* pOCorpse)
-{
-}
+void WarsongGulch::HookGenerateLoot(Player* plr, Object* pOCorpse) {}
 
-void WarsongGulch::HookOnUnitKill(Player* plr, Unit* pVictim)
-{
-}
+void WarsongGulch::HookOnUnitKill(Player* plr, Unit* pVictim) {}
 
 void WarsongGulch::SetIsWeekend(bool isweekend)
 {
