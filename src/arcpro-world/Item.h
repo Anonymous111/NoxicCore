@@ -40,14 +40,7 @@ const static ItemProf prof[22] = { {4, 2}, {4, 4}, {4, 8}, {4, 16}, {4, 64},
 	{2, 262144}, {2, 524288}, {2, 1048576}
 };
 
-const static uint32 arm_skills[7] = { 0,
-                                      SKILL_CLOTH,
-                                      SKILL_LEATHER,
-                                      SKILL_MAIL,
-                                      SKILL_PLATE_MAIL,
-                                      0,
-                                      SKILL_SHIELD
-                                    };
+const static uint32 arm_skills[7] = { 0, SKILL_CLOTH, SKILL_LEATHER, SKILL_MAIL, SKILL_PLATE_MAIL, 0, SKILL_SHIELD };
 
 const static uint32 weap_skills[21] = {	SKILL_AXES,
                                         SKILL_2H_AXES,
@@ -113,7 +106,7 @@ const static double SuffixMods[NUM_INVENTORY_TYPES] = { 0.0,
         0.26, // RELIC
 };
 
-typedef std::map< uint32, EnchantmentInstance > EnchantmentMap;
+typedef std::map<uint32, EnchantmentInstance> EnchantmentMap;
 
 #define APPLY true
 #define REMOVE false
@@ -138,12 +131,12 @@ enum EnchantmentSlot
 	PRISMATIC_ENCHANTMENT_SLOT		= 6,
 	MAX_INSPECTED_ENCHANTMENT_SLOT	= 7,
 
-	PROP_ENCHANTMENT_SLOT_0			= 7, // used with RandomSuffix
-	PROP_ENCHANTMENT_SLOT_1			= 8, // used with RandomSuffix
-	PROP_ENCHANTMENT_SLOT_2			= 9, // used with RandomSuffix and RandomProperty
-	PROP_ENCHANTMENT_SLOT_3			= 10, // used with RandomProperty
-	PROP_ENCHANTMENT_SLOT_4			= 11, // used with RandomProperty
-	MAX_ENCHANTMENT_SLOT			= 12
+	PROP_ENCHANTMENT_SLOT_0	= 7, // used with RandomSuffix
+	PROP_ENCHANTMENT_SLOT_1	= 8, // used with RandomSuffix
+	PROP_ENCHANTMENT_SLOT_2	= 9, // used with RandomSuffix and RandomProperty
+	PROP_ENCHANTMENT_SLOT_3	= 10, // used with RandomProperty
+	PROP_ENCHANTMENT_SLOT_4	= 11, // used with RandomProperty
+	MAX_ENCHANTMENT_SLOT	= 12
 };
 
 enum RandomEnchantmentTypes
@@ -392,6 +385,8 @@ public:
 	bool HasEnchantments() { return (Enchantments.size() > 0) ? true : false; }
 
 	uint32 wrapped_item_id;
+	
+	static void HeirloomInfo(ItemPrototype* proto);
 
 	time_t GetItemExpireTime() { return ItemExpiresOn; }
 	void SetItemExpireTime(time_t timesec) { ItemExpiresOn = timesec; }

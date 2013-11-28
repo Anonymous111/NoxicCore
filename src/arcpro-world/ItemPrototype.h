@@ -673,6 +673,10 @@ struct ItemPrototype
 	string lowercase_name; // used in auctions
 	uint32 FoodType; //pet food type
 	int32 ForcedPetId;
+	
+	bool heirloom;
+	uint32 ScaleDistributeId;
+	uint32 ScaleFlags;
 
 	bool HasFlag(uint32 flag)
 	{
