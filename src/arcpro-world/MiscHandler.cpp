@@ -571,6 +571,7 @@ void WorldSession::HandleLootReleaseOpcode(WorldPacket & recv_data)
 			}break;
 			default:
 			break;
+			}break;
 		}
 	}
 	else if(GET_TYPE_FROM_GUID(guid) == HIGHGUID_TYPE_CORPSE)

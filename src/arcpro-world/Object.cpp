@@ -2034,7 +2034,7 @@ void Object::SetByteFlag(uint16 index, uint8 offset, uint8 newFlag)
 	ARCPRO_ASSERT(index < m_valuesCount);
 	ARCPRO_ASSERT(offset < 4);
 
-	offset << = 3;
+	offset <<= 3;
 
 	if(!(uint8(m_uint32Values[index] >> offset) & newFlag))
 	{
@@ -2058,7 +2058,7 @@ void Object::RemoveByteFlag(uint16 index, uint8 offset, uint8 oldFlag)
 	ARCPRO_ASSERT(index < m_valuesCount);
 	ARCPRO_ASSERT(offset < 4);
 
-	offset << = 3;
+	offset <<= 3;
 
 	if(uint8(m_uint32Values[index] >> offset) & oldFlag)
 	{

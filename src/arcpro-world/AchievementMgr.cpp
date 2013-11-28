@@ -1053,7 +1053,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, in
 				// miscvalue2 = killed creature low GUID
 				{
 					uint64 crGUID = miscvalue1;
-					crGUID << = 32; // shift to high 32-bits
+					crGUID <<= 32; // shift to high 32-bits
 					crGUID += miscvalue2;
 					Unit* pUnit = GetPlayer()->GetMapMgr()->GetUnit(crGUID);
 					if(pUnit)

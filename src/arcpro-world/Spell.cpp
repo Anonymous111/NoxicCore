@@ -3574,8 +3574,8 @@ uint8 Spell::CanCast(bool tolerate)
 				// check if we have high enough skill
 				if(p_caster->_GetSkillLineCurrent(SKILL_JEWELCRAFTING) < proto->RequiredSkillRank)
 					return SPELL_FAILED_LOW_CASTLEVEL;
-			}break
-				// Milling Targeted Item Check
+			}break;
+			// Milling Targeted Item Check
 			case SPELL_EFFECT_MILLING:
 			{
 				// check if the item can be prospected

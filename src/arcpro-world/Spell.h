@@ -306,7 +306,6 @@ enum procFlags
 	PROC_TARGET_SELF					= 0x80000000,	//-2147483648 our custom flag to decide if proc target is self or victim
 };
 
-
 enum CastInterruptFlags
 {
 	CAST_INTERRUPT_NULL					= 0x0,
@@ -1114,7 +1113,7 @@ ARCPRO_INLINE uint32 IsHealingSpell(SpellEntry* sp)
 		default:
 		break;
 	}
-	if(sp->Effect[0] == SPELL_EFFECT_APPLY_AURA || sp->Effect[0] == SPELL_EFFECT_APPLY_GROUP_AREA_AURA || p->Effect[0] == SPELL_EFFECT_APPLY_RAID_AREA_AURA)
+	if(sp->Effect[0] == SPELL_EFFECT_APPLY_AURA || sp->Effect[0] == SPELL_EFFECT_APPLY_GROUP_AREA_AURA || sp->Effect[0] == SPELL_EFFECT_APPLY_RAID_AREA_AURA)
 	{
 		switch(sp->EffectApplyAuraName[0])
 		{
@@ -1465,7 +1464,7 @@ typedef void(Spell::*pSpellTarget)(uint32 i, uint32 j);
 enum PowerType
 {
 	POWER_TYPE_MANA			= 0,
-	POWER_TYPE_RAG			= 1,
+	POWER_TYPE_RAGE			= 1,
 	POWER_TYPE_FOCUS		= 2,
 	POWER_TYPE_ENERGY		= 3,
 	POWER_TYPE_HAPPINESS	= 4,

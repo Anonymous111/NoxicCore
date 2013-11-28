@@ -5388,7 +5388,7 @@ void Player::AddCalculatedRestXP(uint32 seconds)
 
 	// if we are at a resting area rest_XP goes 4 times faster (making it 1 bubble every 2 hrs)
 	if(m_isResting)
-		rested_xp << = 2;
+		rested_xp <<= 2;
 
 	// Add result to accumulated rested XP
 	m_restAmount += uint32(rested_xp);

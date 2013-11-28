@@ -1237,7 +1237,7 @@ void ObjectMgr::DeleteAllRemovedGMTickets()
 
 void ObjectMgr::RemoveGMTicketByPlayer(uint64 playerGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i)
 	{
 		if((*i)->playerGuid == playerGuid && !(*i)->deleted)
 		{
@@ -1249,7 +1249,7 @@ void ObjectMgr::RemoveGMTicketByPlayer(uint64 playerGuid)
 
 void ObjectMgr::RemoveGMTicket(uint64 ticketGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i)
 	{
 		if((*i)->guid == ticketGuid && !(*i)->deleted)
 		{
@@ -1261,7 +1261,7 @@ void ObjectMgr::RemoveGMTicket(uint64 ticketGuid)
 
 GM_Ticket* ObjectMgr::GetGMTicketByPlayer(uint64 playerGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i)
 	{
 		if((*i)->playerGuid == playerGuid && !(*i)->deleted)
 			return (*i);
@@ -1271,7 +1271,7 @@ GM_Ticket* ObjectMgr::GetGMTicketByPlayer(uint64 playerGuid)
 
 GM_Ticket* ObjectMgr::GetGMTicket(uint64 ticketGuid)
 {
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i)
 	{
 		if((*i)->guid == ticketGuid)
 			return (*i);
@@ -1282,7 +1282,7 @@ GM_Ticket* ObjectMgr::GetGMTicket(uint64 ticketGuid)
 /*std::list<GM_Ticket*>* ObjectMgr::GetGMTicketsByPlayer(uint64 playerGuid)
 {
 	std::list<GM_Ticket*>* list = new std::list<GM_Ticket*>();
-	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i;)
+	for(GmTicketList::iterator i = GM_TicketList.begin(); i != GM_TicketList.end(); ++i)
 	{
 		if((*i)->playerGuid == playerGuid)
 			list->push_back((*i));
@@ -1293,7 +1293,7 @@ GM_Ticket* ObjectMgr::GetGMTicket(uint64 ticketGuid)
 void ObjectMgr::LoadVendors()
 {
 	HM_NAMESPACE::hash_map<uint32, std::vector<CreatureItem>*>::const_iterator itr;
-	std::vector< CreatureItem > *items;
+	std::vector<CreatureItem> *items;
 	CreatureItem itm;
 
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM vendors");
@@ -3009,11 +3009,11 @@ bool ObjectMgr::HandleInstanceReputationModifiers(Player* pPlayer, Unit* pVictim
 	if(!pVictim->IsCreature())
 		return false;
 
-	HM_NAMESPACE::hash_map< uint32, InstanceReputationModifier* >::iterator itr = m_reputation_instance.find(pVictim->GetMapId());
+	HM_NAMESPACE::hash_map<uint32, InstanceReputationModifier*>::iterator itr = m_reputation_instance.find(pVictim->GetMapId());
 	if(itr == m_reputation_instance.end())
 		return false;
 
-	is_boss = false;//TO<Creature*>(pVictim)->GetCreatureInfo() ? ((Creature*)pVictim)->GetCreatureInfo()->Rank : 0;
+	is_boss = false; //TO<Creature*>(pVictim)->GetCreatureInfo() ? ((Creature*)pVictim)->GetCreatureInfo()->Rank : 0;
 	if(TO<Creature*>(pVictim)->GetProto()->boss)
 		is_boss = true;
 
@@ -3021,7 +3021,7 @@ bool ObjectMgr::HandleInstanceReputationModifiers(Player* pPlayer, Unit* pVictim
 	int32 replimit;
 	int32 value;
 
-	for(vector< InstanceReputationMod >::iterator i = itr->second->mods.begin(); i !=  itr->second->mods.end(); ++i)
+	for(vector<InstanceReputationMod>::iterator i = itr->second->mods.begin(); i !=  itr->second->mods.end(); ++i)
 	{
 		if(!(*i).faction[team])
 			continue;

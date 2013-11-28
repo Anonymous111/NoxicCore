@@ -72,7 +72,7 @@ public:
 
 protected:
 	void _HandleAuthSession(WorldPacket* recvPacket);
-		oid _HandlePing(WorldPacket* recvPacket);
+	void _HandlePing(WorldPacket* recvPacket);
 
 private:
 	uint32 mOpcode;

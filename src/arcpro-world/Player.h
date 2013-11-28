@@ -1159,7 +1159,7 @@ public:
 		if(school >= SCHOOL_COUNT)
 			return 0;
 
-		return m_floatValues[ PLAYER_FIELD_MOD_DAMAGE_DONE_PCT + school ];
+		return m_floatValues[PLAYER_FIELD_MOD_DAMAGE_DONE_PCT + school];
 	}
 
 	uint32 GetMainMeleeDamage(uint32 AP_owerride); // I need this for windfury
@@ -1227,7 +1227,7 @@ public:
 	/************************************************************************/
 	/* Reputation                                                           */
 	/************************************************************************/
-	void MODStanding(uint32 Faction, int32 Value);
+	void ModStanding(uint32 Faction, int32 Value);
 	int32 GetStanding(uint32 Faction);
 	int32 GetBaseStanding(uint32 Faction);
 	void SetStanding(uint32 Faction, int32 Value);
