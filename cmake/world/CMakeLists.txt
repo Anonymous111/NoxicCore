@@ -2,127 +2,128 @@ PROJECT(world)
 SET( prefix ${ROOT_PATH}/src/arcpro-world )
 SET(sources
 	DBC/DBCStores.cpp
-	AchievementMgr.cpp 
-	CollideInterface.cpp  
-	VoiceChatHandler.cpp 
-	DayWatcherThread.cpp 
-	CommonScheduleThread.cpp 
-	ArenaTeam.cpp 
-	DatabaseCleaner.cpp 
-	ObjectStorage.cpp  
-	AddonMgr.cpp 
-	AIInterface.cpp 
+	AchievementMgr.cpp
+	CollideInterface.cpp 
+	VoiceChatHandler.cpp
+	DayWatcherThread.cpp
+	CommonScheduleThread.cpp
+	ArenaTeam.cpp
+	DatabaseCleaner.cpp
+	ObjectStorage.cpp 
+	AddonMgr.cpp
+	AIInterface.cpp
 	AIEvents.cpp
-	AreaTrigger.cpp 
-	Arenas.cpp 
-	AuctionHouse.cpp 
-	AuctionMgr.cpp 
+	AreaTrigger.cpp
+	Arenas.cpp
+	AuctionHouse.cpp
+	AuctionMgr.cpp
 	Battleground.cpp
-	BattlegroundCommands.cpp 
-	BattlegroundHandler.cpp 
-	BattlegroundMgr.cpp 
-	Channel.cpp 
-	ChannelHandler.cpp 
-	CharacterHandler.cpp 
-	Chat.cpp 
-	ChatHandler.cpp 
-	CombatHandler.cpp 
-	Container.cpp 
-	Corpse.cpp 
-	Creature.cpp 
+	BattlegroundCommands.cpp
+	BattlegroundHandler.cpp
+	BattlegroundMgr.cpp
+	Channel.cpp
+	ChannelHandler.cpp
+	CharacterHandler.cpp
+	Chat.cpp
+	ChatHandler.cpp
+	CombatHandler.cpp
+	Container.cpp
+	Corpse.cpp
+	Creature.cpp
 	Entities/Summons/Summon.cpp
 	Entities/Summons/CompanionSummon.cpp
 	Entities/Summons/GuardianSummon.cpp
 	Entities/Summons/PossessedSummon.cpp
 	Entities/Summons/TotemSummon.cpp
 	Entities/Summons/WildSummon.cpp
-	debugcmds.cpp 
-	DuelHandler.cpp 
-	DynamicObject.cpp 
+	debugcmds.cpp
+	DuelHandler.cpp
+	DynamicObject.cpp
 	EquipmentSetMgr.cpp
-	EventableObject.cpp 
-	EventMgr.cpp 
-	Faction.cpp 
-	GameObject.cpp 
-	GMTicket.cpp 
+	EventableObject.cpp
+	EventMgr.cpp
+	Faction.cpp
+	GameObject.cpp
+	GMTicket.cpp
 	GMTicketCommands.cpp
 	Gossip.cpp
-	Group.cpp 
-	GroupHandler.cpp 
-	Guild.cpp 
-	GuildHandler.cpp 
-	HonorHandler.cpp 
-	InstanceCommands.cpp 
-	Item.cpp 
-	ItemHandler.cpp 
-	ItemInterface.cpp 
-	Level0.cpp 
-	Level1.cpp 
-	Level2.cpp 
-	Level3.cpp 
-	LfgHandler.cpp 
-	LfgMgr.cpp 
-	LootMgr.cpp 
-	LocalizationMgr.cpp 
-	LogonCommClient.cpp 
-	LogonCommHandler.cpp 
-	MailSystem.cpp 
-	MapCell.cpp 
-	Map.cpp 
-	MapScriptInterface.cpp 
-	MapMgr.cpp 
-	MiscHandler.cpp 
-	MovementHandler.cpp 
-	NPCHandler.cpp 
-	Object.cpp 
-	ObjectMgr.cpp 
-	Opcodes.cpp 
-	Pet.cpp 
-	PetHandler.cpp 
-	Player.cpp 
-	PlayerPacketWrapper.cpp 
-	QueryHandler.cpp 
-	Quest.cpp 
-	QuestHandler.cpp 
-	QuestMgr.cpp 
-	QuestCommands.cpp 
-	RaidHandler.cpp 
-	RecallCommands.cpp 
-	ReputationHandler.cpp 
-	ScriptMgr.cpp 
-	SocialHandler.cpp 
-	SpeedDetector.cpp 
-	SpellAuras.cpp 
-	SpellTarget.cpp 
-	Spell.cpp 
+	Group.cpp
+	GroupHandler.cpp
+	Guild.cpp
+	GuildHandler.cpp
+	HonorHandler.cpp
+	InstanceCommands.cpp
+	Item.cpp
+	ItemHandler.cpp
+	ItemHeirloom.cpp
+	ItemInterface.cpp
+	Level0.cpp
+	Level1.cpp
+	Level2.cpp
+	Level3.cpp
+	LfgHandler.cpp
+	LfgMgr.cpp
+	LootMgr.cpp
+	LocalizationMgr.cpp
+	LogonCommClient.cpp
+	LogonCommHandler.cpp
+	MailSystem.cpp
+	MapCell.cpp
+	Map.cpp
+	MapScriptInterface.cpp
+	MapMgr.cpp
+	MiscHandler.cpp
+	MovementHandler.cpp
+	NPCHandler.cpp
+	Object.cpp
+	ObjectMgr.cpp
+	Opcodes.cpp
+	Pet.cpp
+	PetHandler.cpp
+	Player.cpp
+	PlayerPacketWrapper.cpp
+	QueryHandler.cpp
+	Quest.cpp
+	QuestHandler.cpp
+	QuestMgr.cpp
+	QuestCommands.cpp
+	RaidHandler.cpp
+	RecallCommands.cpp
+	ReputationHandler.cpp
+	ScriptMgr.cpp
+	SocialHandler.cpp
+	SpeedDetector.cpp
+	SpellAuras.cpp
+	SpellTarget.cpp
+	Spell.cpp
 	StdAfx.cpp
 	SummonHandler.cpp
-	SpellEffects.cpp 
-	SpellHandler.cpp 
-	HackFixes.cpp 
-	Stats.cpp 
-	TaxiHandler.cpp 
-	TaxiMgr.cpp 
-	TerrainMgr.cpp 
-	TradeHandler.cpp 
-	TransporterHandler.cpp 
-	Unit.cpp 
-	Vehicle.cpp 
+	SpellEffects.cpp
+	SpellHandler.cpp
+	HackFixes.cpp
+	Stats.cpp
+	TaxiHandler.cpp
+	TaxiMgr.cpp
+	TerrainMgr.cpp
+	TradeHandler.cpp
+	TransporterHandler.cpp
+	Unit.cpp
+	Vehicle.cpp
 	VehicleHandler.cpp
-	WayPoints.cpp 
-	WeatherMgr.cpp 
-	World.cpp 
-	WorldCreator.cpp 
-	WorldSession.cpp 
-	WorldSocket.cpp 
+	WayPoints.cpp
+	WeatherMgr.cpp
+	World.cpp
+	WorldCreator.cpp
+	WorldSession.cpp
+	WorldSocket.cpp
 	WorldStatesHandler.cpp
-	WorldRunnable.cpp 
-	WordFilter.cpp 
-	Main.cpp 
-	Master.cpp 
-	CConsole.cpp 
-	ConsoleCommands.cpp 
-	ConsoleListener.cpp 
+	WorldRunnable.cpp
+	WordFilter.cpp
+	Main.cpp
+	Master.cpp
+	CConsole.cpp
+	ConsoleCommands.cpp
+	ConsoleListener.cpp
 	WUtil.cpp
 	SpellTransform.cpp
 	SpellProc.cpp
@@ -157,7 +158,7 @@ SET(sources
 	Rogue.cpp
 	Shaman.cpp
 	Warlock.cpp
-	Warrior.cpp )
+	Warrior.cpp)
 
 SET( headers
 	AchievementMgr.h
@@ -299,8 +300,3 @@ set_target_properties(${PROJECT_NAME} PROPERTIES ENABLE_EXPORTS TRUE)
 add_dependencies( ${PROJECT_NAME} shared g3dlite vmaplib detour recast)
 target_link_libraries( ${PROJECT_NAME} shared  g3dlite vmaplib detour recast ${PCRE_LIBRARIES} )
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION .)
-
-
-
-
-
