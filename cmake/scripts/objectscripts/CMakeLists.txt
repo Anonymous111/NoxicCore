@@ -26,7 +26,6 @@ SET( sources
 	Darkshore.cpp
 	Darnassus.cpp
 	DeadwindPass.cpp
-	Deepholm.cpp
 	DeeprunTram.cpp
 	Desolace.cpp
 	DunMorogh.cpp
@@ -45,7 +44,6 @@ SET( sources
 	Ironforge.cpp
 	IsleofQuelDanas.cpp
 	LochModan.cpp
-	Maelstrom.cpp
 	Misc.cpp
 	Moonglade.cpp
 	Mulgore.cpp
@@ -53,7 +51,6 @@ SET( sources
 	Netherstorm.cpp
 	Orgrimmar.cpp
 	RedridgeMountains.cpp
-	RuinsofGilneas.cpp
 	SearingGorge.cpp
 	ShattrathCity.cpp
 	Silithus.cpp
