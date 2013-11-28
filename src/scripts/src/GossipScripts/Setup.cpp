@@ -34,6 +34,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupArgentTournamentGossip(mgr);
 	SetupAzsharaGossip(mgr);
 	SetupAzuremystIsleGossip(mgr);
+	SetupBattlemasterGossip(mgr);
 	SetupBlastedLandsGossip(mgr);
 	SetupBloodmystIsleGossip(mgr);
 	SetupBoreanTundraGossip(mgr);

@@ -13,6 +13,7 @@ set( sources
 	Gossip_ArgentTournament.cpp
 	Gossip_Azshara.cpp
 	Gossip_AzuremystIsle.cpp
+	Gossip_Battlemaster.cpp
 	Gossip_BlastedLands.cpp
 	Gossip_BloodmystIsle.cpp
 	Gossip_BoreanTundra.cpp

@@ -29,6 +29,7 @@
 void SetupArgentTournamentGossip(ScriptMgr* mgr);
 void SetupAzsharaGossip(ScriptMgr* mgr);
 void SetupAzuremystIsleGossip(ScriptMgr* mgr);
+void SetupBattlemasterGossip(ScriptMgr* mgr);
 void SetupBlastedLandsGossip(ScriptMgr* mgr);
 void SetupBloodmystIsleGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
