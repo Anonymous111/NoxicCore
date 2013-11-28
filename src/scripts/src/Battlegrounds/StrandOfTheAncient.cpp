@@ -72,7 +72,7 @@ Strand of the Ancients
 #include "StrandOfTheAncient.h"
 
 
-#define GO_RELIC 192834
+#define GO_RELIC 192829
 const float sotaTitanRelic[4] = { 836.5f, -108.8f, 111.59f, 0.0f };
 
 const uint32 GateGOIds[6] =
