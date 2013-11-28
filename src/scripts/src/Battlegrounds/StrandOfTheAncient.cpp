@@ -71,7 +71,6 @@ Strand of the Ancients
 #include "StdAfx.h"
 #include "StrandOfTheAncient.h"
 
-
 #define GO_RELIC 192829
 const float sotaTitanRelic[4] = { 836.5f, -108.8f, 111.59f, 0.0f };
 
@@ -126,7 +125,7 @@ const float sotaTransporterDestination[GATE_COUNT][4] =
 };
 
 // Two guns per gate, GUN_LEFT and GUN_RIGHT
-static LocationVector CanonLocations[ SOTA_NUM_CANONS ] = {
+static LocationVector CanonLocations[SOTA_NUM_CANONS] = {
 	LocationVector( 1436.429f, 110.05f, 41.407f, 5.4f ),
 	LocationVector( 1404.9023f, 84.758f, 41.183f, 5.46f ),
 	LocationVector( 1068.693f, -86.951f, 93.81f, 0.02f ),
@@ -139,7 +138,7 @@ static LocationVector CanonLocations[ SOTA_NUM_CANONS ] = {
 	LocationVector( 1215.11f, 57.772f, 64.739f, 5.78f )
 };
 
-static LocationVector DemolisherLocations[ SOTA_NUM_DEMOLISHERS ] = {
+static LocationVector DemolisherLocations[SOTA_NUM_DEMOLISHERS] = {
 	LocationVector( 1620.71f, 64.04f, 7.19f, 3.78f ),
 	LocationVector( 1593.59f, 40.8f, 7.52f, 0.86f ),
 	LocationVector( 1582.42f, -93.75f, 8.49f, 5.7f ),
@@ -160,7 +159,7 @@ const float sotaBoats[4][4] =
 	{ 2439.4f, 845.38f, 1.0f, 3.35f },
 };
 
-static LocationVector sotaAttackerStartingPosition[ SOTA_NUM_ROUND_STAGES ] = {
+static LocationVector sotaAttackerStartingPosition[SOTA_NUM_ROUND_STAGES] = {
 	LocationVector( 2445.288f, 849.35f, 10.0f, 3.76f ),
 	LocationVector( 1624.7f, 42.93f, 10.0f, 2.63f )
 };
@@ -168,7 +167,7 @@ static LocationVector sotaAttackerStartingPosition[ SOTA_NUM_ROUND_STAGES ] = {
 static LocationVector sotaDefenderStartingPosition
 	= LocationVector( 1209.7f, -65.16f, 70.1f, 0.0f );
 
-static LocationVector FlagPolePositions[ NUM_SOTA_CONTROL_POINTS ] = {
+static LocationVector FlagPolePositions[NUM_SOTA_CONTROL_POINTS] = {
 	LocationVector( 1338.863892f, -153.336533f, 30.895121f, -2.530723f ),
 	LocationVector( 1309.124268f, 9.410645f, 30.893402f, -1.623156f ),
 	LocationVector( 1215.114258f, -65.711861f, 70.084267f, -3.124123f )
@@ -180,13 +179,13 @@ static LocationVector FlagPositions[ NUM_SOTA_CONTROL_POINTS ] = {
     LocationVector( 1215.108032f, -65.715767f, 70.084267f, -3.124123f )
 };
 
-static const uint32 FlagIDs[ NUM_SOTA_CONTROL_POINTS ][ MAX_PLAYER_TEAMS ] = {
+static const uint32 FlagIDs[NUM_SOTA_CONTROL_POINTS][MAX_PLAYER_TEAMS] = {
 	{ 191306, 191305 },
 	{ 191308, 191307 },
 	{ 191310, 191309 }
 };
 
-static const uint32 CPWorldstates[ NUM_SOTA_CONTROL_POINTS ][ MAX_PLAYER_TEAMS ] = {
+static const uint32 CPWorldstates[NUM_SOTA_CONTROL_POINTS][MAX_PLAYER_TEAMS] = {
 	{ WORLDSTATE_SOTA_GY_E_A, WORLDSTATE_SOTA_GY_E_H },
 	{ WORLDSTATE_SOTA_GY_W_A, WORLDSTATE_SOTA_GY_W_H },
 	{ WORLDSTATE_SOTA_GY_S_A, WORLDSTATE_SOTA_GY_S_H }
@@ -194,13 +193,13 @@ static const uint32 CPWorldstates[ NUM_SOTA_CONTROL_POINTS ][ MAX_PLAYER_TEAMS ]
 
 static const uint32 SOTA_FLAGPOLE_ID = 191311;
 
-const char* ControlPointNames[ NUM_SOTA_CONTROL_POINTS ] = {
+const char* ControlPointNames[NUM_SOTA_CONTROL_POINTS] = {
 	"East Graveyard",
 	"West Graveyard",
 	"South Graveyard"
 };
 
-static LocationVector GraveyardLocations[ NUM_SOTA_GRAVEYARDS ] = {
+static LocationVector GraveyardLocations[NUM_SOTA_GRAVEYARDS] = {
 	LocationVector( 1396.06018066f, -288.036895752f, 32.0815124512f, 0.0f ),
 	LocationVector( 1388.80358887f, 203.354873657f, 32.1526679993f, 0.0f ),
 	LocationVector( 1122.27844238f, 4.41617822647f, 68.9358291626f, 0.0f ),
@@ -208,7 +207,7 @@ static LocationVector GraveyardLocations[ NUM_SOTA_GRAVEYARDS ] = {
 	LocationVector( 1457.19372559f, -53.7132720947f, 5.18109416962f, 0.0f ),
 };
 
-static const uint32 TeamFactions[ MAX_PLAYER_TEAMS ] = {
+static const uint32 TeamFactions[MAX_PLAYER_TEAMS] = {
 	1,
 	2
 };
