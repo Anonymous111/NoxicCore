@@ -1123,6 +1123,21 @@ void Group::SetAssistantLeader(PlayerInfo* pMember)
 	Update();
 }
 
+void Group::SendPacketToAllInRange(Player* plr, WorldPacket* packet)
+{
+	Lock();
+	for(uint8 i = 0; i < GetSubGroupCount(); ++i)
+	{
+		SubGroup* sg = GetSubGroup(i);
+		for(GroupMembersSet::iterator itr = sg->GetGroupMembersBegin(); itr != sg->GetGroupMembersEnd(); ++itr)
+		{
+			if((*itr)->m_loggedInPlayer && (*itr)->m_loggedInPlayer->GetDistance2dSq(plr) < 80.0f)
+				(*itr)->m_loggedInPlayer->GetSession()->SendPacket(packet);
+		}
+	}
+	Unlock();
+}
+
 void Group::SetDungeonDifficulty(uint32 diff)
 {
 	m_difficulty = static_cast<uint8>(diff);
