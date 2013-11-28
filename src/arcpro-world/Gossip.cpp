@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -41,14 +41,14 @@ Gossip::Item::Item(size_t itemid, uint8 icon, const char* text, bool coded/*= fa
 	boxmessage_ = (boxmessage != NULL) ? boxmessage : "";
 }
 
-WorldPacket & Gossip::operator<<(WorldPacket & packet, const Gossip::Item & item)
+WorldPacket & Gossip::operator<< (WorldPacket & packet, const Gossip::Item & item)
 {
 	packet << uint32(item.id_) << item.icon_ << item.coded_ << item.boxmoney_ << item.text_ << item.boxmessage_;
 	return packet;
 }
 
-template<uint32 size>
-StackBuffer<size>& Gossip::operator<<(StackBuffer<size>& packet, const Gossip::Item & item)
+template< uint32 size >
+StackBuffer< size >& Gossip::operator<< (StackBuffer< size >& packet, const Gossip::Item & item)
 {
 	packet << uint32(item.id_) << item.icon_ << item.coded_ << item.boxmoney_ << item.text_ << item.boxmessage_;
 	return packet;
@@ -96,6 +96,7 @@ void Gossip::Menu::AddQuest(Quest* quest, uint8 icon)
 {
 	this->questlist_.insert(make_pair(quest, icon));
 }
+
 void Gossip::Menu::RemoveQuest(Quest* quest)
 {
 	Gossip::QuestList::iterator itr = questlist_.find(quest);
@@ -103,7 +104,7 @@ void Gossip::Menu::RemoveQuest(Quest* quest)
 		questlist_.erase(itr);
 }
 
-WorldPacket & Gossip::operator<<(WorldPacket & packet, const Gossip::Menu & menu)
+WorldPacket & Gossip::operator<< (WorldPacket & packet, const Gossip::Menu & menu)
 {
 	packet << menu.guid_;
 	packet << uint32(0);
@@ -128,8 +129,8 @@ WorldPacket & Gossip::operator<<(WorldPacket & packet, const Gossip::Menu & menu
 	return packet;
 }
 
-template<uint32 size>
-StackBuffer<size>& Gossip::operator<<(StackBuffer<size> & packet, const Gossip::Menu & menu)
+template< uint32 size >
+StackBuffer< size >& Gossip::operator<< (StackBuffer< size > & packet, const Gossip::Menu & menu)
 {
 	packet << menu.guid_;
 	packet << uint32(0);
@@ -205,7 +206,6 @@ void Gossip::Menu::Complete(Player* plr)
 {
 	plr->GetSession()->OutPacket(SMSG_GOSSIP_COMPLETE, 0, NULL);
 }
-
 
 /*
 English Worldstrings as of 08.16.2009
@@ -352,17 +352,13 @@ Gossip::Script* Gossip::Script::GetInterface(GameObject* go)
 	return sScriptMgr.get_go_gossip(go->GetEntry());
 }
 
-/*
-	SPIRIT HEALER
-	*/
+/* SPIRIT HEALER */
 void Arcpro::Gossip::SpiritHealer::OnHello(Object* pObject, Player* Plr)
 {
 	Plr->GetSession()->SendSpiritHealerRequest(TO_CREATURE(pObject));
 }
 
-/*
-	VENDORS
-	*/
+/* VENDORS */
 void Arcpro::Gossip::Vendor::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* creature = TO_CREATURE(pObject);
@@ -389,10 +385,7 @@ void Arcpro::Gossip::Vendor::OnSelectOption(Object* pObject, Player* Plr, uint32
 	Plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 }
 
-/*
-	TRAINER
-	*/
-
+/* TRAINER */
 void Arcpro::Gossip::Trainer::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* trainer = TO_CREATURE(pObject);
@@ -428,7 +421,7 @@ void Arcpro::Gossip::Trainer::OnHello(Object* pObject, Player* Plr)
 		}
 	}
 	sQuestMgr.FillQuestMenu(trainer, Plr, menu);
-	menu.StackSend<256>(Plr);
+	menu.StackSend< 256 >(Plr);
 }
 
 void Arcpro::Gossip::Trainer::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
@@ -439,10 +432,7 @@ void Arcpro::Gossip::Trainer::OnSelectOption(Object* pObject, Player* Plr, uint3
 		Plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 }
 
-/*
-	TAXIMASTER
-	*/
-
+/* TAXIMASTER */
 void Arcpro::Gossip::FlightMaster::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* flightmaster = TO_CREATURE(pObject);
@@ -454,7 +444,7 @@ void Arcpro::Gossip::FlightMaster::OnHello(Object* pObject, Player* Plr)
 	menu.AddItem(Gossip::ICON_FLIGHTMASTER, Plr->GetSession()->LocalizedWorldSrv(Gossip::FLIGHTMASTER), 1);
 	sQuestMgr.FillQuestMenu(flightmaster, Plr, menu);
 
-	menu.StackSend<256>(Plr);
+	menu.StackSend< 256 >(Plr);
 }
 
 void Arcpro::Gossip::FlightMaster::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
@@ -462,9 +452,7 @@ void Arcpro::Gossip::FlightMaster::OnSelectOption(Object* pObject, Player* Plr, 
 	Plr->GetSession()->SendTaxiList(TO_CREATURE(pObject));
 }
 
-/*
-	AUCTIONEER
-	*/
+/* AUCTIONEER */
 void Arcpro::Gossip::Auctioneer::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* auctioneer = TO_CREATURE(pObject);
@@ -480,9 +468,7 @@ void Arcpro::Gossip::Auctioneer::OnSelectOption(Object* pObject, Player* Plr, ui
 	Plr->GetSession()->SendAuctionList(TO_CREATURE(pObject));
 }
 
-/*
-	INN KEEPERS
-	*/
+/* INN KEEPERS */
 void Arcpro::Gossip::InnKeeper::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* innkeeper = TO_CREATURE(pObject);
@@ -510,10 +496,7 @@ void Arcpro::Gossip::InnKeeper::OnSelectOption(Object* pObject, Player* Plr, uin
 		Plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 }
 
-/*
-	BATTLE MASTER
-	*/
-
+/* BATTLE MASTER */
 void Arcpro::Gossip::BattleMaster::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* battlemaster = TO_CREATURE(pObject);
@@ -531,24 +514,15 @@ void Arcpro::Gossip::BattleMaster::OnSelectOption(Object* pObject, Player* Plr, 
 	Plr->GetSession()->SendBattlegroundList(TO_CREATURE(pObject), 0);
 }
 
-/*
-	BANKER
-	*/
-
+/* BANKER */
 void Arcpro::Gossip::Banker::OnHello(Object* pObject, Player* Plr)
 {
 	Plr->GetSession()->SendBankerList(TO_CREATURE(pObject));
 }
 
-void Arcpro::Gossip::Banker::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
-{
+void Arcpro::Gossip::Banker::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode) {}
 
-}
-
-/*
-	CHARTER GIVER
-	*/
-
+/* CHARTER GIVER */
 void Arcpro::Gossip::CharterGiver::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* chartergiver = TO_CREATURE(pObject);
@@ -566,10 +540,7 @@ void Arcpro::Gossip::CharterGiver::OnSelectOption(Object* pObject, Player* Plr, 
 	Plr->GetSession()->SendCharterRequest(TO_CREATURE(pObject));
 }
 
-/*
-	TABARD DESIGNER
-	*/
-
+/* TABARD DESIGNER */
 void Arcpro::Gossip::TabardDesigner::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* chartergiver = TO_CREATURE(pObject);
@@ -578,9 +549,9 @@ void Arcpro::Gossip::TabardDesigner::OnHello(Object* pObject, Player* Plr)
 		Text = Gossip::DEFAULT_TXTINDEX;
 	
 	Gossip::Menu menu(chartergiver->GetGUID(), Text, Plr->GetSession()->language);
-	menu.AddItem( Gossip::ICON_TABARD, Plr->GetSession()->LocalizedWorldSrv(Gossip::TABARD), 1 );
-	if( chartergiver->isCharterGiver() )
-		menu.AddItem( Gossip::ICON_CHAT, "How do I create a guild?", 2 );
+	menu.AddItem(Gossip::ICON_TABARD, Plr->GetSession()->LocalizedWorldSrv(Gossip::TABARD), 1);
+	if(chartergiver->isCharterGiver())
+		menu.AddItem(Gossip::ICON_CHAT, "How do I create a guild?", 2);
 	
 	if(chartergiver->isVendor())
 	{
@@ -593,23 +564,22 @@ void Arcpro::Gossip::TabardDesigner::OnHello(Object* pObject, Player* Plr)
 
 void Arcpro::Gossip::TabardDesigner::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
 {
-	switch( Id ){
+	switch(Id)
+	{
 		case 1:
 			Plr->GetSession()->SendTabardHelp(TO_CREATURE(pObject));
-			break;
+		break;
 		case 2:
-			if( TO_CREATURE( pObject )->isCharterGiver() )
+			if(TO_CREATURE(pObject)->isCharterGiver())
 				Plr->GetSession()->SendCharterRequest(TO_CREATURE(pObject));
-			break;
+		break;
 		case 3:
 			Plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
-			break;
+		break;
 	}
 }
 
-/*
-	STABLED MASTER
-	*/
+/* STABLED MASTER */
 void Arcpro::Gossip::StableMaster::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* stablemaster = TO_CREATURE(pObject);
@@ -628,9 +598,7 @@ void Arcpro::Gossip::StableMaster::OnSelectOption(Object* pObject, Player* Plr, 
 }
 
 
-/*
-	PET TRAINER
-	*/
+/* PET TRAINER */
 void Arcpro::Gossip::PetTrainer::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* petrain = TO_CREATURE(pObject);
@@ -658,12 +626,9 @@ void Arcpro::Gossip::PetTrainer::OnSelectOption(Object* pObject, Player* Plr, ui
 		Gossip::Menu::Complete(Plr);
 		Plr->SendPetUntrainConfirm();
 	}
-
 }
 
-/*
-	CLASS TRAINER
-	*/
+/* CLASS TRAINER */
 void Arcpro::Gossip::ClassTrainer::OnHello(Object* pObject, Player* Plr)
 {
 	Creature* trainer = TO_CREATURE(pObject);
@@ -675,7 +640,7 @@ void Arcpro::Gossip::ClassTrainer::OnHello(Object* pObject, Player* Plr)
 	uint8 playerclass = Plr->getClass();
 	::Trainer* traininfo = trainer->GetTrainer();
 
-	if(traininfo != NULL)	//Seems to happen
+	if(traininfo != NULL) //Seems to happen
 	{
 		if(traininfo->RequiredClass != playerclass)
 			menu.setTextID(traininfo->Cannot_Train_GossipTextId);
@@ -694,36 +659,36 @@ void Arcpro::Gossip::ClassTrainer::OnHello(Object* pObject, Player* Plr)
 			{
 				case ::MAGE:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::MAGE));
-					break;
+				break;
 				case ::SHAMAN:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::SHAMAN));
-					break;
+				break;
 				case ::WARRIOR:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::WARRIOR));
-					break;
+				break;
 				case ::PALADIN:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::PALADIN));
-					break;
+				break;
 				case ::WARLOCK:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::WARLOCK));
-					break;
+				break;
 				case ::HUNTER:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::HUNTER));
-					break;
+				break;
 				case ::ROGUE:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::ROGUE));
-					break;
+				break;
 				case ::DRUID:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::DRUID));
-					break;
+				break;
 				case ::PRIEST:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::PRIEST));
-					break;
+				break;
 				case ::DEATHKNIGHT:
 					itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::DEATHKNIGHT));
-					break;
-				default:
-					break;
+				break;
+				default: // this should not happen
+				break;
 			}
 			itemname += " ";
 			itemname += string(Plr->GetSession()->LocalizedWorldSrv(Gossip::TRAINING)) + ", " + name + ".";
@@ -741,7 +706,7 @@ void Arcpro::Gossip::ClassTrainer::OnHello(Object* pObject, Player* Plr)
 		}
 	}
 	sQuestMgr.FillQuestMenu(trainer, Plr, menu);
-	menu.StackSend<256>(Plr);
+	menu.StackSend< 256 >(Plr);
 }
 
 void Arcpro::Gossip::ClassTrainer::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
@@ -751,18 +716,18 @@ void Arcpro::Gossip::ClassTrainer::OnSelectOption(Object* pObject, Player* Plr, 
 	{
 		case 1:
 			Plr->GetSession()->SendTrainerList(TO_CREATURE(pObject));
-			break;
+		break;
 		case 2:
 			Gossip::Menu::SendQuickMenu(pObject->GetGUID(), TXTID_TALENTRESET, Plr, 3, Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Gossip::CLASSTRAINER_TALENTCONFIRM), 3);
-			break;
+		break;
 		case 3:
 			Gossip::Menu::Complete(Plr);
 			Plr->SendTalentResetConfirm();
-			break;
+		break;
 		case 4:
 			purchaseconfirm = "Are you sure you would like to purchase your second talent specialization?";
 			Gossip::Menu::SendQuickMenu(pObject->GetGUID(), TXTID_DUALSPECPURCHASE, Plr, 5, Gossip::ICON_CHAT, "Purchase a Dual Talent Specialization.", 10000000, purchaseconfirm);
-			break;
+		break;
 		case 5:
 			if(!Plr->HasGold(10000000))
 			{
@@ -780,6 +745,7 @@ void Arcpro::Gossip::ClassTrainer::OnSelectOption(Object* pObject, Player* Plr, 
 				Plr->CastSpell(Plr, 63707, true); // Allow secondary spec to be activated
 				Plr->SaveToDB(false); // hai gm i bought dual spec but no werk plis gief mi 1000g back - GTFO you never bought anything
 			}
+		break;
 	}
 }
 
@@ -794,7 +760,4 @@ void Arcpro::Gossip::Generic::OnHello(Object* pObject, Player* Plr)
 	menu.StackSend<256>(Plr);
 }
 
-void Arcpro::Gossip::Generic::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
-{
-
-}
+void Arcpro::Gossip::Generic::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode) {}

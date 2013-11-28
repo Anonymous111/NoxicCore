@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -98,7 +98,8 @@ ARCPRO_INLINE void* allocate_and_copy(uint32 len, void* pointer)
 void CommandTableStorage::Load()
 {
 	QueryResult* result = WorldDatabase.Query("SELECT * FROM command_overrides");
-	if(!result) return;
+	if(!result)
+		return;
 
 	do
 	{
@@ -148,9 +149,7 @@ void CommandTableStorage::Override(const char* command, const char* level)
 				// assume this is a subcommand, loop the second set.
 				ChatCommand* p2 = p->ChildCommands;
 				if(!p2)
-				{
 					LOG_ERROR("Invalid command specified for override: %s", command_name);
-				}
 				else
 				{
 					while(p2->Name != 0)
@@ -175,9 +174,8 @@ void CommandTableStorage::Override(const char* command, const char* level)
 					if(p2->Name == 0)
 					{
 						if(strnicmp("*", subcommand_name, 1)) //Hacky.. meh.. -DGM
-						{
 							LOG_ERROR("Invalid subcommand referenced: `%s` under `%s`.", subcommand_name, p->Name);
-						}
+
 						break;
 					}
 				}
@@ -286,12 +284,12 @@ void CommandTableStorage::Init()
 		{ "landwalk",            'd', &ChatHandler::HandleDebugLandWalk,           "",                                                                                                                  NULL, 0, 0, 0 },
 		{ "waterwalk",           'd', &ChatHandler::HandleDebugWaterWalk,          "",                                                                                                                  NULL, 0, 0, 0 },
 		{ "castspell",           'd', &ChatHandler::HandleCastSpellCommand,        ".castspell <spellid> - Casts spell on target.",                                                                     NULL, 0, 0, 0 },
-		{ "castself",            'd', &ChatHandler::HandleCastSelfCommand,         ".castself <spellId> - Target casts spell <spellId> on itself.",                                                     NULL, 0, 0, 0 },
+		{ "castself",            'd', &ChatHandler::HandleCastSelfCommand,         ".castself <spellId> - Target casts spell < spellId > on itself.",                                                     NULL, 0, 0, 0 },
 		{ "castspellne",         'd', &ChatHandler::HandleCastSpellNECommand,      ".castspellne <spellid> - Casts spell on target (only plays animations, doesn't handle effects or range/facing/etc.", NULL, 0, 0, 0 },
 		{ "aggrorange",          'd', &ChatHandler::HandleAggroRangeCommand,       ".aggrorange - Shows aggro Range of the selected Creature.",                                                         NULL, 0, 0, 0 },
 		{ "knockback",           'd', &ChatHandler::HandleKnockBackCommand,        ".knockback <value> - Knocks you back.",                                                                             NULL, 0, 0, 0 },
-		{ "fade",                'd', &ChatHandler::HandleFadeCommand,             ".fade <value> - calls ModThreatModifyer().",                                                                        NULL, 0, 0, 0 },
-		{ "threatMod",           'd', &ChatHandler::HandleThreatModCommand,        ".threatMod <value> - calls ModGeneratedThreatModifyer().",                                                          NULL, 0, 0, 0 },
+		{ "fade",                'd', &ChatHandler::HandleFadeCommand,             ".fade <value > - calls ModThreatModifyer().",                                                                        NULL, 0, 0, 0 },
+		{ "threatMod",           'd', &ChatHandler::HandleThreatModCommand,        ".threatMod <value > - calls ModGeneratedThreatModifyer().",                                                          NULL, 0, 0, 0 },
 		{ "calcThreat",          'd', &ChatHandler::HandleCalcThreatCommand,       ".calcThreat <dmg> <spellId> - calculates threat.",                                                                  NULL, 0, 0, 0 },
 		{ "threatList",          'd', &ChatHandler::HandleThreatListCommand,       ".threatList  - returns all AI_Targets of the selected Creature.",                                                   NULL, 0, 0, 0 },
 		{ "gettptime",           'd', &ChatHandler::HandleGetTransporterTime,      "grabs transporter travel time",                                                                                     NULL, 0, 0, 0 },
@@ -313,8 +311,8 @@ void CommandTableStorage::Init()
 		{ "getpos",              'd', &ChatHandler::HandleGetPosCommand,           "",                                                                                                                  NULL, 0, 0, 0 },
 		{ "sendfailed",			 'd', &ChatHandler::HandleSendFailed,      "",                                                                                                                  NULL, 0, 0, 0 },
 		{ "playmovie",			 'd', &ChatHandler::HandlePlayMovie,			   "Triggers a movie for a player",									NULL, 0, 0, 0 },
-		{ "auraupdate",			 'd', &ChatHandler::HandleAuraUpdateAdd,			   "<SpellID> <Flags> <StackCount> (caster guid = player target)",									NULL, 0, 0, 0 },
-		{ "auraremove",			 'd', &ChatHandler::HandleAuraUpdateRemove,			   "<VisualSlot>",									NULL, 0, 0, 0 },
+		{ "auraupdate",			 'd', &ChatHandler::HandleAuraUpdateAdd,			"<SpellID> <Flags> <StackCount> (caster guid = player target)",									NULL, 0, 0, 0 },
+		{ "auraremove",			 'd', &ChatHandler::HandleAuraUpdateRemove,			 "<VisualSlot>",									NULL, 0, 0, 0 },
 		{ "spawnwar",			 'd', &ChatHandler::HandleDebugSpawnWarCommand,	   "Spawns desired amount of npcs to fight with eachother",																NULL, 0, 0, 0 },
 		{ "updateworldstate",    'd', &ChatHandler::HandleUpdateWorldStateCommand, "Sets the specified worldstate field to the specified value",                                                        NULL, 0, 0, 0 },
 		{ "initworldstates",     'd', &ChatHandler::HandleInitWorldStatesCommand,  "(re)initializes the worldstates.",                                                                                  NULL, 0, 0, 0 },
@@ -393,7 +391,7 @@ void CommandTableStorage::Init()
 		{ "faction",      'o', &ChatHandler::HandleGOFactionCommand,"Sets the faction of the GO",              NULL, 0, 0, 0 },
 		{ "export",       'o', &ChatHandler::HandleGOExport,       "Exports the current GO selected",          NULL, 0, 0, 0 },
 		{ "move",         'g', &ChatHandler::HandleGOMove,         "Moves gameobject to player xyz",           NULL, 0, 0, 0 },
-		{ "rotate",       'g', &ChatHandler::HandleGORotate,       "<Axis> <Value> - Rotates the object. <Axis> x,y, Default o.",             NULL, 0, 0, 0 },
+		{ "rotate",       'g', &ChatHandler::HandleGORotate,       "<Axis> <Value> - Rotates the object. < Axis > x,y, Default o.",             NULL, 0, 0, 0 },
 		{ "portto",       'v', &ChatHandler::HandlePortToGameObjectSpawnCommand, "Teleports you to the gameobject with spawn id x.", NULL, 0, 0, 0 },
 		{ NULL,           '0', NULL,                               "",                                         NULL, 0, 0, 0 }
 	};
@@ -426,13 +424,13 @@ void CommandTableStorage::Init()
 		{ "delete",           'n', &ChatHandler::HandleDeleteCommand,         "Deletes mob from db and world.",                                                                                                          NULL, 0, 0, 0 },
 		{ "info",             'n', &ChatHandler::HandleNpcInfoCommand,        "Displays NPC information",                                                                                                                NULL, 0, 0, 0 },
 		{ "phase",            'n', &ChatHandler::HandleCreaturePhaseCommand,  "<phase> <save> - Sets phase of selected mob",                                                                                             NULL, 0, 0, 0 },
-		{ "addAgent",         'n', &ChatHandler::HandleAddAIAgentCommand,     ".npc addAgent <agent> <procEvent> <procChance> <procCount> <spellId> <spellType> <spelltargetType> <spellCooldown> <floatMisc1> <Misc2>", NULL, 0, 0, 0 },
+		{ "addAgent",         'n', &ChatHandler::HandleAddAIAgentCommand,     ".npc addAgent <agent> <procEvent> <procChance> <procCount> <spellI> <spellType> <spelltargetType> <spellCooldown > <floatMisc1> <Misc2>", NULL, 0, 0, 0 },
 		{ "listAgent",        'n', &ChatHandler::HandleListAIAgentCommand,    ".npc listAgent",                                                                                                                          NULL, 0, 0, 0 },
-		{ "say",              'n', &ChatHandler::HandleMonsterSayCommand,     ".npc say <text> - Makes selected mob say text <text>.",                                                                                   NULL, 0, 0, 0 },
-		{ "yell",             'n', &ChatHandler::HandleMonsterYellCommand,    ".npc yell <Text> - Makes selected mob yell text <text>.",                                                                                 NULL, 0, 0, 0 },
+		{ "say",              'n', &ChatHandler::HandleMonsterSayCommand,     ".npc say <text> - Makes selected mob say text < text >.",                                                                                   NULL, 0, 0, 0 },
+		{ "yell",             'n', &ChatHandler::HandleMonsterYellCommand,    ".npc yell <text> - Makes selected mob yell text < text >.",                                                                                 NULL, 0, 0, 0 },
 		{ "come",             'n', &ChatHandler::HandleNpcComeCommand,        ".npc come - Makes npc move to your position",                                                                                             NULL, 0, 0, 0 },
 		{ "return",           'n', &ChatHandler::HandleNpcReturnCommand,      ".npc return - Returns ncp to spawnpoint.",                                                                                                NULL, 0, 0, 0 },
-		{ "spawn",            'n', &ChatHandler::HandleCreatureSpawnCommand,  ".npc spawn - Spawns npc of entry <id>",                                                                                                   NULL, 0, 0, 0 },
+		{ "spawn",            'n', &ChatHandler::HandleCreatureSpawnCommand,  ".npc spawn - Spawns npc of entry < id >",                                                                                                   NULL, 0, 0, 0 },
 		{ "respawn",          'n', &ChatHandler::HandleCreatureRespawnCommand, ".respawn - Respawns a dead npc from its corpse.",                                                                                         NULL, 0, 0, 0 },
 		{ "spawnlink",        'n', &ChatHandler::HandleNpcSpawnLinkCommand,   ".spawnlink sqlentry",                                                                                                                     NULL, 0, 0, 0 },
 		{ "possess",          'n', &ChatHandler::HandleNpcPossessCommand,     ".npc possess - Possess an npc (mind control)",                                                                                            NULL, 0, 0, 0 },
@@ -450,7 +448,7 @@ void CommandTableStorage::Init()
 		{ "loot",             'm', &ChatHandler::HandleNPCLootCommand,        ".npc loot <quality> - displays possible loot for the selected NPC.",                                                                      NULL, 0, 0, 0 },
 		{ "canfly",           'n', &ChatHandler::HandleNPCCanFlyCommand,      ".npc canfly <save> - Toggles CanFly state",                                                                                                      NULL, 0, 0, 0 },
 		{ "ongameobject",     'n', &ChatHandler::HandleNPCOnGOCommand,        ".npc ongameobject <save> - Toggles onGameobject state. Required when spawning a NPC on a Gameobject",                                            NULL, 0, 0, 0 },
-		{ "cast",             'n', &ChatHandler::HandleNPCCastCommand,        ".npc cast < spellid > - Makes the NPC cast this spell.",																							NULL, 0, 0, 0 },
+		{ "cast",             'n', &ChatHandler::HandleNPCCastCommand,        ".npc cast <spellid> - Makes the NPC cast this spell.",																							NULL, 0, 0, 0 },
 		{ NULL,               '0', NULL,                                      "",                                                                                                                                        NULL, 0, 0, 0 }
 	};
 	dupe_command_table(NPCCommandTable, _NPCCommandTable);
@@ -645,7 +643,7 @@ void CommandTableStorage::Init()
 
 	static ChatCommand banCommandTable[] =
 	{
-		{ "ip",        'm', &ChatHandler::HandleIPBanCommand,         "Adds an address to the IP ban table: .ban ip <address> [duration] [reason]\nDuration must be a number optionally followed by a character representing the calendar subdivision to use (h>hours, d>days, w>weeks, m>months, y>years, default minutes)\nLack of duration results in a permanent ban.", NULL, 0, 0, 0 },
+		{ "ip",        'm', &ChatHandler::HandleIPBanCommand,         "Adds an address to the IP ban table: .ban ip <address> [duration] [reason]\nDuration must be a number optionally followed by a character representing the calendar subdivision to use (h >hours, d >days, w >weeks, m >months, y >years, default minutes)\nLack of duration results in a permanent ban.", NULL, 0, 0, 0 },
 		{ "character", 'b', &ChatHandler::HandleBanCharacterCommand,  "Bans character: .ban character <char> [duration] [reason]",                                                                                                                                                                                                                                          NULL, 0, 0, 0 },
 		{ "account",   'a', &ChatHandler::HandleAccountBannedCommand, "Bans account: .ban account <name> [duration] [reason]",                                                                                                                                                                                                                                              NULL, 0, 0, 0 },
 		{ "all",       'a', &ChatHandler::HandleBanAllCommand,        "Bans account, ip, and character: .ban all <char> [duration] [reason]",                                                                                                                                                                                                                               NULL, 0, 0, 0 },
@@ -845,7 +843,8 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand* table, const char* text, Wo
 		text++;
 	}
 
-	while(*text == ' ') text++;  // skip whitespace
+	while(*text == ' ')
+		text++; // skip whitespace
 
 	if(!cmd.length())
 		return false;
@@ -891,7 +890,7 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand* table, const char* text, Wo
 			else
 				result = CmdSetValueField(m_session, table[i].NormalValueField, table[i].MaxValueField, table[i].Name, text);
 			if(!result)
-				RedSystemMessage(m_session, "Must be in the form of (command) <value>, or, (command) <value> <maxvalue>");
+				RedSystemMessage(m_session, "Must be in the form of (command) < value >, or, (command) < value > < maxvalue >");
 		}
 		else
 		{
@@ -900,9 +899,7 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand* table, const char* text, Wo
 				if(table[i].Help != "")
 					SendMultilineMessage(m_session, table[i].Help.c_str());
 				else
-				{
 					RedSystemMessage(m_session, "Incorrect syntax specified. Try .help %s for the correct syntax.", table[i].Name);
-				}
 			}
 		}
 
@@ -932,23 +929,21 @@ int ChatHandler::ParseCommands(const char* text, WorldSession* session)
 	text++;
 
 	if(!ExecuteCommandInTable(CommandTableStorage::getSingleton().Get(), text, session))
-	{
 		SystemMessage(session, "There is no such command, or you do not have access to it.");
-	}
 
 	return 1;
 }
 
 WorldPacket* ChatHandler::FillMessageData(uint32 type, uint32 language, const char* message, uint64 guid , uint8 flag) const
 {
-	//Packet    structure
-	//uint8	    type;
-	//uint32	language;
-	//uint64	guid;
-	//uint64	guid;
-	//uint32	len_of_text;
-	//char	    text[];		 // not sure ? i think is null terminated .. not null terminated
-	//uint8	    afk_state;
+	//Packet structure
+	//uint8 type;
+	//uint32 language;
+	//uint64 guid;
+	//uint64 guid;
+	//uint32 len_of_text;
+	//char text[]; // not sure ? i think is null terminated .. not null terminated
+	//uint8 afk_state;
 	ARCPRO_ASSERT(type != CHAT_MSG_CHANNEL);
 	//channels are handled in channel handler and so on
 	uint32 messageLength = (uint32)strlen(message) + 1;
@@ -1028,15 +1023,15 @@ Creature* ChatHandler::getSelectedCreature(WorldSession* m_session, bool showerr
 
 	guid = m_session->GetPlayer()->GetSelection();
 
-	switch( GET_TYPE_FROM_GUID( guid ) ){
+	switch(GET_TYPE_FROM_GUID(guid))
+	{
 		case HIGHGUID_TYPE_PET:
 			creature = m_session->GetPlayer()->GetMapMgr()->GetPet(GET_LOWGUID_PART(guid));
-			break;
-
+		break;
 		case HIGHGUID_TYPE_UNIT:
 		case HIGHGUID_TYPE_VEHICLE:
 			creature = m_session->GetPlayer()->GetMapMgr()->GetCreature(GET_LOWGUID_PART(guid));
-			break;
+		break;
 	}
 
 	if(creature != NULL)
@@ -1051,7 +1046,8 @@ Creature* ChatHandler::getSelectedCreature(WorldSession* m_session, bool showerr
 
 void ChatHandler::SystemMessage(WorldSession* m_session, const char* message, ...)
 {
-	if(!message) return;
+	if(!message)
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1064,7 +1060,8 @@ void ChatHandler::SystemMessage(WorldSession* m_session, const char* message, ..
 
 void ChatHandler::ColorSystemMessage(WorldSession* m_session, const char* colorcode, const char* message, ...)
 {
-	if(!message) return;
+	if(!message)
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1079,7 +1076,8 @@ void ChatHandler::ColorSystemMessage(WorldSession* m_session, const char* colorc
 
 void ChatHandler::RedSystemMessage(WorldSession* m_session, const char* message, ...)
 {
-	if(!message) return;
+	if(!message)
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1094,7 +1092,8 @@ void ChatHandler::RedSystemMessage(WorldSession* m_session, const char* message,
 
 void ChatHandler::GreenSystemMessage(WorldSession* m_session, const char* message, ...)
 {
-	if(!message) return;
+	if(!message)
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1109,7 +1108,8 @@ void ChatHandler::GreenSystemMessage(WorldSession* m_session, const char* messag
 
 void ChatHandler::BlueSystemMessage(WorldSession* m_session, const char* message, ...)
 {
-	if(!message) return;
+	if(!message)
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1124,7 +1124,8 @@ void ChatHandler::BlueSystemMessage(WorldSession* m_session, const char* message
 
 void ChatHandler::RedSystemMessageToPlr(Player* plr, const char* message, ...)
 {
-	if(!message || !plr || !plr->GetSession()) return;
+	if(!message || !plr || !plr->GetSession())
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1134,7 +1135,8 @@ void ChatHandler::RedSystemMessageToPlr(Player* plr, const char* message, ...)
 
 void ChatHandler::GreenSystemMessageToPlr(Player* plr, const char* message, ...)
 {
-	if(!message || !plr || !plr->GetSession()) return;
+	if(!message || !plr || !plr->GetSession())
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1144,7 +1146,8 @@ void ChatHandler::GreenSystemMessageToPlr(Player* plr, const char* message, ...)
 
 void ChatHandler::BlueSystemMessageToPlr(Player* plr, const char* message, ...)
 {
-	if(!message || !plr || !plr->GetSession()) return;
+	if(!message || !plr || !plr->GetSession())
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1154,7 +1157,8 @@ void ChatHandler::BlueSystemMessageToPlr(Player* plr, const char* message, ...)
 
 void ChatHandler::SystemMessageToPlr(Player* plr, const char* message, ...)
 {
-	if(!message || !plr || !plr->GetSession()) return;
+	if(!message || !plr || !plr->GetSession())
+		return;
 	va_list ap;
 	va_start(ap, message);
 	char msg1[1024];
@@ -1167,7 +1171,8 @@ bool ChatHandler::CmdSetValueField(WorldSession* m_session, uint32 field, uint32
 	char* pvalue;
 	uint32 mv, av;
 
-	if(!args || !m_session) return false;
+	if(!args || !m_session)
+		return false;
 
 	pvalue = strtok((char*)args, " ");
 	if(!pvalue)
@@ -1184,9 +1189,7 @@ bool ChatHandler::CmdSetValueField(WorldSession* m_session, uint32 field, uint32
 			mv = atol(pvaluemax);
 	}
 	else
-	{
 		mv = 0;
-	}
 
 	if(av <= 0 && mv > 0)
 	{
@@ -1217,18 +1220,15 @@ bool ChatHandler::CmdSetValueField(WorldSession* m_session, uint32 field, uint32
 			GreenSystemMessageToPlr(plr, "%s set your %s to %d.", m_session->GetPlayer()->GetName(), fieldname, av);
 		}
 
-		if(field == UNIT_FIELD_STAT1) av /= 2;
+		if(field == UNIT_FIELD_STAT1)
+			av /= 2;
 		if(field == UNIT_FIELD_BASE_HEALTH)
-		{
 			plr->SetHealth(av);
-		}
 
 		plr->SetUInt32Value(field, av);
 
 		if(fieldmax)
-		{
 			plr->SetUInt32Value(fieldmax, mv);
-		}
 	}
 	else
 	{
@@ -1250,36 +1250,29 @@ bool ChatHandler::CmdSetValueField(WorldSession* m_session, uint32 field, uint32
 			switch(field)
 			{
 				case UNIT_FIELD_FACTIONTEMPLATE:
-					{
-						if(cr->m_spawn)
-							WorldDatabase.Execute("UPDATE creature_spawns SET faction = %u WHERE entry = %u", av, cr->m_spawn->entry);
-					}
-					break;
+				{
+					if(cr->m_spawn)
+						WorldDatabase.Execute("UPDATE creature_spawns SET faction = %u WHERE entry = %u", av, cr->m_spawn->entry);
+				}break;
 				case UNIT_NPC_FLAGS:
-					{
-						WorldDatabase.Execute("UPDATE creature_proto SET npcflags = %u WHERE entry = %u", av, cr->GetProto()->Id);
-					}
-					break;
+					WorldDatabase.Execute("UPDATE creature_proto SET npcflags = %u WHERE entry = %u", av, cr->GetProto()->Id);
+				break;
 			}
 
 			cr->SetUInt32Value(field, av);
 
 			if(fieldmax)
-			{
 				cr->SetUInt32Value(fieldmax, mv);
-			}
 			// reset faction
 			if(field == UNIT_FIELD_FACTIONTEMPLATE)
 				cr->_setFaction();
 
 			// Only actually save the change if we are modifying a spawn
-			if( cr->GetSQL_id() != 0 )
+			if(cr->GetSQL_id() != 0)
 				cr->SaveToDB();
 		}
 		else
-		{
 			RedSystemMessage(m_session, "Invalid Selection.");
-		}
 	}
 	return true;
 }
@@ -1289,7 +1282,8 @@ bool ChatHandler::CmdSetFloatField(WorldSession* m_session, uint32 field, uint32
 	char* pvalue;
 	float mv, av;
 
-	if(!args || !m_session) return false;
+	if(!args || !m_session)
+		return false;
 
 	pvalue = strtok((char*)args, " ");
 	if(!pvalue)
@@ -1306,9 +1300,7 @@ bool ChatHandler::CmdSetFloatField(WorldSession* m_session, uint32 field, uint32
 			mv = (float)atof(pvaluemax);
 	}
 	else
-	{
 		mv = 0;
-	}
 
 	if(av <= 0)
 	{
@@ -1356,22 +1348,21 @@ bool ChatHandler::CmdSetFloatField(WorldSession* m_session, uint32 field, uint32
 			cr->SetFloatValue(field, av);
 			sGMLog.writefromsession(m_session, "used modify field value: [creature]%s, %f on %s", fieldname, av, creaturename.c_str());
 			if(fieldmax)
-			{
 				cr->SetFloatValue(fieldmax, mv);
-			}
+
 			//cr->SaveToDB();
 		}
 		else
-		{
 			RedSystemMessage(m_session, "Invalid Selection.");
-		}
+		
+		return true;
 	}
-	return true;
 }
 
 bool ChatHandler::HandleGetPosCommand(const char* args, WorldSession* m_session)
 {
-	if(!args || !m_session) return false;
+	if(!args || !m_session)
+		return false;
 
 	/*if(m_session->GetPlayer()->GetSelection() == 0) return false;
 	Creature *creature = objmgr.GetCreature(m_session->GetPlayer()->GetSelection());

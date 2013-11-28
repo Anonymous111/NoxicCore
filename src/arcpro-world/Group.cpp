@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -66,10 +66,7 @@ Group::~Group()
 	ObjectMgr::getSingleton().RemoveGroup(this);
 }
 
-SubGroup::~SubGroup()
-{
-
-}
+SubGroup::~SubGroup() {}
 
 void SubGroup::RemovePlayer(PlayerInfo* info)
 {
@@ -226,9 +223,7 @@ void Group::Update()
 
 				/* skip offline players */
 				if((*itr1)->m_loggedInPlayer == NULL)
-				{
 					continue;
-				}
 
 				data.Initialize(SMSG_GROUP_LIST);
 				data << uint8(m_GroupType);
@@ -472,9 +467,7 @@ void Group::RemovePlayer(PlayerInfo* info)
 
 	// remove team member from the instance
 	if(info->m_loggedInPlayer != NULL)
-	{
 		sInstanceMgr.PlayerLeftGroup(this, info->m_loggedInPlayer);
-	}
 
 	if(pPlayer != NULL)
 	{
@@ -486,7 +479,7 @@ void Group::RemovePlayer(PlayerInfo* info)
 			pPlayer->GetSession()->SendPacket(&data);
 
 			data.Initialize(SMSG_PARTY_COMMAND_RESULT);
-			data << uint32(2) << uint8(0) << uint32(0);  // you leave the group
+			data << uint32(2) << uint8(0) << uint32(0); // you leave the group
 			pPlayer->GetSession()->SendPacket(&data);
 		}
 
@@ -495,7 +488,7 @@ void Group::RemovePlayer(PlayerInfo* info)
 		{
 			if(pPlayer->m_auras[i] && pPlayer->m_auras[i]->m_areaAura)
 			{
-				Object* caster = pPlayer->m_auras[ i ]->GetCaster();
+				Object* caster = pPlayer->m_auras[i]->GetCaster();
 				if((caster != NULL) && (pPlayer->GetGUID() != caster->GetGUID()))
 					pPlayer->m_auras[i]->Remove();
 			}
@@ -693,13 +686,9 @@ void Group::MovePlayer(PlayerInfo* info, uint8 subgroup)
 	// Grab the new group, and insert
 	sg = m_SubGroups[subgroup];
 	if(!sg->AddPlayer(info))
-	{
 		RemovePlayer(info);
-	}
 	else
-	{
 		info->subGroup = (int8)sg->GetID();
-	}
 
 	Update();
 	m_groupLock.Release();
@@ -832,9 +821,7 @@ void Group::SaveToDB()
 	{
 		uint32 j = 0;
 		for(GroupMembersSet::iterator itr = m_SubGroups[i]->GetGroupMembersBegin(); j < 5 && itr != m_SubGroups[i]->GetGroupMembersEnd(); ++j, ++itr)
-		{
 			ss << (*itr)->guid << ",";
-		}
 
 		for(; j < 5; ++j)
 			ss << "0,";
@@ -849,9 +836,7 @@ void Group::SaveToDB()
 		for(uint32 j = 0; j < NUM_INSTANCE_MODES; j++)
 		{
 			if(m_instanceIds[i][j] > 0)
-			{
 				ss << i << ":" << j << ":" << m_instanceIds[i][j] << " ";
-			}
 		}
 	}
 	ss << "')";
@@ -869,7 +854,7 @@ void Group::UpdateOutOfRangePlayer(Player* pPlayer, uint32 Flags, bool Distribut
 	if(pPlayer->GetPowerType() != POWER_TYPE_MANA)
 		Flags |= GROUP_UPDATE_FLAG_POWER_TYPE;
 
-	if( pPlayer->GetCurrentVehicle() != NULL )
+	if(pPlayer->GetCurrentVehicle() != NULL)
 		Flags |= GROUP_UPDATE_FLAG_VEHICLE_SEAT;
 
 	/*Flags |= GROUP_UPDATE_FLAG_PET_NAME;
@@ -912,9 +897,7 @@ void Group::UpdateOutOfRangePlayer(Player* pPlayer, uint32 Flags, bool Distribut
 		*data << uint16(pPlayer->getLevel());
 
 	if(Flags & GROUP_UPDATE_FLAG_ZONEID)
-	{
 		*data << uint16(pPlayer->GetAreaID());
-	}
 
 	if(Flags & GROUP_UPDATE_FLAG_POSITION)
 	{
@@ -922,9 +905,10 @@ void Group::UpdateOutOfRangePlayer(Player* pPlayer, uint32 Flags, bool Distribut
 		pPlayer->m_last_group_position = pPlayer->GetPosition();
 	}
 
-	if( Flags & GROUP_UPDATE_FLAG_VEHICLE_SEAT ){
-		if( pPlayer->GetCurrentVehicle() != NULL )
-			*data << uint32( pPlayer->GetCurrentVehicle()->GetSeatEntryForPassenger( pPlayer ) );
+	if(Flags & GROUP_UPDATE_FLAG_VEHICLE_SEAT)
+	{
+		if(pPlayer->GetCurrentVehicle() != NULL)
+			*data << uint32(pPlayer->GetCurrentVehicle()->GetSeatEntryForPassenger(pPlayer));
 	}
 
 	if(Flags & GROUP_UPDATE_TYPE_FULL_REQUEST_REPLY)
@@ -1049,33 +1033,29 @@ void Group::HandleUpdateFieldChange(uint32 Index, Player* pPlayer)
 	{
 		case UNIT_FIELD_HEALTH:
 			Flags = GROUP_UPDATE_FLAG_HEALTH;
-			break;
-
+		break;
 		case UNIT_FIELD_MAXHEALTH:
 			Flags = GROUP_UPDATE_FLAG_MAXHEALTH;
-			break;
-
+		break;
 		case UNIT_FIELD_POWER1:
 		case UNIT_FIELD_POWER2:
 		case UNIT_FIELD_POWER3:
 		case UNIT_FIELD_POWER4:
 		case UNIT_FIELD_POWER7:
 			Flags = GROUP_UPDATE_FLAG_POWER;
-			break;
-
+		break;
 		case UNIT_FIELD_MAXPOWER1:
 		case UNIT_FIELD_MAXPOWER2:
 		case UNIT_FIELD_MAXPOWER3:
 		case UNIT_FIELD_MAXPOWER4:
 		case UNIT_FIELD_MAXPOWER7:
 			Flags = GROUP_UPDATE_FLAG_MAXPOWER;
-			break;
-
+		break;
 		case UNIT_FIELD_LEVEL:
 			Flags = GROUP_UPDATE_FLAG_LEVEL;
-			break;
+		break;
 		default:
-			break;
+		break;
 	}
 
 	if(Flags != 0)
@@ -1094,11 +1074,10 @@ void Group::HandlePartialChange(uint32 Type, Player* pPlayer)
 	{
 		case PARTY_UPDATE_FLAG_POSITION:
 			Flags = GROUP_UPDATE_FLAG_POSITION;
-			break;
-
+		break;
 		case PARTY_UPDATE_FLAG_ZONEID:
 			Flags = GROUP_UPDATE_FLAG_ZONEID;
-			break;
+		break;
 	}
 
 	if(Flags != 0)
@@ -1165,7 +1144,7 @@ void Group::SetDungeonDifficulty(uint32 diff)
 
 void Group::SetRaidDifficulty(uint32 diff)
 {
-	m_raiddifficulty = static_cast< uint8 >(diff);
+	m_raiddifficulty = static_cast<uint8>(diff);
 
 	Lock();
 
@@ -1205,44 +1184,36 @@ void Group::SendLootUpdates(Object* o)
 		case PARTY_LOOT_FFA:
 		case PARTY_LOOT_GROUP:
 		case PARTY_LOOT_NBG:
+		{
+			SubGroup* sGrp = NULL;
+			GroupMembersSet::iterator itr2;
+
+			for(uint32 Index = 0; Index < GetSubGroupCount(); ++Index)
 			{
+				sGrp = GetSubGroup(Index);
+				itr2 = sGrp->GetGroupMembersBegin();
 
-				SubGroup* sGrp = NULL;
-				GroupMembersSet::iterator itr2;
-
-				for(uint32 Index = 0; Index < GetSubGroupCount(); ++Index)
+				for(; itr2 != sGrp->GetGroupMembersEnd(); ++itr2)
 				{
-					sGrp = GetSubGroup(Index);
-					itr2 = sGrp->GetGroupMembersBegin();
-
-					for(; itr2 != sGrp->GetGroupMembersEnd(); ++itr2)
-					{
-						PlayerInfo* p = *itr2;
-
-						if(p->m_loggedInPlayer != NULL && p->m_loggedInPlayer->IsVisible(o->GetGUID()))       // Save updates for non-existent creatures
-							p->m_loggedInPlayer->PushUpdateData(&buf, 1);
-					}
+					PlayerInfo* p = *itr2;
+					if(p->m_loggedInPlayer != NULL && p->m_loggedInPlayer->IsVisible(o->GetGUID())) // Save updates for non-existent creatures
+						p->m_loggedInPlayer->PushUpdateData(&buf, 1);
 				}
-
-				break;
 			}
-
+		}break;
 		case PARTY_LOOT_MASTER:
+		{
+			Player* pLooter = GetLooter() ? GetLooter()->m_loggedInPlayer : NULL;
+			if(pLooter == NULL)
+				pLooter = GetLeader()->m_loggedInPlayer;
+
+			if(pLooter->IsVisible(o->GetGUID()))
 			{
-				Player* pLooter = GetLooter() ? GetLooter()->m_loggedInPlayer : NULL;
-				if(pLooter == NULL)
-					pLooter = GetLeader()->m_loggedInPlayer;
-
-				if(pLooter->IsVisible(o->GetGUID()))
-				{
-					Unit* victim = TO< Unit* >(o);
-
-					victim->Tag(pLooter->GetGUID());
-					pLooter->PushUpdateData(&buf, 1);
-				}
-
-				break;
+				Unit* victim = TO<Unit*>(o);
+				victim->Tag(pLooter->GetGUID());
+				pLooter->PushUpdateData(&buf, 1);
 			}
+		}break;
 	}
 
 

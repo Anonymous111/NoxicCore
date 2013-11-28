@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -45,7 +45,7 @@ Item::Item()//this is called when constructing as container
 	Enchantments.clear();
 
 	for(uint32 i = 0; i < 3; ++i)
-		OnUseSpellIDs[ i ] = 0;
+		OnUseSpellIDs[i] = 0;
 }
 
 void Item::Init(uint32 high, uint32 low)
@@ -134,7 +134,6 @@ void Item::Create(uint32 itemid, Player* owner)
 	SetDurability(m_itemProto->MaxDurability);
 	SetDurabilityMax(m_itemProto->MaxDurability);
 
-
 	m_owner = owner;
 	if(m_itemProto->LockId > 1)
 		locked = true;
@@ -184,7 +183,7 @@ void Item::LoadFromDB(Field* fields, Player* plr, bool light)
 	else
 		SetItemRandomSuffixFactor(0);
 
-	//SetTextId( fields[11].GetUInt32() );
+	//SetTextId(fields[11].GetUInt32());
 
 	SetDurabilityMax(m_itemProto->MaxDurability);
 	SetDurability(fields[12].GetUInt32());
@@ -211,9 +210,8 @@ void Item::LoadFromDB(Field* fields, Player* plr, bool light)
 			}
 			else
 			{
-				/*
-				EnchantEntry *pEnchant = new EnchantEntry;
-				memset(pEnchant,0,sizeof(EnchantEntry));
+				/*EnchantEntry* pEnchant = new EnchantEntry;
+				memset(pEnchant, 0, sizeof(EnchantEntry));
 
 				pEnchant->Id = enchant_id;
 				if(enchslot != 2)
@@ -354,7 +352,6 @@ void Item::SaveToDB(int8 containerslot, int8 slot, bool firstsave, QueryBuffer* 
 			buf->AddQueryNA(ss.str().c_str());
 	}
 
-
 	ss.rdbuf()->str("");
 
 	uint64 ownerGUID = GetOwnerGUID();
@@ -374,8 +371,8 @@ void Item::SaveToDB(int8 containerslot, int8 slot, bool firstsave, QueryBuffer* 
 	ss << random_prop << ", " << random_suffix << ", ";
 	ss << 0 << ",";
 	ss << GetDurability() << ",";
-	ss << static_cast<int>(containerslot) << ",";
-	ss << static_cast<int>(slot) << ",'";
+	ss << static_cast< int >(containerslot) << ",";
+	ss << static_cast< int >(slot) << ",'";
 
 	// Pack together enchantment fields
 	if(Enchantments.size() > 0)
@@ -450,7 +447,7 @@ void Item::DeleteFromDB()
 		/* deleting a container */
 		for(uint32 i = 0; i < m_itemProto->ContainerSlots; ++i)
 		{
-			if(TO< Container* >(this)->GetItem(static_cast<int16>(i)) != NULL)
+			if(TO<Container*>(this)->GetItem(static_cast< int16 >(i)) != NULL)
 			{
 				/* abort the delete */
 				return;
@@ -475,21 +472,17 @@ void Item::DeleteMe()
 uint32 GetSkillByProto(uint32 Class, uint32 SubClass)
 {
 	if(Class == 4 && SubClass < 7)
-	{
 		return arm_skills[SubClass];
-	}
 	else if(Class == 2)
 	{
 		if(SubClass < 20)  //no skill for fishing
-		{
 			return weap_skills[SubClass];
-		}
 	}
 	return 0;
 }
 
 //This map is used for profess.
-//Prof packet struct: {SMSG_SET_PROFICIENCY,(uint8)item_class,(uint32)1<<item_subclass}
+//Prof packet struct: {SMSG_SET_PROFICIENCY,(uint8)item_class,(uint32)1<< item_subclass}
 //ie: for fishing (it's class=2--weapon, subclass ==20 -- fishing rod) permissive packet
 // will have structure 0x2,524288
 //this table is needed to get class/subclass by skill, valid classes are 2 and 4
@@ -500,48 +493,70 @@ const ItemProf* GetProficiencyBySkill(uint32 skill)
 	{
 		case SKILL_CLOTH:
 			return &prof[0];
+		break;
 		case SKILL_LEATHER:
 			return &prof[1];
+		break;
 		case SKILL_MAIL:
 			return &prof[2];
+		break;
 		case SKILL_PLATE_MAIL:
 			return &prof[3];
+		break;
 		case SKILL_SHIELD:
 			return &prof[4];
+		break;
 		case SKILL_AXES:
 			return &prof[5];
+		break;
 		case SKILL_2H_AXES:
 			return &prof[6];
+		break;
 		case SKILL_BOWS:
 			return &prof[7];
+		break;
 		case SKILL_GUNS:
 			return &prof[8];
+		break;
 		case SKILL_MACES:
 			return &prof[9];
+		break;
 		case SKILL_2H_MACES:
 			return &prof[10];
+		break;
 		case SKILL_POLEARMS:
 			return &prof[11];
+		break;
 		case SKILL_SWORDS:
 			return &prof[12];
+		break;
 		case SKILL_2H_SWORDS:
 			return &prof[13];
+		break;
 		case SKILL_STAVES:
 			return &prof[14];
+		break;
 		case SKILL_FIST_WEAPONS:
 			return &prof[15];
+		break;
 		case SKILL_DAGGERS:
 			return &prof[16];
+		break;
 		case SKILL_THROWN:
 			return &prof[17];
+		break;
 		case SKILL_CROSSBOWS:
 			return &prof[19];
+		break;
 		case SKILL_WANDS:
 			return &prof[20];
+		break;
 		case SKILL_FISHING:
 			return &prof[21];
+		break;
 		default:
 			return NULL;
+		break;
 	}
 }
 
@@ -607,7 +622,6 @@ void Item::SetOwner(Player* owner)
 	m_owner = owner;
 }
 
-
 int32 Item::AddEnchantment(EnchantEntry* Enchantment, uint32 Duration, bool Perm /* = false */, bool apply /* = true */, bool RemoveAtLogout /* = false */, uint32 Slot_, uint32 RandomSuffix)
 {
 	int32 Slot = Slot_;
@@ -636,9 +650,7 @@ int32 Item::AddEnchantment(EnchantEntry* Enchantment, uint32 Duration, bool Perm
 
 	// Add the removal event.
 	if(Duration)
-	{
 		sEventMgr.AddEvent(this, &Item::RemoveEnchantment, uint32(Slot), EVENT_REMOVE_ENCHANTMENT1 + Slot, Duration * 1000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-	}
 
 	// No need to send the log packet, if the owner isn't in world (we're still loading)
 	if(!m_owner->IsInWorld())
@@ -655,9 +667,7 @@ int32 Item::AddEnchantment(EnchantEntry* Enchantment, uint32 Duration, bool Perm
 		m_owner->SendPacket(&EnchantLog);
 
 		if(m_owner->GetTradeTarget())
-		{
 			m_owner->SendTradeUpdate();
-		}
 
 		/* Only apply the enchantment bonus if we're equipped */
 		int16 slot = m_owner->GetItemInterface()->GetInventorySlotByGuid(GetGUID());
@@ -732,146 +742,119 @@ void Item::ApplyEnchantmentBonus(uint32 Slot, bool Apply)
 			// Depending on the enchantment type, take the appropriate course of action.
 			switch(Entry->type[c])
 			{
-				case 1:		 // Trigger spell on melee attack.
+				case 1: // Trigger spell on melee attack.
+				{
+					if(Apply)
 					{
-						if(Apply)
+						if(Entry->spell[c] != 0)
+							m_owner->AddProcTriggerSpell(Entry->spell[c], 0, m_owner->GetGUID(), Entry->min[c], PROC_ON_MELEE_ATTACK, 0, NULL, NULL, this);
+					}
+					else
+						m_owner->RemoveProcTriggerSpell(Entry->spell[c], m_owner->GetGUID(), GetGUID());
+				}break;
+				case 2: // Mod damage done.
+				{
+					int32 val = Entry->min[c];
+					if(RandomSuffixAmount)
+						val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
+
+					if(Apply)
+						m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, val);
+					else
+						m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, -val);
+					m_owner->CalcDamage();
+				}break;
+				case 3: // Cast spell (usually means apply aura)
+				{
+					if(Apply)
+					{
+						SpellCastTargets targets(m_owner->GetGUID());
+						SpellEntry* sp;
+						Spell* spell;
+
+						if(Entry->spell[c] != 0)
 						{
-							if(Entry->spell[c] != 0)
-								m_owner->AddProcTriggerSpell(Entry->spell[c], 0, m_owner->GetGUID(), Entry->min[c], PROC_ON_MELEE_ATTACK, 0, NULL, NULL, this);
-						}
-						else
-						{
-							m_owner->RemoveProcTriggerSpell(Entry->spell[c], m_owner->GetGUID(), GetGUID());
+							sp = dbcSpell.LookupEntryForced(Entry->spell[c]);
+							if(sp == NULL)
+								continue;
+
+							spell = sSpellFactoryMgr.NewSpell(m_owner, sp, true, 0);
+							spell->i_caster = this;
+							spell->prepare(&targets);
 						}
 					}
-					break;
-
-				case 2:		 // Mod damage done.
+					else
 					{
-						int32 val = Entry->min[c];
-						if(RandomSuffixAmount)
-							val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
-
-						if(Apply)
-							m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, val);
-						else
-							m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, -val);
-						m_owner->CalcDamage();
+						if(Entry->spell[c] != 0)
+							m_owner->RemoveAuraByItemGUID(Entry->spell[c] , GetGUID());
 					}
-					break;
-
-				case 3:		 // Cast spell (usually means apply aura)
-					{
-						if(Apply)
-						{
-							SpellCastTargets targets(m_owner->GetGUID());
-							SpellEntry* sp;
-							Spell* spell;
-
-							if(Entry->spell[c] != 0)
-							{
-								sp = dbcSpell.LookupEntryForced(Entry->spell[c]);
-								if(sp == NULL)
-									continue;
-
-								spell = sSpellFactoryMgr.NewSpell(m_owner, sp, true, 0);
-								spell->i_caster = this;
-								spell->prepare(&targets);
-							}
-						}
-						else
-						{
-							if(Entry->spell[c] != 0)
-								m_owner->RemoveAuraByItemGUID(Entry->spell[c] , GetGUID());
-						}
-
-					}
-					break;
-
+				}break;
 				case 4:		 // Modify physical resistance
-					{
-						int32 val = Entry->min[c];
-						if(RandomSuffixAmount)
-							val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
+				{
+					int32 val = Entry->min[c];
+					if(RandomSuffixAmount)
+						val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
 
-						if(Apply)
-						{
-							m_owner->FlatResistanceModifierPos[Entry->spell[c]] += val;
-						}
-						else
-						{
-							m_owner->FlatResistanceModifierPos[Entry->spell[c]] -= val;
-						}
-						m_owner->CalcResistance(Entry->spell[c]);
-					}
-					break;
+					if(Apply)
+						m_owner->FlatResistanceModifierPos[Entry->spell[c]] += val;
+					else
+						m_owner->FlatResistanceModifierPos[Entry->spell[c]] -= val;
 
+					m_owner->CalcResistance(Entry->spell[c]);
+				}break;
 				case 5:	 //Modify rating ...order is PLAYER_FIELD_COMBAT_RATING_1 and above
+				{
+					//spellid is enum ITEM_STAT_TYPE
+					//min=max is amount
+					int32 val = Entry->min[c];
+					if(RandomSuffixAmount)
+						val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
+
+					m_owner->ModifyBonuses(Entry->spell[c], val, Apply);
+					m_owner->UpdateStats();
+				}break;
+				case 6:	 // Rockbiter weapon (increase damage per second... how the hell do you calc that)
+				{
+					if(Apply)
 					{
-						//spellid is enum ITEM_STAT_TYPE
-						//min=max is amount
+						//m_owner->ModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS, Entry->min[c]);
+						//if I'm not wrong then we should apply DMPS formula for this. This will have somewhat a larger value 28->34
 						int32 val = Entry->min[c];
 						if(RandomSuffixAmount)
 							val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
 
-						m_owner->ModifyBonuses(Entry->spell[c], val, Apply);
-						m_owner->UpdateStats();
+						int32 value = GetProto()->Delay * val / 1000;
+						m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, value);
 					}
-					break;
-
-				case 6:	 // Rockbiter weapon (increase damage per second... how the hell do you calc that)
+					else
 					{
-						if(Apply)
-						{
-							//m_owner->ModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS, Entry->min[c]);
-							//if I'm not wrong then we should apply DMPS formula for this. This will have somewhat a larger value 28->34
-							int32 val = Entry->min[c];
-							if(RandomSuffixAmount)
-								val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
+						int32 val = Entry->min[c];
+						if(RandomSuffixAmount)
+							val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
 
-							int32 value = GetProto()->Delay * val / 1000;
-							m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, value);
-						}
-						else
-						{
-							int32 val = Entry->min[c];
-							if(RandomSuffixAmount)
-								val = RANDOM_SUFFIX_MAGIC_CALCULATION(RandomSuffixAmount, GetItemRandomSuffixFactor());
-
-							int32 value = - (int32)(GetProto()->Delay * val / 1000);
-							m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, value);
-						}
-						m_owner->CalcDamage();
+						int32 value = - (int32)(GetProto()->Delay * val / 1000);
+						m_owner->ModPosDamageDoneMod(SCHOOL_NORMAL, value);
 					}
-					break;
-
+					m_owner->CalcDamage();
+				}break;
 				case 7:
+				{
+					if(Apply)
 					{
-						if(Apply)
-						{
-							for(uint32 i = 0; i < 3; ++i)
-								OnUseSpellIDs[ i ] = Entry->spell[ i ];
-
-						}
-						else
-						{
-							for(uint32 i = 0; i < 3; ++i)
-								OnUseSpellIDs[ i ] = 0;
-						}
-						break;
+						for(uint32 i = 0; i < 3; ++i)
+							OnUseSpellIDs[i] = Entry->spell[i];
 					}
-
+					else
+					{
+						for(uint32 i = 0; i < 3; ++i)
+							OnUseSpellIDs[i] = 0;
+					}
+				}break;
 				case 8:
-					{
-						// Adding a prismatic socket to belt, hands, etc is type 8, it has no bonus to apply HERE
-						break;
-					}
-
+				break;
 				default:
-					{
-						LOG_ERROR("Unknown enchantment type: %u (%u)", Entry->type[c], Entry->Id);
-					}
-					break;
+					LOG_ERROR("Unknown enchantment type: %u (%u)", Entry->type[c], Entry->Id);
+				break;
 			}
 		}
 	}
@@ -909,13 +892,13 @@ int32 Item::FindFreeEnchantSlot(EnchantEntry* Enchantment, uint32 random_type)
 	if(GetProto()->SocketBonus)
 		GemSlotsReserve++;
 
-	if(random_type == RANDOMPROPERTY)		// random prop
+	if(random_type == RANDOMPROPERTY) // random prop
 	{
 		for(uint32 Slot = PROP_ENCHANTMENT_SLOT_2; Slot < MAX_ENCHANTMENT_SLOT; ++Slot)
 			if(GetEnchantmentId(Slot) == 0)
 				return Slot;
 	}
-	else if(random_type == RANDOMSUFFIX)	// random suffix
+	else if(random_type == RANDOMSUFFIX) // random suffix
 	{
 		for(uint32 Slot = PROP_ENCHANTMENT_SLOT_0; Slot < MAX_ENCHANTMENT_SLOT; ++Slot)
 			if(GetEnchantmentId(Slot) == 0)
@@ -1015,9 +998,7 @@ void Item::RemoveRelatedEnchants(EnchantEntry* newEnchant)
 		itr2 = itr++;
 
 		if(itr2->second.Enchantment->Id == newEnchant->Id || (itr2->second.Enchantment->EnchantGroups > 1 && newEnchant->EnchantGroups > 1))
-		{
 			RemoveEnchantment(itr2->first);
-		}
 	}
 }
 
@@ -1110,30 +1091,31 @@ string GetItemLinkByProto(ItemPrototype* iProto, uint32 language = NULL)
 	{
 		case 0: //Poor,gray
 			colour = "cff9d9d9d";
-			break;
+		break;
 		case 1: //Common,white
 			colour = "cffffffff";
-			break;
+		break;
 		case 2: //Uncommon,green
 			colour = "cff1eff00";
-			break;
+		break;
 		case 3: //Rare,blue
 			colour = "cff0070dd";
-			break;
+		break;
 		case 4: //Epic,purple
 			colour = "cffa335ee";
-			break;
+		break;
 		case 5: //Legendary,orange
 			colour = "cffff8000";
-			break;
+		break;
 		case 6: //Artifact,pale gold
 			colour = "c00fce080";
-			break;
+		break;
 		case 7: //Heirloom,pale gold
 			colour = "c00fce080";
-			break;
+		break;
 		default:
 			colour = "cff9d9d9d";
+		break;
 	}
 
 	// try to get localized version
@@ -1145,7 +1127,7 @@ string GetItemLinkByProto(ItemPrototype* iProto, uint32 language = NULL)
 		snprintf(buffer, 256, "|%s|Hitem:%u:0:0:0:0:0:0:0|h[%s]|h|r", colour.c_str(), iProto->ItemId, iProto->Name1);
 
 
-	ItemLink	= static_cast<const char*>(buffer);
+	ItemLink	= static_cast< const char* >(buffer);
 
 	return ItemLink;
 }
@@ -1155,56 +1137,49 @@ int32 GetStatScalingStatValueColumn(ItemPrototype* proto, uint32 type)
 	switch(type)
 	{
 		case SCALINGSTATSTAT:
-			{
-				if(proto->ScalingStatsFlag & 1)
-					return 0;
-				if(proto->ScalingStatsFlag & 2)
-					return 1;
-				if(proto->ScalingStatsFlag & 4)
-					return 2;
-				if(proto->ScalingStatsFlag & 8)
-					return 3;
-				if(proto->ScalingStatsFlag & 16)
-					return 4;
-				break;
-			}
-
+		{
+			if(proto->ScalingStatsFlag & 1)
+				return 0;
+			if(proto->ScalingStatsFlag & 2)
+				return 1;
+			if(proto->ScalingStatsFlag & 4)
+				return 2;
+			if(proto->ScalingStatsFlag & 8)
+				return 3;
+			if(proto->ScalingStatsFlag & 16)
+				return 4;
+		}break;
 		case SCALINGSTATARMOR:
-			{
-				if(proto->ScalingStatsFlag & 32)
-					return 5;
-				if(proto->ScalingStatsFlag & 64)
-					return 6;
-				if(proto->ScalingStatsFlag & 128)
-					return 7;
-				if(proto->ScalingStatsFlag & 256)
-					return 8;
-				break;
-			}
-
+		{
+			if(proto->ScalingStatsFlag & 32)
+				return 5;
+			if(proto->ScalingStatsFlag & 64)
+				return 6;
+			if(proto->ScalingStatsFlag & 128)
+				return 7;
+			if(proto->ScalingStatsFlag & 256)
+				return 8;
+		}break;
 		case SCALINGSTATDAMAGE:
-			{
-				if(proto->ScalingStatsFlag & 512)
-					return 9;
-				if(proto->ScalingStatsFlag & 1024)
-					return 10;
-				if(proto->ScalingStatsFlag & 2048)
-					return 11;
-				if(proto->ScalingStatsFlag & 4096)
-					return 12;
-				if(proto->ScalingStatsFlag & 8192)
-					return 13;
-				if(proto->ScalingStatsFlag & 16384)
-					return 14;
-				break;
-			}
-
+		{
+			if(proto->ScalingStatsFlag & 512)
+				return 9;
+			if(proto->ScalingStatsFlag & 1024)
+				return 10;
+			if(proto->ScalingStatsFlag & 2048)
+				return 11;
+			if(proto->ScalingStatsFlag & 4096)
+				return 12;
+			if(proto->ScalingStatsFlag & 8192)
+				return 13;
+			if(proto->ScalingStatsFlag & 16384)
+				return 14;
+		}break;
 		case SCALINGSTATSPELLPOWER:
-			{
-				if(proto->ScalingStatsFlag & 32768)
-					return 15;
-				break;
-			}
+		{
+			if(proto->ScalingStatsFlag & 32768)
+				return 15;
+		}break;
 	}
 	return 1;
 }
@@ -1215,9 +1190,7 @@ uint32 Item::CountGemsWithLimitId(uint32 LimitId)
 	for(uint32 count = 0; count < GetSocketsCount(); count++)
 	{
 		EnchantmentInstance* ei = GetEnchantment(SOCK_ENCHANTMENT_SLOT1 + count);
-		if(ei
-		        && ei->Enchantment->GemEntry //huh ? Gem without entry ?
-		  )
+		if(ei && ei->Enchantment->GemEntry) //huh ? Gem without entry ?
 		{
 			ItemPrototype* ip = ItemPrototypeStorage.LookupEntry(ei->Enchantment->GemEntry);
 			if(ip && ip->ItemLimitCategory == LimitId)
@@ -1237,7 +1210,7 @@ void Item::EventRemoveItem()
 void Item::SendDurationUpdate()
 {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
-	//  As of 3.1.3 the server sends this to set the actual durationtime ( the time the item exists for)
+	//  As of 3.1.3 the server sends this to set the actual durationtime (the time the item exists for)
 	//  of the item
 	//
 	//  {SERVER} Packet: (0x01EA) SMSG_ITEM_TIME_UPDATE PacketSize = 12 TimeStamp = 37339296
@@ -1253,10 +1226,7 @@ void Item::SendDurationUpdate()
 	durationupdate << uint64(GetGUID());
 	durationupdate << uint32(GetItemExpireTime() - UNIXTIME);
 	m_owner->SendPacket(&durationupdate);
-
 }
-
-
 
 // "Stackable items (such as Frozen Orbs and gems) and
 // charged items that can be purchased with an alternate currency are not eligible. "
@@ -1280,7 +1250,6 @@ bool Item::IsEligibleForRefund()
 
 	return true;
 }
-
 
 void Item::RemoveFromRefundableMap()
 {
@@ -1317,10 +1286,11 @@ uint32 Item::RepairItemCost()
 
 bool Item::RepairItem(Player* pPlayer, bool guildmoney, int32* pCost)   //pCost is needed for the guild log
 {
-	//int32 cost = (int32)pItem->GetUInt32Value( ITEM_FIELD_MAXDURABILITY ) - (int32)pItem->GetUInt32Value( ITEM_FIELD_DURABILITY );
+	//int32 cost = (int32)pItem->GetUInt32Value(ITEM_FIELD_MAXDURABILITY) - (int32)pItem->GetUInt32Value(ITEM_FIELD_DURABILITY);
 	int32 cost = RepairItemCost();
 	if(cost <= 0)
 		return false;
+
 	if(guildmoney && pPlayer->IsInGuild())
 	{
 		if(!pPlayer->GetGuildMember()->RepairItem((uint32)cost))

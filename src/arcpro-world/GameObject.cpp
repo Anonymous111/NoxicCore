@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -31,7 +31,7 @@ GameObject::GameObject(uint64 guid)
 	SetGUID(guid);
 	SetByte(GAMEOBJECT_BYTES_1, 3, 100);
 	m_wowGuid.Init(GetGUID());
-	SetScale(1);  //info->Size  );
+	SetScale(1);  //info->Size );
 	SetByte(GAMEOBJECT_BYTES_1, 3, 100);
 	counter = 0; //not needed at all but to prevent errors that var was not initialized, can be removed in release
 	bannerslot = bannerauraslot = -1;
@@ -107,10 +107,10 @@ bool GameObject::CreateFromProto(uint32 entry, uint32 mapid, float x, float y, f
 	SetEntry(entry);
 
 	m_overrides = overrides;
-//	SetFloatValue( GAMEOBJECT_POS_X, x );
-//	SetFloatValue( GAMEOBJECT_POS_Y, y );
-//	SetFloatValue( GAMEOBJECT_POS_Z, z );
-//	SetFloatValue( GAMEOBJECT_FACING, ang );
+	/*SetFloatValue(GAMEOBJECT_POS_X, x);
+	SetFloatValue(GAMEOBJECT_POS_Y, y);
+	SetFloatValue(GAMEOBJECT_POS_Z, z);
+	SetFloatValue(GAMEOBJECT_FACING, ang);*/
 	SetPosition(x, y, z, ang);
 	SetParentRotation(0, r0);
 	SetParentRotation(1, r1);
@@ -161,7 +161,7 @@ void GameObject::Update(uint32 p_time)
 				return;
 		}
 
-		for(std::set< Object* >::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
+		for(std::set<Object*>::iterator itr = m_objectsInRange.begin(); itr != m_objectsInRange.end(); ++itr)
 		{
 			float dist;
 
@@ -194,7 +194,7 @@ void GameObject::Update(uint32 p_time)
 				if(pInfo->Type == GAMEOBJECT_TYPE_TRAP)
 				{
 					if(m_summoner != NULL)
-						m_summoner->HandleProc(PROC_ON_TRAP_TRIGGER, reinterpret_cast< Unit* >(o), spell);
+						m_summoner->HandleProc(PROC_ON_TRAP_TRIGGER, reinterpret_cast<Unit*>(o), spell);
 				}
 
 				if(m_summonedGo)
@@ -203,11 +203,8 @@ void GameObject::Update(uint32 p_time)
 					return;
 				}
 
-				if(spell->EffectImplicitTargetA[0] == 16 ||
-				        spell->EffectImplicitTargetB[0] == 16)
-				{
+				if(spell->EffectImplicitTargetA[0] == 16 || spell->EffectImplicitTargetB[0] == 16)
 					return;	 // on area don't continue.
-				}
 			}
 		}
 	}
@@ -297,25 +294,25 @@ void GameObject::SaveToDB()
 	ss.rdbuf()->str("");
 
 	ss << "INSERT INTO gameobject_spawns VALUES("
-	   << m_spawn->id << ","
-	   << GetEntry() << ","
-	   << GetMapId() << ","
-	   << GetPositionX() << ","
-	   << GetPositionY() << ","
-	   << GetPositionZ() << ","
-	   << GetOrientation() << ","
-//		<< GetUInt64Value(GAMEOBJECT_ROTATION) << ","
-	   << uint64(0) << ","
-	   << GetParentRotation(0) << ","
-	   << GetParentRotation(2) << ","
-	   << GetParentRotation(3) << ","
-	   << GetUInt32Value(GAMEOBJECT_BYTES_1) << ","
-	   << GetUInt32Value(GAMEOBJECT_FLAGS) << ","
-	   << GetFaction() << ","
-	   << GetScale() << ","
-	   << "0,"
-	   << m_phase << ","
-	   << m_overrides << ")";
+		<< m_spawn->id << ","
+		<< GetEntry() << ","
+		<< GetMapId() << ","
+		<< GetPositionX() << ","
+		<< GetPositionY() << ","
+		<< GetPositionZ() << ","
+		<< GetOrientation() << ","
+		//<< GetUInt64Value(GAMEOBJECT_ROTATION) << ","
+		<< uint64(0) << ","
+		<< GetParentRotation(0) << ","
+		<< GetParentRotation(2) << ","
+		<< GetParentRotation(3) << ","
+		<< GetUInt32Value(GAMEOBJECT_BYTES_1) << ","
+		<< GetUInt32Value(GAMEOBJECT_FLAGS) << ","
+		<< GetFaction() << ","
+		<< GetScale() << ","
+		<< "0,"
+		<< m_phase << ","
+		<< m_overrides << ")";
 	WorldDatabase.Execute(ss.str().c_str());
 }
 
@@ -325,33 +322,33 @@ void GameObject::SaveToFile(std::stringstream & name)
 	std::stringstream ss;
 
 	ss << "INSERT INTO gameobject_spawns VALUES("
-	   << ((m_spawn == NULL) ? 0 : m_spawn->id) << ","
-	   << GetEntry() << ","
-	   << GetMapId() << ","
-	   << GetPositionX() << ","
-	   << GetPositionY() << ","
-	   << GetPositionZ() << ","
-	   << GetOrientation() << ","
-//		<< GetUInt64Value(GAMEOBJECT_ROTATION) << ","
-	   << uint64(0) << ","
-	   << GetParentRotation(0) << ","
-	   << GetParentRotation(2) << ","
-	   << GetParentRotation(3) << ","
-	   << GetByte(GAMEOBJECT_BYTES_1, 0) << ","
-	   << GetUInt32Value(GAMEOBJECT_FLAGS) << ","
-	   << GetFaction() << ","
-	   << GetScale() << ","
-	   << "0,"
-	   << m_phase << ","
-	   << m_overrides << ")";
+		<< ((m_spawn == NULL) ? 0 : m_spawn->id) << ","
+		<< GetEntry() << ","
+		<< GetMapId() << ","
+		<< GetPositionX() << ","
+		<< GetPositionY() << ","
+		<< GetPositionZ() << ","
+		<< GetOrientation() << ","
+		//<< GetUInt64Value(GAMEOBJECT_ROTATION) << ","
+		<< uint64(0) << ","
+		<< GetParentRotation(0) << ","
+		<< GetParentRotation(2) << ","
+		<< GetParentRotation(3) << ","
+		<< GetByte(GAMEOBJECT_BYTES_1, 0) << ","
+		<< GetUInt32Value(GAMEOBJECT_FLAGS) << ","
+		<< GetFaction() << ","
+		<< GetScale() << ","
+		<< "0,"
+		<< m_phase << ","
+		<< m_overrides << ")";
 
 	FILE* OutFile;
 
 	OutFile = fopen(name.str().c_str(), "wb");
-	if(!OutFile) return;
+	if(!OutFile)
+		return;
 	fwrite(ss.str().c_str(), 1, ss.str().size(), OutFile);
 	fclose(OutFile);
-
 }
 
 void GameObject::InitAI()
@@ -359,33 +356,25 @@ void GameObject::InitAI()
 	if(!pInfo)
 		return;
 
-	if( pInfo->Type == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING )
+	if(pInfo->Type == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING)
 		Rebuild();
 
 	// this fixes those fuckers in booty bay
-	if(pInfo->SpellFocus == 0 &&
-	        pInfo->sound1 == 0 &&
-	        pInfo->sound2 == 0 &&
-	        pInfo->sound3 != 0 &&
-	        pInfo->sound5 != 3 &&
-	        pInfo->sound9 == 1)
+	if(pInfo->SpellFocus == 0 && pInfo->sound1 == 0 && pInfo->sound2 == 0 && pInfo->sound3 != 0 && pInfo->sound5 != 3 && pInfo->sound9 == 1)
 		return;
 
 	uint32 spellid = 0;
 	if(pInfo->Type == GAMEOBJECT_TYPE_TRAP)
-	{
 		spellid = pInfo->sound3;
-	}
 	else if(pInfo->Type == GAMEOBJECT_TYPE_SPELL_FOCUS)
 	{
 		// get spellid from attached gameobject if there is such - by sound2 field
 		if(pInfo->sound2 != 0)
 		{
-
 			GameObjectInfo* gi = GameObjectNameStorage.LookupEntry(pInfo->sound2);
 			if(gi == NULL)
 			{
-				LOG_ERROR("Gamobject %u is of spellfocus type, has attachment GO data ( %u ), but attachment not found in database.", pInfo->ID, pInfo->sound2);
+				LOG_ERROR("Gamobject %u is of spellfocus type, has attachment GO data (%u), but attachment not found in database.", pInfo->ID, pInfo->sound2);
 				return;
 			}
 
@@ -410,9 +399,7 @@ void GameObject::InitAI()
 					{
 						//herbalism and mining;
 						if(pLock->lockmisc[i] == LOCKTYPE_MINING || pLock->lockmisc[i] == LOCKTYPE_HERBALISM)
-						{
 							CalcMineRemaining(true);
-						}
 					}
 				}
 			}
@@ -420,9 +407,7 @@ void GameObject::InitAI()
 
 	}
 	else if(pInfo->Type == GAMEOBJECT_TYPE_FISHINGHOLE)
-	{
 		CalcFishRemaining(true);
-	}
 
 	if(myScript == NULL)
 		myScript = sScriptMgr.CreateAIScriptClassForGameObject(GetEntry(), this);
@@ -438,12 +423,10 @@ void GameObject::InitAI()
 		return;
 	}
 	else
-	{
 		spell = sp;
-	}
+
 	//ok got valid spell that will be casted on target when it comes close enough
 	//get the range for that
-
 	float r = 0;
 
 	for(uint32 i = 0; i < 3; i++)
@@ -461,7 +444,6 @@ void GameObject::InitAI()
 
 	range = r * r; //square to make code faster
 	checkrate = 20;//once in 2 seconds
-
 }
 
 bool GameObject::Load(GOSpawn* spawn)
@@ -473,12 +455,11 @@ bool GameObject::Load(GOSpawn* spawn)
 	m_phase = spawn->phase;
 	//SetRotation(spawn->o);
 	SetUInt32Value(GAMEOBJECT_FLAGS, spawn->flags);
-//	SetLevel(spawn->level);
+	//SetLevel(spawn->level);
 	SetByte(GAMEOBJECT_BYTES_1, 0, static_cast<uint8>(spawn->state));
 	if(spawn->faction)
-	{
 		SetFaction(spawn->faction);
-	}
+
 	SetScale(spawn->scale);
 
 	return true;
@@ -531,7 +512,7 @@ void GameObject::UseFishingNode(Player* player)
 	{
 		if((*it) == NULL || !(*it)->IsGameObject() || TO_GAMEOBJECT(*it)->GetType() != GAMEOBJECT_TYPE_FISHINGHOLE)
 			continue;
-		school = TO< GameObject* >(*it);
+		school = TO<GameObject*>(*it);
 		if(!isInRange(school, (float)school->GetInfo()->sound1))
 		{
 			school = NULL;
@@ -567,7 +548,6 @@ void GameObject::UseFishingNode(Player* player)
 		player->GetSession()->OutPacket(SMSG_FISH_ESCAPED);
 		EndFishing(player, true);
 	}
-
 }
 
 void GameObject::EndFishing(Player* player, bool abort)
@@ -576,14 +556,14 @@ void GameObject::EndFishing(Player* player, bool abort)
 
 	if(spell)
 	{
-		if(abort)   // abort because of a reason
+		if(abort) // abort because of a reason
 		{
 			//FIX ME: here 'failed' should appear over progress bar
 			spell->SendChannelUpdate(0);
 			//spell->cancel();
 			spell->finish(false);
 		}
-		else		// spell ended
+		else // spell ended
 		{
 			spell->SendChannelUpdate(0);
 			spell->finish();
@@ -618,7 +598,7 @@ void GameObject::AddQuest(QuestRelation* Q)
 
 void GameObject::DeleteQuest(QuestRelation* Q)
 {
-	list<QuestRelation*>::iterator it;
+	list< QuestRelation* >::iterator it;
 	for(it = m_quests->begin(); it != m_quests->end(); ++it)
 	{
 		if(((*it)->type == Q->type) && ((*it)->qst == Q->qst))
@@ -632,14 +612,12 @@ void GameObject::DeleteQuest(QuestRelation* Q)
 
 Quest* GameObject::FindQuest(uint32 quest_id, uint8 quest_relation)
 {
-	list< QuestRelation* >::iterator it;
+	list<QuestRelation*>::iterator it;
 	for(it = m_quests->begin(); it != m_quests->end(); ++it)
 	{
 		QuestRelation* ptr = (*it);
 		if((ptr->qst->id == quest_id) && (ptr->type & quest_relation))
-		{
 			return ptr->qst;
-		}
 	}
 	return NULL;
 }
@@ -651,9 +629,7 @@ uint16 GameObject::GetQuestRelation(uint32 quest_id)
 	for(it = m_quests->begin(); it != m_quests->end(); ++it)
 	{
 		if((*it) != NULL && (*it)->qst->id == quest_id)
-		{
 			quest_relation |= (*it)->type;
-		}
 	}
 	return quest_relation;
 }
@@ -723,13 +699,13 @@ void GameObject::OnPushToWorld()
 	CALL_INSTANCE_SCRIPT_EVENT(m_mapMgr, OnGameObjectPushToWorld)(this);
 
 	// We have a field supposedly for this, but it's pointless to waste CPU time for this
-	// unless it's longer than a minute ( since usually then it's much longer )
-	if( ( pInfo->Type == GAMEOBJECT_TYPE_CHEST ) && ( pInfo->sound3 == 0 ) ){
+	// unless it's longer than a minute (since usually then it's much longer)
+	if((pInfo->Type == GAMEOBJECT_TYPE_CHEST) && (pInfo->sound3 == 0)){
 		time_t restockTime = 60 * 1000;
-		if( pInfo->sound2 > 60 )
+		if(pInfo->sound2 > 60)
 			restockTime = pInfo->sound2 * 1000;
 
-		EventMgr::getSingleton().AddEvent( this, &GameObject::ReStock, EVENT_GO_CHEST_RESTOCK, restockTime, 0, 0 );
+		EventMgr::getSingleton().AddEvent(this, &GameObject::ReStock, EVENT_GO_CHEST_RESTOCK, restockTime, 0, 0);
 	}
 }
 
@@ -753,7 +729,7 @@ void GameObject::RemoveFromWorld(bool free_guid)
 	data << GetGUID();
 	SendMessageToSet(&data, true);
 
-	sEventMgr.RemoveEvents( this );
+	sEventMgr.RemoveEvents(this);
 	Object::RemoveFromWorld(free_guid);
 }
 
@@ -763,7 +739,7 @@ bool GameObject::HasLoot()
 	if(loot.gold > 0)
 		return true;
 
-	for(vector<__LootItem>::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
+	for(vector< __LootItem >::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
 	{
 		if(itr->item.itemproto->Bonding == ITEM_BIND_QUEST || itr->item.itemproto->Bonding == ITEM_BIND_QUEST2)
 			continue;
@@ -843,72 +819,78 @@ uint8 GameObject::GetState()
 	return GetByte(GAMEOBJECT_BYTES_1, 0);
 }
 
-void GameObject::Damage( uint32 damage, uint64 AttackerGUID, uint64 ControllerGUID, uint32 SpellID ){
+void GameObject::Damage(uint32 damage, uint64 AttackerGUID, uint64 ControllerGUID, uint32 SpellID){
 	// If we are already destroyed there's nothing to damage!
-	if( hitpoints == 0 )
+	if(hitpoints == 0)
 		return;
 	
-	if( damage >= hitpoints ){
+	if(damage >= hitpoints)
+	{
 		// Instant destruction
 		hitpoints = 0;
 		
-		SetFlags( GAMEOBJECT_FLAG_DESTROYED );
-		SetFlags( GetFlags() & ~GAMEOBJECT_FLAG_DAMAGED );
-		SetDisplayId( pInfo->sound9); // destroyed display id
+		SetFlags(GAMEOBJECT_FLAG_DESTROYED);
+		SetFlags(GetFlags() & ~GAMEOBJECT_FLAG_DAMAGED);
+		SetDisplayId(pInfo->sound9); // destroyed display id
 
-		CALL_GO_SCRIPT_EVENT( this, OnDestroyed)();
-	
-	}else{
+		CALL_GO_SCRIPT_EVENT(this, OnDestroyed)();
+	}
+	else
+	{
 		// Simply damaging
 		hitpoints -= damage;
 		
-		if( !HasFlags( GAMEOBJECT_FLAG_DAMAGED ) ){
+		if(!HasFlags(GAMEOBJECT_FLAG_DAMAGED))
+		{
 			// Intact  ->  Damaged
 			
 			// Are we below the intact-damaged transition treshold?
-			if( hitpoints <= ( maxhitpoints - pInfo->SpellFocus ) ){
-				SetFlags( GAMEOBJECT_FLAG_DAMAGED );
-				SetDisplayId( pInfo->sound4 ); // damaged display id
+			if(hitpoints <= (maxhitpoints - pInfo->SpellFocus))
+			{
+				SetFlags(GAMEOBJECT_FLAG_DAMAGED);
+				SetDisplayId(pInfo->sound4); // damaged display id
 			}
 		}
 
-		CALL_GO_SCRIPT_EVENT( this, OnDamaged )( damage );
+		CALL_GO_SCRIPT_EVENT(this, OnDamaged)(damage);
 	}
 	
-	uint8 animprogress = static_cast< uint8 >( Arcpro::round( hitpoints/ float( maxhitpoints ) ) * 255 );
-	SetAnimProgress( animprogress );
-	SendDamagePacket( damage, AttackerGUID, ControllerGUID, SpellID );
+	uint8 animprogress = static_cast<uint8>(Arcpro::round(hitpoints/ float(maxhitpoints)) * 255);
+	SetAnimProgress(animprogress);
+	SendDamagePacket(damage, AttackerGUID, ControllerGUID, SpellID);
 }
 
-void GameObject::SendDamagePacket( uint32 damage, uint64 AttackerGUID, uint64 ControllerGUID, uint32 SpellID ){
-	WorldPacket data( SMSG_DESTRUCTIBLE_BUILDING_DAMAGE, 29 );
+void GameObject::SendDamagePacket(uint32 damage, uint64 AttackerGUID, uint64 ControllerGUID, uint32 SpellID)
+{
+	WorldPacket data(SMSG_DESTRUCTIBLE_BUILDING_DAMAGE, 29);
 	
-	data << WoWGuid( GetNewGUID() );
-	data << WoWGuid( AttackerGUID );
-	data << WoWGuid( ControllerGUID );
-	data << uint32( damage );
-	data << uint32( SpellID );
-	SendMessageToSet( &data, false, false );
+	data << WoWGuid(GetNewGUID());
+	data << WoWGuid(AttackerGUID);
+	data << WoWGuid(ControllerGUID);
+	data << uint32(damage);
+	data << uint32(SpellID);
+	SendMessageToSet(&data, false, false);
 }
 
-void GameObject::Rebuild(){
-	SetFlags( GetFlags() & uint32( ~( GAMEOBJECT_FLAG_DAMAGED | GAMEOBJECT_FLAG_DESTROYED ) ) );
-	SetDisplayId( pInfo->DisplayID );
+void GameObject::Rebuild()
+{
+	SetFlags(GetFlags() & uint32(~(GAMEOBJECT_FLAG_DAMAGED | GAMEOBJECT_FLAG_DESTROYED)));
+	SetDisplayId(pInfo->DisplayID);
 	maxhitpoints = pInfo->SpellFocus + pInfo->sound5;
 	hitpoints = maxhitpoints;
 }
 
-void GameObject::ReStock(){
+void GameObject::ReStock()
+{
 	// this hasn't been looted yet so we don't want to restock
-	if( loot.items.empty() )
+	if(loot.items.empty())
 		return;
 
-	if( !loot.looters.empty() )
+	if(!loot.looters.empty())
 		return;
 
-	if( loot.HasRoll() )
+	if(loot.HasRoll())
 		return;
 
-	lootmgr.FillGOLoot( &loot, pInfo->sound1, m_mapMgr->iInstanceMode );
+	lootmgr.FillGOLoot(&loot, pInfo->sound1, m_mapMgr->iInstanceMode);
 }
-
