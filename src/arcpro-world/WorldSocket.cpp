@@ -224,10 +224,10 @@ void WorldSocket::OnConnect()
 
 	wp << uint32(1);
 	wp << uint32(mSeed);
-	wp << uint32(0xC0FFEEEE);
-	wp << uint32(0x00BABE00);
-	wp << uint32(0xDF1697E5);
-	wp << uint32(0x1234ABCD);
+	wp << uint32(0xC0FFEEEE); // Generated Random
+	wp << uint32(0x00BABE00); // 3.2.2
+	wp << uint32(0xDF1697E5); // 3.2.2
+	wp << uint32(0x1234ABCD); // 3.2.2
 
 	SendPacket(&wp);
 }
