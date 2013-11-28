@@ -88,29 +88,29 @@ SERVER_DECL DBCStorage<SpellShapeshiftForm> dbcSpellShapeshiftForm;
 SERVER_DECL DBCStorage<QuestXP> dbcQuestXP;
 SERVER_DECL DBCStorage<MailTemplateEntry> dbcMailTemplateEntry;
 SERVER_DECL DBCStorage<WMOAreaTableEntry> dbcWMOAreaTable;
-SERVER_DECL DBCStorage< SummonPropertiesEntry > dbcSummonProperties;
-SERVER_DECL DBCStorage< NameGenEntry > dbcNameGen;
-SERVER_DECL DBCStorage< LFGDungeonEntry > dbcLFGDungeon;
-SERVER_DECL DBCStorage< VehicleEntry > dbcVehicle;
-SERVER_DECL DBCStorage< VehicleSeatEntry > dbcVehicleSeat;
+SERVER_DECL DBCStorage<SummonPropertiesEntry> dbcSummonProperties;
+SERVER_DECL DBCStorage<NameGenEntry> dbcNameGen;
+SERVER_DECL DBCStorage<LFGDungeonEntry> dbcLFGDungeon;
+SERVER_DECL DBCStorage<VehicleEntry> dbcVehicle;
+SERVER_DECL DBCStorage<VehicleSeatEntry> dbcVehicleSeat;
 
-const char* WorldMapOverlayStoreFormat = "nxiiiixxxxxxxxxxx";
-const char* BarberShopStyleEntryFormat = "nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxi";
-const char* ItemSetFormat = "ulxxxxxxxxxxxxxxxxuuuuuuuuxxxxxxxxxuuuuuuuuuuuuuuuuuu";
-const char* LockFormat = "uuuuuuuuuuuuuuuuuuuuuuuuuxxxxxxxx";
-const char* EmoteEntryFormat = "uxuuuuxuxuxxxxxxxxx";
-const char* skilllinespellFormat = "uuuxxxxuuuuuxx";
-const char* EnchantEntrYFormat = "uxuuuuuuuuuuuusxxxxxxxxxxxxxxxxuuuuxxx";
-const char* GemPropertyEntryFormat = "uuuuu";
-const char* GlyphPropertyEntryFormat = "uuuu";
-const char* GlyphSlotEntryFormat = "uuu";
-const char* skilllineentrYFormat = "uuulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-const char* VehicleEntryfmt = "niffffiiiiiiiifffffffffffffffssssfifiixx";
-const char* VehicleSeatEntryfmt = "niiffffffffffiiiiiifffffffiiifffiiiiiiiffiiiiixxxxxxxxxxxx";
+const char* WorldMapOverlayStoreFormat	= "nxiiiixxxxxxxxxxx";
+const char* BarberShopStyleEntryFormat	= "nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxi";
+const char* ItemSetFormat				= "ulxxxxxxxxxxxxxxxxuuuuuuuuxxxxxxxxxuuuuuuuuuuuuuuuuuu";
+const char* LockFormat					= "uuuuuuuuuuuuuuuuuuuuuuuuuxxxxxxxx";
+const char* EmoteEntryFormat			= "uxuuuuxuxuxxxxxxxxx";
+const char* skilllinespellFormat		= "uuuxxxxuuuuuxx";
+const char* EnchantEntrYFormat			= "uxuuuuuuuuuuuusxxxxxxxxxxxxxxxxuuuuxxx";
+const char* GemPropertyEntryFormat		= "uuuuu";
+const char* GlyphPropertyEntryFormat	= "uuuu";
+const char* GlyphSlotEntryFormat		= "uuu";
+const char* skilllineentrYFormat		= "uuulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* VehicleEntryfmt				= "niffffiiiiiiiifffffffffffffffssssfifiixx";
+const char* VehicleSeatEntryfmt			= "niiffffffffffiiiiiifffffffiiifffiiiiiiiffiiiiixxxxxxxxxxxx";
 
-// const char* BattlemasterListEntryFormat = "uiiiiiiiiuuuuuiiiiiiiiiiiiiiiiiiuux";
-// const char* BattlemasterListEntryFormat = "uiiiiiiiiuuiiiiiiiiiiiiiiiiiuux";
-//const char* BattlemasterListEntryFormat = "uiiiiiiiiuuiiiiiiiiiiiiiiiiiuux";
+/*const char* BattlemasterListEntryFormat = "uiiiiiiiiuuuuuiiiiiiiiiiiiiiiiiiuux";
+const char* BattlemasterListEntryFormat = "uiiiiiiiiuuiiiiiiiiiiiiiiiiiuux";
+const char* BattlemasterListEntryFormat = "uiiiiiiiiuuiiiiiiiiiiiiiiiiiuux";*/
 
 const char* CharTitlesEntryfmt =
     "u" // ID
@@ -286,29 +286,28 @@ const char* spellentryFormat =
     "i"
     ;
 
-const char* itemextendedcostFormat = "uuuxuuuuuuuuuuux";
-const char* talententryFormat = "uuuuuuuuuxxxxuxxuxxxxxx";
-const char* talenttabentryFormat = "uxxxxxxxxxxxxxxxxxxxuuux";
-const char* spellcasttimeFormat = "uuxx";
-const char* spellradiusFormat = "ufxf";
-const char* spellrangeFormat = "uffffxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-const char* SpellRuneCostFormat = "uuuuu";
-const char* spelldurationFormat = "uuuu";
-const char* randompropsFormat = "uxuuuxxxxxxxxxxxxxxxxxxx";
-const char* areagroupFormat = "uuuuuuuu";
-const char* areatableFormat = "uuuuuxxxuxulxxxxxxxxxxxxxxxxuxxxxxxx";
-const char* factiontemplatedbcFormat = "uuuuuuuuuuuuuu";
-const char* auctionhousedbcFormat = "uuuuxxxxxxxxxxxxxxxxx";
-const char* factiondbcFormat = "uiuuuuuuuuiiiiuuuuulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* itemextendedcostFormat		= "uuuxuuuuuuuuuuux";
+const char* talententryFormat			= "uuuuuuuuuxxxxuxxuxxxxxx";
+const char* talenttabentryFormat		= "uxxxxxxxxxxxxxxxxxxxuuux";
+const char* spellcasttimeFormat			= "uuxx";
+const char* spellradiusFormat			= "ufxf";
+const char* spellrangeFormat			= "uffffxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* SpellRuneCostFormat			= "uuuuu";
+const char* spelldurationFormat			= "uuuu";
+const char* randompropsFormat			= "uxuuuxxxxxxxxxxxxxxxxxxx";
+const char* areagroupFormat				= "uuuuuuuu";
+const char* areatableFormat				= "uuuuuxxxuxulxxxxxxxxxxxxxxxxuxxxxxxx";
+const char* factiontemplatedbcFormat	= "uuuuuuuuuuuuuu";
+const char* auctionhousedbcFormat		= "uuuuxxxxxxxxxxxxxxxxx";
+const char* factiondbcFormat			= "uiuuuuuuuuiiiiuuuuulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-
-const char* dbctaxinodeFormat = "uufffxxxxxxxxxxxxxxxxxuu";
-const char* dbctaxipathFormat = "uuuu";
-const char* dbctaxipathnodeFormat = "uuuufffuuxx";
-const char* creaturespelldataFormat = "uuuuuuuuu";
-const char* charraceFormat = "uxxxxxxuxxxxuxlxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-const char* charclassFormat = "uxuxlxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-const char* creaturefamilyFormat = "ufufuuuuuxlxxxxxxxxxxxxxxxxx";
+const char* dbctaxinodeFormat			= "uufffxxxxxxxxxxxxxxxxxuu";
+const char* dbctaxipathFormat			= "uuuu";
+const char* dbctaxipathnodeFormat		= "uuuufffuuxx";
+const char* creaturespelldataFormat		= "uuuuuuuuu";
+const char* charraceFormat				= "uxxxxxxuxxxxuxlxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* charclassFormat				= "uxuxlxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* creaturefamilyFormat		= "ufufuuuuuxlxxxxxxxxxxxxxxxxx";
 const char* mapentryFormat =
     "u"					// 0 id
     "s"					// 1 name_internal
@@ -329,24 +328,24 @@ const char* mapentryFormat =
     "x"					// 64 unk
     "x";				// 65 unk, but as it is always one of the following ones, it could be a max. player count: 0, 5, 10, 20, 25, 40
 
-const char* itemrandomsuffixformat = "uxxxxxxxxxxxxxxxxxxuuuxxuuuxx";//19, 20, 21, 24, 25, 26
-const char* chatchannelformat = "iixssssssssssssssslxxxxxxxxxxxxxxxxxx";
-const char* durabilityqualityFormat = "uf";
-const char* durabilitycostsFormat = "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
-const char* bankslotpriceformat = "uu";
-const char* barbershopstyleFormat = "nulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxuuu";
-const char* gtfloatformat = "f";
-const char* areatriggerformat = "uuffffffff";
-const char* scalingstatdistributionformat = "uiiiiiiiiiiuuuuuuuuuuu";
-const char* scalingstatvaluesformat = "uuuuuuuuuuuuuuuuuuxxxxxx";
-const char* itemlimitcategoryformat = "usxxxxxxxxxxxxxxxxuu";
-const char* spellshapeshiftformformat = "uxxxxxxxxxxxxxxxxxxuuxuuuxxuuuuuuuu";
-const char* questxpformat = "uxuuuuuuuux";
-const char* mailTemplateEntryFormat="nsxxxxxxxxxxxxxxxxsxxxxxxxxxxxxxxxx";
-const char* wmoareaformat = "uiiixxxxxuuxxxxxxxxxxxxxxxxx";
-const char* summonpropertiesformat = "uuuuuu";
-const char* namegenentryformat = "usuu";
-const char* LFGDungeonEntryformat = "nxxxxxxxxxxxxxxxxxiiiiiiixixxixixxxxxxxxxxxxxxxxx";
+const char* itemrandomsuffixformat			= "uxxxxxxxxxxxxxxxxxxuuuxxuuuxx"; //19, 20, 21, 24, 25, 26
+const char* chatchannelformat				= "iixssssssssssssssslxxxxxxxxxxxxxxxxxx";
+const char* durabilityqualityFormat			= "uf";
+const char* durabilitycostsFormat			= "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
+const char* bankslotpriceformat				= "uu";
+const char* barbershopstyleFormat			= "nulxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxuuu";
+const char* gtfloatformat					= "f";
+const char* areatriggerformat				= "uuffffffff";
+const char* scalingstatdistributionformat	= "uiiiiiiiiiiuuuuuuuuuuu";
+const char* scalingstatvaluesformat			= "uuuuuuuuuuuuuuuuuuxxxxxx";
+const char* itemlimitcategoryformat			= "usxxxxxxxxxxxxxxxxuu";
+const char* spellshapeshiftformformat		= "uxxxxxxxxxxxxxxxxxxuuxuuuxxuuuuuuuu";
+const char* questxpformat					= "uxuuuuuuuux";
+const char* mailTemplateEntryFormat			= "nsxxxxxxxxxxxxxxxxsxxxxxxxxxxxxxxxx";
+const char* wmoareaformat					= "uiiixxxxxuuxxxxxxxxxxxxxxxxx";
+const char* summonpropertiesformat			= "uuuuuu";
+const char* namegenentryformat				= "usuu";
+const char* LFGDungeonEntryformat			= "nxxxxxxxxxxxxxxxxxiiiiiiixixxixixxxxxxxxxxxxxxxxx";
 
 template<class T>
 bool loader_stub(const char* filename, const char* format, bool ind, T & l, bool loadstrs)
