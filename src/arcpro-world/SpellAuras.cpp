@@ -4858,7 +4858,7 @@ void Aura::SpellAuraMounted(bool apply)
 		if(!displayId)
 			return;
 
-		CreatureProto *cp = CreatureProtoStorage.LookupEntry(mod->m_miscValue);
+		CreatureProto* cp = CreatureProtoStorage.LookupEntry(mod->m_miscValue);
 		if(cp == NULL)
 			return;
 		p_target->m_MountSpellId = m_spellProto->Id;
@@ -7868,7 +7868,7 @@ void Aura::HandleAuraControlVehicle(bool apply)
 	if(!m_target->IsVehicle())
 		return;
 
-	Unit *caster = static_cast<Unit*>(GetCaster());
+	Unit* caster = static_cast<Unit*>(GetCaster());
 
 	if(apply)
 	{
@@ -7880,7 +7880,6 @@ void Aura::HandleAuraControlVehicle(bool apply)
 		if((caster->GetCurrentVehicle() != NULL) && (caster->GetCurrentVehicle() == m_target->GetVehicleComponent()))
 			m_target->GetVehicleComponent()->EjectPassenger(caster);		
 	}
-
 }
 
 void Aura::SpellAuraModCombatResultChance(bool apply)

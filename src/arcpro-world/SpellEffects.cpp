@@ -448,6 +448,25 @@ void Spell::SpellEffectInstantKill(uint32 i)
 
 	switch(spellId)
 	{
+		case 7814:
+		case 7815:
+		case 7816:
+		case 7876:
+		case 7877:
+		case 7878:
+		case 11778:
+		case 11779:
+		case 11780:
+		case 15968:
+		case 15969:
+		case 18128:
+		case 18129:
+		case 20398:
+		case 20399:
+		case 20400:
+		case 20401:
+		case 20402:
+		break;
 		case 48743:
 			// retarget? some one test this spell.
 			return;
@@ -456,21 +475,21 @@ void Spell::SpellEffectInstantKill(uint32 i)
 			uint32 DemonicSacEffectSpellId = 0;
 			switch(unitTarget->GetEntry())
 			{
-				case 416:
+				case 416: //Imp
 					DemonicSacEffectSpellId = 18789;
-				break; //Imp
-				case 417:
+				break;
+				case 417: //Felhunter
 					DemonicSacEffectSpellId = 18792;
-				break; //Felhunter
-				case 1860:
+				break;
+				case 1860: //VoidWalker
 					DemonicSacEffectSpellId = 18790;
-				break; //VoidWalker
-				case 1863:
+				break;
+				case 1863: //Succubus
 					DemonicSacEffectSpellId = 18791;
-				break; //Succubus
-				case 17252:
+				break;
+				case 17252: //felguard
 					DemonicSacEffectSpellId = 35701;
-				break; //felguard
+				break;
 			}
 			if(DemonicSacEffectSpellId)
 			{
@@ -479,6 +498,64 @@ void Spell::SpellEffectInstantKill(uint32 i)
 					u_caster->CastSpell(u_caster, se, true);
 			}
 		break;
+		case 7812: // Sacrifice Voidwalker
+		case 19438:
+		case 19440:
+		case 19441:
+		case 19442:
+		case 19443:
+		case 27273:
+		{
+			if(unitTarget->GetEntry() != 1860)
+				return;
+		}break;
+		case 29364: // Encapsulate Voidwalker
+		{
+			if(unitTarget->GetEntry() != 16975)
+				return;
+		}break;
+		case 33974: //Power Burn for each Point consumed mana (Effect1) target get damage(Effect3) no better idea :P
+		{
+			unitTarget->GetPowerType() == POWER_TYPE_RAGE ? m_caster->DealDamage(unitTarget, m_spellInfo->EffectBasePoints[0], 0, spellId, false) : m_caster->DealDamage(unitTarget, m_spellInfo->EffectBasePoints[1], 0, spellId, false);
+			return;
+		}break;
+		case 36484: // Mana Burn same like Power Burn
+		{
+			m_caster->DealDamage(unitTarget, m_spellInfo->EffectBasePoints[0], 0, spellId, false);
+			return;
+		}break;
+		case 37056: // Kill Legion Hold Infernals
+		{
+			if(unitTarget->GetEntry() != 21316)
+				return;
+		}break;
+		case 40105: // Infusion (don't know why this should kill anything makes no sence)
+			return;
+		break;
+		case 43135: // Bubbling Ooze
+			return;
+		break;
+		case 61416: // Kill Watchers?
+		{
+			if(unitTarget->GetEntry() != 31104)
+				return;
+		}break;
+		case 41626: // Destroy Spirit
+		case 44659:
+		{
+			if(unitTarget->GetEntry() != 23109)
+				return;
+		}break;
+		case 45259: // Karazhan - Kill Chest Bunny
+		{
+			if(unitTarget->GetEntry() != 25213)
+				return;
+		}break;
+		case 19752: // Divine Intervention
+		{
+			if(p_caster != NULL)
+				p_caster->KillPlayer();
+		}break;
 	}
 
 	switch(GetProto()->NameHash)
@@ -4537,7 +4614,6 @@ void Spell::SpellEffectApplyPetAA(uint32 i)
 
 void Spell::SpellEffectDummyMelee(uint32 i)   // Normalized Weapon damage +
 {
-
 	if(!unitTarget || !u_caster)
 		return;
 
@@ -5188,6 +5264,23 @@ void Spell::SpellEffectActivateSpec(uint32 i)
 
 	uint8 NewSpec = p_caster->m_talentActiveSpec == SPEC_PRIMARY ? SPEC_SECONDARY : SPEC_PRIMARY; // Check if primary spec is on or not
 	p_caster->ActivateSpec(NewSpec);
+	
+	// Use up all our power
+	switch(p_caster->GetPowerType())
+	{
+		case POWER_TYPE_MANA:
+			p_caster->SetPower(POWER_TYPE_MANA, 0);
+		break;
+		case POWER_TYPE_RAGE:
+			p_caster->SetPower(POWER_TYPE_RAGE, 0);
+		break;
+		case POWER_TYPE_ENERGY:
+			p_caster->SetPower(POWER_TYPE_ENERGY, 0);
+		break;
+		case POWER_TYPE_RUNE:
+			p_caster->SetPower(POWER_TYPE_RUNE, 0);
+		break;
+	}
 
 	WorldPacket data(SMSG_ACTION_BUTTONS, PLAYER_ACTION_BUTTON_SIZE + 1);
 
