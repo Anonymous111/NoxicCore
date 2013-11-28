@@ -108,9 +108,9 @@ void CapitalizeString(string & arg)
 {
 	if(arg.length() == 0)
 		return;
-	arg[0] = static_cast< char >(toupper(arg[0]));
+	arg[0] = static_cast<char>(toupper(arg[0]));
 	for(uint32 x = 1; x < arg.size(); ++x)
-		arg[x] = static_cast< char >(tolower(arg[x]));
+		arg[x] = static_cast<char>(tolower(arg[x]));
 }
 
 void WorldSession::CharacterEnumProc(QueryResult* result)
@@ -125,7 +125,8 @@ void WorldSession::CharacterEnumProc(QueryResult* result)
 	uint32 start_time = getMSTime();
 
 	player_item items[23];
-	int8 slot;
+	//uint32 slot;
+	int8 slot; //int8 containerslot;
 	uint32 i;
 	ItemPrototype* proto;
 	QueryResult* res;
@@ -211,8 +212,8 @@ void WorldSession::CharacterEnumProc(QueryResult* result)
 				char_flags |= 0x00004000;	//Character has to be renamed before logging in
 
 			data << uint32(char_flags);
-			data << uint32(0);				//Character recustomization flags
-			data << uint8(0);				//Unknown 3.2.0
+			data << uint32(0); //Character recustomization flags
+			//data << uint8(0); //Unknown 3.2.0 -- No longer used in the last build of 3.2.2
 
 			if(Class == WARLOCK || Class == HUNTER)
 			{
