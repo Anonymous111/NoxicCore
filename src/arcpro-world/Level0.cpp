@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -59,7 +59,7 @@ bool ChatHandler::ShowHelpForCommand(WorldSession* m_session, ChatCommand* table
 
 bool ChatHandler::HandleHelpCommand(const char* args, WorldSession* m_session)
 {
-//	ChatCommand *table = getCommandTable();
+	//ChatCommand* table = getCommandTable();
 	WorldPacket data;
 
 	if(!*args)
@@ -70,13 +70,10 @@ bool ChatHandler::HandleHelpCommand(const char* args, WorldSession* m_session)
 		return false;
 
 	if(!ShowHelpForCommand(m_session, CommandTableStorage::getSingleton().Get(), cmd))
-	{
 		RedSystemMessage(m_session, "Sorry, no help was found for this command, or that command does not exist.");
-	}
 
 	return true;
 }
-
 
 bool ChatHandler::HandleCommandsCommand(const char* args, WorldSession* m_session)
 {
@@ -99,33 +96,29 @@ bool ChatHandler::HandleCommandsCommand(const char* args, WorldSession* m_sessio
 		switch(table[i].CommandGroup)
 		{
 			case 'z':
-				{
-					output += "|cffff6060";
-					output += table[i].Name;
-					output += "|r, ";
-				}
-				break;
+			{
+				output += "|cffff6060";
+				output += table[i].Name;
+				output += "|r, ";
+			}break;
 			case 'm':
-				{
-					output += "|cff00ffff";
-					output += table[i].Name;
-					output += ", ";
-				}
-				break;
+			{
+				output += "|cff00ffff";
+				output += table[i].Name;
+				output += ", ";
+			}break;
 			case 'c':
-				{
-					output += "|cff00ff00";
-					output += table[i].Name;
-					output += "|r, ";
-				}
-				break;
+			{
+				output += "|cff00ff00";
+				output += table[i].Name;
+				output += "|r, ";
+			}break;
 			default:
-				{
-					output += "|cff00ccff";
-					output += table[i].Name;
-					output += "|r, ";
-				}
-				break;
+			{
+				output += "|cff00ccff";
+				output += table[i].Name;
+				output += "|r, ";
+			}break;
 		}
 
 		count++;
@@ -138,10 +131,8 @@ bool ChatHandler::HandleCommandsCommand(const char* args, WorldSession* m_sessio
 	if(count)
 		output += "\n";
 
-
-	//FillSystemMessageData(&data, table[i].Name);
-	//m_session->SendPacket(&data);
-	//}
+	/*FillSystemMessageData(&data, table[i].Name);
+	m_session->SendPacket(&data);*/
 
 	SendMultilineMessage(m_session, output.c_str());
 
@@ -220,8 +211,6 @@ bool ChatHandler::HandleStartCommand(const char* args, WorldSession* m_session)
 bool ChatHandler::HandleInfoCommand(const char* args, WorldSession* m_session)
 {
 	WorldPacket data;
-
-
 	//uint32 clientsNum = (uint32)sWorld.GetSessionCount();
 
 	int gm = 0;
@@ -240,8 +229,7 @@ bool ChatHandler::HandleInfoCommand(const char* args, WorldSession* m_session)
 		}
 	}
 	objmgr._playerslock.ReleaseReadLock();
-	GreenSystemMessage(m_session, "Server Revision: |r%sArcPro %s/%s-%s-%s %s(http://www.arcpro.info)", MSG_COLOR_WHITE,
-		BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH, MSG_COLOR_LIGHTBLUE);
+	GreenSystemMessage(m_session, "Server Revision: |r%sArcPro %s/%s-%s-%s %s(zdroid9770@yahoo.com)", MSG_COLOR_WHITE, BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH, MSG_COLOR_LIGHTBLUE);
 	GreenSystemMessage(m_session, "Server Uptime: |r%s", sWorld.GetUptimeString().c_str());
 	GreenSystemMessage(m_session, "Current Players: |r%d (%d GMs) (%u Peak)", count, gm, sWorld.PeakSessionCount);
 	GreenSystemMessage(m_session, "Active Thread Count: |r%u", ThreadPool.GetActiveThreadCount());
@@ -317,9 +305,8 @@ bool ChatHandler::HandleSaveCommand(const char* args, WorldSession* m_session)
 		GreenSystemMessage(m_session, "Player %s saved to DB", p_target->GetName());
 	}
 	else
-	{
 		RedSystemMessage(m_session, "You can only save once every 5 minutes.");
-	}
+
 	return true;
 }
 
@@ -422,9 +409,8 @@ bool ChatHandler::HandleRatingsCommand(const char* args , WorldSession* m_sessio
 		return false;
 
 	for(uint32 i = 0; i < 24; i++)
-	{
 		m_plyr->ModUnsigned32Value(PLAYER_FIELD_COMBAT_RATING_1 + i, i);
-	}
+
 	m_plyr->UpdateStats();
 	return true;
 }
@@ -446,14 +432,9 @@ bool ChatHandler::HandleSimpleDistanceCommand(const char* args , WorldSession* m
 	if(toX >= _maxX || toX <= _minX || toY <= _minY || toY >= _maxY)
 		return false;
 
-	float distance = CalculateDistance(
-	                     m_session->GetPlayer()->GetPositionX(),
-	                     m_session->GetPlayer()->GetPositionY(),
-	                     m_session->GetPlayer()->GetPositionZ(),
-	                     toX, toY, toZ);
+	float distance = CalculateDistance(m_session->GetPlayer()->GetPositionX(), m_session->GetPlayer()->GetPositionY(), m_session->GetPlayer()->GetPositionZ(), toX, toY, toZ);
 
-	m_session->SystemMessage("Your distance to location (%f, %f, %f) is %0.2f meters.",
-	                         toX, toY, toZ, distance);
+	m_session->SystemMessage("Your distance to location (%f, %f, %f) is %0.2f meters.", toX, toY, toZ, distance);
 
 	return true;
 }

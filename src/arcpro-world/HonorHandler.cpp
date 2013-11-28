@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -58,13 +58,9 @@ int32 HonorHandler::CalculateHonorPointsForKill(uint32 playerLevel, uint32 victi
 	uint32 k_grey = 0;
 
 	if(k_level > 5 && k_level < 40)
-	{
 		k_grey = k_level - 5 - float2int32(std::floor(((float)k_level) / 10.0f));
-	}
 	else
-	{
 		k_grey = k_level - 1 - float2int32(std::floor(((float)k_level) / 5.0f));
-	}
 
 	if(v_level <= k_grey)
 		return 0;
@@ -165,7 +161,8 @@ void HonorHandler::OnPlayerKilled(Player* pPlayer, Player* pVictim)
 					for(uint32 i = 0; i < groups; i++)
 					{
 						SubGroup* sg = pGroup->GetSubGroup(i);
-						if(!sg) continue;
+						if(!sg)
+							continue;
 
 						for(GroupMembersSet::iterator itr2 = sg->GetGroupMembersBegin(); itr2 != sg->GetGroupMembersEnd(); itr2++)
 						{
@@ -183,7 +180,8 @@ void HonorHandler::OnPlayerKilled(Player* pPlayer, Player* pVictim)
 			for(set<Player*>::iterator itr = contributors.begin(); itr != contributors.end(); itr++)
 			{
 				Player* pAffectedPlayer = (*itr);
-				if(!pAffectedPlayer) continue;
+				if(!pAffectedPlayer)
+					continue;
 
 				pAffectedPlayer->m_killsToday++;
 				pAffectedPlayer->m_killsLifetime++;
@@ -222,7 +220,7 @@ void HonorHandler::OnPlayerKilled(Player* pPlayer, Player* pVictim)
 					SpellEntry* pvp_token_spell = dbcSpell.LookupEntry(pAffectedPlayer->IsTeamHorde() ? 33004 : 33005);
 					pAffectedPlayer->CastSpell(pAffectedPlayer, pvp_token_spell, true);
 				}
-				// If we are in Hellfire Peninsula <http://www.wowwiki.com/Hellfire_Peninsula#World_PvP_-_Hellfire_Fortifications>
+				// If we are in Hellfire Peninsula < http://www.wowpedia.org/Hellfire_Peninsula#World_PvP_-_Hellfire_Fortifications >
 				if(pAffectedPlayer->GetZoneId() == 3483)
 				{
 					// Hellfire Horde Controlled Towers
@@ -294,7 +292,7 @@ bool ChatHandler::HandlePVPCreditCommand(const char* args, WorldSession* m_sessi
 	uint32 Rank, Points;
 	if(sscanf(args, "%u %u", (unsigned int*)&Rank, (unsigned int*)&Points) != 2)
 	{
-		RedSystemMessage(m_session, "Command must be in format <rank> <points>.");
+		RedSystemMessage(m_session, "Command must be in format < rank > < points >.");
 		return true;
 	}
 	Points *= 10;
@@ -305,8 +303,7 @@ bool ChatHandler::HandlePVPCreditCommand(const char* args, WorldSession* m_sessi
 		return true;
 	}
 
-	BlueSystemMessage(m_session, "Building packet with Rank %u, Points %u, GUID " I64FMT ".",
-	                  Rank, Points, Guid);
+	BlueSystemMessage(m_session, "Building packet with Rank %u, Points %u, GUID " I64FMT ".", Rank, Points, Guid);
 
 	WorldPacket data(SMSG_PVP_CREDIT, 12);
 	data << Points << Guid << Rank;

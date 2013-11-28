@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,12 +24,11 @@
 
 class SERVER_DECL HonorHandler
 {
-	public:
-		static int32 CalculateHonorPointsForKill(uint32 playerLevel, uint32 victimLevel);
-		static void RecalculateHonorFields(Player* pPlayer);
-		static void AddHonorPointsToPlayer(Player* pPlayer, uint32 uAmount);
-		static void OnPlayerKilled(Player* pPlayer, Player* pVictim);
+public:
+	static int32 CalculateHonorPointsForKill(uint32 playerLevel, uint32 victimLevel);
+	static void RecalculateHonorFields(Player* pPlayer);
+	static void AddHonorPointsToPlayer(Player* pPlayer, uint32 uAmount);
+	static void OnPlayerKilled(Player* pPlayer, Player* pVictim);
 };
-
 
 #endif

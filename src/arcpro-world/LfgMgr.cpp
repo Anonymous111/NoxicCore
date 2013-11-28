@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -39,11 +39,7 @@ LfgMgr::LfgMgr()
 	}
 }
 
-LfgMgr::~LfgMgr()
-{
-
-
-}
+LfgMgr::~LfgMgr() {}
 
 bool LfgMgr::AttemptLfgJoin(Player* pl, uint32 LfgDungeonId)
 {
@@ -57,7 +53,7 @@ bool LfgMgr::AttemptLfgJoin(Player* pl, uint32 LfgDungeonId)
 	// search for any groups that have auto add members enabled, also have this dungeon, and add him
 	// if one is found.
 	/*LfgPlayerList itr;
-	Player * plr;
+	Player* plr;
 
 	// make sure the dungeon is usable by autojoin (should never be true)
 	if(LfgDungeonTypes[LfgDungeonId] != LFG_INSTANCE && LfgDungeonTypes[LfgDungeonId] != LFG_HEROIC_DUNGEON)
@@ -65,10 +61,13 @@ bool LfgMgr::AttemptLfgJoin(Player* pl, uint32 LfgDungeonId)
 
 	m_lock.Acquire();
 
-	for(itr = m_lookingForGroup[LfgDungeonId].begin(); itr != m_lookingForGroup[LfgDungeonId].end(); ++itr) {
+	for(itr = m_lookingForGroup[LfgDungeonId].begin(); itr != m_lookingForGroup[LfgDungeonId].end(); ++itr)
+	{
 		plr = *itr;
-		if(plr->m_AutoAddMem) {
-			if(plr->GetGroup() && !plr->GetGroup()->IsFull() && plr->GetGroup()->GetGroupType() == GROUP_TYPE_PARTY) {
+		if(plr->m_AutoAddMem)
+		{
+			if(plr->GetGroup() && !plr->GetGroup()->IsFull() && plr->GetGroup()->GetGroupType() == GROUP_TYPE_PARTY)
+			{
 				plr->GetGroup()->AddMember(pl->m_playerInfo);
 				pl->SendMeetingStoneQueue(LfgDungeonId, 0);
 				m_lock.Release();

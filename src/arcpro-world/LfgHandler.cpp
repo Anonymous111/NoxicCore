@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -44,9 +44,7 @@ void WorldSession::HandleEnableAutoJoin(WorldPacket & recvPacket)
 		if(_player->LfgDungeonId[i] != 0)
 		{
 			if(LfgDungeonTypes[_player->LfgDungeonId[i]] != LFG_INSTANCE && LfgDungeonTypes[_player->LfgDungeonId[i]] != LFG_HEROIC_DUNGEON)
-			{
 				return;
-			}
 		}
 	}
 
@@ -90,9 +88,7 @@ void WorldSession::HandleEnableAutoAddMembers(WorldPacket & recvPacket)
 	for(i = 0; i < MAX_LFG_QUEUE_ID; ++i)
 	{
 		if(_player->LfgDungeonId[i] != 0)
-		{
 			sLfgMgr.UpdateLfgQueue(_player->LfgDungeonId[i]);
-		}
 	}
 }
 
@@ -204,9 +200,9 @@ void WorldSession::HandleLfgInviteAccept(WorldPacket & recvPacket)
 	if(_player->m_lfgMatch == NULL && _player->m_lfgInviterGuid == 0)
 	{
 		if(_player->m_lfgMatch == NULL)
-			OutPacket(SMSG_LFG_AUTOJOIN_FAILED_NO_PLAYER);		// Matched Player(s) have gone offline.
+			OutPacket(SMSG_LFG_AUTOJOIN_FAILED_NO_PLAYER); // Matched Player(s) have gone offline.
 		else
-			OutPacket(SMSG_LFG_AUTOJOIN_FAILED);				// Group no longer available.
+			OutPacket(SMSG_LFG_AUTOJOIN_FAILED); // Group no longer available.
 
 		return;
 	}
@@ -238,7 +234,7 @@ void WorldSession::HandleLfgInviteAccept(WorldPacket & recvPacket)
 		Player* pPlayer = objmgr.GetPlayer(_player->m_lfgInviterGuid);
 		if(pPlayer == NULL)
 		{
-			OutPacket(SMSG_LFG_AUTOJOIN_FAILED_NO_PLAYER);			// Matched Player(s) have gone offline.
+			OutPacket(SMSG_LFG_AUTOJOIN_FAILED_NO_PLAYER); // Matched Player(s) have gone offline.
 			return;
 		}
 

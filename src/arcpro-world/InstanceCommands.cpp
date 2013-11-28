@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -27,10 +27,13 @@ const char* GetDifficultyString(uint8 difficulty)
 	{
 		case MODE_NORMAL:
 			return "normal";
+		break;
 		case MODE_HEROIC:
 			return "heroic";
+		break;
 		default:
 			return "unknown";
+		break;
 	}
 }
 
@@ -40,14 +43,19 @@ const char* GetRaidDifficultyString(uint8 diff)
 	{
 		case MODE_NORMAL_10MEN:
 			return "normal 10men";
+		break;
 		case MODE_NORMAL_25MEN:
 			return "normal 25men";
+		break;
 		case MODE_HEROIC_10MEN:
 			return "heroic 10men";
+		break;
 		case MODE_HEROIC_25MEN:
 			return "heroic 25men";
+		break;
 		default:
 			return "unknown";
+		break;
 	}
 }
 
@@ -57,16 +65,21 @@ const char* GetMapTypeString(uint8 type)
 	{
 		case INSTANCE_NULL:
 			return "Continent";
+		break;
 		case INSTANCE_RAID:
 			return "Raid";
+		break;
 		case INSTANCE_NONRAID:
 			return "Non-Raid";
+		break;
 		case INSTANCE_BATTLEGROUND:
 			return "PvP";
 		case INSTANCE_MULTIMODE:
 			return "MultiMode";
+		break;
 		default:
 			return "Unknown";
+		break;
 	}
 }
 
@@ -116,7 +129,6 @@ bool ChatHandler::HandleResetInstanceCommand(const char* args, WorldSession* m_s
 		RedSystemMessage(m_session, "You must specify an instance id.");
 		return true;
 	}
-
 
 	Player* plr;
 
@@ -193,7 +205,7 @@ bool ChatHandler::HandleResetInstanceCommand(const char* args, WorldSession* m_s
 	// shut down instance
 	sInstanceMgr.DeleteBattlegroundInstance(instance->m_mapId, instance->m_instanceId);
 	instance->m_mapMgr->InstanceShutdown();
-//	RedSystemMessage(m_session, "Resetting single non-persistent instances is not available yet.");
+	//RedSystemMessage(m_session, "Resetting single non-persistent instances is not available yet.");
 	sGMLog.writefromsession(m_session, "used reset instance command on %s, instance %u,", plr->GetName(), instanceId);
 	return true;
 }
@@ -230,12 +242,12 @@ bool ChatHandler::HandleShutdownInstanceCommand(const char* args, WorldSession* 
 	return true;
 }
 
-//bool ChatHandler::HandleDeleteInstanceCommand(const char* args, WorldSession *m_session)
-//{
-//	RedSystemMessage(m_session, "Command not implemented yet.");
-//	return true;
-//	//sGMLog.writefromsession(m_session, "used delete instance command on instance %u,", 0);
-//}
+/*bool ChatHandler::HandleDeleteInstanceCommand(const char* args, WorldSession *m_session)
+{
+	RedSystemMessage(m_session, "Command not implemented yet.");
+	return true;
+	//sGMLog.writefromsession(m_session, "used delete instance command on instance %u,", 0);
+}*/
 
 bool ChatHandler::HandleGetInstanceInfoCommand(const char* args, WorldSession* m_session)
 {
@@ -277,14 +289,10 @@ bool ChatHandler::HandleGetInstanceInfoCommand(const char* args, WorldSession* m
 		ss << "Type: " << MSG_COLOR_CYAN << GetMapTypeString(static_cast<uint8>(instance->m_mapInfo->type)) << "|r";
 
 		if(instance->m_mapInfo->type == INSTANCE_MULTIMODE)
-		{
 			ss << " (" << MSG_COLOR_CYAN << GetDifficultyString(static_cast<uint8>(instance->m_difficulty)) << "|r)";
-		}
 
 		if(instance->m_mapInfo->type == INSTANCE_RAID)
-		{
 			ss << " (" << MSG_COLOR_CYAN << GetRaidDifficultyString(static_cast<uint8>(instance->m_difficulty)) << "|r)";
-		}
 
 		ss << "\n";
 	}
@@ -293,9 +301,7 @@ bool ChatHandler::HandleGetInstanceInfoCommand(const char* args, WorldSession* m
 		ss << "Expires: " << MSG_COLOR_CYAN << ConvertTimeStampToDataTime((uint32)instance->m_expiration) << "|r\n";
 
 	if(instance->m_mapMgr == NULL)
-	{
 		ss << "Status: " << MSG_COLOR_LIGHTRED << "Shut Down|r\n";
-	}
 	else if(!instance->m_mapMgr->HasPlayers())
 	{
 		ss << "Status: " << MSG_COLOR_LIGHTRED << "Idle|r";
@@ -304,10 +310,8 @@ bool ChatHandler::HandleGetInstanceInfoCommand(const char* args, WorldSession* m
 		ss << "\n";
 	}
 	else
-	{
 		ss << "Status: " << MSG_COLOR_GREEN << "In use|r (" << MSG_COLOR_GREEN << (uint32)instance->m_mapMgr->GetPlayerCount() << MSG_COLOR_CYAN << " players inside|r)\n";
 
-	}
 	SendMultilineMessage(m_session, ss.str().c_str());
 
 	return true;
@@ -385,9 +389,8 @@ bool ChatHandler::HandleShowInstancesCommand(const char* args, WorldSession* m_s
 			{
 				ss << " [" << GetMapTypeString(static_cast<uint8>(pInstance->m_mapInfo->type)) << "]";
 				if(pInstance->m_mapInfo->type == INSTANCE_MULTIMODE)
-				{
 					ss << " [" << GetDifficultyString(static_cast<uint8>(pInstance->m_difficulty)) << "]";
-				}
+
 				ss << " - ";
 				if(pInstance->m_mapMgr == NULL)
 					ss << MSG_COLOR_LIGHTRED << "Shut Down|r";

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -45,9 +45,7 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
 	}
 
 	if(player == _player)
-	{
 		return;
-	}
 
 	if(_player->InGroup() && !_player->IsGroupLeader())
 	{
@@ -181,7 +179,8 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & recv_data)
 	WorldPacket data(SMSG_GROUP_DECLINE, 100);
 
 	Player* player = objmgr.GetPlayer(_player->GetInviter());
-	if(!player) return;
+	if(!player)
+		return;
 
 	data << GetPlayer()->GetName();
 
@@ -235,9 +234,7 @@ void WorldSession::HandleGroupUninviteOpcode(WorldPacket & recv_data)
 	group = _player->GetGroup();
 
 	if(group != NULL)
-	{
 		group->RemovePlayer(info);
-	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -378,14 +375,9 @@ void WorldSession::HandleLootMethodOpcode(WorldPacket & recv_data)
 
 	Player* plr = objmgr.GetPlayer((uint32)lootMaster);
 	if(plr != NULL)
-	{
-		pGroup->SetLooter(plr, static_cast<uint8>(lootMethod), static_cast<uint16>(threshold));
-	}
+		pGroup->SetLooter(plr, static_cast<uint8>(lootMethod), static_cast< uint16 >(threshold));
 	else
-	{
-		pGroup->SetLooter(_player, static_cast<uint8>(lootMethod), static_cast<uint16>(threshold));
-	}
-
+		pGroup->SetLooter(_player, static_cast<uint8>(lootMethod), static_cast< uint16 >(threshold));
 }
 
 void WorldSession::HandleMinimapPingOpcode(WorldPacket & recv_data)
@@ -395,7 +387,8 @@ void WorldSession::HandleMinimapPingOpcode(WorldPacket & recv_data)
 	if(!_player->InGroup())
 		return;
 	Group* party = _player->GetGroup();
-	if(!party)return;
+	if(!party)
+		return;
 
 	float x, y;
 	recv_data >> x >> y;

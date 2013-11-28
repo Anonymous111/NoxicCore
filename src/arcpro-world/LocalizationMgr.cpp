@@ -2,7 +2,7 @@
  * ArcPro MMORPG Server
  * Copyright (c) 2011-2013 ArcPro Speculation <http://www.arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
- * Copyright (c) 2007-2012 Burlex <burlex@gmail.com>
+ * Copyright (c) 2007-2012 Burlex < burlex@gmail.com >
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -30,10 +30,10 @@ void LocalizationMgr::Shutdown()
 
 #define SAFE_FREE_PTR(x) if(deletedPointers.find((x)) == deletedPointers.end()) { deletedPointers.insert((x)); free((x)); }
 
-	set<void*> deletedPointers;
+	set< void* > deletedPointers;
 	uint32 maxid = 0;
 	uint32 i, j;
-	vector<pair<uint32, uint32> >::iterator xtr = m_languages.begin();
+	vector< pair<uint32, uint32>>::iterator xtr = m_languages.begin();
 	for(; xtr != m_languages.end(); ++xtr)
 		if(xtr->second > maxid)
 			maxid = xtr->second;
@@ -80,32 +80,20 @@ void LocalizationMgr::Shutdown()
 		}
 
 		for(HM_NAMESPACE::hash_map<uint32, LocalizedGameObjectName>::iterator itr = m_GameObjectNames[i].begin(); itr != m_GameObjectNames[i].end(); ++itr)
-		{
 			SAFE_FREE_PTR(itr->second.Name);
-		}
 
 		for(HM_NAMESPACE::hash_map<uint32, LocalizedItemPage>::iterator itr = m_ItemPages[i].begin(); itr != m_ItemPages[i].end(); ++itr)
-		{
 			SAFE_FREE_PTR(itr->second.Text);
-		}
 
 		// (p2wow) world server common message going to be localized.
 		for(HM_NAMESPACE::hash_map<uint32, LocalizedWorldStringTable>::iterator itr = m_WorldStrings[i].begin(); itr != m_WorldStrings[i].end(); ++itr)
-		{
 			SAFE_FREE_PTR(itr->second.Text);
-		}
 
 		for(HM_NAMESPACE::hash_map<uint32, LocalizedWorldBroadCast>::iterator itr = m_WorldBroadCast[i].begin(); itr != m_WorldBroadCast[i].end(); ++itr)
-		{
 			SAFE_FREE_PTR(itr->second.Text);
-		}
 
 		for(HM_NAMESPACE::hash_map<uint32, LocalizedWorldMapInfo>::iterator itr = m_WorldMapInfo[i].begin(); itr != m_WorldMapInfo[i].end(); ++itr)
-		{
 			SAFE_FREE_PTR(itr->second.Text);
-		}
-
-
 	}
 
 	deletedPointers.clear();
@@ -126,10 +114,10 @@ void LocalizationMgr::Shutdown()
 void LocalizationMgr::Lower(string & conv)
 {
 	for(size_t i = 0; i < conv.length(); ++i)
-		conv[i] = static_cast<char>(tolower(conv[i]));
+		conv[i] = static_cast< char >(tolower(conv[i]));
 }
 
-void LocalizationMgr::GetDistinctLanguages(set<string>& dest, const char* table)
+void LocalizationMgr::GetDistinctLanguages(set< string >& dest, const char* table)
 {
 	QueryResult* result = WorldDatabase.Query("SELECT DISTINCT language_code FROM %s", table);
 	if(result == NULL)
@@ -142,7 +130,6 @@ void LocalizationMgr::GetDistinctLanguages(set<string>& dest, const char* table)
 		sLocalizationMgr.Lower(lc);
 		if(dest.find(lc) == dest.end())
 			dest.insert(lc);
-
 	}
 	while(result->NextRow());
 	delete result;
@@ -153,7 +140,7 @@ uint32 LocalizationMgr::GetLanguageId(uint32 full)
 	if(m_disabled)
 		return 0;
 
-	for(vector<pair<uint32, uint32> >::iterator itr = m_languages.begin(); itr != m_languages.end(); ++itr)
+	for(vector< pair<uint32, uint32>>::iterator itr = m_languages.begin(); itr != m_languages.end(); ++itr)
 		if(itr->first == full)
 			return itr->second;
 
@@ -166,8 +153,8 @@ void LocalizationMgr::Reload(bool first)
 		return;
 
 	QueryResult* result;
-	set<string> languages;
-	map<string, string> bound_languages;
+	set< string > languages;
+	map< string, string > bound_languages;
 	GetDistinctLanguages(languages, "creature_names_localized");
 	GetDistinctLanguages(languages, "gameobject_names_localized");
 	GetDistinctLanguages(languages, "items_localized");
@@ -182,8 +169,8 @@ void LocalizationMgr::Reload(bool first)
 	/* Read Language Bindings From Config                                   */
 	/************************************************************************/
 	string ls = Config.MainConfig.GetStringDefault("Localization", "LocaleBindings", "");
-	vector<string> tbindings = StrSplit(ls, " ");
-	for(vector<string>::iterator ztr = tbindings.begin(); ztr != tbindings.end(); ++ztr)
+	vector< string > tbindings = StrSplit(ls, " ");
+	for(vector< string >::iterator ztr = tbindings.begin(); ztr != tbindings.end(); ++ztr)
 	{
 		char lb[200];
 		string ll1, ll2;
@@ -213,7 +200,7 @@ void LocalizationMgr::Reload(bool first)
 
 	uint32 langid = 1;
 	pair<uint32, uint32> dpr;
-	for(set<string>::iterator sitr = languages.begin(); sitr != languages.end(); ++sitr)
+	for(set< string >::iterator sitr = languages.begin(); sitr != languages.end(); ++sitr)
 	{
 		if((*sitr) == "enus")		// Default
 		{
@@ -237,15 +224,15 @@ void LocalizationMgr::Reload(bool first)
 	else
 		m_disabled = false;
 
-	m_CreatureNames = new HM_NAMESPACE::hash_map<uint32, LocalizedCreatureName>[langid];
-	m_GameObjectNames = new HM_NAMESPACE::hash_map<uint32, LocalizedGameObjectName>[langid];
-	m_Quests = new HM_NAMESPACE::hash_map<uint32, LocalizedQuest>[langid];
-	m_NpcTexts = new HM_NAMESPACE::hash_map<uint32, LocalizedNpcText>[langid];
-	m_Items = new HM_NAMESPACE::hash_map<uint32, LocalizedItem>[langid];
-	m_ItemPages = new HM_NAMESPACE::hash_map<uint32, LocalizedItemPage>[langid];
-	m_WorldStrings = new HM_NAMESPACE::hash_map<uint32, LocalizedWorldStringTable>[langid];
-	m_WorldBroadCast = new HM_NAMESPACE::hash_map<uint32, LocalizedWorldBroadCast>[langid];
-	m_WorldMapInfo = new HM_NAMESPACE::hash_map<uint32, LocalizedWorldMapInfo>[langid];
+	m_CreatureNames = new HM_NAMESPACE::hash_map< uint32, LocalizedCreatureName >[langid];
+	m_GameObjectNames = new HM_NAMESPACE::hash_map< uint32, LocalizedGameObjectName >[langid];
+	m_Quests = new HM_NAMESPACE::hash_map< uint32, LocalizedQuest >[langid];
+	m_NpcTexts = new HM_NAMESPACE::hash_map< uint32, LocalizedNpcText >[langid];
+	m_Items = new HM_NAMESPACE::hash_map< uint32, LocalizedItem >[langid];
+	m_ItemPages = new HM_NAMESPACE::hash_map< uint32, LocalizedItemPage >[langid];
+	m_WorldStrings = new HM_NAMESPACE::hash_map< uint32, LocalizedWorldStringTable >[langid];
+	m_WorldBroadCast = new HM_NAMESPACE::hash_map< uint32, LocalizedWorldBroadCast >[langid];
+	m_WorldMapInfo = new HM_NAMESPACE::hash_map< uint32, LocalizedWorldMapInfo >[langid];
 
 	/************************************************************************/
 	/* Creature Names                                                       */
@@ -334,9 +321,7 @@ void LocalizationMgr::Reload(bool first)
 					continue;		// no loading enUS stuff.. lawl
 
 				if(m_Items[lid].find(entry) != m_Items[lid].end())
-				{
 					continue;
-				}
 
 				it.Name = strdup(f[2].GetString());
 				it.Description = strdup(f[3].GetString());
@@ -552,7 +537,7 @@ void LocalizationMgr::Reload(bool first)
 	/************************************************************************/
 	/* Apply all the language bindings.                                     */
 	/************************************************************************/
-	for(map<string, string>::iterator itr = bound_languages.begin(); itr != bound_languages.end(); ++itr)
+	for(map< string, string >::iterator itr = bound_languages.begin(); itr != bound_languages.end(); ++itr)
 	{
 		uint32 source_language_id = GetLanguageId(itr->second);
 		uint32 dest_language_id = GetLanguageId(itr->first);
@@ -563,21 +548,21 @@ void LocalizationMgr::Reload(bool first)
 		}
 
 		/* duplicate the hashmaps (we can save the pointers here) */
-		CopyHashMap<LocalizedItem>(&m_Items[source_language_id], &m_Items[dest_language_id]);
-		CopyHashMap<LocalizedCreatureName>(&m_CreatureNames[source_language_id], &m_CreatureNames[dest_language_id]);
-		CopyHashMap<LocalizedGameObjectName>(&m_GameObjectNames[source_language_id], &m_GameObjectNames[dest_language_id]);
-		CopyHashMap<LocalizedItemPage>(&m_ItemPages[source_language_id], &m_ItemPages[dest_language_id]);
-		CopyHashMap<LocalizedQuest>(&m_Quests[source_language_id], &m_Quests[dest_language_id]);
-		CopyHashMap<LocalizedNpcText>(&m_NpcTexts[source_language_id], &m_NpcTexts[dest_language_id]);
-		CopyHashMap<LocalizedWorldStringTable>(&m_WorldStrings[source_language_id], &m_WorldStrings[dest_language_id]);
-		CopyHashMap<LocalizedWorldBroadCast>(&m_WorldBroadCast[source_language_id], &m_WorldBroadCast[dest_language_id]);
-		CopyHashMap<LocalizedWorldMapInfo>(&m_WorldMapInfo[source_language_id], &m_WorldMapInfo[dest_language_id]);
+		CopyHashMap< LocalizedItem >(&m_Items[source_language_id], &m_Items[dest_language_id]);
+		CopyHashMap< LocalizedCreatureName >(&m_CreatureNames[source_language_id], &m_CreatureNames[dest_language_id]);
+		CopyHashMap< LocalizedGameObjectName >(&m_GameObjectNames[source_language_id], &m_GameObjectNames[dest_language_id]);
+		CopyHashMap< LocalizedItemPage >(&m_ItemPages[source_language_id], &m_ItemPages[dest_language_id]);
+		CopyHashMap< LocalizedQuest >(&m_Quests[source_language_id], &m_Quests[dest_language_id]);
+		CopyHashMap< LocalizedNpcText >(&m_NpcTexts[source_language_id], &m_NpcTexts[dest_language_id]);
+		CopyHashMap< LocalizedWorldStringTable >(&m_WorldStrings[source_language_id], &m_WorldStrings[dest_language_id]);
+		CopyHashMap< LocalizedWorldBroadCast >(&m_WorldBroadCast[source_language_id], &m_WorldBroadCast[dest_language_id]);
+		CopyHashMap< LocalizedWorldMapInfo >(&m_WorldMapInfo[source_language_id], &m_WorldMapInfo[dest_language_id]);
 	}
 }
 
 #define MAKE_LOOKUP_FUNCTION(t, hm, fn) t * LocalizationMgr::fn(uint32 id, uint32 language) { \
 	if(m_disabled) { return NULL; } \
-	HM_NAMESPACE::hash_map<uint32, t>::iterator itr = hm[language].find(id); \
+	HM_NAMESPACE::hash_map< uint32, t >::iterator itr = hm[language].find(id); \
 	return (itr == hm[language].end()) ? NULL : &itr->second; }
 
 MAKE_LOOKUP_FUNCTION(LocalizedCreatureName, m_CreatureNames, GetLocalizedCreatureName);
@@ -589,4 +574,3 @@ MAKE_LOOKUP_FUNCTION(LocalizedItemPage, m_ItemPages, GetLocalizedItemPage);
 MAKE_LOOKUP_FUNCTION(LocalizedWorldStringTable, m_WorldStrings, GetLocalizedWorldStringTable);
 MAKE_LOOKUP_FUNCTION(LocalizedWorldBroadCast, m_WorldBroadCast, GetLocalizedWorldBroadCast);
 MAKE_LOOKUP_FUNCTION(LocalizedWorldMapInfo, m_WorldMapInfo, GetLocalizedWorldMapInfo);
-
