@@ -1331,14 +1331,16 @@ bool ChatHandler::CmdSetFloatField(WorldSession* m_session, uint32 field, uint32
 			GreenSystemMessageToPlr(plr, "%s set your %s to %.1f.", m_session->GetPlayer()->GetName(), fieldname, av);
 		}
 		plr->SetFloatValue(field, av);
-		if(fieldmax) plr->SetFloatValue(fieldmax, mv);
+		if(fieldmax)
+			plr->SetFloatValue(fieldmax, mv);
 	}
 	else
 	{
 		Creature* cr = getSelectedCreature(m_session, false);
 		if(cr)
 		{
-			if(!(field < UNIT_END && fieldmax < UNIT_END)) return false;
+			if(!(field < UNIT_END && fieldmax < UNIT_END))
+				return false;
 			std::string creaturename = "Unknown Being";
 			creaturename = cr->GetCreatureInfo()->Name;
 			if(fieldmax)
@@ -1354,9 +1356,8 @@ bool ChatHandler::CmdSetFloatField(WorldSession* m_session, uint32 field, uint32
 		}
 		else
 			RedSystemMessage(m_session, "Invalid Selection.");
-		
-		return true;
 	}
+	return true;
 }
 
 bool ChatHandler::HandleGetPosCommand(const char* args, WorldSession* m_session)
