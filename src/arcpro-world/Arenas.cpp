@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -48,44 +48,37 @@ Arena::Arena(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t, uint32 players_per
 	{
 		case BATTLEGROUND_ARENA_5V5:
 			m_arenateamtype = 2;
-			break;
-
+		break;
 		case BATTLEGROUND_ARENA_3V3:
 			m_arenateamtype = 1;
-			break;
-
+		break;
 		case BATTLEGROUND_ARENA_2V2:
 			m_arenateamtype = 0;
-			break;
-
+		break;
 		default:
 			m_arenateamtype = 0;
-			break;
+		break;
 	}
 	rated_match = false;
 
 
-	switch( m_mapMgr->GetMapId() ){
+	switch(m_mapMgr->GetMapId())
+	{
 		case 559:
 			m_zoneid = 3698;
-			break;
-
+		break;
 		case 562:
 			m_zoneid = 3702;
-			break;
-
+		break;
 		case 572:
 			m_zoneid = 3968;
-			break;
-
+		break;
 		case 617:
 			m_zoneid = 4378;
-			break;
-
+		break;
 		case 618:
 			m_zoneid = 4408;
-			break;
-
+		break;
 	}
 }
 
@@ -127,9 +120,7 @@ void Arena::OnAddPlayer(Player* plr)
 			if(plr->m_auras[x] && !plr->m_auras[x]->GetSpellProto()->DurationIndex && plr->m_auras[x]->GetSpellProto()->AttributesExC & CAN_PERSIST_AND_CASTED_WHILE_DEAD)
 				continue;
 			else
-			{
 				plr->m_auras[x]->Remove();
-			}
 		}
 	}
 	// On arena start all conjured items are removed
@@ -141,7 +132,7 @@ void Arena::OnAddPlayer(Player* plr)
 	if(!m_started  && plr->IsInWorld())
 		plr->ResetAllCooldowns();
 
-	// if( plr->m_isGmInvisible == false )
+	// if(plr->m_isGmInvisible == false)
 	// Make sure the player isn't a GM an isn't invisible (monitoring?)
 	if(!plr->m_isGmInvisible)
 	{
@@ -195,9 +186,7 @@ void Arena::HookOnPlayerKill(Player* plr, Player* pVictim)
 	}
 #endif
 	if(pVictim->IsPlayer())
-	{
 		plr->m_bgScore.KillingBlows++;
-	}
 }
 
 void Arena::HookOnHK(Player* plr)
@@ -209,7 +198,8 @@ void Arena::HookOnPlayerDeath(Player* plr)
 {
 	ARCPRO_ASSERT(plr != NULL);
 
-	if(plr->m_isGmInvisible == true) return;
+	if(plr->m_isGmInvisible == true)
+		return;
 
 	if(m_playersAlive.find(plr->GetLowGUID()) != m_playersAlive.end())
 	{
@@ -226,9 +216,7 @@ void Arena::OnCreate()
 		(*itr)->PushToWorld(m_mapMgr);
 }
 
-void Arena::HookOnShadowSight()
-{
-}
+void Arena::HookOnShadowSight() {}
 
 void Arena::OnStart()
 {
@@ -259,7 +247,8 @@ void Arena::OnStart()
 
 	for(i = 0; i < 2; i++)
 	{
-		if(m_teams[i] == NULL) continue;
+		if(m_teams[i] == NULL)
+			continue;
 
 		m_teams[i]->m_stat_gamesplayedseason++;
 		m_teams[i]->m_stat_gamesplayedweek++;
@@ -332,9 +321,9 @@ uint32 Arena::CalcDeltaRating(uint32 oldRating, uint32 opponentRating, bool outc
 	return long2int32(32.0 * multiplier);
 }
 
-uint32 Arena::GetTeamFaction( uint32 team )
+uint32 Arena::GetTeamFaction(uint32 team)
 {
-	std::set< Player* >::iterator itr = m_players[ team ].begin();
+	std::set<Player*>::iterator itr = m_players[ team ].begin();
 	Player *p = *itr;
 	return p->GetTeam();
 }
@@ -439,12 +428,12 @@ void Arena::HookOnAreaTrigger(Player* plr, uint32 id)
 		case 4538:
 		case 4696:
 			buffslot = 0;
-			break;
+		break;
 		case 4537:
 		case 4539:
 		case 4697:
 			buffslot = 1;
-			break;
+		break;
 	}
 
 	if(buffslot >= 0)
@@ -464,14 +453,9 @@ void Arena::HookOnAreaTrigger(Player* plr, uint32 id)
 		}
 	}
 }
-void Arena::HookGenerateLoot(Player* plr, Object* pCorpse)    // Not Used
-{
-}
 
-void Arena::HookOnUnitKill(Player* plr, Unit* pVictim)
-{
-}
+void Arena::HookGenerateLoot(Player* plr, Object* pCorpse) {} // Not Used
 
-void Arena::HookOnFlagDrop(Player* plr)
-{
-}
+void Arena::HookOnUnitKill(Player* plr, Unit* pVictim) {}
+
+void Arena::HookOnFlagDrop(Player* plr) {}

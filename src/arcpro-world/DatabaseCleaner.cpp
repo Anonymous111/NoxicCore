@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -34,15 +34,9 @@ void DatabaseCleaner::Run()
 	Optimize();
 }
 
-void DatabaseCleaner::CleanWorld()
-{
+void DatabaseCleaner::CleanWorld() {}
 
-}
-
-void DatabaseCleaner::Optimize()
-{
-
-}
+void DatabaseCleaner::Optimize() {}
 
 void DatabaseCleaner::CleanCharacters()
 {
@@ -67,21 +61,19 @@ void DatabaseCleaner::CleanCharacters()
 	Log.Notice("DatabaseCleaner", "Got %u guids.", chr_guids.size());
 	Log.Notice("DatabaseCleaner", "Cleaning playeritems...");
 	result = CharacterDatabase.Query("SELECT ownerguid, guid FROM playeritems");
-	vector<uint64> tokill_items;
+	vector< uint64 > tokill_items;
 	if(result)
 	{
 		do
 		{
 			if(result->Fetch()[0].GetUInt32() != 0 && chr_guids.find(result->Fetch()[0].GetUInt32()) == chr_guids.end())
-			{
 				tokill_items.push_back(result->Fetch()[1].GetUInt64());
-			}
 		}
 		while(result->NextRow());
 		delete result;
 	}
 
-	for(vector<uint64>::iterator itr = tokill_items.begin(); itr != tokill_items.end(); ++itr)
+	for(vector< uint64 >::iterator itr = tokill_items.begin(); itr != tokill_items.end(); ++itr)
 	{
 		CharacterDatabase.WaitExecute("DELETE FROM playeritems WHERE guid = " I64FMTD, *itr);
 	}
@@ -115,12 +107,8 @@ void DatabaseCleaner::CleanCharacters()
 			Corpse* pCorpse = new Corpse(0, result->Fetch()[0].GetUInt32());
 			pCorpse->LoadValues(result->Fetch()[8].GetString());
 			pCorpse->SetLowGUID(0);
-			if(pCorpse->GetDisplayId() == 0 ||
-			        GET_LOWGUID_PART(pCorpse->GetOwner()) == 0 ||
-			        chr_guids.find(GET_LOWGUID_PART(pCorpse->GetOwner())) == chr_guids.end())
-			{
+			if(pCorpse->GetDisplayId() == 0 || GET_LOWGUID_PART(pCorpse->GetOwner()) == 0 || chr_guids.find(GET_LOWGUID_PART(pCorpse->GetOwner())) == chr_guids.end())
 				tokill_corpses.push_back(pCorpse->GetLowGUID());
-			}
 			delete pCorpse;
 		}
 		while(result->NextRow());
@@ -157,9 +145,7 @@ void DatabaseCleaner::CleanCharacters()
 		do
 		{
 			if(chr_guilds.find(result->Fetch()[0].GetUInt32()) == chr_guilds.end())
-			{
 				tokill_guilds.push_back(result->Fetch()[0].GetUInt32());
-			}
 		}
 		while(result->NextRow());
 		delete result;
@@ -177,9 +163,7 @@ void DatabaseCleaner::CleanCharacters()
 		do
 		{
 			if(chr_guilds.find(result->Fetch()[0].GetUInt32()) == chr_guilds.end())
-			{
 				tokill_guildranks.insert(result->Fetch()[0].GetUInt32());
-			}
 		}
 		while(result->NextRow());
 		delete result;
@@ -190,7 +174,7 @@ void DatabaseCleaner::CleanCharacters()
 	Log.Notice("DatabaseCleaner", "Deleted %u guild rank rows.", tokill_guildranks.size());
 	Log.Notice("DatabaseCleaner", "Cleaning social table...");
 	result = CharacterDatabase.Query("SELECT * FROM social");
-	vector<pair<uint32, uint32> > tokill_social;
+	vector< pair<uint32, uint32>> tokill_social;
 	if(result)
 	{
 		do
@@ -209,15 +193,13 @@ void DatabaseCleaner::CleanCharacters()
 		delete result;
 	}
 
-	for(vector<pair<uint32, uint32> >::iterator itr = tokill_social.begin(); itr != tokill_social.end(); ++itr)
-	{
+	for(vector<pair<uint32, uint32>>::iterator itr = tokill_social.begin(); itr != tokill_social.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM social WHERE guid = %u and socialguid = %u", itr->first, itr->second);
-	}
 
 	Log.Notice("DatabaseCleaner", "Deleted %u social entries.", tokill_social.size());
 	Log.Notice("DatabaseCleaner", "Cleaning cooldown tables...");
 	set<uint32> tokill_cool;
-	vector<pair<uint32, uint32> > tokill_cool2;
+	vector< pair<uint32, uint32>> tokill_cool2;
 	result = CharacterDatabase.Query("SELECT OwnerGuid, CooldownTimeStamp FROM playercooldownitems");
 	if(result)
 	{
@@ -235,7 +217,7 @@ void DatabaseCleaner::CleanCharacters()
 		delete result;
 	}
 
-	for(vector<pair<uint32, uint32> >::iterator itr = tokill_cool2.begin(); itr != tokill_cool2.end(); ++itr)
+	for(vector<pair<uint32, uint32>>::iterator itr = tokill_cool2.begin(); itr != tokill_cool2.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM playercooldownitems WHERE OwnerGuid = %u AND CooldownTimeStamp = %u", itr->first, itr->second);
 	for(set<uint32>::iterator itr = tokill_cool.begin(); itr != tokill_cool.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM playercooldownitems WHERE OwnerGuid = %u", *itr);
@@ -260,7 +242,7 @@ void DatabaseCleaner::CleanCharacters()
 		delete result;
 	}
 
-	for(vector<pair<uint32, uint32> >::iterator itr = tokill_cool2.begin(); itr != tokill_cool2.end(); ++itr)
+	for(vector<pair<uint32, uint32>>::iterator itr = tokill_cool2.begin(); itr != tokill_cool2.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM playercooldownsecurity WHERE OwnerGuid = %u AND TimeStamp = %u", itr->first, itr->second);
 	for(set<uint32>::iterator itr = tokill_cool.begin(); itr != tokill_cool.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM playercooldownsecurity WHERE OwnerGuid = %u", *itr);
@@ -355,11 +337,8 @@ void DatabaseCleaner::CleanCharacters()
 	{
 		do
 		{
-			if(chr_charters.find(result->Fetch()[0].GetUInt32()) == chr_charters.end() ||
-			        chr_guids.find(result->Fetch()[1].GetUInt32()) == chr_guids.end())
-			{
+			if(chr_charters.find(result->Fetch()[0].GetUInt32()) == chr_charters.end() || chr_guids.find(result->Fetch()[1].GetUInt32()) == chr_guids.end())
 				tokill_charters.push_back(result->Fetch()[0].GetUInt32());
-			}
 		}
 		while(result->NextRow());
 		delete result;
@@ -367,6 +346,7 @@ void DatabaseCleaner::CleanCharacters()
 
 	for(vector<uint32>::iterator itr = tokill_charters.begin(); itr != tokill_charters.end(); ++itr)
 		CharacterDatabase.WaitExecute("DELETE FROM charters WHERE charterId = %u", *itr);
+
 	Log.Notice("DatabaseCleaner", "Deleted %u charters.", tokill_charters.size());
 	Log.Notice("DatabaseCleaner", "Cleaning charters...");
 	result = CharacterDatabase.Query("SELECT auctionId, owner FROM auctions");
@@ -377,7 +357,6 @@ void DatabaseCleaner::CleanCharacters()
 		{
 			if(chr_guids.find(result->Fetch()[1].GetUInt32()) == chr_guids.end())
 				tokill_auct.push_back(result->Fetch()[0].GetUInt32());
-
 		}
 		while(result->NextRow());
 		delete result;

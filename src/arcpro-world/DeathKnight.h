@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -30,11 +30,11 @@
 
 enum SPELL_RUNE_TYPES
 {
-    RUNE_BLOOD		= 0,
-    RUNE_FROST		= 1,
-    RUNE_UNHOLY		= 2,
-    RUNE_DEATH		= 3,
-    RUNE_MAX_TYPES	= 4
+	RUNE_BLOOD		= 0,
+	RUNE_FROST		= 1,
+	RUNE_UNHOLY		= 2,
+	RUNE_DEATH		= 3,
+	RUNE_MAX_TYPES	= 4
 };
 
 const uint8 base_runes[MAX_RUNES] = {RUNE_BLOOD, RUNE_BLOOD, RUNE_FROST, RUNE_FROST, RUNE_UNHOLY, RUNE_UNHOLY};
@@ -47,42 +47,41 @@ struct Rune
 
 class DeathKnight : public Player
 {
-		Rune m_runes[MAX_RUNES];
+	Rune m_runes[MAX_RUNES];
 
-		// Holds last slot used
-		uint8 m_last_used_rune_slot;
+	// Holds last slot used
+	uint8 m_last_used_rune_slot;
 
-	protected:
+protected:
+	void SendRuneUpdate(uint8 slot);
 
-		void SendRuneUpdate(uint8 slot);
-
-	public:
-		DeathKnight(uint32 guid) : Player(guid)
+public:
+	DeathKnight(uint32 guid) : Player(guid)
+	{
+		m_last_used_rune_slot = 0;
+		for(uint8 i = 0; i < MAX_RUNES; ++i)
 		{
-			m_last_used_rune_slot = 0;
-			for(uint8 i = 0; i < MAX_RUNES; ++i)
-			{
-				m_runes[i].type = base_runes[i];
-				m_runes[i].is_used = false;
-			}
+			m_runes[i].type = base_runes[i];
+			m_runes[i].is_used = false;
 		}
+	}
 
-		bool IsDeathKnight() { return true; }
+	bool IsDeathKnight() { return true; }
 
-		//*************************************************************************************
-		// RUNES
-		//*************************************************************************************
+	//*************************************************************************************
+	// RUNES
+	//*************************************************************************************
 
-		uint8 GetBaseRuneType(uint8 slot);
-		uint8 GetRuneType(uint8 slot);
-		bool GetRuneIsUsed(uint8 slot);
-		void ConvertRune(uint8 slot, uint8 type);
-		uint32 HasRunes(uint8 type, uint32 count);
-		uint32 TakeRunes(uint8 type, uint32 count);
-		void ResetRune(uint8 slot);
-		uint8 GetRuneFlags();
-		bool IsAllRunesOfTypeInUse(uint8 type);
-		uint8 GetLastUsedUnitSlot() { return m_last_used_rune_slot; }
+	uint8 GetBaseRuneType(uint8 slot);
+	uint8 GetRuneType(uint8 slot);
+	bool GetRuneIsUsed(uint8 slot);
+	void ConvertRune(uint8 slot, uint8 type);
+	uint32 HasRunes(uint8 type, uint32 count);
+	uint32 TakeRunes(uint8 type, uint32 count);
+	void ResetRune(uint8 slot);
+	uint8 GetRuneFlags();
+	bool IsAllRunesOfTypeInUse(uint8 type);
+	uint8 GetLastUsedUnitSlot() { return m_last_used_rune_slot; }
 };
 
 #endif

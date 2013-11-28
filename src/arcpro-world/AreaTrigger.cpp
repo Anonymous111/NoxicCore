@@ -11,15 +11,16 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #include "StdAfx.h"
+
 void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
 {
 	CHECK_INWORLD_RETURN
@@ -32,19 +33,19 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
 
 enum AreaTriggerFailures
 {
-    AREA_TRIGGER_FAILURE_OK				= 0,
-    AREA_TRIGGER_FAILURE_UNAVAILABLE	= 1,
-    AREA_TRIGGER_FAILURE_NO_BC			= 2,
-    AREA_TRIGGER_FAILURE_NO_HEROIC		= 3,
-    AREA_TRIGGER_FAILURE_NO_RAID		= 4,
-    AREA_TRIGGER_FAILURE_NO_ATTUNE_Q	= 5,
-    AREA_TRIGGER_FAILURE_NO_ATTUNE_I	= 6,
-    AREA_TRIGGER_FAILURE_LEVEL			= 7,
-    AREA_TRIGGER_FAILURE_NO_GROUP		= 8,
-    AREA_TRIGGER_FAILURE_NO_KEY         = 9,
-    AREA_TRIGGER_FAILURE_NO_CHECK		= 10,
-    AREA_TRIGGER_FAILURE_NO_WOTLK		= 11,
-    AREA_TRIGGER_FAILURE_LEVEL_HEROIC	= 12,
+	AREA_TRIGGER_FAILURE_OK				= 0,
+	AREA_TRIGGER_FAILURE_UNAVAILABLE	= 1,
+	AREA_TRIGGER_FAILURE_NO_BC			= 2,
+	AREA_TRIGGER_FAILURE_NO_HEROIC		= 3,
+	AREA_TRIGGER_FAILURE_NO_RAID		= 4,
+	AREA_TRIGGER_FAILURE_NO_ATTUNE_Q	= 5,
+	AREA_TRIGGER_FAILURE_NO_ATTUNE_I	= 6,
+	AREA_TRIGGER_FAILURE_LEVEL			= 7,
+	AREA_TRIGGER_FAILURE_NO_GROUP		= 8,
+	AREA_TRIGGER_FAILURE_NO_KEY         = 9,
+	AREA_TRIGGER_FAILURE_NO_CHECK		= 10,
+	AREA_TRIGGER_FAILURE_NO_WOTLK		= 11,
+	AREA_TRIGGER_FAILURE_LEVEL_HEROIC	= 12,
 };
 
 uint32 AreaTriggerFailureMessages[] =
@@ -61,7 +62,7 @@ uint32 AreaTriggerFailureMessages[] =
 	30,
 	33,
 	81,
-	31, // 33="You must be level 70 to enter Heroic mode." 31="You must be at least level %u to pass through here."
+	31, // 33 = "You must be level 70 to enter Heroic mode." 31 = "You must be at least level %u to pass through here."
 };
 
 uint32 CheckTriggerPrerequisites(AreaTrigger* pAreaTrigger, WorldSession* pSession, Player* pPlayer, MapInfo* pMapInfo)
@@ -91,21 +92,16 @@ uint32 CheckTriggerPrerequisites(AreaTrigger* pAreaTrigger, WorldSession* pSessi
 	if((pMapInfo->type == INSTANCE_MULTIMODE && pPlayer->iInstanceType >= MODE_HEROIC) && !pPlayer->GetGroup())
 		return AREA_TRIGGER_FAILURE_NO_GROUP;
 
-	if(pMapInfo && pMapInfo->required_quest_1 && ( pPlayer->GetTeam() == TEAM_ALLIANCE ) && !pPlayer->HasFinishedQuest(pMapInfo->required_quest_1))
+	if(pMapInfo && pMapInfo->required_quest_1 && (pPlayer->GetTeam() == TEAM_ALLIANCE) && !pPlayer->HasFinishedQuest(pMapInfo->required_quest_1))
 		return AREA_TRIGGER_FAILURE_NO_ATTUNE_Q;
 
-	if(pMapInfo && pMapInfo->required_quest_2 && ( pPlayer->GetTeam() == TEAM_HORDE ) && !pPlayer->HasFinishedQuest(pMapInfo->required_quest_2))
+	if(pMapInfo && pMapInfo->required_quest_2 && (pPlayer->GetTeam() == TEAM_HORDE) && !pPlayer->HasFinishedQuest(pMapInfo->required_quest_2))
 		return AREA_TRIGGER_FAILURE_NO_ATTUNE_Q;
 
 	if(pMapInfo && pMapInfo->required_item && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->required_item, true))
 		return AREA_TRIGGER_FAILURE_NO_ATTUNE_I;
 
-	if(pPlayer->iInstanceType >= MODE_HEROIC &&
-	        pMapInfo->type == INSTANCE_MULTIMODE
-	        && ((pMapInfo->heroic_key_1 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_1, false))
-	            &&	(pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))
-	           )
-	  )
+	if(pPlayer->iInstanceType >= MODE_HEROIC && pMapInfo->type == INSTANCE_MULTIMODE && ((pMapInfo->heroic_key_1 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_1, false)) && (pMapInfo->heroic_key_2 > 0 && !pPlayer->GetItemInterface()->GetItemCount(pMapInfo->heroic_key_2, false))))
 		return AREA_TRIGGER_FAILURE_NO_KEY;
 
 	if(pMapInfo->type != INSTANCE_NULL && pPlayer->iInstanceType >= MODE_HEROIC && pPlayer->getLevel() < pMapInfo->minlevel_heroic)
@@ -155,93 +151,86 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
 	switch(pAreaTrigger->Type)
 	{
 		case ATTYPE_INSTANCE:
+		{
+			//only ports if player is out of pendings
+			if(GetPlayer()->GetPlayerStatus() == TRANSFER_PENDING)
+				break;
+			if(sWorld.instance_CheckTriggerPrerequisites)
 			{
-				//only ports if player is out of pendings
-				if(GetPlayer()->GetPlayerStatus() == TRANSFER_PENDING)
-					break;
-				if(sWorld.instance_CheckTriggerPrerequisites)
+				uint32 reason = CheckTriggerPrerequisites(pAreaTrigger, this, _player, WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid));
+				if(reason != AREA_TRIGGER_FAILURE_OK)
 				{
-					uint32 reason = CheckTriggerPrerequisites(pAreaTrigger, this, _player, WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid));
-					if(reason != AREA_TRIGGER_FAILURE_OK)
+					const char* pReason = GetPlayer()->GetSession()->LocalizedWorldSrv(AreaTriggerFailureMessages[reason]);
+					char msg[200];
+					WorldPacket data(SMSG_AREA_TRIGGER_MESSAGE, 50);
+					data << uint32(0);
+
+					switch(reason)
 					{
-						const char* pReason = GetPlayer()->GetSession()->LocalizedWorldSrv(AreaTriggerFailureMessages[reason]);
-						char msg[200];
-						WorldPacket data(SMSG_AREA_TRIGGER_MESSAGE, 50);
-						data << uint32(0);
-
-						switch(reason)
+						case AREA_TRIGGER_FAILURE_LEVEL:
+							snprintf(msg, 200, pReason, pAreaTrigger->required_level);
+							data << msg;
+						break;
+						case AREA_TRIGGER_FAILURE_NO_ATTUNE_I:
 						{
-							case AREA_TRIGGER_FAILURE_LEVEL:
-								snprintf(msg, 200, pReason, pAreaTrigger->required_level);
-								data << msg;
-								break;
-							case AREA_TRIGGER_FAILURE_NO_ATTUNE_I:
-								{
-									MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
-									ItemPrototype* pItem = ItemPrototypeStorage.LookupEntry(pMi->required_item);
-									if(pItem)
-										snprintf(msg, 200, GetPlayer()->GetSession()->LocalizedWorldSrv(35), pItem->Name1);
-									else
-										snprintf(msg, 200, "%s", GetPlayer()->GetSession()->LocalizedWorldSrv(36));
+							MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
+							ItemPrototype* pItem = ItemPrototypeStorage.LookupEntry(pMi->required_item);
+							if(pItem)
+								snprintf(msg, 200, GetPlayer()->GetSession()->LocalizedWorldSrv(35), pItem->Name1);
+							else
+								snprintf(msg, 200, "%s", GetPlayer()->GetSession()->LocalizedWorldSrv(36));
 
-									data << msg;
-								}
-								break;
-							case AREA_TRIGGER_FAILURE_NO_ATTUNE_Q:
-								{
-									MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
-									Quest* pQuest = NULL;
+							data << msg;
+						}break;
+						case AREA_TRIGGER_FAILURE_NO_ATTUNE_Q:
+						{
+							MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
+							Quest* pQuest = NULL;
 
-									if( pPlayer->GetTeam() == TEAM_ALLIANCE )
-										pQuest = QuestStorage.LookupEntry(pMi->required_quest_1 );
-									else
-										pQuest = QuestStorage.LookupEntry(pMi->required_quest_2 );
+							if(pPlayer->GetTeam() == TEAM_ALLIANCE)
+								pQuest = QuestStorage.LookupEntry(pMi->required_quest_1);
+							else
+								pQuest = QuestStorage.LookupEntry(pMi->required_quest_2);
 
-									if(pQuest)
-										snprintf(msg, 200, "You must have finished the quest '%s' to pass through here.", pQuest->title);
-									else
-										snprintf(msg, 200, "You must have finished the quest '%s' to pass through here.", "UNKNOWN" );
+							if(pQuest)
+								snprintf(msg, 200, "You must have finished the quest '%s' to pass through here.", pQuest->title);
+							else
+								snprintf(msg, 200, "You must have finished the quest '%s' to pass through here.", "UNKNOWN");
 
-									data << msg;
-								}
-								break;
-							case AREA_TRIGGER_FAILURE_NO_KEY:
-								{
-									MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
-									ItemPrototype* pItem = ItemPrototypeStorage.LookupEntry(pMi->heroic_key_1);
-									if(pItem)
-										snprintf(msg, 200, "You must have the item, `%s` to pass through here.", pItem->Name1);
-									else
-										snprintf(msg, 200, "You must have the item, UNKNOWN to pass through here.");
+							data << msg;
+						}break;
+						case AREA_TRIGGER_FAILURE_NO_KEY:
+						{
+							MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
+							ItemPrototype* pItem = ItemPrototypeStorage.LookupEntry(pMi->heroic_key_1);
+							if(pItem)
+								snprintf(msg, 200, "You must have the item, `%s` to pass through here.", pItem->Name1);
+							else
+								snprintf(msg, 200, "You must have the item, UNKNOWN to pass through here.");
 
-									data << msg;
-								}
-								break;
-							case AREA_TRIGGER_FAILURE_LEVEL_HEROIC:
-								{
-									MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
-									snprintf(msg, 200, pReason, pMi->minlevel_heroic);
-									data << msg;
-								}
-								break;
-							default:
-								data << pReason;
-								break;
-						}
-
-						data << uint8(0);
-						SendPacket(&data);
-						return;
+							data << msg;
+						}break;
+						case AREA_TRIGGER_FAILURE_LEVEL_HEROIC:
+						{
+							MapInfo* pMi = WorldMapInfoStorage.LookupEntry(pAreaTrigger->Mapid);
+							snprintf(msg, 200, pReason, pMi->minlevel_heroic);
+							data << msg;
+						}break;
+						default:
+							data << pReason;
+						break;
 					}
-				}
-				GetPlayer()->SaveEntryPoint(pAreaTrigger->Mapid);
-				GetPlayer()->SafeTeleport(pAreaTrigger->Mapid, 0, LocationVector(pAreaTrigger->x, pAreaTrigger->y, pAreaTrigger->z, pAreaTrigger->o));
-			}
-			break;
-		case ATTYPE_QUESTTRIGGER:
-			{
 
-			} break;
+					data << uint8(0);
+					SendPacket(&data);
+					return;
+				}
+			}
+			GetPlayer()->SaveEntryPoint(pAreaTrigger->Mapid);
+			GetPlayer()->SafeTeleport(pAreaTrigger->Mapid, 0, LocationVector(pAreaTrigger->x, pAreaTrigger->y, pAreaTrigger->z, pAreaTrigger->o));
+		}break;
+		case ATTYPE_QUESTTRIGGER:
+		break;
 		case ATTYPE_INN:
 			{
 				// Inn
@@ -249,15 +238,14 @@ void WorldSession::_HandleAreaTriggerOpcode(uint32 id)
 			}
 			break;
 		case ATTYPE_TELEPORT:
+		{
+			if(GetPlayer()->GetPlayerStatus() != TRANSFER_PENDING) //only ports if player is out of pendings
 			{
-				if(GetPlayer()->GetPlayerStatus() != TRANSFER_PENDING) //only ports if player is out of pendings
-				{
-					GetPlayer()->SaveEntryPoint(pAreaTrigger->Mapid);
-					GetPlayer()->SafeTeleport(pAreaTrigger->Mapid, 0, LocationVector(pAreaTrigger->x, pAreaTrigger->y, pAreaTrigger->z, pAreaTrigger->o));
-				}
+				GetPlayer()->SaveEntryPoint(pAreaTrigger->Mapid);
+				GetPlayer()->SafeTeleport(pAreaTrigger->Mapid, 0, LocationVector(pAreaTrigger->x, pAreaTrigger->y, pAreaTrigger->z, pAreaTrigger->o));
 			}
-			break;
+		}break;
 		default:
-			break;
+		break;
 	}
 }

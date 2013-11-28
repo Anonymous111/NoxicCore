@@ -11,23 +11,23 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #include "StdAfx.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// float CalcHPCoefficient( MapInfo *mi, uint32 mode, bool boss )
+// float CalcHPCoefficient(MapInfo *mi, uint32 mode, bool boss)
 //  Returns the HP coefficient that is suited for the map, mode, and creature
 //
 // Parameters:
 //  MapInfo *mi		-		pointer to the mapinfo structure
-//	uint32  mode	-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc )
+//	uint32  mode	-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc)
 //	bool	boss	-		true if the creature is a boss, false if not
 //
 // Return Values:
@@ -62,21 +62,19 @@ float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
 			{
 				case MODE_NORMAL_10MEN:
 					coeff = 1.0f;
-					break;
-
+				break;
 				case MODE_HEROIC_10MEN:
 					coeff = 1.25f;
-					break;
-
+				break;
 				case MODE_NORMAL_25MEN:
 					if(hasheroic)
 						coeff = 5.0f;
 					else
 						coeff = 3.0f;
-					break;
-
+				break;
 				case MODE_HEROIC_25MEN:
 					coeff = 5.0f * 1.25f;
+				break;
 			}
 
 			// trash hp coeff calculation
@@ -87,19 +85,16 @@ float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
 			{
 				case MODE_NORMAL_10MEN:
 					coeff = 1.0f;
-					break;
-
+				break;
 				case MODE_HEROIC_10MEN:
 					coeff = 1.5f;
-					break;
-
+				break;
 				case MODE_NORMAL_25MEN:
 					coeff = 2.0f;
-					break;
-
+				break;
 				case MODE_HEROIC_25MEN:
 					coeff = 2.5f;
-					break;
+				break;
 			}
 		}
 	}
@@ -107,7 +102,6 @@ float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
 	// heroic dungeon
 	if(mi->type == INSTANCE_MULTIMODE)
 	{
-
 		if(mode > 0)
 			coeff = 1.5f;
 		else
@@ -119,12 +113,12 @@ float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// float CalcDMGCoefficient( MapInfo *mi, uint32 mode )
+// float CalcDMGCoefficient(MapInfo *mi, uint32 mode)
 //  Calculates the creature damage coefficient that is suitable for the map type and difficulty
 //
 // Parameters:
 //  MapInfo *mi		-		pointer to the MapInfo structure
-//  uint32 mode		-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc )
+//  uint32 mode		-		numeric representation of the version of the map (normal, heroic, 10-25 men, etc)
 //
 // Return Value:
 //  Returns the suitable damage coefficient in a float
@@ -132,7 +126,6 @@ float CalcHPCoefficient(MapInfo* mi, uint32 mode, bool boss)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 float CalcDMGCoefficient(MapInfo* mi, uint32 mode)
 {
-
 	// This calculation is purely speculation as we have no way of finding out how Blizzard generates these values
 	// These cases are based on simple observation of trash/boss damage values for different modes
 	// If you know they are wrong AND you know a better calculation formula then DO change it.
@@ -144,23 +137,19 @@ float CalcDMGCoefficient(MapInfo* mi, uint32 mode)
 	{
 		case MODE_NORMAL_10MEN:
 			return 1.0f;
-			break;
-
+		break;
 		case MODE_NORMAL_25MEN:
 			if(mi->type == INSTANCE_MULTIMODE)
 				return 1.5f;
 			else
 				return 2.0;
-
-			break;
-
+		break;
 		case MODE_HEROIC_10MEN:
 			return 1.5f;
-			break;
-
+		break;
 		case MODE_HEROIC_25MEN:
 			return 2.5f;
-			break;
+		break;
 	}
 
 	return 1.0f;
@@ -239,7 +228,6 @@ Creature::Creature(uint64 guid)
 	m_Creature_type = 0;
 }
 
-
 Creature::~Creature()
 {
 	sEventMgr.RemoveEvents(this);
@@ -310,9 +298,7 @@ void Creature::OnRemoveCorpse()
 		m_position = m_spawnLocation;
 
 		if((GetMapMgr()->GetMapInfo() && GetMapMgr()->GetMapInfo()->type == INSTANCE_RAID && proto->boss) || m_noRespawn)
-		{
 			RemoveFromWorld(false, true);
-		}
 		else
 		{
 			if(proto->RespawnTime || m_respawnTimeOverride)
@@ -412,7 +398,6 @@ void Creature::CreateWayPoint(uint32 WayPointID, uint32 mapid, float x, float y,
 
 ///////////
 /// Looting
-
 void Creature::generateLoot()
 {
 	if(!loot.items.empty())
@@ -433,7 +418,7 @@ void Creature::generateLoot()
 		{
 			uint16 lootThreshold = looter->GetGroup()->GetThreshold();
 
-			for(vector<__LootItem>::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
+			for(vector< __LootItem >::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
 			{
 				if(itr->item.itemproto->Quality < lootThreshold)
 					continue;
@@ -459,7 +444,7 @@ void Creature::generateLoot()
 	 * (hopefully) get 24 random bits, which is then used to create a
 	 * normal distribution over 1/24th of the difference.
 	 */
-	if( loot.gold >= 12 )
+	if(loot.gold >= 12)
 	{
 		uint32 random_bits;
 		double chunk_size;
@@ -502,7 +487,7 @@ void Creature::generateLoot()
 		loot.gold = static_cast<uint32>(0.5 + gold_fp);
 	}
 
-	loot.gold = static_cast<uint32>( loot.gold * sWorld.getRate(RATE_MONEY) );
+	loot.gold = static_cast<uint32>(loot.gold * sWorld.getRate(RATE_MONEY));
 }
 
 void Creature::SaveToDB()
@@ -599,7 +584,6 @@ void Creature::SaveToDB()
 	WorldDatabase.Execute(ss.str().c_str());
 }
 
-
 void Creature::LoadScript()
 {
 	_myScriptClass = sScriptMgr.CreateAIScriptClassForEntry(this);
@@ -613,7 +597,6 @@ void Creature::DeleteFromDB()
 	WorldDatabase.Execute("DELETE FROM creature_spawns WHERE id = %u", GetSQL_id());
 	WorldDatabase.Execute("DELETE FROM creature_waypoints WHERE spawnid = %u", GetSQL_id());
 }
-
 
 /////////////
 /// Quests
@@ -645,9 +628,7 @@ Quest* Creature::FindQuest(uint32 quest_id, uint8 quest_relation)
 		QuestRelation* ptr = (*it);
 
 		if((ptr->qst->id == quest_id) && (ptr->type & quest_relation))
-		{
 			return ptr->qst;
-		}
 	}
 	return NULL;
 }
@@ -655,14 +636,12 @@ Quest* Creature::FindQuest(uint32 quest_id, uint8 quest_relation)
 uint16 Creature::GetQuestRelation(uint32 quest_id)
 {
 	uint16 quest_relation = 0;
-	list<QuestRelation*>::iterator it;
+	list< QuestRelation* >::iterator it;
 
 	for(it = m_quests->begin(); it != m_quests->end(); ++it)
 	{
 		if((*it)->qst->id == quest_id)
-		{
 			quest_relation |= (*it)->type;
-		}
 	}
 	return quest_relation;
 }
@@ -684,7 +663,6 @@ void Creature::setDeathState(DeathState s)
 
 	if(s == JUST_DIED)
 	{
-
 		GetAIInterface()->ResetUnitToFollow();
 		m_deathState = CORPSE;
 		m_corpseEvent = true;
@@ -699,8 +677,6 @@ void Creature::setDeathState(DeathState s)
 		// if it's not a Pet, and not a summon and it has skinningloot then we will allow skinning
 		if((GetCreatedByGUID() == 0) && (GetSummonedByGUID() == 0) && lootmgr.IsSkinnable(creature_info->Id))
 			SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
-
-
 	}
 
 	else m_deathState = s;
@@ -798,10 +774,10 @@ void Creature::EnslaveExpire()
 	{
 		case UNIT_TYPE_DEMON:
 			SetFaction(90);
-			break;
+		break;
 		default:
 			SetFaction(954);
-			break;
+		break;
 	};
 
 	GetAIInterface()->Init(((Unit*)this), AITYPE_AGRO, MOVEMENTTYPE_NONE);
@@ -846,10 +822,10 @@ void Creature::CalcResistance(uint32 type)
 	int32 pos = 0;
 	int32 neg = 0;
 
-	if(BaseResistanceModPct[ type ] < 0)
-		neg = (BaseResistance[ type ] * abs(BaseResistanceModPct[ type ]) / 100);
+	if(BaseResistanceModPct[type] < 0)
+		neg = (BaseResistance[type] * abs(BaseResistanceModPct[type]) / 100);
 	else
-		pos = (BaseResistance[ type ] * BaseResistanceModPct[ type ]) / 100;
+		pos = (BaseResistance[type] * BaseResistanceModPct[type]) / 100;
 
 	if(IsPet() && isAlive() && IsInWorld())
 	{
@@ -860,20 +836,20 @@ void Creature::CalcResistance(uint32 type)
 			pos += int32(0.40f * owner->GetResistance(type));
 	}
 
-	if(ResistanceModPct[ type ] < 0)
-		neg += (BaseResistance[ type ] + pos - neg) * abs(ResistanceModPct[ type ]) / 100;
+	if(ResistanceModPct[type] < 0)
+		neg += (BaseResistance[type] + pos - neg) * abs(ResistanceModPct[type]) / 100;
 	else
-		pos += (BaseResistance[ type ] + pos - neg) * ResistanceModPct[ type ] / 100;
+		pos += (BaseResistance[type] + pos - neg) * ResistanceModPct[type] / 100;
 
-	if(FlatResistanceMod[ type ] < 0)
-		neg += abs(FlatResistanceMod[ type ]);
+	if(FlatResistanceMod[type] < 0)
+		neg += abs(FlatResistanceMod[type]);
 	else
-		pos += FlatResistanceMod[ type ];
+		pos += FlatResistanceMod[type];
 
 	SetUInt32Value(UNIT_FIELD_RESISTANCEBUFFMODSPOSITIVE + type, pos);
 	SetUInt32Value(UNIT_FIELD_RESISTANCEBUFFMODSNEGATIVE + type, neg);
 
-	int32 tot = BaseResistance[ type ] + pos - neg;
+	int32 tot = BaseResistance[type] + pos - neg;
 
 	SetResistance(type, tot > 0 ? tot : 0);
 }
@@ -883,91 +859,93 @@ void Creature::CalcStat(uint32 type)
 	int32 pos = 0;
 	int32 neg = 0;
 
-	if(StatModPct[ type ] < 0)
-		neg = (BaseStats[ type ] * abs(StatModPct[ type ]) / 100);
+	if(StatModPct[type] < 0)
+		neg = (BaseStats[type] * abs(StatModPct[type]) / 100);
 	else
-		pos = (BaseStats[ type ] * StatModPct[ type ]) / 100;
+		pos = (BaseStats[type] * StatModPct[type]) / 100;
 
 	if(IsPet())
 	{
-		Player* owner = TO< Pet* >(this)->GetPetOwner();
+		Player* owner = TO<Pet*>(this)->GetPetOwner();
 		if(type == STAT_STAMINA && owner)
 			pos += int32(0.45f * owner->GetStat(STAT_STAMINA));
 		else if(type == STAT_INTELLECT && owner && GetCreatedBySpell())
 			pos += int32(0.30f * owner->GetStat(STAT_INTELLECT));
 	}
 
-	if(TotalStatModPct[ type ] < 0)
-		neg += (BaseStats[ type ] + pos - neg) * abs(TotalStatModPct[ type ]) / 100;
+	if(TotalStatModPct[type] < 0)
+		neg += (BaseStats[type] + pos - neg) * abs(TotalStatModPct[type]) / 100;
 	else
-		pos += (BaseStats[ type ] + pos - neg) * TotalStatModPct[ type ] / 100;
+		pos += (BaseStats[type] + pos - neg) * TotalStatModPct[type] / 100;
 
-	if(FlatStatMod[ type ] < 0)
-		neg += abs(FlatStatMod[ type ]);
+	if(FlatStatMod[type] < 0)
+		neg += abs(FlatStatMod[type]);
 	else
-		pos += FlatStatMod[ type ];
+		pos += FlatStatMod[type];
 
 	SetUInt32Value(UNIT_FIELD_POSSTAT0 + type, pos);
 	SetUInt32Value(UNIT_FIELD_NEGSTAT0 + type, neg);
 
-	int32 tot = BaseStats[ type ] + pos - neg;
+	int32 tot = BaseStats[type] + pos - neg;
 	SetStat(type, tot > 0 ? tot : 0);
 
 	switch(type)
 	{
 		case STAT_STRENGTH:
+		{
+			//Attack Power
+			if(!IsPet())  //We calculate pet's later
 			{
-				//Attack Power
-				if(!IsPet())  //We calculate pet's later
-				{
-					uint32 str = GetStat(STAT_STRENGTH);
-					int32 AP = (str * 2 - 20);
-					if(AP < 0) AP = 0;
-					SetAttackPower(AP);
-				}
-				CalcDamage();
+				uint32 str = GetStat(STAT_STRENGTH);
+				int32 AP = (str * 2 - 20);
+				if(AP < 0)
+					AP = 0;
+				SetAttackPower(AP);
 			}
-			break;
+			CalcDamage();
+		}break;
 		case STAT_AGILITY:
-			{
-				//Ranged Attack Power (Does any creature use this?)
-				int32 RAP = getLevel() + GetStat(STAT_AGILITY) - 10;
-				if(RAP < 0) RAP = 0;
-				SetRangedAttackPower(RAP);
-			}
-			break;
+		{
+			//Ranged Attack Power (Does any creature use this?)
+			int32 RAP = getLevel() + GetStat(STAT_AGILITY) - 10;
+			if(RAP < 0)
+				RAP = 0;
+			SetRangedAttackPower(RAP);
+		}break;
 		case STAT_STAMINA:
-			{
-				//Health
-				uint32 hp = GetBaseHealth();
-				uint32 stat_bonus = GetUInt32Value(UNIT_FIELD_POSSTAT2) - GetUInt32Value(UNIT_FIELD_NEGSTAT2);
-				if(static_cast<int32>(stat_bonus) < 0) stat_bonus = 0;
+		{
+			//Health
+			uint32 hp = GetBaseHealth();
+			uint32 stat_bonus = GetUInt32Value(UNIT_FIELD_POSSTAT2) - GetUInt32Value(UNIT_FIELD_NEGSTAT2);
+			if(static_cast<int32>(stat_bonus) < 0)
+				stat_bonus = 0;
 
-				uint32 bonus = stat_bonus * 10 + m_healthfromspell;
-				uint32 res = hp + bonus;
+			uint32 bonus = stat_bonus * 10 + m_healthfromspell;
+			uint32 res = hp + bonus;
 
-				if(res < hp) res = hp;
-				SetUInt32Value(UNIT_FIELD_MAXHEALTH, res);
-				if(GetUInt32Value(UNIT_FIELD_HEALTH) > GetUInt32Value(UNIT_FIELD_MAXHEALTH))
-					SetHealth(GetUInt32Value(UNIT_FIELD_MAXHEALTH));
-			}
-			break;
+			if(res < hp)
+				res = hp;
+			SetUInt32Value(UNIT_FIELD_MAXHEALTH, res);
+			if(GetUInt32Value(UNIT_FIELD_HEALTH) > GetUInt32Value(UNIT_FIELD_MAXHEALTH))
+				SetHealth(GetUInt32Value(UNIT_FIELD_MAXHEALTH));
+		}break;
 		case STAT_INTELLECT:
+		{
+			if(GetPowerType() == POWER_TYPE_MANA)
 			{
-				if(GetPowerType() == POWER_TYPE_MANA)
-				{
-					uint32 mana = GetBaseMana();
-					uint32 stat_bonus = (GetUInt32Value(UNIT_FIELD_POSSTAT3) - GetUInt32Value(UNIT_FIELD_NEGSTAT3));
-					if(static_cast<int32>(stat_bonus) < 0) stat_bonus = 0;
+				uint32 mana = GetBaseMana();
+				uint32 stat_bonus = (GetUInt32Value(UNIT_FIELD_POSSTAT3) - GetUInt32Value(UNIT_FIELD_NEGSTAT3));
+				if(static_cast<int32>(stat_bonus) < 0)
+					stat_bonus = 0;
 
-					uint32 bonus = stat_bonus * 15;
-					uint32 res = mana + bonus;
+				uint32 bonus = stat_bonus * 15;
+				uint32 res = mana + bonus;
 
-					if(res < mana) res = mana;
-					SetMaxPower(POWER_TYPE_MANA, res);
-				}
+				if(res < mana)
+					res = mana;
+				SetMaxPower(POWER_TYPE_MANA, res);
 			}
-			break;
+		}break;
 	}
 }
 
@@ -1011,7 +989,6 @@ void Creature::RegenerateMana()
 	if(cur >= mm)return;
 	amt = (getLevel() + 10) * PctPowerRegenModifier[POWER_TYPE_MANA];
 
-
 	amt *= sWorld.getRate(RATE_POWER1);
 	if(amt <= 1.0)  //this fixes regen like 0.98
 		cur++;
@@ -1031,7 +1008,8 @@ void Creature::RegenerateFocus()
 
 	uint32 cur = GetPower(POWER_TYPE_FOCUS);
 	uint32 mm = GetMaxPower(POWER_TYPE_FOCUS);
-	if(cur >= mm)return;
+	if(cur >= mm)
+		return;
 	float regenrate = sWorld.getRate(RATE_POWER3);
 	float amt = 25.0f * PctPowerRegenModifier[POWER_TYPE_FOCUS] * regenrate;
 	cur += (uint32)amt;
@@ -1058,7 +1036,7 @@ void Creature::AddVendorItem(uint32 itemid, uint32 amount, ItemExtendedCostEntry
 	ci.extended_cost = ec;
 	if(!m_SellItems)
 	{
-		m_SellItems = new vector<CreatureItem>;
+		m_SellItems = new vector< CreatureItem >;
 		objmgr.SetVendorList(GetEntry(), m_SellItems);
 	}
 	m_SellItems->push_back(ci);
@@ -1092,12 +1070,10 @@ void Creature::UpdateItemAmount(uint32 itemid)
 	{
 		if(itr->itemid == itemid)
 		{
-			if(itr->max_amount == 0)		// shouldn't happen
+			if(itr->max_amount == 0) // shouldn't happen
 				itr->available_amount = 0;
 			else
-			{
 				itr->available_amount = itr->max_amount;
-			}
 			return;
 		}
 	}
@@ -1105,7 +1081,7 @@ void Creature::UpdateItemAmount(uint32 itemid)
 
 void Creature::FormationLinkUp(uint32 SqlId)
 {
-	if(!m_mapMgr)		// shouldn't happen
+	if(!m_mapMgr) // shouldn't happen
 		return;
 
 	Creature* creature = m_mapMgr->GetSqlIdCreature(SqlId);
@@ -1119,7 +1095,7 @@ void Creature::FormationLinkUp(uint32 SqlId)
 
 void Creature::ChannelLinkUpGO(uint32 SqlId)
 {
-	if(!m_mapMgr)		// shouldn't happen
+	if(!m_mapMgr) // shouldn't happen
 		return;
 
 	GameObject* go = m_mapMgr->GetSqlIdGameObject(SqlId);
@@ -1133,7 +1109,7 @@ void Creature::ChannelLinkUpGO(uint32 SqlId)
 
 void Creature::ChannelLinkUpCreature(uint32 SqlId)
 {
-	if(!m_mapMgr)		// shouldn't happen
+	if(!m_mapMgr) // shouldn't happen
 		return;
 
 	Creature* go = m_mapMgr->GetSqlIdCreature(SqlId);
@@ -1158,7 +1134,8 @@ bool Creature::isattackable(CreatureSpawn* spawn)
 
 	if((spawn->flags & 2) || (spawn->flags & 128) || (spawn->flags & 256) || (spawn->flags & 65536))
 		return false;
-	else return true;
+	else
+		return true;
 }
 
 uint8 get_byte(uint32 buffer, uint32 index)
@@ -1168,7 +1145,7 @@ uint8 get_byte(uint32 buffer, uint32 index)
 		return 0;
 
 	buffer = buffer >> index * 8;
-	mask   = mask   >> 3 * 8;
+	mask = mask >> 3 * 8;
 	buffer = buffer & mask;
 
 	return (uint8)buffer;
@@ -1195,9 +1172,9 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	SetEntry(proto->Id);
 	SetScale(proto->Scale);
 
-	//SetHealth( (mode ? long2int32(proto->Health * 1.5)  : proto->Health));
+	//SetHealth((mode ? long2int32(proto->Health * 1.5)  : proto->Health));
 	//SetBaseHealth((mode ? long2int32(proto->Health * 1.5)  : proto->Health));
-	//SetMaxHealth( (mode ? long2int32(proto->Health * 1.5)  : proto->Health));
+	//SetMaxHealth((mode ? long2int32(proto->Health * 1.5)  : proto->Health));
 	if(proto->MinHealth > proto->MaxHealth)
 	{
 		proto->MaxHealth = proto->MinHealth + 1;
@@ -1214,7 +1191,7 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	else if(creature_info->Type != UNIT_TYPE_CRITTER)
 		diff_coeff = CalcHPCoefficient(info, mode, false);
 
-	health = static_cast< uint32 >(health * diff_coeff);
+	health = static_cast<uint32>(health * diff_coeff);
 
 	SetHealth(health);
 	SetMaxHealth(health);
@@ -1229,9 +1206,9 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	//if(spawn->displayid != creature_info->Male_DisplayID)
 	//	setGender(1);   // Female
 
-	// uint32 model = 0;
-	// uint32 gender = creature_info->GenerateModelId(&model);
-	// setGender(gender);
+	//uint32 model = 0;
+	//uint32 gender = creature_info->GenerateModelId(&model);
+	//setGender(gender);
 
 	SetDisplayId(spawn->displayid);
 	SetNativeDisplayId(spawn->displayid);
@@ -1278,9 +1255,7 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 
 	// not a neutral creature
 	if(!(m_factionDBC->RepListId == -1 && m_faction->HostileMask == 0 && m_faction->FriendlyMask == 0))
-	{
 		GetAIInterface()->m_canCallForHelp = true;
-	}
 
 	// set if creature can shoot or not.
 	if(proto->CanRanged == 1)
@@ -1323,7 +1298,6 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	SetUInt32Value(UNIT_FIELD_BYTES_2, spawn->bytes2);
 
 ////////////AI
-
 	// kek
 	for(list<AI_Spell*>::iterator itr = proto->spells.begin(); itr != proto->spells.end(); ++itr)
 	{
@@ -1340,10 +1314,8 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 
 	GetAIInterface()->SetWalk();
 
-	if(isattackable(spawn) && !(proto->isTrainingDummy) && !IsVehicle() )
-	{
+	if(isattackable(spawn) && !(proto->isTrainingDummy) && !IsVehicle())
 		GetAIInterface()->SetAllowedToEnterCombat(true);
-	}
 	else
 	{
 		GetAIInterface()->SetAllowedToEnterCombat(false);
@@ -1365,18 +1337,12 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	}
 
 //////////////AI
-
 	myFamily = dbcCreatureFamily.LookupEntry(creature_info->Family);
 
 
 //HACK!
-	if(m_uint32Values[UNIT_FIELD_DISPLAYID] == 17743 ||
-	        m_uint32Values[UNIT_FIELD_DISPLAYID] == 20242 ||
-	        m_uint32Values[UNIT_FIELD_DISPLAYID] == 15435 ||
-	        (creature_info->Family == UNIT_TYPE_MISC))
-	{
+	if(m_uint32Values[UNIT_FIELD_DISPLAYID] == 17743 || m_uint32Values[UNIT_FIELD_DISPLAYID] == 20242 || m_uint32Values[UNIT_FIELD_DISPLAYID] == 15435 || (creature_info->Family == UNIT_TYPE_MISC))
 		m_useAI = false;
-	}
 
 	if(spawn->CanFly == 1)
 		GetAIInterface()->SetFly();
@@ -1424,18 +1390,18 @@ bool Creature::Load(CreatureSpawn* spawn, uint32 mode, MapInfo* info)
 	this->m_position.z = spawn->z;
 	this->m_position.o = spawn->o;
 
-	if( IsVehicle() ){
-		AddVehicleComponent( proto->Id, proto->vehicleid );
-		SetFlag( UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK );
-		setAItoUse( false );
+	if(IsVehicle())
+	{
+		AddVehicleComponent(proto->Id, proto->vehicleid);
+		SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
+		setAItoUse(false);
 	}
 
-	if( proto->rooted != 0 )
+	if(proto->rooted != 0)
 		Root();
 
 	return true;
 }
-
 
 void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 {
@@ -1445,10 +1411,8 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	if(!creature_info)
 		return;
 
-	if(proto_->isTrainingDummy == 0 && !IsVehicle() )
-	{
+	if(proto_->isTrainingDummy == 0 && !IsVehicle())
 		GetAIInterface()->SetAllowedToEnterCombat(true);
-	}
 	else
 	{
 		GetAIInterface()->SetAllowedToEnterCombat(false);
@@ -1492,11 +1456,11 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	SetMinDamage(proto->MinDamage);
 	SetMaxDamage(proto->MaxDamage);
 
-// m_spawn is invalid here - don't use it!
-// this is loading a CreatureProto, which doesn't have ItemSlotDisplays
-//	SetEquippedItem(MELEE,m_spawn->Item1SlotDisplay);
-//	SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_1, m_spawn->Item2SlotDisplay);
-//	SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_2, m_spawn->Item3SlotDisplay);
+	// m_spawn is invalid here - don't use it!
+	// this is loading a CreatureProto, which doesn't have ItemSlotDisplays
+	//SetEquippedItem(MELEE,m_spawn->Item1SlotDisplay);
+	//SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_1, m_spawn->Item2SlotDisplay);
+	//SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_2, m_spawn->Item3SlotDisplay);
 
 	SetFaction(proto->Faction);
 	SetBoundingRadius(proto->BoundingRadius);
@@ -1509,9 +1473,7 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 
 	// not a neutral creature
 	if(!(m_factionDBC->RepListId == -1 && m_faction->HostileMask == 0 && m_faction->FriendlyMask == 0))
-	{
 		GetAIInterface()->m_canCallForHelp = true;
-	}
 
 	// set if creature can shoot or not.
 	if(proto->CanRanged == 1)
@@ -1551,7 +1513,6 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	SetCastSpeedMod(1.0f);   // better set this one
 
 	////////////AI
-
 	// kek
 	for(list<AI_Spell*>::iterator itr = proto->spells.begin(); itr != proto->spells.end(); ++itr)
 	{
@@ -1579,13 +1540,8 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 
 
 	//HACK!
-	if(m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 17743 ||
-	        m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 20242 ||
-	        m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 15435 ||
-	        creature_info->Type == UNIT_TYPE_MISC)
-	{
+	if(m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 17743 || m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 20242 || m_uint32Values[ UNIT_FIELD_DISPLAYID ] == 15435 || creature_info->Type == UNIT_TYPE_MISC)
 		m_useAI = false;
-	}
 
 	SetPowerType(POWER_TYPE_MANA);
 
@@ -1605,13 +1561,14 @@ void Creature::Load(CreatureProto* proto_, float x, float y, float z, float o)
 	if(m_invisFlag > 0)
 		m_invisible = true;
 
-	if( IsVehicle() ){
-		AddVehicleComponent( proto->Id, proto->vehicleid );
-		SetFlag( UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK );
-		setAItoUse( false );
+	if(IsVehicle())
+	{
+		AddVehicleComponent(proto->Id, proto->vehicleid);
+		SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
+		setAItoUse(false);
 	}
 
-	if( proto->rooted != 0 )
+	if(proto->rooted != 0)
 		Root();
 }
 
@@ -1641,15 +1598,14 @@ void Creature::OnPushToWorld()
 	for(; itr != proto->start_auras.end(); ++itr)
 	{
 		sp = dbcSpell.LookupEntryForced((*itr));
-		if(sp == NULL) continue;
+		if(sp == NULL)
+			continue;
 
 		CastSpell(this, sp, 0);
 	}
 
 	if(GetScript() == NULL)
-	{
 		LoadScript();
-	}
 
 	Unit::OnPushToWorld();
 
@@ -1667,20 +1623,16 @@ void Creature::OnPushToWorld()
 		}
 
 		if(m_spawn->channel_target_creature)
-		{
 			sEventMgr.AddEvent(this, &Creature::ChannelLinkUpCreature, m_spawn->channel_target_creature, EVENT_CREATURE_CHANNEL_LINKUP, 1000, 5, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);	// only 5 attempts
-		}
 
 		if(m_spawn->channel_target_go)
-		{
 			sEventMgr.AddEvent(this, &Creature::ChannelLinkUpGO, m_spawn->channel_target_go, EVENT_CREATURE_CHANNEL_LINKUP, 1000, 5, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);	// only 5 attempts
-		}
 	}
 
 	m_aiInterface->m_is_in_instance = (m_mapMgr->GetMapInfo()->type != INSTANCE_NULL) ? true : false;
 	if(this->HasItems())
 	{
-		for(std::vector<CreatureItem>::iterator itr2 = m_SellItems->begin(); itr2 != m_SellItems->end(); ++itr2)
+		for(std::vector< CreatureItem >::iterator itr2 = m_SellItems->begin(); itr2 != m_SellItems->end(); ++itr2)
 		{
 			if(itr2->max_amount == 0)
 				itr2->available_amount = 0;
@@ -1760,7 +1712,8 @@ void Creature::RemoveLimboState(Unit* healer)
 // Generates 3 random waypoints around the NPC
 void Creature::SetGuardWaypoints()
 {
-	if(!GetMapMgr()) return;
+	if(!GetMapMgr())
+		return;
 
 	GetAIInterface()->setMoveType(1);
 	for(int i = 1; i <= 4; i++)
@@ -1814,7 +1767,7 @@ bool Creature::HasLootForPlayer(Player* plr)
 	if(loot.gold > 0)
 		return true;
 
-	for(vector<__LootItem>::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
+	for(vector< __LootItem >::iterator itr = loot.items.begin(); itr != loot.items.end(); ++itr)
 	{
 		ItemPrototype* proto = itr->item.itemproto;
 		if(proto != NULL)
@@ -1895,54 +1848,55 @@ void Creature::RemoveSanctuaryFlag()
 	summonhandler.RemoveSanctuaryFlags();
 }
 
-void Creature::SetSpeeds( uint8 type, float speed ){
-	WorldPacket data( 50 );
+void Creature::SetSpeeds(uint8 type, float speed){
+	WorldPacket data(50);
 
 	data << GetNewGUID();
-	data << uint32( 0 );
+	data << uint32(0);
 
-	if( type == RUN )
-		data << uint8( 0 );
+	if(type == RUN)
+		data << uint8(0);
 
-	data << float( speed );
+	data << float(speed);
 
-	switch( type ){
-
-		case WALK:{
-			data.SetOpcode( SMSG_FORCE_WALK_SPEED_CHANGE );
+	switch(type)
+	{
+		case WALK:
+		{
+			data.SetOpcode(SMSG_FORCE_WALK_SPEED_CHANGE);
 			m_walkSpeed = speed;
-			break;}
-
-		case RUN:{
+		}break;
+		case RUN:
+		{
 			data.SetOpcode(SMSG_FORCE_RUN_SPEED_CHANGE);
 			m_runSpeed = speed;
-			break;}
-		
-		case RUNBACK:{
+		}break;
+		case RUNBACK:
+		{
 			data.SetOpcode(SMSG_FORCE_RUN_BACK_SPEED_CHANGE);
 			m_backWalkSpeed = speed;
-			break;}
-		
-		case SWIM:{
+		}break;
+		case SWIM:
+		{
 			data.SetOpcode(SMSG_FORCE_SWIM_SPEED_CHANGE);
 			m_swimSpeed = speed;
-			break;}
-		
-		case SWIMBACK:{
+		}break;
+		case SWIMBACK:
+		{
 			data.SetOpcode(SMSG_FORCE_SWIM_BACK_SPEED_CHANGE);
 			m_backSwimSpeed = speed;
-			break;}
-
-		case FLY:{
+		}break;
+		case FLY:
+		{
 			data.SetOpcode(SMSG_FORCE_FLIGHT_SPEED_CHANGE);
 			m_flySpeed = speed;
-			break;}
-
+		}break;
 		default:
 			return;
+		break;
 	}
 
-	SendMessageToSet( &data , true );
+	SendMessageToSet(&data , true);
 }
 
 void Creature::PrepareForRemove()
@@ -1971,9 +1925,7 @@ void Creature::PrepareForRemove()
 	if(GetMapMgr()->GetMapInfo() && GetMapMgr()->GetMapInfo()->type == INSTANCE_RAID)
 	{
 		if(GetCreatureInfo()->Rank == 3)
-		{
 			GetMapMgr()->RemoveCombatInProgress(GetGUID());
-		}
 	}
 }
 
@@ -1989,7 +1941,7 @@ void Creature::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint
 {
 	if(!pVictim || !pVictim->isAlive() || !pVictim->IsInWorld() || !IsInWorld())
 		return;
-	if(pVictim->IsPlayer() && TO< Player* >(pVictim)->GodModeCheat == true)
+	if(pVictim->IsPlayer() && TO<Player*>(pVictim)->GodModeCheat == true)
 		return;
 	if(pVictim->bInvincible)
 		return;
@@ -2003,7 +1955,7 @@ void Creature::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint
 
 	if(pVictim->IsPvPFlagged())
 	{
-		Player* p = TO< Player* >(GetPlayerOwner());
+		Player* p = TO<Player*>(GetPlayerOwner());
 
 		if(p != NULL)
 		{
@@ -2016,7 +1968,7 @@ void Creature::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint
 	// Bg dmg counter
 	if(pVictim != this)
 	{
-		Player* p = TO< Player* >(GetPlayerOwner());
+		Player* p = TO<Player*>(GetPlayerOwner());
 		if(p != NULL)
 		{
 			if(p->m_bg != NULL && GetMapMgr() == pVictim->GetMapMgr())
@@ -2038,11 +1990,8 @@ void Creature::DealDamage(Unit* pVictim, uint32 damage, uint32 targetEvent, uint
 		pVictim->Die(this, damage, spellId);
 	}
 	else
-	{
 		pVictim->TakeDamage(this, damage, spellId, no_remove_auras);
-	}
 }
-
 
 void Creature::TakeDamage(Unit* pAttacker, uint32 damage, uint32 spellid, bool no_remove_auras)
 {
@@ -2065,19 +2014,20 @@ void Creature::TakeDamage(Unit* pAttacker, uint32 damage, uint32 spellid, bool n
 
 	GetAIInterface()->AttackReaction(pAttacker, damage, spellid);
 
-	ModHealth(-1 * static_cast< int32 >(damage));
+	ModHealth(-1 * static_cast<int32>(damage));
 }
 
 void Creature::Die(Unit* pAttacker, uint32 damage, uint32 spellid)
 {
-	if( GetVehicleComponent() != NULL ){
+	if(GetVehicleComponent() != NULL)
+	{
 		GetVehicleComponent()->RemoveAccessories();
 		GetVehicleComponent()->EjectAllPassengers();
 	}
 
 	// Creature falls off vehicle on death
-	if( ( currentvehicle != NULL ) )
-		currentvehicle->EjectPassenger( this );
+	if((currentvehicle != NULL))
+		currentvehicle->EjectPassenger(this);
 
 	//general hook for die
 	if(!sHookInterface.OnPreUnitDie(pAttacker, this))
@@ -2102,12 +2052,10 @@ void Creature::Die(Unit* pAttacker, uint32 damage, uint32 spellid)
 
 	if(GetChannelSpellTargetGUID() != 0)
 	{
-
 		Spell* spl = GetCurrentSpell();
 
 		if(spl != NULL)
 		{
-
 			for(int i = 0; i < 3; i++)
 			{
 				if(spl->GetProto()->Effect[i] == SPELL_EFFECT_PERSISTENT_AREA_AURA)
@@ -2121,14 +2069,15 @@ void Creature::Die(Unit* pAttacker, uint32 damage, uint32 spellid)
 				}
 			}
 
-			if(spl->GetProto()->ChannelInterruptFlags == 48140) spl->cancel();
+			if(spl->GetProto()->ChannelInterruptFlags == 48140)
+				spl->cancel();
 		}
 	}
 
 	/* Stop players from casting */
-	for(std::set< Object* >::iterator itr = GetInRangePlayerSetBegin() ; itr != GetInRangePlayerSetEnd() ; itr ++)
+	for(std::set<Object*>::iterator itr = GetInRangePlayerSetBegin() ; itr != GetInRangePlayerSetEnd() ; itr ++)
 	{
-		Unit* attacker = TO< Unit* >(*itr);
+		Unit* attacker = TO<Unit*>(*itr);
 
 		if(attacker->GetCurrentSpell() != NULL)
 		{
@@ -2179,8 +2128,8 @@ void Creature::Die(Unit* pAttacker, uint32 damage, uint32 spellid)
 			charmer->UnPossess();
 	}
 
-	if( m_mapMgr->m_battleground != NULL )
-		m_mapMgr->m_battleground->HookOnUnitDied( this );
+	if(m_mapMgr->m_battleground != NULL)
+		m_mapMgr->m_battleground->HookOnUnitDied(this);
 }
 
 void Creature::SendChatMessage(uint8 type, uint32 lang, const char* msg, uint32 delay)
@@ -2212,7 +2161,7 @@ void Creature::SendChatMessage(uint8 type, uint32 lang, const char* msg, uint32 
 void Creature::SendChatMessageToPlayer(uint8 type, uint32 lang, const char* msg, Player* plr)
 {
 	size_t UnitNameLength = 0, MessageLength = 0;
-	if( plr == NULL)
+	if(plr == NULL)
 		return;
 
 	UnitNameLength = strlen((char*)GetCreatureInfo()->Name) + 1;
@@ -2324,15 +2273,15 @@ void Creature::BuildPetSpellList(WorldPacket & data)
 {
 
 	data << uint64(GetGUID());
-	data << uint16( creature_info->Family );
+	data << uint16(creature_info->Family);
 	data << uint32(0);
 
-	if( !IsVehicle() )
+	if(!IsVehicle())
 		data << uint32(0);
 	else
-		data << uint32( 0x8000101 );	
+		data << uint32(0x8000101);	
 
-	std::vector< uint32 >::iterator itr = proto->castable_spells.begin();
+	std::vector<uint32>::iterator itr = proto->castable_spells.begin();
 
 	// Send the actionbar
 	for(uint32 i = 0; i < 10; ++i)
@@ -2340,14 +2289,14 @@ void Creature::BuildPetSpellList(WorldPacket & data)
 		if(itr != proto->castable_spells.end())
 		{
 			uint32 spell = *itr;
-			data << uint32( Arcpro::Util::MAKE_UNIT_ACTION_BUTTON( spell, i + 8 ) );
+			data << uint32(Arcpro::Util::MAKE_UNIT_ACTION_BUTTON(spell, i + 8));
 			++itr;
 		}
 		else
 		{
-			data << uint16( 0 );
-			data << uint8( 0 );
-			data << uint8( i + 8 );
+			data << uint16(0);
+			data << uint8(0);
+			data << uint8(i + 8);
 		}
 	}
 
@@ -2361,17 +2310,20 @@ Object* Creature::GetPlayerOwner()
 	return NULL;
 }
 
-void Creature::AddVehicleComponent( uint32 creature_entry, uint32 vehicleid ){
-	if( vehicle != NULL ){
-		LOG_ERROR( "Creature %u ( %s ) with GUID %u already has a vehicle component.", proto->Id, creature_info->Name, GetUIdFromGUID() );
+void Creature::AddVehicleComponent(uint32 creature_entry, uint32 vehicleid)
+{
+	if(vehicle != NULL)
+	{
+		LOG_ERROR("Creature %u (%s) with GUID %u already has a vehicle component.", proto->Id, creature_info->Name, GetUIdFromGUID());
 		return;
 	}
 
 	vehicle = new Vehicle();
-	vehicle->Load( this, creature_entry, vehicleid );
+	vehicle->Load(this, creature_entry, vehicleid);
 }
 
-void Creature::RemoveVehicleComponent(){
+void Creature::RemoveVehicleComponent()
+{
 	delete vehicle;
 	vehicle = NULL;
 }

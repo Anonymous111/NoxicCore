@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,12 +23,12 @@
 
 static const uint32 TeamCountToId[6] =
 {
-	0,						// 0
-	0,						// 1
-	0,						// 2
-	ARENA_TEAM_TYPE_2V2,	// 3
-	ARENA_TEAM_TYPE_3V3,	// 4
-	ARENA_TEAM_TYPE_5V5,	// 5
+	0, // 0
+	0, // 1
+	0, // 2
+	ARENA_TEAM_TYPE_2V2, // 3
+	ARENA_TEAM_TYPE_3V3, // 4
+	ARENA_TEAM_TYPE_5V5, // 5
 };
 
 static const uint32 IdToTeamCount[6] =
@@ -121,7 +121,7 @@ void ArenaTeam::Destroy()
 {
 	char buffer[1024];
 	WorldPacket* data;
-	vector<PlayerInfo*> tokill;
+	vector< PlayerInfo* > tokill;
 	uint32 i;
 	tokill.reserve(m_memberCount);
 	snprintf(buffer, 1024, "The arena team, '%s', disbanded.", m_name.c_str());
@@ -135,10 +135,8 @@ void ArenaTeam::Destroy()
 			tokill.push_back(m_members[i].Info);
 	}
 
-	for(vector<PlayerInfo*>::iterator itr = tokill.begin(); itr != tokill.end(); ++itr)
-	{
+	for(vector< PlayerInfo* >::iterator itr = tokill.begin(); itr != tokill.end(); ++itr)
 		RemoveMember(*itr);
-	}
 
 	objmgr.RemoveArenaTeam(this);
 	delete this;
@@ -285,15 +283,11 @@ void ArenaTeam::SaveToDB()
 			   << m_members[i].Won_ThisSeason << " " << m_members[i].PersonalRating << "'";
 		}
 		else
-		{
 			ss << ",'0 0 0 0 0 0'";
-		}
 	}
 
 	for(; i < 10; ++i)
-	{
 		ss << ",'0 0 0 0 0 0'";
-	}
 
 	ss << ")";
 	CharacterDatabase.Execute(ss.str().c_str());
@@ -550,9 +544,7 @@ void WorldSession::HandleArenaTeamInviteAcceptOpcode(WorldPacket & recv_data)
 		delete data;
 	}
 	else
-	{
 		SendNotification("Internal error.");
-	}
 }
 
 void WorldSession::HandleArenaTeamInviteDenyOpcode(WorldPacket & recv_data)

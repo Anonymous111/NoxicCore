@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -27,7 +27,7 @@ LoginErrorCode VerifyName(const char* name, size_t nlen)
 	const char* p;
 	size_t i;
 
-	static const char* bannedCharacters = "\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|/!@#$%^&*~`.,0123456789\0";
+	static const char* bannedCharacters = "\t\v\b\f\a\n\r\\\"\'\? < >[](){}_=+-|/!@#$%^&*~`.,0123456789\0";
 	static const char* allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	if(sWorld.m_limitedNames)
@@ -106,10 +106,11 @@ bool ChatHandler::HandleRenameAllCharacter(const char* args, WorldSession* m_ses
 
 void CapitalizeString(string & arg)
 {
-	if(arg.length() == 0) return;
-	arg[0] = static_cast<char>(toupper(arg[0]));
+	if(arg.length() == 0)
+		return;
+	arg[0] = static_cast< char >(toupper(arg[0]));
 	for(uint32 x = 1; x < arg.size(); ++x)
-		arg[x] = static_cast<char>(tolower(arg[x]));
+		arg[x] = static_cast< char >(tolower(arg[x]));
 }
 
 void WorldSession::CharacterEnumProc(QueryResult* result)
@@ -215,7 +216,7 @@ void WorldSession::CharacterEnumProc(QueryResult* result)
 
 			if(Class == WARLOCK || Class == HUNTER)
 			{
-				res = CharacterDatabase.Query("SELECT entry, level FROM playerpets WHERE ownerguid = %u AND MOD( active, 10 ) = 1 AND alive = TRUE;", Arcpro::Util::GUID_LOPART(guid));
+				res = CharacterDatabase.Query("SELECT entry, level FROM playerpets WHERE ownerguid = %u AND MOD(active, 10) = 1 AND alive = TRUE;", Arcpro::Util::GUID_LOPART(guid));
 
 				if(res)
 				{
@@ -292,7 +293,7 @@ void WorldSession::CharacterEnumProc(QueryResult* result)
 
 void WorldSession::HandleCharEnumOpcode(WorldPacket & recv_data)
 {
-	AsyncQuery* q = new AsyncQuery(new SQLClassCallbackP1<World, uint32>(World::getSingletonPtr(), &World::CharacterEnumProc, GetAccountId()));
+	AsyncQuery* q = new AsyncQuery(new SQLClassCallbackP1< World, uint32 >(World::getSingletonPtr(), &World::CharacterEnumProc, GetAccountId()));
 	q->AddQuery("SELECT guid, level, race, class, gender, bytes, bytes2, name, positionX, positionY, positionZ, mapId, zoneId, banned, restState, deathstate, forced_rename_pending, player_flags, guild_data.guildid FROM characters LEFT JOIN guild_data ON characters.guid = guild_data.playerid WHERE acct=%u ORDER BY guid LIMIT 10", GetAccountId());
 	CharacterDatabase.QueueAsyncQuery(q);
 }
@@ -373,8 +374,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
 	}
 
 	// Check if player got Death Knight already on this realm.
-	if(Config.OptionalConfig.GetBoolDefault("ClassOptions" , "DeathKnightLimit" , true) && has_dk
-	        && (class_ == DEATHKNIGHT))
+	if(Config.OptionalConfig.GetBoolDefault("ClassOptions" , "DeathKnightLimit" , true) && has_dk && (class_ == DEATHKNIGHT))
 	{
 		OutPacket(SMSG_CHAR_CREATE, 1, CHAR_CREATE_UNIQUE_CLASS_LIMIT);
 		return;
@@ -433,7 +433,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
 		WorldPacket data(1);
 		data.SetOpcode(SMSG_CHAR_CREATE);
 		data << (uint8)56 + 1; // This errorcode is not the actual one. Need to find a real error code.
-		SendPacket( &data );
+		SendPacket(&data);
 		*/
 		OutPacket(SMSG_CHAR_CREATE, 1, CHAR_CREATE_LEVEL_REQUIREMENT);
 		return;
@@ -491,9 +491,8 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
 		fail = E_CHAR_DELETE_FAILED;
 	}
 	else
-	{
 		fail = DeleteCharacter((uint32)guid);
-	}
+
 	OutPacket(SMSG_CHAR_DELETE, 1, &fail);
 }
 
@@ -534,7 +533,7 @@ uint8 WorldSession::DeleteCharacter(uint32 guid)
 				t->RemoveMember(inf);
 		}
 
-		/*if( _socket != NULL )
+		/*if(_socket != NULL)
 			sPlrLog.write("Account: %s | IP: %s >> Deleted player %s", GetAccountName().c_str(), GetSocket()->GetRemoteIP().c_str(), name.c_str());*/
 
 		sPlrLog.writefromsession(this, "deleted character %s (GUID: %u)", name.c_str(), (uint32)guid);
@@ -638,7 +637,6 @@ void WorldSession::HandleCharRenameOpcode(WorldPacket & recv_data)
 	SendPacket(&data);
 }
 
-
 void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
 {
 	CHECK_PACKET_SIZE(recv_data, 8);
@@ -655,7 +653,7 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
 		return;
 	}
 
-	AsyncQuery* q = new AsyncQuery(new SQLClassCallbackP0<WorldSession>(this, &WorldSession::LoadPlayerFromDBProc));
+	AsyncQuery* q = new AsyncQuery(new SQLClassCallbackP0< WorldSession >(this, &WorldSession::LoadPlayerFromDBProc));
 	q->AddQuery("SELECT guid,class FROM characters WHERE guid = %u AND forced_rename_pending = 0", playerGuid); // 0
 	CharacterDatabase.QueueAsyncQuery(q);
 }
@@ -689,34 +687,34 @@ void WorldSession::LoadPlayerFromDBProc(QueryResultVector & results)
 	{
 		case WARRIOR:
 			plr = new Warrior(playerGuid);
-			break;
+		break;
 		case PALADIN:
 			plr = new Paladin(playerGuid);
-			break;
+		break;
 		case HUNTER:
 			plr = new Hunter(playerGuid);
-			break;
+		break;
 		case ROGUE:
 			plr = new Rogue(playerGuid);
-			break;
+		break;
 		case PRIEST:
 			plr = new Priest(playerGuid);
-			break;
+		break;
 		case DEATHKNIGHT:
 			plr = new DeathKnight(playerGuid);
-			break;
+		break;
 		case SHAMAN:
 			plr = new Shaman(playerGuid);
-			break;
+		break;
 		case MAGE:
 			plr = new Mage(playerGuid);
-			break;
+		break;
 		case WARLOCK:
 			plr = new Warlock(playerGuid);
-			break;
+		break;
 		case DRUID:
 			plr = new Druid(playerGuid);
-			break;
+		break;
 	}
 
 	if(plr == NULL)
@@ -747,11 +745,8 @@ void WorldSession::FullLogin(Player* plr)
 	if(mgr && mgr->m_battleground)
 	{
 		// Don't allow player to login into a bg that has ended or is full
-		if(mgr->m_battleground->HasEnded() == true ||
-		        mgr->m_battleground->HasFreeSlots(plr->GetTeamInitial(), mgr->m_battleground->GetType() == false))
-		{
+		if(mgr->m_battleground->HasEnded() == true || mgr->m_battleground->HasFreeSlots(plr->GetTeamInitial(), mgr->m_battleground->GetType() == false))
 			mgr = NULL;
-		}
 	}
 
 	// Trying to log to an instance that doesn't exists anymore?
@@ -830,7 +825,7 @@ void WorldSession::FullLogin(Player* plr)
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	StackWorldPacket<20> datab(SMSG_FEATURE_SYSTEM_STATUS);
+	StackWorldPacket< 20 > datab(SMSG_FEATURE_SYSTEM_STATUS);
 
 
 	datab.Initialize(SMSG_FEATURE_SYSTEM_STATUS);
@@ -909,7 +904,7 @@ void WorldSession::FullLogin(Player* plr)
 			{
 				plr->SetMapId(pTrans->GetMapId());
 
-				StackWorldPacket<20> dataw(SMSG_NEW_WORLD);
+				StackWorldPacket< 20 > dataw(SMSG_NEW_WORLD);
 
 				dataw << pTrans->GetMapId();
 				dataw << c_tposx;
@@ -1016,8 +1011,7 @@ void WorldSession::FullLogin(Player* plr)
 	// Recruiting message
 	_player->BroadcastMessage(RECRUITING);
 	// Shows Online players, and connection peak
-	_player->BroadcastMessage("Online Players: %s%u |rPeak: %s%u|r Accepted Connections: %s%u",
-	                          MSG_COLOR_SEXGREEN, sWorld.GetSessionCount(), MSG_COLOR_SEXBLUE, sWorld.PeakSessionCount, MSG_COLOR_SEXBLUE, sWorld.mAcceptedConnections);
+	_player->BroadcastMessage("Online Players: %s%u |rPeak: %s%u|r Accepted Connections: %s%u", MSG_COLOR_SEXGREEN, sWorld.GetSessionCount(), MSG_COLOR_SEXBLUE, sWorld.PeakSessionCount, MSG_COLOR_SEXBLUE, sWorld.mAcceptedConnections);
 
 	// Shows Server uptime
 	_player->BroadcastMessage("Server Uptime: |r%s", sWorld.GetUptimeString().c_str());
@@ -1050,7 +1044,6 @@ void WorldSession::FullLogin(Player* plr)
 	sHookInterface.OnFullLogin(_player);
 
 	objmgr.AddPlayer(_player);
-
 }
 
 bool ChatHandler::HandleRenameCommand(const char* args, WorldSession* m_session)
@@ -1099,9 +1092,7 @@ bool ChatHandler::HandleRenameCommand(const char* args, WorldSession* m_session)
 		plr->SaveToDB(false);
 	}
 	else
-	{
 		CharacterDatabase.WaitExecute("UPDATE characters SET name = '%s' WHERE guid = %u", CharacterDatabase.EscapeString(new_name).c_str(), (uint32)pi->guid);
-	}
 
 	GreenSystemMessage(m_session, "Changed name of '%s' to '%s'.", name1, name2);
 	sGMLog.writefromsession(m_session, "renamed character %s (GUID: %u) to %s", name1, pi->guid, name2);

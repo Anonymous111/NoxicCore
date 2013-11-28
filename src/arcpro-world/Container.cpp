@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -35,7 +35,6 @@ Container::Container(uint32 high, uint32 low) : Item()
 
 	SetScale(1);   //always 1
 
-
 	m_Slot = NULL;
 	random_suffix = random_prop = 0;
 }
@@ -45,9 +44,7 @@ Container::~Container()
 	for(uint32 i = 0; i < m_itemProto->ContainerSlots; i++)
 	{
 		if(m_Slot[i] && m_Slot[i]->GetOwner() == m_owner)
-		{
 			m_Slot[i]->DeleteMe();
-		}
 	}
 
 	delete [] m_Slot;
@@ -105,13 +102,11 @@ void Container::Create(uint32 itemid, Player* owner)
 
 int8 Container::FindFreeSlot()
 {
-	int8 TotalSlots = static_cast<int8>(GetNumSlots());
+	int8 TotalSlots = static_cast< int8 >(GetNumSlots());
 	for(int8 i = 0; i < TotalSlots; i++)
 	{
 		if(!m_Slot[i])
-		{
 			return i;
-		}
 	}
 	LOG_DEBUG("Container::FindFreeSlot: no slot available");
 	return ITEM_NO_SLOT_AVAILABLE;
@@ -119,13 +114,11 @@ int8 Container::FindFreeSlot()
 
 bool Container::HasItems()
 {
-	int8 TotalSlots = static_cast<int8>(GetNumSlots());
+	int8 TotalSlots = static_cast< int8 >(GetNumSlots());
 	for(int8 i = 0; i < TotalSlots; i++)
 	{
 		if(m_Slot[i])
-		{
 			return true;
-		}
 	}
 	return false;
 }
@@ -135,7 +128,7 @@ bool Container::AddItem(int16 slot, Item* item)
 	if(slot < 0 || (uint32)slot >= GetProto()->ContainerSlots)
 		return false;
 
-	//ARCPRO_ASSERT(   m_Slot[slot] == NULL);
+	//ARCPRO_ASSERT(  m_Slot[slot] == NULL);
 	if(m_Slot[slot] != NULL)
 	{
 		//sLog.outString("Bad container item %u slot %d", item->GetGUID(), slot);
@@ -202,7 +195,6 @@ void Container::SwapItems(int8 SrcSlot, int8 DstSlot)
 		{
 			if(m_Slot[DstSlot]->GetStackCount() == destMaxCount)
 			{
-
 			}
 			else
 			{
@@ -224,9 +216,7 @@ void Container::SwapItems(int8 SrcSlot, int8 DstSlot)
 		m_Slot[DstSlot]->m_isDirty = true;
 	}
 	else
-	{
 		SetSlot(DstSlot, 0);
-	}
 
 	if(m_Slot[SrcSlot])
 	{
@@ -234,9 +224,7 @@ void Container::SwapItems(int8 SrcSlot, int8 DstSlot)
 		m_Slot[SrcSlot]->m_isDirty = true;
 	}
 	else
-	{
 		SetSlot(SrcSlot, 0);
-	}
 }
 
 Item* Container::SafeRemoveAndRetreiveItemFromSlot(int16 slot, bool destroy)
@@ -257,9 +245,8 @@ Item* Container::SafeRemoveAndRetreiveItemFromSlot(int16 slot, bool destroy)
 		if(destroy)
 		{
 			if(pItem->IsInWorld())
-			{
 				pItem->RemoveFromWorld();
-			}
+
 			pItem->DeleteFromDB();
 		}
 	}
@@ -276,16 +263,17 @@ bool Container::SafeFullRemoveItemFromSlot(int16 slot)
 
 	Item* pItem = m_Slot[slot];
 
-	if(pItem == NULL || pItem == this) return false;
+	if(pItem == NULL || pItem == this)
+		return false;
+
 	m_Slot[slot] = NULL;
 
 	SetSlot(slot, 0);
 	pItem->SetContainerGUID(0);
 
 	if(pItem->IsInWorld())
-	{
 		pItem->RemoveFromWorld();
-	}
+
 	pItem->DeleteFromDB();
 	pItem->DeleteMe();
 
@@ -325,7 +313,6 @@ bool Container::AddItemToFreeSlot(Item* pItem, uint32* r_slot)
 	return false;
 }
 
-
 void Container::SaveBagToDB(int8 slot, bool first, QueryBuffer* buf)
 {
 	SaveToDB(INVENTORY_SLOT_NOT_SET, slot, first, buf);
@@ -333,10 +320,6 @@ void Container::SaveBagToDB(int8 slot, bool first, QueryBuffer* buf)
 	for(uint32 i = 0; i < m_itemProto->ContainerSlots; i++)
 	{
 		if(m_Slot[i] && !((m_Slot[i]->GetProto()->Flags) & 2))
-		{
 			m_Slot[i]->SaveToDB(slot, static_cast<int8>(i), first, buf);
-		}
 	}
 }
-
-

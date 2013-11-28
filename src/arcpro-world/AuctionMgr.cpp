@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,7 +49,6 @@ void AuctionMgr::LoadAuctionHouses()
 			tempmap.insert(make_pair(res->Fetch()[0].GetUInt32(), ah));
 			if(!((++c) % period))
 				Log.Notice("AuctionHouse", "Done %u/%u, %u%% complete.", c, res->GetRowCount(), c * 100 / res->GetRowCount());
-
 		}
 		while(res->NextRow());
 		delete res;
@@ -70,7 +69,9 @@ void AuctionMgr::LoadAuctionHouses()
 AuctionHouse* AuctionMgr::GetAuctionHouse(uint32 Entry)
 {
 	HM_NAMESPACE::hash_map<uint32, AuctionHouse*>::iterator itr = auctionHouseEntryMap.find(Entry);
-	if(itr == auctionHouseEntryMap.end()) return NULL;
+	if(itr == auctionHouseEntryMap.end())
+		return NULL;
+
 	return itr->second;
 }
 
@@ -79,7 +80,7 @@ void AuctionMgr::Update()
 	if((++loopcount % 100))
 		return;
 
-	vector<AuctionHouse*>::iterator itr = auctionHouses.begin();
+	vector< AuctionHouse* >::iterator itr = auctionHouses.begin();
 	for(; itr != auctionHouses.end(); ++itr)
 	{
 		(*itr)->UpdateDeletionQueue();

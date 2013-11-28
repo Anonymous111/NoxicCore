@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 /*
@@ -27,22 +27,22 @@
 
 class CommonScheduleThread : public CThread
 {
-		bool m_running;
-		bool m_busy;
-		std::multimap<uint32, uint32>::iterator itOrderMSGEntry;
+	bool m_running;
+	bool m_busy;
+	std::multimap<uint32, uint32>::iterator itOrderMSGEntry;
 
-		uint32 BCTimerCount;
+	uint32 BCTimerCount;
 
-		Arcpro::Threading::ConditionVariable cond;
+	Arcpro::Threading::ConditionVariable cond;
 
-	public:
-		CommonScheduleThread();
-		~CommonScheduleThread();
+public:
+	CommonScheduleThread();
+	~CommonScheduleThread();
 
-		bool run();
-		void terminate();
+	bool run();
+	void terminate();
 
-		void BroadCastExec();
+	void BroadCastExec();
 };
 
 #endif

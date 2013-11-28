@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -51,9 +51,8 @@ void ConsoleThread::terminate()
 #endif
 	LOG_BASIC("Waiting for console thread to terminate....");
 	while(m_isRunning)
-	{
 		Arcpro::Sleep(100);
-	}
+
 	LOG_BASIC("Console shut down.");
 }
 
@@ -88,9 +87,7 @@ bool ConsoleThread::run()
 #else
 		int ret = poll(&input, 1, 1000);
 		if(ret < 0)
-		{
 			break;
-		}
 		else if(ret == 0)
 		{
 			if(!m_killSwitch)	// timeout
@@ -101,9 +98,7 @@ bool ConsoleThread::run()
 
 		ret = read(0, cmd, sizeof(cmd));
 		if(ret <= 0)
-		{
 			break;
-		}
 #endif
 
 		len = strlen(cmd);

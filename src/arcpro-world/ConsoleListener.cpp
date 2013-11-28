@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -33,78 +33,78 @@
 
 enum STATES
 {
-    STATE_USER		= 1,
-    STATE_PASSWORD	= 2,
-    STATE_LOGGED	= 3,
-    STATE_WAITING	= 4,
+	STATE_USER		= 1,
+	STATE_PASSWORD	= 2,
+	STATE_LOGGED	= 3,
+	STATE_WAITING	= 4,
 };
 
 class ConsoleSocket : public Socket
 {
-		RemoteConsole* m_pConsole;
-		char* m_pBuffer;
-		uint32 m_pBufferLen;
-		uint32 m_pBufferPos;
-		uint32 m_state;
-		string m_username;
-		string m_password;
-		uint32 m_requestNo;
-		uint8 m_failedLogins;
+	RemoteConsole* m_pConsole;
+	char* m_pBuffer;
+	uint32 m_pBufferLen;
+	uint32 m_pBufferPos;
+	uint32 m_state;
+	string m_username;
+	string m_password;
+	uint32 m_requestNo;
+	uint8 m_failedLogins;
 
-	public:
-		ConsoleSocket(SOCKET iFd);
-		~ConsoleSocket();
+public:
+	ConsoleSocket(SOCKET iFd);
+	~ConsoleSocket();
 
-		void OnRead();
-		void OnDisconnect();
-		void OnConnect();
-		void TryAuthenticate();
-		void AuthCallback(bool result);
+	void OnRead();
+	void OnDisconnect();
+	void OnConnect();
+	void TryAuthenticate();
+	void AuthCallback(bool result);
 };
 
 class ConsoleAuthMgr : public Singleton<ConsoleAuthMgr>
 {
-		Mutex authmgrlock;
-		uint32 highrequestid;
-		map<uint32, ConsoleSocket*> requestmap;
-	public:
+	Mutex authmgrlock;
+	uint32 highrequestid;
+	map<uint32, ConsoleSocket*> requestmap;
 
-		ConsoleAuthMgr()
-		{
-			highrequestid = 1;
-		}
+public:
+	ConsoleAuthMgr()
+	{
+		highrequestid = 1;
+	}
 
-		uint32 GenerateRequestId()
-		{
-			uint32 n;
-			authmgrlock.Acquire();
-			n = highrequestid++;
-			authmgrlock.Release();
-			return n;
-		}
+	uint32 GenerateRequestId()
+	{
+		uint32 n;
+		authmgrlock.Acquire();
+		n = highrequestid++;
+		authmgrlock.Release();
+		return n;
+	}
 
-		void SetRequest(uint32 id, ConsoleSocket* sock)
-		{
-			authmgrlock.Acquire();
-			if(sock == NULL)
-				requestmap.erase(id);
-			else
-				requestmap.insert(make_pair(id, sock));
-			authmgrlock.Release();
-		}
+	void SetRequest(uint32 id, ConsoleSocket* sock)
+	{
+		authmgrlock.Acquire();
+		if(sock == NULL)
+			requestmap.erase(id);
+		else
+			requestmap.insert(make_pair(id, sock));
+		authmgrlock.Release();
+	}
 
-		ConsoleSocket* GetRequest(uint32 id)
-		{
-			ConsoleSocket* rtn;
-			authmgrlock.Acquire();
-			map<uint32, ConsoleSocket*>::iterator itr = requestmap.find(id);
-			if(itr == requestmap.end())
-				rtn = NULL;
-			else
-				rtn = itr->second;
-			authmgrlock.Release();
-			return rtn;
-		}
+	ConsoleSocket* GetRequest(uint32 id)
+	{
+		ConsoleSocket* rtn;
+		authmgrlock.Acquire();
+		map<uint32, ConsoleSocket*>::iterator itr = requestmap.find(id);
+		if(itr == requestmap.end())
+			rtn = NULL;
+		else
+			rtn = itr->second;
+		authmgrlock.Release();
+		return rtn;
+	}
 };
 
 ListenSocket<ConsoleSocket> * g_pListenSocket = NULL;
@@ -223,8 +223,7 @@ void ConsoleSocket::OnRead()
 					m_username = string(m_pBuffer);
 					m_pConsole->Write("password: ");
 					m_state = STATE_PASSWORD;
-					break;
-
+				break;
 				case STATE_PASSWORD:
 					m_password = string(m_pBuffer);
 					m_pConsole->Write("\r\nAttempting to authenticate. Please wait.\r\n");
@@ -234,8 +233,7 @@ void ConsoleSocket::OnRead()
 					ConsoleAuthMgr::getSingleton().SetRequest(m_requestNo, this);
 
 					TestConsoleLogin(m_username, m_password, m_requestNo);
-					break;
-
+				break;
 				case STATE_LOGGED:
 					if(!strnicmp(m_pBuffer, "quit", 4))
 					{
@@ -244,7 +242,7 @@ void ConsoleSocket::OnRead()
 					}
 
 					HandleConsoleInput(m_pConsole, m_pBuffer);
-					break;
+				break;
 			}
 		}
 
@@ -279,9 +277,7 @@ void ConsoleSocket::OnDisconnect()
 		m_requestNo = 0;
 	}
 	if(m_state == STATE_LOGGED)
-	{
 		Log.Notice("RemoteConsole", "User `%s` disconnected.", m_username.c_str());
-	}
 }
 
 void ConsoleSocket::AuthCallback(bool result)
@@ -299,9 +295,7 @@ void ConsoleSocket::AuthCallback(bool result)
 			m_state = STATE_USER;
 		}
 		else
-		{
 			Disconnect();
-		}
 	}
 	else
 	{
@@ -349,22 +343,22 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 	{
 		{
 			&HandleAnnounceCommand,
-			"a", "<announce string>",
+			"a", "< announce string >",
 			"Shows the message in all client chat boxes."
 		},
 		{
 			&HandleAnnounceCommand,
-			"announce", "<announce string>",
+			"announce", "< announce string >",
 			"Shows the message in all client chat boxes."
 		},
 		{
 			&HandleBanAccountCommand,
-			"ban", "<account> <timeperiod> [reason]",
+			"ban", "< account > < timeperiod > [reason]",
 			"Bans account x for time y."
 		},
 		{
 			&HandleBanAccountCommand,
-			"banaccount", "<account> <timeperiod> [reason]",
+			"banaccount", "< account > < timeperiod > [reason]",
 			"Bans account x for time y."
 		},
 		{
@@ -389,7 +383,7 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		},
 		{
 			&HandleKickCommand,
-			"kick", "<Player Name> <reason>",
+			"kick", "< Player Name > < reason >",
 			"Kicks player x for reason y."
 		},
 		{
@@ -399,7 +393,7 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		},
 		{
 			&HandleMOTDCommand,
-			"setmotd", "<new motd>",
+			"setmotd", "< new motd >",
 			"Sets a new MOTD"
 		},
 		{
@@ -409,7 +403,7 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		},
 		{
 			&HandlePlayerInfoCommand,
-			"playerinfo", "<Player Name>",
+			"playerinfo", "< Player Name >",
 			"Shows information about a player."
 		},
 		{
@@ -429,37 +423,37 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		},
 		{
 			&HandleUnbanAccountCommand,
-			"unban", "<account>",
+			"unban", "< account >",
 			"Unbans account x."
 		},
 		{
 			&HandleUnbanAccountCommand,
-			"unbanaccount", "<account>",
+			"unbanaccount", "< account >",
 			"Unbans account x."
 		},
 		{
 			&HandleWAnnounceCommand,
-			"w", "<wannounce string>",
+			"w", "< wannounce string >",
 			"Shows the message in all client title areas."
 		},
 		{
 			&HandleWAnnounceCommand,
-			"wannounce", "<wannounce string>",
+			"wannounce", "< wannounce string >",
 			"Shows the message in all client title areas."
 		},
 		{
 			&HandleWhisperCommand,
-			"whisper", "<player> <message>",
+			"whisper", "< player > < message >",
 			"Whispers a message to someone from the console."
 		},
 		{
 			&HandleNameHashCommand,
-			"getnamehash", "<text>",
-			"Returns the crc32 hash of <text>"
+			"getnamehash", "< text >",
+			"Returns the crc32 hash of < text >"
 		},
 		{
 			&HandleRevivePlayer,
-			"reviveplr", "<name>",
+			"reviveplr", "< name >",
 			"Revives a Player"
 		},
 		{
@@ -469,13 +463,13 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		},
 		{
 			&HandleReloadConsoleCommand,
-			"reload", "<Table>",
+			"reload", "< Table >",
 			"Reloads a table from the world database."
 		},
 		{
-			&HandleScriptEngineReloadCommand, "reloadscripts", "<NULL>", "Reloads all scripting engines currently loaded."
+			&HandleScriptEngineReloadCommand, "reloadscripts", "< NULL >", "Reloads all scripting engines currently loaded."
 		},
-		{ &HandleTimeDateCommand, "datetime", "<NULL>", "Shows time and date according to localtime()" },
+		{ &HandleTimeDateCommand, "datetime", "< NULL >", "Shows time and date according to localtime()" },
 		{ NULL, NULL, NULL, NULL },
 	};
 
@@ -483,7 +477,7 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 	char* p, *q;
 
 	// let's tokenize into arguments.
-	vector<const char*> tokens;
+	vector< const char* > tokens;
 
 	q = (char*)szInput;
 	p = strchr(q, ' ');
@@ -510,12 +504,7 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 			{
 				if(!stricmp(Commands[i].Name, tokens[1]))
 				{
-					pConsole->Write("Command: %s\r\n"
-					                "Arguments: %s\r\n"
-					                "Description: %s\r\n",
-					                Commands[i].Name,
-					                Commands[i].ArgumentFormat,
-					                Commands[i].Description);
+					pConsole->Write("Command: %s\r\n" "Arguments: %s\r\n" "Description: %s\r\n", Commands[i].Name, Commands[i].ArgumentFormat, Commands[i].Description);
 					return;
 				}
 			}
@@ -525,9 +514,8 @@ void HandleConsoleInput(BaseConsole* pConsole, const char* szInput)
 		pConsole->Write("| %15s | %57s |\r\n", "Name", "Arguments");
 		pConsole->Write("===============================================================================\r\n");
 		for(i = 0; Commands[i].Name != NULL; ++i)
-		{
 			pConsole->Write("| %15s | %57s |\r\n", Commands[i].Name, Commands[i].ArgumentFormat);
-		}
+
 		pConsole->Write("===============================================================================\r\n");
 		pConsole->Write("| type 'quit' to terminate a Remote Console Session                           |\r\n");
 		pConsole->Write("===============================================================================\r\n");

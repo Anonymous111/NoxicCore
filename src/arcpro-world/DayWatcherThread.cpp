@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,7 +24,6 @@
  */
 
 #include "StdAfx.h"
-
 #define THREAD_LOOP_INTERVAL 120 // seconds
 
 DayWatcherThread::DayWatcherThread()
@@ -33,10 +32,7 @@ DayWatcherThread::DayWatcherThread()
 	m_dirty = false;
 }
 
-DayWatcherThread::~DayWatcherThread()
-{
-
-}
+DayWatcherThread::~DayWatcherThread() {}
 
 void DayWatcherThread::terminate()
 {
@@ -114,18 +110,17 @@ bool DayWatcherThread::has_timeout_expired(tm* now_time, tm* last_time, uint32 t
 	switch(timeoutval)
 	{
 		case WEEKLY:
-			{
-				return (abs(now_time->tm_yday - last_time->tm_yday) >= 7);
-			}
-
+			return (abs(now_time->tm_yday - last_time->tm_yday) >= 7);
+		break;
 		case MONTHLY:
 			return (now_time->tm_mon != last_time->tm_mon);
-
+		break;
 		case HOURLY:
 			return ((now_time->tm_hour != last_time->tm_hour) || (now_time->tm_mday != last_time->tm_mday) || (now_time->tm_mon != last_time->tm_mon));
-
+		break;
 		case DAILY:
 			return (now_time->tm_mday != last_time->tm_mday && now_time->tm_hour == 4);
+		break;
 	}
 	return false;
 }
@@ -209,15 +204,13 @@ void DayWatcherThread::update_arena()
 						continue;
 
 					/* we're in an arena team of this type! */
-					/* Source: http://www.wowwiki.com/Arena_point */
+					/* Source: http://www.wowpedia.org/Arena_point */
 					X = (double)team->m_stat_rating;
-					if(X <= 510.0)	// "if X<=510"
-						continue;		// no change
-					else if(X > 510.0 && X <= 1500.0)		// "if 510 < X <= 1500"
-					{
+					if(X <= 510.0) // "if X< =510"
+						continue; // no change
+					else if(X > 510.0 && X <= 1500.0) // "if 510 < X <= 1500"
 						Y = (0.22 * X) + 14.0;
-					}
-					else			// "if X > 1500"
+					else // "if X > 1500"
 					{
 						// http://eu.wowarmory.com/arena-calculator.xml
 						//              1511.26
@@ -227,13 +220,13 @@ void DayWatcherThread::update_arena()
 
 						double power = ((-0.00412) * X);
 						//if(power < 1.0)
-						//	power = 1.0;
+							//power = 1.0;
 
 						double divisor = pow(((double)(2.71828)), power);
 						divisor *= 1639.28;
 						divisor += 1.0;
 						//if(divisor < 1.0)
-						//	divisor = 1.0;
+							//divisor = 1.0;
 
 						Y = 1511.26 / divisor;
 					}
@@ -251,9 +244,7 @@ void DayWatcherThread::update_arena()
 						Y *= sWorld.getRate(RATE_ARENAPOINTMULTIPLIER3X);
 					}
 					else
-					{
 						Y *= sWorld.getRate(RATE_ARENAPOINTMULTIPLIER5X);
-					}
 
 					if(Y > 1.0)
 						arenapointsPerTeam[i] += long2int32(double(ceil(Y)));
@@ -262,7 +253,8 @@ void DayWatcherThread::update_arena()
 
 			arenapointsPerTeam[0] = (uint32)max(arenapointsPerTeam[0], arenapointsPerTeam[1]);
 			arenapoints += (uint32)max(arenapointsPerTeam[0], arenapointsPerTeam[2]);
-			if(arenapoints > 5000) arenapoints = 5000;
+			if(arenapoints > 5000)
+				arenapoints = 5000;
 
 			if(orig_arenapoints != arenapoints)
 			{
@@ -274,7 +266,7 @@ void DayWatcherThread::update_arena()
 					/* update visible fields (must be done through an event because of no uint lock */
 					sEventMgr.AddEvent(plr, &Player::RecalculateHonor, EVENT_PLAYER_UPDATE, 100, 1, 0);
 
-					/* send a little message :> */
+					/* send a little message : > */
 					sChatHandler.SystemMessage(plr->GetSession(), "Your arena points have been updated! Check your PvP tab!");
 				}
 
@@ -293,4 +285,3 @@ void DayWatcherThread::update_arena()
 	dupe_tm_pointer(localtime(&last_arena_time), &local_last_arena_time);
 	m_dirty = true;
 }
-

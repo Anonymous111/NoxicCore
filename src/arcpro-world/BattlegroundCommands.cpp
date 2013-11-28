@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -99,9 +99,7 @@ bool ChatHandler::HandleSetWorldStatesCommand(const char* args, WorldSession* m_
 	if(m_session->GetPlayer()->m_bg)
 	{
 		for(uint32 i = first; i < last; i++)
-		{
 			m_session->GetPlayer()->m_bg->SetWorldState(i, val);
-		}
 	}
 
 	return true;

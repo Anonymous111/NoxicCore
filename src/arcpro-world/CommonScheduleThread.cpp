@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -28,10 +28,7 @@ CommonScheduleThread::CommonScheduleThread()
 	BCTimerCount = 0;
 }
 
-CommonScheduleThread::~CommonScheduleThread()
-{
-
-}
+CommonScheduleThread::~CommonScheduleThread() {}
 
 void CommonScheduleThread::terminate()
 {
@@ -49,7 +46,8 @@ bool CommonScheduleThread::run()
 	if(sWorld.BCSystemEnable && sWorld.BCOrderMode == 1)
 		itOrderMSGEntry = objmgr.GetBCTotalItemBegin();
 	// cebernic nothing in storage
-	if(objmgr.IsBCEntryStorageEmpty()) sWorld.BCSystemEnable = 0;
+	if(objmgr.IsBCEntryStorageEmpty())
+		sWorld.BCSystemEnable = 0;
 
 	BCTimerCount = getMSTime() + ((uint32)sWorld.BCInterval * 1000);
 
@@ -76,44 +74,47 @@ cebernic: AutoBroadCast System
 */
 void CommonScheduleThread::BroadCastExec()
 {
-	if(!sWorld.BCSystemEnable) return;
+	if(!sWorld.BCSystemEnable)
+		return;
 
 	if((uint32)sWorld.BCInterval > THREAD_LOOP_INTERVAL)
 	{
 		if(getMSTime() <= BCTimerCount)
-		{
 			return;
-		}
-		else	BCTimerCount = getMSTime() + ((uint32)sWorld.BCInterval * 1000);
+		else
+			BCTimerCount = getMSTime() + ((uint32)sWorld.BCInterval * 1000);
 	}
 
 	switch(sWorld.BCOrderMode)
 	{
 		case 0:
+		{
+			int entry =	objmgr.CalcCurrentBCEntry();
+			if(entry < 0)
 			{
-				int entry =	objmgr.CalcCurrentBCEntry();
-				if(entry < 0)
-				{
-					sWorld.BCSystemEnable = false;
-					Log.Notice("BCSystem", "table worldbroadcast loads failed,so BCSystem disabled already.");
-					return;
-				}
+				sWorld.BCSystemEnable = false;
+				Log.Notice("BCSystem", "table worldbroadcast loads failed,so BCSystem disabled already.");
+				return;
+			}
 
-				if(entry == 0) return;    // no anymessagez hitted.
-				else sWorld.SendBCMessageByID(entry);
-				//printf("random entry: %u\n",entry);
-			}
-			break;
+			if(entry == 0)
+				return; // no anymessagez hitted.
+			else
+				sWorld.SendBCMessageByID(entry);
+			//printf("random entry: %u\n",entry);
+		}break;
 		case 1:
-			{
-				// re-assign
-				if(itOrderMSGEntry ==  objmgr.GetBCTotalItemEnd()) itOrderMSGEntry = objmgr.GetBCTotalItemBegin();
-				sWorld.SendBCMessageByID((uint32)itOrderMSGEntry->second);
-				//printf("serial entry: %u\n",(uint32)itOrderMSGEntry->second);
-				itOrderMSGEntry++;
-			}
-			break;
+		{
+			// re-assign
+			if(itOrderMSGEntry == objmgr.GetBCTotalItemEnd())
+				itOrderMSGEntry = objmgr.GetBCTotalItemBegin();
+
+			sWorld.SendBCMessageByID((uint32)itOrderMSGEntry->second);
+			//printf("serial entry: %u\n",(uint32)itOrderMSGEntry->second);
+			itOrderMSGEntry++;
+		}break;
 		default:
 			return;
+		break;
 	}
 }

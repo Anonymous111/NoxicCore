@@ -11,19 +11,19 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #include "StdAfx.h"
 
 Mutex m_confSettingLock;
-vector<string> m_bannedChannels;
-vector<string> m_minimumChannel;
+vector< string > m_bannedChannels;
+vector< string > m_minimumChannel;
 uint64 voicechannelhigh = 0;
 
 void Channel::LoadConfSettings()
@@ -84,7 +84,7 @@ Channel::Channel(const char* name, uint32 team, uint32 type_id)
 	else
 		m_flags = 0x01;
 
-	for(vector<string>::iterator itr = m_minimumChannel.begin(); itr != m_minimumChannel.end(); ++itr)
+	for(vector< string >::iterator itr = m_minimumChannel.begin(); itr != m_minimumChannel.end(); ++itr)
 	{
 		if(stricmp(name, itr->c_str()))
 		{
@@ -174,7 +174,7 @@ void Channel::Part(Player* plr, bool send_packet)
 
 	if(plr->GetSession() && (plr->GetSession()->IsLoggingOut() || plr->m_TeleportState == 1))
 	{
-
+		// Do nothing?
 	}
 	else if(send_packet)
 	{
@@ -188,9 +188,9 @@ void Channel::Part(Player* plr, bool send_packet)
 		data << uint8(CHANNEL_NOTIFY_FLAG_LEFT) << m_name << plr->GetGUID();
 		SendToAll(&data);
 
-		/*		data.Initialize(SMSG_PLAYER_LEFT_CHANNEL);
-				data << plr->GetGUID() << m_flags << m_id << m_name;
-				SendToAll(&data);*/
+		/*data.Initialize(SMSG_PLAYER_LEFT_CHANNEL);
+		data << plr->GetGUID() << m_flags << m_id << m_name;
+		SendToAll(&data);*/
 	}
 
 	if(m_members.size() == 0)
@@ -798,9 +798,8 @@ ChannelMgr::~ChannelMgr()
 	{
 		ChannelList::iterator itr = this->Channels[i].begin();
 		for(; itr != this->Channels[i].end(); ++itr)
-		{
 			delete itr->second;
-		}
+
 		Channels[i].clear();
 	}
 }
@@ -850,7 +849,7 @@ Channel* ChannelMgr::GetCreateChannel(const char* name, Player* p, uint32 type_i
 
 	// make sure the name isn't banned
 	m_confSettingLock.Acquire();
-	for(vector<string>::iterator itr2 = m_bannedChannels.begin(); itr2 != m_bannedChannels.end(); ++itr2)
+	for(vector< string >::iterator itr2 = m_bannedChannels.begin(); itr2 != m_bannedChannels.end(); ++itr2)
 	{
 		if(!strnicmp(name, itr2->c_str(), itr2->size()))
 		{
@@ -931,7 +930,4 @@ void ChannelMgr::RemoveChannel(Channel* chn)
 	lock.Release();
 }
 
-ChannelMgr::ChannelMgr()
-{
-
-}
+ChannelMgr::ChannelMgr() {}

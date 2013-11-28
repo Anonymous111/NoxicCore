@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -50,7 +50,7 @@ AuctionHouse::AuctionHouse(uint32 ID)
 
 AuctionHouse::~AuctionHouse()
 {
-	HM_NAMESPACE::hash_map<uint32, Auction*>::iterator itr = auctions.begin();
+	HM_NAMESPACE::hash_map< uint32, Auction* >::iterator itr = auctions.begin();
 	for(; itr != auctions.end(); ++itr)
 		delete itr->second;
 }
@@ -72,7 +72,7 @@ void AuctionHouse::UpdateDeletionQueue()
 	removalLock.Acquire();
 	Auction* auct;
 
-	list<Auction*>::iterator it = removalList.begin();
+	list< Auction* >::iterator it = removalList.begin();
 	for(; it != removalList.end(); ++it)
 	{
 		auct = *it;
@@ -90,7 +90,7 @@ void AuctionHouse::UpdateAuctions()
 	removalLock.Acquire();
 
 	uint32 t = (uint32)UNIXTIME;
-	HM_NAMESPACE::hash_map<uint32, Auction*>::iterator itr = auctions.begin();
+	HM_NAMESPACE::hash_map< uint32, Auction* >::iterator itr = auctions.begin();
 	Auction* auct;
 	for(; itr != auctions.end();)
 	{
@@ -105,9 +105,7 @@ void AuctionHouse::UpdateAuctions()
 				this->SendAuctionExpiredNotificationPacket(auct);
 			}
 			else
-			{
 				auct->DeletedReason = AUCTION_REMOVE_WON;
-			}
 
 			auct->Deleted = true;
 			removalList.push_back(auct);
@@ -122,7 +120,7 @@ void AuctionHouse::AddAuction(Auction* auct)
 {
 	// add to the map
 	auctionLock.AcquireWriteLock();
-	auctions.insert(HM_NAMESPACE::hash_map<uint32, Auction*>::value_type(auct->Id , auct));
+	auctions.insert(HM_NAMESPACE::hash_map< uint32, Auction* >::value_type(auct->Id , auct));
 	auctionLock.ReleaseWriteLock();
 
 	Log.Debug("AuctionHouse", "%u: Add auction %u, expire@ %u.", dbc->id, auct->Id, auct->ExpiryTime);
@@ -131,7 +129,7 @@ void AuctionHouse::AddAuction(Auction* auct)
 Auction* AuctionHouse::GetAuction(uint32 Id)
 {
 	Auction* ret;
-	HM_NAMESPACE::hash_map<uint32, Auction*>::iterator itr;
+	HM_NAMESPACE::hash_map< uint32, Auction* >::iterator itr;
 	auctionLock.AcquireReadLock();
 	itr = auctions.find(Id);
 	ret = (itr == auctions.end()) ? 0 : itr->second;
@@ -148,69 +146,60 @@ void AuctionHouse::RemoveAuction(Auction* auct)
 	switch(auct->DeletedReason)
 	{
 		case AUCTION_REMOVE_EXPIRED:
-			{
-				// ItemEntry:0:3
-				snprintf(subject, 100, "%u:0:3", (unsigned int)auct->pItem->GetEntry());
+		{
+			// ItemEntry:0:3
+			snprintf(subject, 100, "%u:0:3", (unsigned int)auct->pItem->GetEntry());
 
-				// Auction expired, resend item, no money to owner.
-				sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->Owner, subject, "", 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
-			}
-			break;
-
+			// Auction expired, resend item, no money to owner.
+			sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->Owner, subject, "", 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
+		}break;
 		case AUCTION_REMOVE_WON:
-			{
-				// ItemEntry:0:1
-				snprintf(subject, 100, "%u:0:1", (unsigned int)auct->pItem->GetEntry());
+		{
+			// ItemEntry:0:1
+			snprintf(subject, 100, "%u:0:1", (unsigned int)auct->pItem->GetEntry());
 
-				// <owner player guid>:bid:buyout
-				snprintf(body, 200, "%X:%u:%u", (unsigned int)auct->Owner, (unsigned int)auct->HighestBid, (unsigned int)auct->BuyoutPrice);
+			// < owner player guid >:bid:buyout
+			snprintf(body, 200, "%X:%u:%u", (unsigned int)auct->Owner, (unsigned int)auct->HighestBid, (unsigned int)auct->BuyoutPrice);
 
-				// Auction won by highest bidder. He gets the item.
-				sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->HighestBidder, subject, body, 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
+			// Auction won by highest bidder. He gets the item.
+			sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->HighestBidder, subject, body, 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
 
-				// Send a mail to the owner with his cut of the price.
-				uint32 auction_cut = float2int32(cut_percent * auct->HighestBid);
-				int32 amount = auct->HighestBid - auction_cut + auct->DepositAmount;
-				if(amount < 0)
-					amount = 0;
+			// Send a mail to the owner with his cut of the price.
+			uint32 auction_cut = float2int32(cut_percent * auct->HighestBid);
+			int32 amount = auct->HighestBid - auction_cut + auct->DepositAmount;
+			if(amount < 0)
+				amount = 0;
 
-				// ItemEntry:0:2
-				snprintf(subject, 100, "%u:0:2", (unsigned int)auct->pItem->GetEntry());
+			// ItemEntry:0:2
+			snprintf(subject, 100, "%u:0:2", (unsigned int)auct->pItem->GetEntry());
 
-				// <hex player guid>:bid:0:deposit:cut
-				if(auct->HighestBid == auct->BuyoutPrice)	   // Buyout
-					snprintf(body, 200, "%X:%u:%u:%u:%u", (unsigned int)auct->HighestBidder, (unsigned int)auct->HighestBid, (unsigned int)auct->BuyoutPrice, (unsigned int)auct->DepositAmount, (unsigned int)auction_cut);
-				else
-					snprintf(body, 200, "%X:%u:0:%u:%u", (unsigned int)auct->HighestBidder, (unsigned int)auct->HighestBid, (unsigned int)auct->DepositAmount, (unsigned int)auction_cut);
+			// < hex player guid >:bid:0:deposit:cut
+			if(auct->HighestBid == auct->BuyoutPrice)	   // Buyout
+				snprintf(body, 200, "%X:%u:%u:%u:%u", (unsigned int)auct->HighestBidder, (unsigned int)auct->HighestBid, (unsigned int)auct->BuyoutPrice, (unsigned int)auct->DepositAmount, (unsigned int)auction_cut);
+			else
+				snprintf(body, 200, "%X:%u:0:%u:%u", (unsigned int)auct->HighestBidder, (unsigned int)auct->HighestBid, (unsigned int)auct->DepositAmount, (unsigned int)auction_cut);
 
-				// send message away.
-				sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->Owner, subject, body, amount, 0, 0, MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
+			// send message away.
+			sMailSystem.SendAutomatedMessage(AUCTION, dbc->id, auct->Owner, subject, body, amount, 0, 0, MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
 
-				// If it's not a buyout (otherwise the players has been already notified)
-				if(auct->HighestBid < auct->BuyoutPrice || auct->BuyoutPrice == 0)
-				{
+			// If it's not a buyout (otherwise the players has been already notified)
+			if(auct->HighestBid < auct->BuyoutPrice || auct->BuyoutPrice == 0)
 					this->SendAuctionBuyOutNotificationPacket(auct);
-				}
-			}
-			break;
+		}break;
 		case AUCTION_REMOVE_CANCELLED:
-			{
-				snprintf(subject, 100, "%u:0:5", (unsigned int)auct->pItem->GetEntry());
-				uint32 cut = float2int32(cut_percent * auct->HighestBid);
-				Player* plr = objmgr.GetPlayer(auct->Owner);
-				if(cut && plr && plr->HasGold(cut))
-					plr->ModGold(-(int32)cut);
+		{
+			snprintf(subject, 100, "%u:0:5", (unsigned int)auct->pItem->GetEntry());
+			uint32 cut = float2int32(cut_percent * auct->HighestBid);
+			Player* plr = objmgr.GetPlayer(auct->Owner);
+			if(cut && plr && plr->HasGold(cut))
+				plr->ModGold(-(int32)cut);
 
-				sMailSystem.SendAutomatedMessage(AUCTION, GetID(), auct->Owner, subject, "", 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
+			sMailSystem.SendAutomatedMessage(AUCTION, GetID(), auct->Owner, subject, "", 0, 0, auct->pItem->GetGUID(), MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
 
-				// return bidders money
-				if(auct->HighestBidder)
-				{
-					sMailSystem.SendAutomatedMessage(AUCTION, GetID(), auct->HighestBidder, subject, "", auct->HighestBid, 0, 0, MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
-				}
-
-			}
-			break;
+			// return bidders money
+			if(auct->HighestBidder)
+				sMailSystem.SendAutomatedMessage(AUCTION, GetID(), auct->HighestBidder, subject, "", auct->HighestBid, 0, 0, MAIL_STATIONERY_AUCTION, MAIL_CHECK_MASK_COPIED);
+		}break;
 	}
 
 	// Remove the auction from the hashmap.
@@ -293,7 +282,7 @@ void AuctionHouse::SendBidListPacket(Player* plr, WorldPacket* packet)
 
 	Auction* auct;
 	auctionLock.AcquireReadLock();
-	HM_NAMESPACE::hash_map<uint32, Auction*>::iterator itr = auctions.begin();
+	HM_NAMESPACE::hash_map< uint32, Auction* >::iterator itr = auctions.begin();
 	for(; itr != auctions.end(); ++itr)
 	{
 		auct = itr->second;
@@ -419,19 +408,19 @@ void AuctionHouse::SendAuctionExpiredNotificationPacket(Auction* auct)
 {
 	//TODO: I don't know the net code... so: TODO ;-)
 
-	//Player *owner = objmgr.GetPlayer((uint32)auct->Owner);
-	//if(owner != NULL && owner->IsInWorld())
-	//{
-	//  WorldPacket data(SMSG_AUCTION_REMOVED_NOTIFICATION, ??);
-	//  data << GetID();
-	//  data << auct->Id;
-	//  data << uint32(0);   // I don't have an active blizz account..so I can't get the netcode by myself.
-	//  data << uint32(0);
-	//  data << uint32(0);
-	//  data << auct->pItem->GetEntry();
-	//  data << uint32(0);
-	//  owner->GetSession()->SendPacket(&data);
-	//}
+	/*Player* owner = objmgr.GetPlayer((uint32)auct->Owner);
+	if(owner != NULL && owner->IsInWorld())
+	{
+		WorldPacket data(SMSG_AUCTION_REMOVED_NOTIFICATION, ??);
+		data << GetID();
+		data << auct->Id;
+		data << uint32(0); // I don't have an active blizz account..so I can't get the netcode by myself.
+		data << uint32(0);
+		data << uint32(0);
+		data << auct->pItem->GetEntry();
+		data << uint32(0);
+		owner->GetSession()->SendPacket(&data);
+	}*/
 }
 
 void WorldSession::SendAuctionPlaceBidResultPacket(uint32 itemId, uint32 error)
@@ -536,7 +525,8 @@ void WorldSession::HandleCancelAuction(WorldPacket & recv_data)
 
 	// Find Item
 	Auction* auct = pCreature->auctionHouse->GetAuction(auction_id);
-	if(auct == 0) return;
+	if(auct == 0)
+		return;
 
 	pCreature->auctionHouse->QueueDeletion(auct, AUCTION_REMOVE_CANCELLED);
 
@@ -603,9 +593,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 	};
 
 	if(pItem->IsInWorld())
-	{
 		pItem->RemoveFromWorld();
-	}
 
 	pItem->SetOwner(NULL);
 	pItem->m_isDirty = true;
@@ -672,14 +660,14 @@ void AuctionHouse::SendAuctionList(Player* plr, WorldPacket* packet)
 	if(auctionString.length() > 0)
 	{
 		for(uint32 j = 0; j < auctionString.length(); ++j)
-			auctionString[j] = static_cast<char>(tolower(auctionString[j]));
+			auctionString[j] = static_cast< char >(tolower(auctionString[j]));
 	}
 
 	WorldPacket data(SMSG_AUCTION_LIST_RESULT, 7000);
 	data << uint32(0); // count of items
 
 	auctionLock.AcquireReadLock();
-	HM_NAMESPACE::hash_map<uint32, Auction*>::iterator itr = auctions.begin();
+	HM_NAMESPACE::hash_map< uint32, Auction* >::iterator itr = auctions.begin();
 	ItemPrototype* proto;
 	for(; itr != auctions.end(); ++itr)
 	{
@@ -789,11 +777,11 @@ void WorldSession::HandleAuctionListPendingSales(WorldPacket & recv_data)
 	uint32 count = 0;
 
 	WorldPacket data(SMSG_AUCTION_LIST_PENDING_SALES, 4);
-	data << uint32(count);                                  // count
+	data << uint32(count); // count
 	/*for(uint32 i = 0; i < count; ++i)
 	{
-		data << "";                                         // string
-		data << "";                                         // string
+		data << ""; // string
+		data << ""; // string
 		data << uint32(0);
 		data << uint32(0);
 		data << float(0);
@@ -836,7 +824,7 @@ void AuctionHouse::LoadAuctions()
 		auct->DeletedReason = 0;
 		auct->Deleted = false;
 
-		auctions.insert(HM_NAMESPACE::hash_map<uint32, Auction*>::value_type(auct->Id, auct));
+		auctions.insert(HM_NAMESPACE::hash_map< uint32, Auction* >::value_type(auct->Id, auct));
 	}
 	while(result->NextRow());
 	delete result;

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -70,12 +70,8 @@ CBattleground::~CBattleground()
 void CBattleground::UpdatePvPData()
 {
 	if(IS_ARENA(m_type))
-	{
 		if(!m_ended)
-		{
 			return;
-		}
-	}
 
 	if(UNIXTIME >= m_nextPvPUpdateTime)
 	{
@@ -100,12 +96,10 @@ void CBattleground::BuildPvPUpdateDataPacket(WorldPacket* data)
 	if(IS_ARENA(m_type))
 	{
 		if(!m_ended)
-		{
 			return;
-		}
 
 		*data << uint8(1);
-		//In 3.1 this should be the uint32(negative rating), uint32(positive rating), uint32(0)[<-this is the new field in 3.1], and a name if available / which is a null-terminated string, and we send an uint8(0), so we provide a zero length name string /
+		//In 3.1 this should be the uint32(negative rating), uint32(positive rating), uint32(0)[< -this is the new field in 3.1], and a name if available / which is a null-terminated string, and we send an uint8(0), so we provide a zero length name string /
 		if(!Rated())
 		{
 			*data << uint32(0) << uint32(0) << uint32(0) << uint8(0);
@@ -117,22 +111,14 @@ void CBattleground::BuildPvPUpdateDataPacket(WorldPacket* data)
 			ArenaTeam** teams = TO< Arena* >(this)->GetTeams();
 
 			if(teams[0])
-			{
 				*data << uint32(0) << uint32(3000 + m_deltaRating[0]) << uint32(0) << uint8(0);
-			}
 			else
-			{
 				*data << uint32(0) << uint32(0) << uint32(0) << uint8(0);
-			}
 
 			if(teams[1])
-			{
 				*data << uint32(0) << uint32(3000 + m_deltaRating[1]) << uint32(0) << uint8(0);
-			}
 			else
-			{
 				*data << uint32(0) << uint32(0) << uint32(0) << uint8(0);
-			}
 		}
 
 		*data << uint8(1);
@@ -165,7 +151,7 @@ void CBattleground::BuildPvPUpdateDataPacket(WorldPacket* data)
 			*data << uint8(m_winningteam ? 0 : 1);
 		}
 		else
-			*data << uint8(0);      // If the game has ended - this will be 1
+			*data << uint8(0); // If the game has ended - this will be 1
 
 		*data << uint32((m_players[0].size() + m_players[1].size()) - m_invisGMs);
 
@@ -269,9 +255,8 @@ void CBattleground::PortPlayer(Player* plr, bool skip_teleport /* = false*/)
 		DistributePacketToTeam(&data, plr->m_bgTeam);
 	}
 	else
-	{
 		m_invisGMs++;
-	}
+
 	m_players[plr->m_bgTeam].insert(plr);
 
 	/* remove from any auto queue remove events */
@@ -332,7 +317,7 @@ GameObject* CBattleground::SpawnGameObject(uint32 entry, uint32 MapId , float x,
 {
 	GameObject* go = m_mapMgr->CreateGameObject(entry);
 
-	Arcpro::Util::ArcproAssert( go != NULL );
+	Arcpro::Util::ArcproAssert(go != NULL);
 
 	go->CreateFromProto(entry, MapId, x, y, z, o);
 
@@ -345,53 +330,61 @@ GameObject* CBattleground::SpawnGameObject(uint32 entry, uint32 MapId , float x,
 	return go;
 }
 
-GameObject* CBattleground::SpawnGameObject( uint32 entry, LocationVector &v, uint32 flags, uint32 faction, float scale ){
-	return SpawnGameObject( entry, m_mapMgr->GetMapId(), v.x, v.y, v.z, v.o, flags, faction, scale );
+GameObject* CBattleground::SpawnGameObject(uint32 entry, LocationVector &v, uint32 flags, uint32 faction, float scale)
+{
+	return SpawnGameObject(entry, m_mapMgr->GetMapId(), v.x, v.y, v.z, v.o, flags, faction, scale);
 }
 
-Creature* CBattleground::SpawnCreature(uint32 entry, float x, float y, float z, float o, uint32 faction )
+Creature* CBattleground::SpawnCreature(uint32 entry, float x, float y, float z, float o, uint32 faction)
 {
 	CreatureProto* cp = CreatureProtoStorage.LookupEntry(entry);
 	Creature* c = m_mapMgr->CreateCreature(entry);
 
-	Arcpro::Util::ArcproAssert( c != NULL );
+	Arcpro::Util::ArcproAssert(c != NULL);
 
 	c->Load(cp, x, y, z, o);
 	
-	if( faction != 0 )
-		c->SetFaction( faction );
+	if(faction != 0)
+		c->SetFaction(faction);
 
 	c->PushToWorld(m_mapMgr);
 	return c;
 }
 
-Creature* CBattleground::SpawnCreature( uint32 entry, LocationVector &v, uint32 faction ){
-	return SpawnCreature( entry, v.x, v.y, v.z, v.o, faction );
+Creature* CBattleground::SpawnCreature(uint32 entry, LocationVector &v, uint32 faction)
+{
+	return SpawnCreature(entry, v.x, v.y, v.z, v.o, faction);
 }
 
-void CBattleground::AddHonorToTeam( uint32 team, uint32 amount ){
+void CBattleground::AddHonorToTeam(uint32 team, uint32 amount)
+{
 	m_mainLock.Acquire();
-	for( std::set< Player* >::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr ){
+	for(std::set<Player*>::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr)
+	{
 		Player *p = *itr;
-		HonorHandler::AddHonorPointsToPlayer( p, amount );
+		HonorHandler::AddHonorPointsToPlayer(p, amount);
 	}
 	m_mainLock.Release();
 }
 
-void CBattleground::CastSpellOnTeam( uint32 team, uint32 spell ){
+void CBattleground::CastSpellOnTeam(uint32 team, uint32 spell)
+{
 	m_mainLock.Acquire();
-	for( std::set< Player* >::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr ){
+	for(std::set<Player*>::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr)
+	{
 		Player *p = *itr;
-		p->CastSpell( p, spell, false );
+		p->CastSpell(p, spell, false);
 	}
 	m_mainLock.Release();
 }
 
-void CBattleground::RemoveAuraFromTeam( uint32 team, uint32 aura ){
+void CBattleground::RemoveAuraFromTeam(uint32 team, uint32 aura)
+{
 	m_mainLock.Acquire();
-	for( std::set< Player* >::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr ){
+	for(std::set<Player*>::iterator itr = m_players[ team ].begin(); itr != m_players[ team ].end(); ++itr)
+	{
 		Player *p = *itr;
-		p->RemoveAura( aura );
+		p->RemoveAura(aura);
 	}
 	m_mainLock.Release();
 }
@@ -455,9 +448,7 @@ void CBattleground::RemovePlayer(Player* plr, bool logout)
 		DistributePacketToAll(&data);
 	}
 	else
-	{
 		RemoveInvisGM();
-	}
 
 	// Call subclassed virtual method
 	OnRemovePlayer(plr);
@@ -555,13 +546,11 @@ void CBattleground::EventCountdown()
 		{
 			for(set<Player*>::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
 				if((*itr) && (*itr)->GetSession())
-				{
 					(*itr)->GetSession()->SystemMessage((*itr)->GetSession()->LocalizedWorldSrv(46), (*itr)->GetSession()->LocalizedWorldSrv(GetNameID()));
-				}
 		}
 		m_mainLock.Release();
 
-		// SendChatMessage( CHAT_MSG_BG_EVENT_NEUTRAL, 0, "One minute until the battle for %s begins!", GetName() );
+		// SendChatMessage(CHAT_MSG_BG_EVENT_NEUTRAL, 0, "One minute until the battle for %s begins!", GetName());
 	}
 	else if(m_countdownStage == 2)
 	{
@@ -572,13 +561,11 @@ void CBattleground::EventCountdown()
 		{
 			for(set<Player*>::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
 				if((*itr) && (*itr)->GetSession())
-				{
 					(*itr)->GetSession()->SystemMessage((*itr)->GetSession()->LocalizedWorldSrv(47), (*itr)->GetSession()->LocalizedWorldSrv(GetNameID()));
-				}
 		}
 		m_mainLock.Release();
 
-		//SendChatMessage( CHAT_MSG_BG_EVENT_NEUTRAL, 0, "Thirty seconds until the battle for %s begins!", GetName() );
+		//SendChatMessage(CHAT_MSG_BG_EVENT_NEUTRAL, 0, "Thirty seconds until the battle for %s begins!", GetName());
 	}
 	else if(m_countdownStage == 3)
 	{
@@ -589,13 +576,11 @@ void CBattleground::EventCountdown()
 		{
 			for(set<Player*>::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
 				if((*itr) && (*itr)->GetSession())
-				{
 					(*itr)->GetSession()->SystemMessage((*itr)->GetSession()->LocalizedWorldSrv(48), (*itr)->GetSession()->LocalizedWorldSrv(GetNameID()));
-				}
 		}
 		m_mainLock.Release();
 
-		//SendChatMessage( CHAT_MSG_BG_EVENT_NEUTRAL, 0, "Fifteen seconds until the battle for %s begins!", GetName() );
+		//SendChatMessage(CHAT_MSG_BG_EVENT_NEUTRAL, 0, "Fifteen seconds until the battle for %s begins!", GetName());
 		sEventMgr.ModifyEventTime(this, EVENT_BATTLEGROUND_COUNTDOWN, 150);
 		sEventMgr.ModifyEventTimeLeft(this, EVENT_BATTLEGROUND_COUNTDOWN, 15000);
 	}
@@ -606,12 +591,10 @@ void CBattleground::EventCountdown()
 		{
 			for(set<Player*>::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
 				if((*itr) && (*itr)->GetSession())
-				{
 					(*itr)->GetSession()->SystemMessage((*itr)->GetSession()->LocalizedWorldSrv(49), (*itr)->GetSession()->LocalizedWorldSrv(GetNameID()));
-				}
 		}
 		m_mainLock.Release();
-		//SendChatMessage( CHAT_MSG_BG_EVENT_NEUTRAL, 0, "The battle for %s has begun!", GetName() );
+		//SendChatMessage(CHAT_MSG_BG_EVENT_NEUTRAL, 0, "The battle for %s has begun!", GetName());
 		sEventMgr.RemoveEvents(this, EVENT_BATTLEGROUND_COUNTDOWN);
 		Start();
 	}
@@ -624,10 +607,10 @@ void CBattleground::Start()
 
 void CBattleground::SetWorldState(uint32 Index, uint32 Value)
 {
-	if( m_zoneid == 0 )
+	if(m_zoneid == 0)
 		return;
 
-	m_mapMgr->GetWorldStatesHandler().SetWorldStateForZone( m_zoneid, 0, Index, Value );
+	m_mapMgr->GetWorldStatesHandler().SetWorldStateForZone(m_zoneid, 0, Index, Value);
 }
 
 void CBattleground::Close()
@@ -677,9 +660,7 @@ Creature* CBattleground::SpawnSpiritGuide(float x, float y, float z, float o, ui
 
 	CreatureInfo* pInfo = CreatureNameStorage.LookupEntry(13116 + horde);
 	if(pInfo == NULL)
-	{
 		return NULL;
-	}
 
 	Creature* pCreature = m_mapMgr->CreateCreature(pInfo->Id);
 
@@ -733,16 +714,17 @@ Creature* CBattleground::SpawnSpiritGuide(float x, float y, float z, float o, ui
 	return pCreature;
 }
 
-Creature* CBattleground::SpawnSpiritGuide( LocationVector &v, uint32 faction ){
-	return SpawnSpiritGuide( v.x, v.y, v.z, v.o, faction );
+Creature* CBattleground::SpawnSpiritGuide(LocationVector &v, uint32 faction){
+	return SpawnSpiritGuide(v.x, v.y, v.z, v.o, faction);
 }
 
 void CBattleground::QueuePlayerForResurrect(Player* plr, Creature* spirit_healer)
 {
 	m_mainLock.Acquire();
-	map<Creature*, set<uint32> >::iterator itr = m_resurrectMap.find(spirit_healer);
+	map<Creature*, set<uint32>>::iterator itr = m_resurrectMap.find(spirit_healer);
 	if(itr != m_resurrectMap.end())
 		itr->second.insert(plr->GetLowGUID());
+
 	plr->m_areaSpiritHealer_guid = spirit_healer->GetGUID();
 	m_mainLock.Release();
 }
@@ -750,9 +732,10 @@ void CBattleground::QueuePlayerForResurrect(Player* plr, Creature* spirit_healer
 void CBattleground::RemovePlayerFromResurrect(Player* plr, Creature* spirit_healer)
 {
 	m_mainLock.Acquire();
-	map<Creature*, set<uint32> >::iterator itr = m_resurrectMap.find(spirit_healer);
+	map<Creature*, set<uint32>>::iterator itr = m_resurrectMap.find(spirit_healer);
 	if(itr != m_resurrectMap.end())
 		itr->second.erase(plr->GetLowGUID());
+
 	plr->m_areaSpiritHealer_guid = 0;
 	m_mainLock.Release();
 }
@@ -760,7 +743,7 @@ void CBattleground::RemovePlayerFromResurrect(Player* plr, Creature* spirit_heal
 void CBattleground::AddSpiritGuide(Creature* pCreature)
 {
 	m_mainLock.Acquire();
-	map<Creature*, set<uint32> >::iterator itr = m_resurrectMap.find(pCreature);
+	map< Creature*, set<uint32>>::iterator itr = m_resurrectMap.find(pCreature);
 	if(itr == m_resurrectMap.end())
 	{
 		set<uint32> ti;
@@ -781,7 +764,7 @@ void CBattleground::EventResurrectPlayers()
 	m_mainLock.Acquire();
 	Player* plr;
 	set<uint32>::iterator itr;
-	map<Creature*, set<uint32> >::iterator i;
+	map< Creature*, set<uint32>>::iterator i;
 	WorldPacket data(50);
 	for(i = m_resurrectMap.begin(); i != m_resurrectMap.end(); ++i)
 	{
@@ -824,7 +807,7 @@ void CBattleground::QueueAtNearestSpiritGuide(Player* plr, Creature* old)
 	Creature* cl = NULL;
 	set<uint32> *closest = NULL;
 	m_lock.Acquire();
-	map<Creature*, set<uint32> >::iterator itr = m_resurrectMap.begin();
+	map<Creature*, set<uint32>>::iterator itr = m_resurrectMap.begin();
 	for(; itr != m_resurrectMap.end(); ++itr)
 	{
 		if(itr->first == old)
@@ -866,9 +849,8 @@ bool CBattleground::HasFreeSlots(uint32 Team, uint32 type)
 
 	m_mainLock.Acquire();
 	if(IS_ARENA(type))
-	{
 		res = ((uint32)m_players[Team].size() + m_pendPlayers[Team].size() < maxPlayers);
-	}
+
 	else
 	{
 		uint32 size[2];
@@ -879,4 +861,3 @@ bool CBattleground::HasFreeSlots(uint32 Team, uint32 type)
 	m_mainLock.Release();
 	return res;
 }
-

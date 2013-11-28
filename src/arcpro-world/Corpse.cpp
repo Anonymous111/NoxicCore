@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -50,16 +50,14 @@ Corpse::~Corpse()
 	//just in case
 }
 
-
 void Corpse::Create(Player* owner, uint32 mapid, float x, float y, float z, float ang)
 {
 	Object::_Create(mapid, x, y, z, ang);
-
 	/*
-	SetFloatValue( CORPSE_FIELD_POS_X, x );
-	SetFloatValue( CORPSE_FIELD_POS_Y, y );
-	SetFloatValue( CORPSE_FIELD_POS_Z, z );
-	SetFloatValue( CORPSE_FIELD_FACING, ang );
+	SetFloatValue(CORPSE_FIELD_POS_X, x);
+	SetFloatValue(CORPSE_FIELD_POS_Y, y);
+	SetFloatValue(CORPSE_FIELD_POS_Z, z);
+	SetFloatValue(CORPSE_FIELD_FACING, ang);
 	*/
 	SetOwner(owner->GetGUID());
 	_loadedfromdb = false;  // can't be created from db ;)
@@ -79,7 +77,7 @@ void Corpse::SaveToDB()
 	for(uint16 i = 0; i < m_valuesCount; i++)
 		ss << GetUInt32Value(i) << " ";
 
-	ss << "', " << GetInstanceID() << " )";
+	ss << "', " << GetInstanceID() << ")";
 
 	CharacterDatabase.Execute(ss.str().c_str());
 }
@@ -104,9 +102,7 @@ void CorpseData::DeleteFromDB()
 void Corpse::Despawn()
 {
 	if(this->IsInWorld())
-	{
 		RemoveFromWorld(false);
-	}
 }
 
 void Corpse::generateLoot()

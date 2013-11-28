@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,8 +23,7 @@
 
 initialiseSingleton(CBattlegroundManager);
 
-CBattlegroundManager::CBattlegroundManager()
-	: EventableObject()
+CBattlegroundManager::CBattlegroundManager() : EventableObject()
 {
 	int i;
 
@@ -38,40 +37,36 @@ CBattlegroundManager::CBattlegroundManager()
 		m_instances[i].clear();
 		m_maxBattlegroundId[i] = 0;
 	}
-
 }
 
-CBattlegroundManager::~CBattlegroundManager()
+CBattlegroundManager::~CBattlegroundManager() {}
+
+void CBattlegroundManager::RegisterBgFactory(uint32 map, BattlegroundFactoryMethod method)
 {
-
-}
-
-void CBattlegroundManager::RegisterBgFactory( uint32 map, BattlegroundFactoryMethod method ){
-	std::map< uint32, BattlegroundFactoryMethod >::iterator itr = bgFactories.find( map );
-	if( itr != bgFactories.end() )
+	std::map< uint32, BattlegroundFactoryMethod >::iterator itr = bgFactories.find(map);
+	if(itr != bgFactories.end())
 		return;
 
 	bgFactories[ map ] = method;
-
 }
 
-void CBattlegroundManager::RegisterArenaFactory( uint32 map, ArenaFactoryMethod method ){
-	std::vector< uint32 >::iterator itr =
-		std::find( arenaMaps.begin(), arenaMaps.end(), map );
-	if( itr != arenaMaps.end() )
+void CBattlegroundManager::RegisterArenaFactory(uint32 map, ArenaFactoryMethod method)
+{
+	std::vector<uint32>::iterator itr =
+		std::find(arenaMaps.begin(), arenaMaps.end(), map);
+	if(itr != arenaMaps.end())
 		return;
-	arenaMaps.push_back( map );
-	arenaFactories.push_back( method );
+	arenaMaps.push_back(map);
+	arenaFactories.push_back(method);
 }
 
-
-void CBattlegroundManager::RegisterMapForBgType( uint32 type, uint32 map ){
-	std::map< uint32, uint32 >::iterator itr = bgMaps.find( type );
-	if( itr != bgMaps.end() )
+void CBattlegroundManager::RegisterMapForBgType(uint32 type, uint32 map)
+{
+	std::map<uint32, uint32>::iterator itr = bgMaps.find(type);
+	if(itr != bgMaps.end())
 		return;
 
-	bgMaps[ type ] = map;
-
+	bgMaps[type] = map;
 }
 
 void CBattlegroundManager::HandleBattlegroundListPacket(WorldSession* m_session, uint32 BattlegroundType, uint8 from)
@@ -85,27 +80,27 @@ void CBattlegroundManager::HandleBattlegroundListPacket(WorldSession* m_session,
 		data << uint64(0);
 
 	data << from;
-	data << uint32(BattlegroundType);   // typeid
-	data << uint8(0);                                      // unk
-	data << uint8(0);                                      // unk
+	data << uint32(BattlegroundType); // typeid
+	data << uint8(0); // unk
+	data << uint8(0); // unk
 
 	// Rewards
-	data << uint8(0);                                      // 3.3.3 hasWin
-	data << uint32(0);                                     // 3.3.3 winHonor
-	data << uint32(0);                                     // 3.3.3 winArena
-	data << uint32(0);                                     // 3.3.3 lossHonor
+	data << uint8(0); // 3.3.3 hasWin
+	data << uint32(0); // 3.3.3 winHonor
+	data << uint32(0); // 3.3.3 winArena
+	data << uint32(0); // 3.3.3 lossHonor
 
 	uint8 isRandom = 0;
-	data << uint8(isRandom);                               // 3.3.3 isRandom
+	data << uint8(isRandom); // 3.3.3 isRandom
 
 	// Random bgs
 	if(isRandom == 1)
 	{
 		// rewards
-		data << uint8(0);                                  // win random
-		data << uint32(0);                                 // Reward honor if won
-		data << uint32(0);                                 // Reward arena point if won
-		data << uint32(0);                                 // Lost honor if lost
+		data << uint8(0); // win random
+		data << uint32(0); // Reward honor if won
+		data << uint32(0); // Reward arena point if won
+		data << uint32(0); // Lost honor if lost
 	}
 
 	if(IS_ARENA(BattlegroundType))
@@ -120,11 +115,11 @@ void CBattlegroundManager::HandleBattlegroundListPacket(WorldSession* m_session,
 	uint32 Count = 0;
 	size_t pos = data.wpos();
 
-	data << uint32(0);      // Count
+	data << uint32(0); // Count
 
 	/* Append the battlegrounds */
 	m_instanceLock.Acquire();
-	for(map<uint32, CBattleground*>::iterator itr = m_instances[BattlegroundType].begin(); itr != m_instances[BattlegroundType].end(); ++itr)
+	for(map< uint32, CBattleground* >::iterator itr = m_instances[BattlegroundType].begin(); itr != m_instances[BattlegroundType].end(); ++itr)
 	{
 		if(itr->second->CanPlayerJoin(m_session->GetPlayer(), BattlegroundType) && !itr->second->HasEnded())
 		{
@@ -134,7 +129,7 @@ void CBattlegroundManager::HandleBattlegroundListPacket(WorldSession* m_session,
 	}
 	m_instanceLock.Release();
 
-	data.put< uint32 >(pos, Count);
+	data.put<uint32>(pos, Count);
 
 	m_session->SendPacket(&data);
 }
@@ -151,15 +146,15 @@ void CBattlegroundManager::HandleBattlegroundJoin(WorldSession* m_session, World
 	pck >> guid >> bgtype >> instance;
 
 	// Random battlegrounds aren't yet implemented
-	if( bgtype == BATTLEGROUND_RANDOM )
+	if(bgtype == BATTLEGROUND_RANDOM)
 		return;
 
-	if( ( bgtype >= BATTLEGROUND_NUM_TYPES ) || ( bgtype == 0 ) ||
-		( ( bgMaps.find( bgtype ) == bgMaps.end() ) && bgtype != BATTLEGROUND_RANDOM ) )
+	if((bgtype >= BATTLEGROUND_NUM_TYPES) || (bgtype == 0) ||
+		((bgMaps.find(bgtype) == bgMaps.end()) && bgtype != BATTLEGROUND_RANDOM))
 	{
 		sCheatLog.writefromsession(m_session, "tried to crash the server by joining battleground that does not exist (0)");
 		m_session->Disconnect();
-		return;      // cheater!
+		return; // cheater!
 	}
 
 	/* Check the instance id */
@@ -167,7 +162,7 @@ void CBattlegroundManager::HandleBattlegroundJoin(WorldSession* m_session, World
 	{
 		/* We haven't picked the first instance. This means we've specified an instance to join. */
 		m_instanceLock.Acquire();
-		map<uint32, CBattleground*>::iterator itr = m_instances[bgtype].find(instance);
+		map< uint32, CBattleground* >::iterator itr = m_instances[bgtype].find(instance);
 
 		if(itr == m_instances[bgtype].end())
 		{
@@ -202,7 +197,7 @@ void CBattlegroundManager::HandleBattlegroundJoin(WorldSession* m_session, World
 	/* We will get updated next few seconds =) */
 }
 
-#define IS_ARENA(x) ( (x) >= BATTLEGROUND_ARENA_2V2 && (x) <= BATTLEGROUND_ARENA_5V5 )
+#define IS_ARENA(x) ((x) >= BATTLEGROUND_ARENA_2V2 && (x) <= BATTLEGROUND_ARENA_5V5)
 
 void ErasePlayerFromList(uint32 guid, list<uint32>* l)
 {
@@ -222,22 +217,31 @@ uint8 GetBattlegroundCaption(BattleGroundTypes bgType)
 	{
 		case BATTLEGROUND_ALTERAC_VALLEY:
 			return 38;
+		break;
 		case BATTLEGROUND_WARSONG_GULCH:
 			return 39;
+		break;
 		case BATTLEGROUND_ARATHI_BASIN:
 			return 40;
+		break;
 		case BATTLEGROUND_ARENA_2V2:
 			return 41;
+		break;
 		case BATTLEGROUND_ARENA_3V3:
 			return 42;
+		break;
 		case BATTLEGROUND_ARENA_5V5:
 			return 43;
+		break;
 		case BATTLEGROUND_EYE_OF_THE_STORM:
 			return 44;
+		break;
 		case BATTLEGROUND_STRAND_OF_THE_ANCIENT:
 			return 34;
+		break;
 		default:
 			return 45;
+		break;
 	}
 }
 
@@ -267,29 +271,29 @@ void CBattlegroundManager::HandleGetBattlegroundQueueCommand(WorldSession* m_ses
 			switch(j)
 			{
 				case 0:
-					ss << " (<10)";
-					break;
+					ss << " (< 10)";
+				break;
 				case 1:
-					ss << " (<20)";
-					break;
+					ss << " (< 20)";
+				break;
 				case 2:
-					ss << " (<30)";
-					break;
+					ss << " (< 30)";
+				break;
 				case 3:
-					ss << " (<40)";
-					break;
+					ss << " (< 40)";
+				break;
 				case 4:
-					ss << " (<50)";
-					break;
+					ss << " (< 50)";
+				break;
 				case 5:
-					ss << " (<60)";
-					break;
+					ss << " (< 60)";
+				break;
 				case 6:
-					ss << " (<70)";
-					break;
+					ss << " (< 70)";
+				break;
 				case 7:
-					ss << " (<80)";
-					break;
+					ss << " (< 80)";
+				break;
 			}
 
 			ss << ": ";
@@ -306,9 +310,7 @@ void CBattlegroundManager::HandleGetBattlegroundQueueCommand(WorldSession* m_ses
 					plr = objmgr.GetPlayer(*it4);
 
 					if(!plr || GetLevelGrouping(plr->getLevel()) != j)
-					{
 						continue;
-					}
 
 					if(plr->IsTeamAlliance())
 						ally++;
@@ -456,9 +458,7 @@ void CBattlegroundManager::AddPlayerToBg(CBattleground* bg, deque<uint32> *playe
 		}
 	}
 	else
-	{
 		ErasePlayerFromList(plrguid, &m_queuedPlayers[i][j]);
-	}
 }
 
 void CBattlegroundManager::AddPlayerToBgTeam(CBattleground* bg, deque<uint32> *playerVec, uint32 i, uint32 j, int Team)
@@ -484,13 +484,13 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 	Player* plr;
 	CBattleground* bg;
 	list<uint32>::iterator it3, it4;
-	map<uint32, CBattleground*>::iterator iitr;
+	map< uint32, CBattleground* >::iterator iitr;
 	Arena* arena;
 	int32 team;
 	uint32 plrguid;
 	uint32 factionMap[ MAX_PLAYER_TEAMS ];
 	uint32 count;
-	std::queue< uint32 > teams[ MAX_PLAYER_TEAMS ];
+	std::queue<uint32> teams[ MAX_PLAYER_TEAMS ];
 
 	m_queueLock.Acquire();
 	m_instanceLock.Acquire();
@@ -561,11 +561,11 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 					if(arena->Rated())
 						continue;
 
-					factionMap[ 0 ] = arena->GetTeamFaction( 0 );
-					factionMap[ 1 ] = arena->GetTeamFaction( 1 );
+					factionMap[ 0 ] = arena->GetTeamFaction(0);
+					factionMap[ 1 ] = arena->GetTeamFaction(1);
 
 					team = arena->GetFreeTeam();
-					while( ( team >= 0 ) && ( tempPlayerVec[ factionMap[ team ] ].size() > 0 ) )
+					while((team >= 0) && (tempPlayerVec[ factionMap[ team ] ].size() > 0))
 					{
 						plrguid = *tempPlayerVec[ factionMap[ team ] ].begin();
 						tempPlayerVec[ factionMap[ team ] ].pop_front();
@@ -590,13 +590,9 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 					}
 
 					while(tempPlayerVec[0].size() > 0 && bg->HasFreeSlots(0, bg->GetType()))
-					{
 						AddPlayerToBgTeam(bg, &tempPlayerVec[0], i, j, 0);
-					}
 					while(tempPlayerVec[1].size() > 0 && bg->HasFreeSlots(1, bg->GetType()))
-					{
 						AddPlayerToBgTeam(bg, &tempPlayerVec[1], i, j, 1);
-					}
 				}
 			}
 
@@ -604,7 +600,7 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 			{
 				// enough players to start a round?
 				uint32 minPlayers = BattlegroundManager.GetMinimumPlayers(i);
-				if(!forceStart && ( ( tempPlayerVec[0].size() + tempPlayerVec[1].size() ) < ( minPlayers * 2 ) ) )
+				if(!forceStart && ((tempPlayerVec[0].size() + tempPlayerVec[1].size()) < (minPlayers * 2)))
 					continue;
 
 				if(CanCreateInstance(i, j))
@@ -619,63 +615,63 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 					}
 
 					// No alliance in the queue
-					if( tempPlayerVec[ 0 ].size() == 0 )
+					if(tempPlayerVec[ 0 ].size() == 0)
 					{
-						count = GetMaximumPlayers( i ) * 2;
-						while( ( count > 0 ) && ( tempPlayerVec[ 1 ].size() > 0 ) )
+						count = GetMaximumPlayers(i) * 2;
+						while((count > 0) && (tempPlayerVec[1].size() > 0))
 						{
-							if( teams[ 0 ].size() > teams[ 1 ].size() )
-								teams[ 1 ].push( tempPlayerVec[ 1 ].front() );
+							if(teams[0].size() > teams[1].size())
+								teams[1].push(tempPlayerVec[1].front());
 							else
-								teams[ 0 ].push( tempPlayerVec[ 1 ].front() );
-							tempPlayerVec[ 1 ].pop_front();
+								teams[0].push(tempPlayerVec[1].front());
+							tempPlayerVec[1].pop_front();
 							count--;
 						}
 					}
 					else
 					// No horde in the queue
-					if( tempPlayerVec[ 1 ].size() == 0 )
+					if(tempPlayerVec[1].size() == 0)
 					{
-						count = GetMaximumPlayers( i ) * 2;
-						while( ( count > 0 ) && ( tempPlayerVec[ 0 ].size() > 0 ) )
+						count = GetMaximumPlayers(i) * 2;
+						while((count > 0) && (tempPlayerVec[0].size() > 0))
 						{
-							if( teams[ 0 ].size() > teams[ 1 ].size() )
-								teams[ 1 ].push( tempPlayerVec[ 0 ].front() );
+							if(teams[0].size() > teams[1].size())
+								teams[1].push(tempPlayerVec[0].front());
 							else
-								teams[ 0 ].push( tempPlayerVec[ 0 ].front() );
-							tempPlayerVec[ 0 ].pop_front();
+								teams[0].push(tempPlayerVec[0].front());
+							tempPlayerVec[0].pop_front();
 							count--;
 						}
 					}
 					else
 					// There are both alliance and horde players in the queue
 					{
-						count = GetMaximumPlayers( i );
-						while( ( count > 0 ) && ( tempPlayerVec[ 0 ].size() > 0 ) && ( tempPlayerVec[ 1 ].size() > 0 ) )
+						count = GetMaximumPlayers(i);
+						while((count > 0) && (tempPlayerVec[0].size() > 0) && (tempPlayerVec[1].size() > 0))
 						{
-							teams[ 0 ].push( tempPlayerVec[ 0 ].front() );
-							teams[ 1 ].push( tempPlayerVec[ 1 ].front() );
-							tempPlayerVec[ 0 ].pop_front();
-							tempPlayerVec[ 1 ].pop_front();
+							teams[0].push(tempPlayerVec[0].front());
+							teams[1].push(tempPlayerVec[1].front());
+							tempPlayerVec[0].pop_front();
+							tempPlayerVec[1].pop_front();
 							count--;
 						}
 					}
 					
 					// Now we just need to add the players to the Arena instance
-					while( teams[ 0 ].size() > 0 )
+					while(teams[ 0 ].size() > 0)
 					{
-						for( uint32 team = 0; team < 2; team++ )
+						for(uint32 team = 0; team < 2; team++)
 						{
-							plrguid = teams[ team ].front();
-							teams[ team ].pop();
-							plr = objmgr.GetPlayer( plrguid );
-							if( plr == NULL )
+							plrguid = teams[team].front();
+							teams[team].pop();
+							plr = objmgr.GetPlayer(plrguid);
+							if(plr == NULL)
 								continue;
 							
 							plr->m_bgTeam = team;
-							arena->AddPlayer( plr, plr->m_bgTeam );
+							arena->AddPlayer(plr, plr->m_bgTeam);
 							// remove from the main queue (painful!)
-							ErasePlayerFromList( plr->GetLowGUID(), &m_queuedPlayers[i][j] );
+							ErasePlayerFromList(plr->GetLowGUID(), &m_queuedPlayers[i][j]);
 						}
 					}
 				}
@@ -701,9 +697,7 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 							for(k = 0; k < 2; ++k)
 							{
 								while(tempPlayerVec[k].size() && bg->HasFreeSlots(k, bg->GetType()))
-								{
 									AddPlayerToBgTeam(bg, &tempPlayerVec[k], i, j, k);
-								}
 							}
 						}
 						else
@@ -730,9 +724,7 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 	for(i = BATTLEGROUND_ARENA_2V2; i <= BATTLEGROUND_ARENA_5V5; ++i)
 	{
 		if(!forceStart && m_queuedGroups[i].size() < 2)      /* got enough to have an arena battle ;P */
-		{
 			continue;
-		}
 
 		for(j = 0; j < (uint32)m_queuedGroups[i].size(); j++)
 		{
@@ -754,13 +746,12 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 
 			group1 = objmgr.GetGroupById(*itz);
 			if(group1 == NULL)
-			{
 				continue;
-			}
 
 			if(forceStart && m_queuedGroups[i].size() == 1)
 			{
-				if(CreateArenaType(i, group1, NULL) == -1) return;
+				if(CreateArenaType(i, group1, NULL) == -1)
+					return;
 				m_queuedGroups[i].remove(group1->GetID());
 				continue;
 			}
@@ -776,9 +767,7 @@ void CBattlegroundManager::EventQueueUpdate(bool forceStart)
 					teamids[1] = GetArenaGroupQInfo(group2, i, &avgRating[1]);
 					uint32 delta = abs((int32)avgRating[0] - (int32)avgRating[1]);
 					if(teamids[0] != teamids[1] && delta <= sWorld.ArenaQueueDiff)
-					{
 						possibleGroups.push_back(group2->GetID());
-					}
 				}
 			}
 
@@ -880,12 +869,12 @@ bool CBattlegroundManager::CanCreateInstance(uint32 Type, uint32 LevelGroup)
 	/*uint32 lc = 0;
 	for(map<uint32, CBattleground*>::iterator itr = m_instances[Type].begin(); itr != m_instances[Type].end(); ++itr)
 	{
-	if(itr->second->GetLevelGroup() == LevelGroup)
-	{
-	lc++;
-	if(lc >= MAXIMUM_BATTLEGROUNDS_PER_LEVEL_GROUP)
-	return false;
-	}
+		if(itr->second->GetLevelGroup() == LevelGroup)
+		{
+			lc++;
+			if(lc >= MAXIMUM_BATTLEGROUNDS_PER_LEVEL_GROUP)
+			return false;
+		}
 	}*/
 
 	return true;
@@ -898,24 +887,34 @@ uint32 CBattlegroundManager::GetMinimumPlayers(uint32 dbcIndex)
 	{
 		case BATTLEGROUND_ALTERAC_VALLEY:
 			return sWorld.bgsettings.AV_MIN;
+		break;
 		case BATTLEGROUND_WARSONG_GULCH:
 			return sWorld.bgsettings.WSG_MIN;
+		break;
 		case BATTLEGROUND_ARATHI_BASIN:
 			return sWorld.bgsettings.AB_MIN;
+		break;
 		case BATTLEGROUND_EYE_OF_THE_STORM:
 			return sWorld.bgsettings.EOTS_MIN;
+		break;
 		case BATTLEGROUND_ARENA_2V2:
 			return sWorld.arenaSettings.A2V2_MIN;
+		break;
 		case BATTLEGROUND_ARENA_3V3:
 			return sWorld.arenaSettings.A3V3_MIN;
+		break;
 		case BATTLEGROUND_ARENA_5V5:
 			return sWorld.arenaSettings.A5V5_MIN;
+		break;
 		case BATTLEGROUND_STRAND_OF_THE_ANCIENT:
 			return sWorld.bgsettings.SOTA_MIN;
+		break;
 		case BATTLEGROUND_ISLE_OF_CONQUEST:
 			return sWorld.bgsettings.IOC_MIN;
+		break;
 		default:
 			return 1;
+		break;
 	}
 }
 
@@ -926,42 +925,53 @@ uint32 CBattlegroundManager::GetMaximumPlayers(uint32 dbcIndex)
 	{
 		case BATTLEGROUND_ALTERAC_VALLEY:
 			return sWorld.bgsettings.AV_MAX;
+		break;
 		case BATTLEGROUND_WARSONG_GULCH:
 			return sWorld.bgsettings.WSG_MAX;
+		break;
 		case BATTLEGROUND_ARATHI_BASIN:
 			return sWorld.bgsettings.AB_MAX;
+		break;
 		case BATTLEGROUND_EYE_OF_THE_STORM:
 			return sWorld.bgsettings.EOTS_MAX;
+		break;
 		case BATTLEGROUND_ARENA_2V2:
 			return sWorld.arenaSettings.A2V2_MAX;
+		break;
 		case BATTLEGROUND_ARENA_3V3:
 			return sWorld.arenaSettings.A3V3_MAX;
+		break;
 		case BATTLEGROUND_ARENA_5V5:
 			return sWorld.arenaSettings.A5V5_MAX;
+		break;
 		case BATTLEGROUND_STRAND_OF_THE_ANCIENT:
 			return sWorld.bgsettings.SOTA_MAX;
+		break;
 		case BATTLEGROUND_ISLE_OF_CONQUEST:
 			return sWorld.bgsettings.IOC_MAX;
+		break;
 		default:
 			return 1;
+		break;
 	}
 }
 
-
 CBattleground* CBattlegroundManager::CreateInstance(uint32 Type, uint32 LevelGroup)
 {
-	if( bgMaps.find( Type ) == bgMaps.end() ){
-		if( !IS_ARENA( Type ) ){
-			LOG_ERROR( "BattlegroundManager", "No map Id is registered for Battleground type %u", Type );
+	if(bgMaps.find(Type) == bgMaps.end())
+	{
+		if(!IS_ARENA(Type))
+		{
+			LOG_ERROR("BattlegroundManager", "No map Id is registered for Battleground type %u", Type);
 			return NULL;
 		}
 	}
 
 	BattlegroundFactoryMethod cfunc = NULL;
 
-	if( !IS_ARENA( Type ) )
-		if( bgFactories.find( bgMaps[ Type ] ) != bgFactories.end() )
-			cfunc = bgFactories[ bgMaps[ Type ] ];
+	if(!IS_ARENA(Type))
+		if(bgFactories.find(bgMaps[Type]) != bgFactories.end())
+			cfunc = bgFactories[bgMaps[Type]];
 
 	MapMgr* mgr = NULL;
 	CBattleground* bg;
@@ -975,12 +985,13 @@ CBattleground* CBattlegroundManager::CreateInstance(uint32 Type, uint32 LevelGro
 	{
 		/* arenas follow a different procedure. */
 		uint32 arenaMapCount = arenaMaps.size();
-		if( arenaMapCount == 0 ){
-			LOG_ERROR( "BattlegroundManager", "There are no Arenas registered. Cannot create Arena." );
+		if(arenaMapCount == 0)
+		{
+			LOG_ERROR("BattlegroundManager", "There are no Arenas registered. Cannot create Arena.");
 			return NULL;
 		}
 
-		uint32 index = RandomUInt( arenaMapCount - 1 );
+		uint32 index = RandomUInt(arenaMapCount - 1);
 		uint32 mapid = arenaMaps[ index ];
 		ArenaFactoryMethod arenaFactory = arenaFactories[ index ];
 		uint32 players_per_side;
@@ -992,7 +1003,7 @@ CBattleground* CBattlegroundManager::CreateInstance(uint32 Type, uint32 LevelGro
 			return NULL;      // Shouldn't happen
 		}
 
-		players_per_side = GetMaximumPlayers( Type );
+		players_per_side = GetMaximumPlayers(Type);
 
 		iid = ++m_maxBattlegroundId[Type];
 		bg = arenaFactory(mgr, iid, LevelGroup, Type, players_per_side);
@@ -1024,19 +1035,19 @@ CBattleground* CBattlegroundManager::CreateInstance(uint32 Type, uint32 LevelGro
 	{
 		case BATTLEGROUND_WARSONG_GULCH:
 			n = 0;
-			break;
+		break;
 		case BATTLEGROUND_ARATHI_BASIN:
 			n = 1;
-			break;
+		break;
 		case BATTLEGROUND_EYE_OF_THE_STORM:
 			n = 2;
-			break;
+		break;
 		case BATTLEGROUND_STRAND_OF_THE_ANCIENT:
 			n = 3;
-			break;
+		break;
 		default:
 			n = 0;
-			break;
+		break;
 	}
 	if(((tm.tm_yday / 7) % 4) == n)
 	{
@@ -1113,10 +1124,7 @@ void CBattlegroundManager::DeleteBattleground(CBattleground* bg)
 		printStackTrace();
 		throw;
 	}
-
 }
-
-
 
 void CBattlegroundManager::SendBattlefieldStatus(Player* plr, BattleGroundStatus Status, uint32 Type, uint32 InstanceID, uint32 Time, uint32 MapId, uint8 RatedMatch)
 {
@@ -1127,36 +1135,34 @@ void CBattlegroundManager::SendBattlefieldStatus(Player* plr, BattleGroundStatus
 	{
 		if(IS_ARENA(Type))
 		{
-			data << uint32(0);		// Queue Slot 0..2. Only the first slot is used in ArcPro!
+			data << uint32(0); // Queue Slot 0..2. Only the first slot is used in ArcPro!
 			switch(Type)
 			{
 				case BATTLEGROUND_ARENA_2V2:
 					data << uint8(2);
-					break;
-
+				break;
 				case BATTLEGROUND_ARENA_3V3:
 					data << uint8(3);
-					break;
-
+				break;
 				case BATTLEGROUND_ARENA_5V5:
 					data << uint8(5);
-					break;
+				break;
 			}
 			data << uint8(0xC);
 			data << uint32(6);
 			data << uint16(0x1F90);
-			data << uint8(0);                // 3.3.0
-			data << uint8(0);                // 3.3.0
+			data << uint8(0); // 3.3.0
+			data << uint8(0); // 3.3.0
 			data << uint32(11);
-			data << uint8(RatedMatch);      // 1 = rated match
+			data << uint8(RatedMatch); // 1 = rated match
 		}
 		else
 		{
 			data << uint32(0);
 			data << uint8(0) << uint8(2);
 			data << Type;
-			data << uint8(0);                // 3.3.0
-			data << uint8(0);                // 3.3.0
+			data << uint8(0); // 3.3.0
+			data << uint8(0); // 3.3.0
 			data << uint16(0x1F90);
 			data << InstanceID;
 			data << uint8(0);
@@ -1166,14 +1172,14 @@ void CBattlegroundManager::SendBattlefieldStatus(Player* plr, BattleGroundStatus
 
 		switch(Status)
 		{
-			case BGSTATUS_INQUEUE:					// Waiting in queue
-				data << uint32(60) << uint32(0);	// Time / Elapsed time
-				break;
-			case BGSTATUS_READY:					// Ready to join!
+			case BGSTATUS_INQUEUE: // Waiting in queue
+				data << uint32(60) << uint32(0); // Time / Elapsed time
+			break;
+			case BGSTATUS_READY: // Ready to join!
 				data << MapId;
 				data << uint64(0);
 				data << Time;
-				break;
+			break;
 			case BGSTATUS_TIME:
 				data << MapId;
 				data << uint64(0);
@@ -1183,9 +1189,9 @@ void CBattlegroundManager::SendBattlefieldStatus(Player* plr, BattleGroundStatus
 					data << uint8(0);
 				else
 					data << uint8(1);
-				break;
+			break;
 			case BGSTATUS_NOFLAGS:
-				break;
+			break;
 		}
 	}
 
@@ -1235,16 +1241,14 @@ void CBattlegroundManager::HandleArenaJoin(WorldSession* m_session, uint32 Battl
 			{
 				case BATTLEGROUND_ARENA_3V3:
 					maxplayers = 3;
-					break;
-
+				break;
 				case BATTLEGROUND_ARENA_5V5:
 					maxplayers = 5;
-					break;
-
+				break;
 				case BATTLEGROUND_ARENA_2V2:
 				default:
 					maxplayers = 2;
-					break;
+				break;
 			}
 
 			if(pGroup->GetLeader()->m_loggedInPlayer && pGroup->GetLeader()->m_loggedInPlayer->m_arenaTeams[type] == NULL)
@@ -1315,11 +1319,9 @@ void CBattlegroundManager::HandleArenaJoin(WorldSession* m_session, uint32 Battl
 			Log.Notice("BattlegroundMgr", "Group %u is now in battleground queue for arena type %u", pGroup->GetID(), BattlegroundType);
 
 			/* send the battleground status packet */
-
 			return;
 		}
 	}
-
 
 	/* Queue him! */
 	m_queueLock.Acquire();
@@ -1341,5 +1343,3 @@ void CBattlegroundManager::HandleArenaJoin(WorldSession* m_session, uint32 Battl
 
 	m_queueLock.Release();
 }
-
-

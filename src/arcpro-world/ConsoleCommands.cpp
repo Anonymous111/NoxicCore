@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -23,19 +23,19 @@
 #include <git_version.h>
 #include "ConsoleCommands.h"
 
-bool HandleTimeDateCommand( BaseConsole *console, int argc, const char *argv[] )
+bool HandleTimeDateCommand(BaseConsole *console, int argc, const char *argv[])
 {
 	time_t unixTime = UNIXTIME;
 
 	std::stringstream ss;
 	ss << "Date and time according to localtime() (american style):" << std::endl;
-	ss << localtime( &unixTime )->tm_mon << "-";
-	ss << localtime( &unixTime )->tm_mday << "-";
-	ss << ( localtime( &unixTime )->tm_year + 1900 ) << "  ";
-	ss << localtime( &unixTime )->tm_hour << ":";
-	ss << localtime( &unixTime )->tm_min << std::endl << std::endl;
+	ss << localtime(&unixTime)->tm_mon << "-";
+	ss << localtime(&unixTime)->tm_mday << "-";
+	ss << (localtime(&unixTime)->tm_year + 1900) << "  ";
+	ss << localtime(&unixTime)->tm_hour << ":";
+	ss << localtime(&unixTime)->tm_min << std::endl << std::endl;
 
-	console->Write( ss.str().c_str() );
+	console->Write(ss.str().c_str());
 
 	return true;
 }
@@ -63,7 +63,7 @@ bool HandleInfoCommand(BaseConsole* pConsole, int argc, const char* argv[])
 	pConsole->Write("======================================================================\r\n");
 	pConsole->Write("Server Information: \r\n");
 	pConsole->Write("======================================================================\r\n");
-	pConsole->Write("Server Revision: ArcPro %s/%s-%s-%s (http://www.arcpro.info)\r\n", BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH);
+	pConsole->Write("Server Revision: ArcPro %s/%s-%s-%s (zdroid9770@yahoo.com)\r\n", BUILD_HASH_STR, CONFIG, PLATFORM_TEXT, ARCH);
 	pConsole->Write("Server Uptime: %s\r\n", sWorld.GetUptimeString().c_str());
 	pConsole->Write("Current Players: %d (%d GMs, %d queued)\r\n", clientsNum, gm,  0);
 	pConsole->Write("Active Thread Count: %u\r\n", ThreadPool.GetActiveThreadCount());
@@ -98,9 +98,7 @@ bool HandleGMsCommand(BaseConsole* pConsole, int argc, const char* argv[])
 	for(itr = objmgr._players.begin(); itr != objmgr._players.end(); ++itr)
 	{
 		if(itr->second->GetSession()->GetPermissionCount())
-		{
 			pConsole->Write("| %21s | %15s | %03u ms |\r\n" , itr->second->GetName(), itr->second->GetSession()->GetPermissions(), itr->second->GetSession()->GetLatency());
-		}
 	}
 	objmgr._playerslock.ReleaseReadLock();
 
@@ -122,9 +120,8 @@ bool HandleOnlinePlayersCommand(BaseConsole* pConsole, int argc, const char* arg
 	PlayerStorageMap::const_iterator itr;
 	objmgr._playerslock.AcquireReadLock();
 	for(itr = objmgr._players.begin(); itr != objmgr._players.end(); ++itr)
-	{
 		pConsole->Write("| %21s | %15u | %03u ms |\r\n" , itr->second->GetName(), itr->second->GetSession()->GetPlayer()->getLevel(), itr->second->GetSession()->GetLatency());
-	}
+
 	objmgr._playerslock.ReleaseReadLock();
 
 	pConsole->Write("======================================================\r\n\r\n");
@@ -140,6 +137,7 @@ void ConcatArgs(string & outstr, int argc, int startoffset, const char* argv[])
 			outstr += " ";
 	}
 }
+
 bool HandleAnnounceCommand(BaseConsole* pConsole, int argc, const char* argv[])
 {
 	char pAnnounce[1024];
@@ -236,9 +234,7 @@ bool HandleShutDownCommand(BaseConsole* pConsole, int argc, const char* argv[])
 			exit(0);
 		}
 		else
-		{
 			delay = atoi(argv[1]);
-		}
 	}
 
 	sMaster.m_ShutdownTimer = delay * 1000;
@@ -276,8 +272,7 @@ bool HandleBanAccountCommand(BaseConsole* pConsole, int argc, const char* argv[]
 	/// apply instantly in db
 	sLogonCommHandler.Account_SetBanned(argv[1], banned, pReason);
 
-	pConsole->Write("Account '%s' has been banned %s%s. The change will be effective immediately.\r\n", argv[1],
-	                timeperiod ? "until " : "forever", timeperiod ? ConvertTimeStampToDataTime(timeperiod + (uint32)UNIXTIME).c_str() : "");
+	pConsole->Write("Account '%s' has been banned %s%s. The change will be effective immediately.\r\n", argv[1], timeperiod ? "until " : "forever", timeperiod ? ConvertTimeStampToDataTime(timeperiod + (uint32)UNIXTIME).c_str() : "");
 
 	return true;
 }
@@ -296,9 +291,7 @@ bool HandleUnbanAccountCommand(BaseConsole* pConsole, int argc, const char* argv
 bool HandleMOTDCommand(BaseConsole* pConsole, int argc, const char* argv[])
 {
 	if(argc < 2)
-	{
 		pConsole->Write("The current message of the day is: '%s'.\r\n", sWorld.GetMotd());
-	}
 	else
 	{
 		char set_motd[1024];
@@ -356,9 +349,8 @@ bool HandleRevivePlayer(BaseConsole* pConsole, int argc, const char* argv[])
 		pConsole->Write("Revived player %s.\r\n", argv[1]);
 	}
 	else
-	{
 		pConsole->Write("Player %s is not dead.\r\n", argv[1]);
-	}
+
 	return true;
 }
 
@@ -393,8 +385,7 @@ bool HandleReloadConsoleCommand(BaseConsole* pConsole, int argc, const char* arg
 	sWorld.SendWorldText("Support for reloading tables on the fly was disabled in ArcPro revision 3621. You are seeing this message because apparently reading SVN changelog or using forums search is way over the head of some of our users.", 0);
 	return true;
 
-	/*
-	if( argc < 2 || strlen(argv[1]) < 3 )
+	/*if(argc < 2 || strlen(argv[1]) < 3)
 		return false;
 
 	char str[200];
@@ -405,12 +396,12 @@ bool HandleReloadConsoleCommand(BaseConsole* pConsole, int argc, const char* arg
 		MSG_COLOR_LIGHTRED, argv[1]);
 	sWorld.SendWorldText(str, 0);
 
-	if( !stricmp(argv[1], "spell_disable") )
+	if(!stricmp(argv[1], "spell_disable"))
 	{
 		objmgr.ReloadDisabledSpells();
 		ret = 1;
 	}
-	else if( !stricmp(argv[1], "vendors") )
+	else if(!stricmp(argv[1], "vendors"))
 	{
 		objmgr.ReloadVendors();
 		ret = 1;
@@ -419,18 +410,18 @@ bool HandleReloadConsoleCommand(BaseConsole* pConsole, int argc, const char* arg
 		ret = Storage_ReloadTable(argv[1]);
 
 
-	if (ret == 0)
+	if(ret == 0)
 	{
-		pConsole->Write( "Database reload failed.\r\n" );
+		pConsole->Write("Database reload failed.\r\n");
 		snprintf(str, 200, "%sDatabase reload failed.", MSG_COLOR_LIGHTRED);
 	}
 	else
 	{
 		uint32 timediff = (unsigned int)(getMSTime() - mstime);
-		pConsole->Write( "Database reload completed in %u ms.\r\n", timediff );
-		snprintf( str, 200, "%sDatabase reload completed in %u ms.", MSG_COLOR_LIGHTBLUE, timediff );
+		pConsole->Write("Database reload completed in %u ms.\r\n", timediff);
+		snprintf(str, 200, "%sDatabase reload completed in %u ms.", MSG_COLOR_LIGHTBLUE, timediff);
 	}
-	sWorld.SendWorldText( str, 0 );
+	sWorld.SendWorldText(str, 0);
 
 	return true;
 

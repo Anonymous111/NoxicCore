@@ -11,27 +11,26 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
 #ifndef __AREATRIGGERHANDLER_H
 #define __AREATRIGGERHANDLER_H
 
-
 enum AreaTriggerType
 {
-    ATTYPE_NULL		 = 0,
-    ATTYPE_INSTANCE	 = 1,
-    ATTYPE_QUESTTRIGGER = 2,
-    ATTYPE_INN		  = 3,
-    ATTYPE_TELEPORT	 = 4,
-    ATTYPE_SPELL		= 5,
-    ATTYPE_BATTLEGROUND = 6,
+	ATTYPE_NULL			= 0,
+	ATTYPE_INSTANCE		= 1,
+	ATTYPE_QUESTTRIGGER	= 2,
+	ATTYPE_INN			= 3,
+	ATTYPE_TELEPORT		= 4,
+	ATTYPE_SPELL		= 5,
+	ATTYPE_BATTLEGROUND	= 6,
 };
 
 #pragma pack(push,1)
@@ -48,9 +47,7 @@ typedef struct AreaTrigger
 	float o;
 	uint32 required_honor_rank;
 	uint32 required_level;
-} AreaTrigger;
+}AreaTrigger;
 #pragma pack(pop)
-
-
 
 #endif

@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -49,9 +49,8 @@ uint32 c_GetNanoSeconds(uint64 t1, uint64 t2)
 
 #define COLLISION_BEGINTIMER uint64 v1 = c_GetTimerValue();
 
-#endif	// COLLISION_DEBUG
-#endif	// WIN32
-
+#endif // COLLISION_DEBUG
+#endif // WIN32
 
 // Debug functions
 #ifdef COLLISION_DEBUG
@@ -222,7 +221,7 @@ void CCollideInterface::DeactivateTile(uint32 mapId, uint32 tileX, uint32 tileY)
 		{
 			uint32 key = tileX | (tileY << 16);
 			nav->tilelock.Acquire();
-			std::map<uint32, dtTileRef>::iterator itr = nav->tilerefs.find(key);
+			std::map< uint32, dtTileRef >::iterator itr = nav->tilerefs.find(key);
 
 			if(itr != nav->tilerefs.end())
 			{
@@ -355,5 +354,4 @@ void CCollideInterface::LoadNavMeshTile(uint32 mapId, uint32 tileX, uint32 tileY
 	nav->tilelock.Release();
 }
 
-#endif		// COLLISION_DEBUG
-
+#endif // COLLISION_DEBUG

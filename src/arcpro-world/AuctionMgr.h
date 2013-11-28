@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -25,39 +25,39 @@
 class AuctionHouse;
 class AuctionMgr : public Singleton <AuctionMgr>
 {
-	public:
-		AuctionMgr()
-		{
-			loopcount = 0;
-			maxId.SetVal(1);
-		}
+public:
+	AuctionMgr()
+	{
+		loopcount = 0;
+		maxId.SetVal(1);
+	}
 
-		~AuctionMgr()
-		{
-			vector<AuctionHouse*>::iterator itr = auctionHouses.begin();
-			for(; itr != auctionHouses.end(); ++itr)
-				delete(*itr);
-		}
+	~AuctionMgr()
+	{
+		vector<AuctionHouse*>::iterator itr = auctionHouses.begin();
+		for(; itr != auctionHouses.end(); ++itr)
+			delete(*itr);
+	}
 
-		void LoadAuctionHouses();
-		void Update();
+	void LoadAuctionHouses();
+	void Update();
 
-		AuctionHouse* GetAuctionHouse(uint32 Entry);
+	AuctionHouse* GetAuctionHouse(uint32 Entry);
 
-		uint32 GenerateAuctionId()
-		{
-			uint32 id = ++maxId;
+	uint32 GenerateAuctionId()
+	{
+		uint32 id = ++maxId;
 
-			return id;
-		}
+		return id;
+	}
 
-	private:
-		HM_NAMESPACE::hash_map<uint32, AuctionHouse*> auctionHouseEntryMap;
-		vector<AuctionHouse*> auctionHouses;
+private:
+	HM_NAMESPACE::hash_map<uint32, AuctionHouse*> auctionHouseEntryMap;
+	vector<AuctionHouse*> auctionHouses;
 
-		Arcpro::Threading::AtomicCounter maxId;
+	Arcpro::Threading::AtomicCounter maxId;
 
-		uint32 loopcount;
+	uint32 loopcount;
 };
 
 #define sAuctionMgr AuctionMgr::getSingleton()

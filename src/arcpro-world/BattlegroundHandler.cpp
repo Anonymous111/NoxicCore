@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -32,9 +32,7 @@ void WorldSession::HandleBattlefieldPortOpcode(WorldPacket & recv_data)
 	recv_data >> unk >> bgtype >> mapinfo >> action;
 
 	if(action == 0)
-	{
 		BattlegroundManager.RemovePlayerFromQueues(_player);
-	}
 	else
 	{
 		/**********************************************************************************
@@ -54,11 +52,11 @@ void WorldSession::HandleBattlefieldStatusOpcode(WorldPacket & recv_data)
 	/**********************************************************************************
 	* This is done based on whether we are queued, inside, or not in a battleground.
 	***********************************************************************************/
-	if(_player->m_pendingBattleground)		// Ready to port
+	if(_player->m_pendingBattleground) // Ready to port
 		BattlegroundManager.SendBattlefieldStatus(_player, BGSTATUS_READY, _player->m_pendingBattleground->GetType(), _player->m_pendingBattleground->GetId(), 120000, 0, _player->m_pendingBattleground->Rated());
-	else if(_player->m_bg)					// Inside a bg
+	else if(_player->m_bg) // Inside a bg
 		BattlegroundManager.SendBattlefieldStatus(_player, BGSTATUS_TIME, _player->m_bg->GetType(), _player->m_bg->GetId(), (uint32)UNIXTIME - _player->m_bg->GetStartTime(), _player->GetMapId(), _player->m_bg->Rated());
-	else									// None
+	else // None
 		BattlegroundManager.SendBattlefieldStatus(_player, BGSTATUS_NOFLAGS, 0, 0, 0, 0, 0);
 }
 
@@ -89,9 +87,7 @@ void WorldSession::SendBattlegroundList(Creature* pCreature, uint32 mapid)
 	if(mapid == 0)
 	{
 		if(strstr(pCreature->GetCreatureInfo()->SubName, "Arena") != NULL)
-		{
 			t = BATTLEGROUND_ARENA_2V2;
-		}
 		else
 		{
 			BGMaster* battlemaster = BGMasterStorage.LookupEntry(pCreature->GetProto()->Id);
@@ -188,38 +184,37 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & recv_da
 	uint32 count1 = 0;
 	uint32 count2 = 0;
 
-	Player *ap = objmgr.GetPlayer( bg->GetFlagHolderGUID( TEAM_ALLIANCE ) );
-	if( ap != NULL )
+	Player* ap = objmgr.GetPlayer(bg->GetFlagHolderGUID(TEAM_ALLIANCE));
+	if(ap != NULL)
 		count2++;
 
-	Player *hp = objmgr.GetPlayer( bg->GetFlagHolderGUID( TEAM_HORDE ) );
-	
+	Player* hp = objmgr.GetPlayer(bg->GetFlagHolderGUID(TEAM_HORDE));
 	// If the two are the same, then it's from a Bg that only has 1 flag like EOTS
-	if( ( ap != NULL ) &&
-		( hp != NULL ) &&
-		( ap->GetGUID() == hp->GetGUID() ) )
+	if((ap != NULL) && (hp != NULL) && (ap->GetGUID() == hp->GetGUID()))
 		hp = NULL;
 
-	if( hp != NULL )
+	if(hp != NULL)
 		count2++;
 
-	WorldPacket data( MSG_BATTLEGROUND_PLAYER_POSITIONS, ( 4 + 4 + 16 * count1 + 16 * count2 ) );
-	data << uint32( count1 );
-	data << uint32( count2 );
+	WorldPacket data(MSG_BATTLEGROUND_PLAYER_POSITIONS, (4 + 4 + 16 * count1 + 16 * count2));
+	data << uint32(count1);
+	data << uint32(count2);
 
-	if( ap != NULL ){
-		data << uint64( ap->GetGUID() );
-		data << float( ap->GetPositionX() );
-		data << float( ap->GetPositionY() );
+	if(ap != NULL)
+	{
+		data << uint64(ap->GetGUID());
+		data << float(ap->GetPositionX());
+		data << float(ap->GetPositionY());
 	}
 
-	if( hp != NULL ){
-		data << uint64( hp->GetGUID() );
-		data << float( hp->GetPositionX() );
-		data << float( hp->GetPositionY() );
+	if(hp != NULL)
+	{
+		data << uint64(hp->GetGUID());
+		data << float(hp->GetPositionX());
+		data << float(hp->GetPositionY());
 	}
 
-	SendPacket( &data );
+	SendPacket(&data);
 }
 
 void WorldSession::HandleBattleMasterJoinOpcode(WorldPacket & recv_data)
@@ -270,17 +265,15 @@ void WorldSession::HandleArenaJoinOpcode(WorldPacket & recv_data)
 	recv_data >> guid >> arenacategory >> as_group >> rated_match;
 	switch(arenacategory)
 	{
-		case 0:		// 2v2
+		case 0: // 2v2
 			bgtype = BATTLEGROUND_ARENA_2V2;
-			break;
-
-		case 1:		// 3v3
+		break;
+		case 1: // 3v3
 			bgtype = BATTLEGROUND_ARENA_3V3;
-			break;
-
-		case 2:		// 5v5
+		break;
+		case 2: // 5v5
 			bgtype = BATTLEGROUND_ARENA_5V5;
-			break;
+		break;
 	}
 
 	if(bgtype != 0)
@@ -359,7 +352,6 @@ void WorldSession::HandleInspectArenaStatsOpcode(WorldPacket & recv_data)
 		}
 	}
 }
-
 
 void WorldSession::HandlePVPLogDataOpcode(WorldPacket & recv_data)
 {
