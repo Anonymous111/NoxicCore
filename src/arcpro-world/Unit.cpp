@@ -8043,3 +8043,29 @@ void Unit::SendEnvironmentalDamageLog(uint64 guid, uint8 type, uint32 damage)
 
 	SendMessageToSet(&data, true, false);
 }
+
+bool AuraInterface::HasActiveAura(uint32 spellid)
+{
+	for(uint32 x = 0; x < MAX_AURAS; x++)
+	{
+		if(m_auras.find(x) != m_auras.end())
+		{
+			if(m_auras.at(x)->GetSpellId() == spellid)
+				return true;
+		}
+	}
+	return false;
+}
+
+bool AuraInterface::HasActiveAura(uint32 spellid, uint64 guid)
+{
+	for(uint32 x = 0; x < MAX_AURAS; x++)
+	{
+		if(m_auras.find(x) != m_auras.end())
+		{
+			if(m_auras.at(x)->GetSpellId() == spellid && (!guid || m_auras.at(x)->GetCasterGUID() == guid))
+				return true;
+		}
+	}
+	return false;
+}
