@@ -3630,11 +3630,11 @@ void Spell::SpellEffectAddExtraAttacks(uint32 i) // Add Extra Attacks
 
 void Spell::SpellEffectDodge(uint32 i)
 {
-	//i think this actually enables the skill to be able to dodge melee+ranged attacks
+	//I think this actually enables the skill to be able to dodge melee+ranged attacks
 	//value is static and sets value directly which will be modified by other factors
 	//this is only basic value and will be overwritten elsewhere !!!
-	//	if(unitTarget->IsPlayer())
-	//		unitTarget->SetFloatValue(PLAYER_DODGE_PERCENTAGE,damage);
+	//if(unitTarget->IsPlayer())
+		//unitTarget->SetFloatValue(PLAYER_DODGE_PERCENTAGE,damage);
 }
 
 void Spell::SpellEffectParry(uint32 i)
@@ -3645,10 +3645,10 @@ void Spell::SpellEffectParry(uint32 i)
 
 void Spell::SpellEffectBlock(uint32 i)
 {
-	//i think this actually enables the skill to be able to block melee+ranged attacks
+	//I think this actually enables the skill to be able to block melee+ranged attacks
 	//value is static and sets value directly which will be modified by other factors
-	//	if(unitTarget->IsPlayer())
-	//		unitTarget->SetFloatValue(PLAYER_BLOCK_PERCENTAGE,damage);
+	//if(unitTarget->IsPlayer())
+		//unitTarget->SetFloatValue(PLAYER_BLOCK_PERCENTAGE,damage);
 }
 
 void Spell::SpellEffectCreateItem(uint32 i)
@@ -3719,14 +3719,22 @@ void Spell::SpellEffectCreateItem(uint32 i)
 		// tailoring specializations get +1 cloth bonus
 		switch(spellid)
 		{
+			case 27389: // Conjure Food 7
+			case 10140: // Conjure Water 7 // Thanks to Sandshroud team for the conjured
+			case 37420: // Conjure Water 8
+				item_count += 8;
+			break;
 			case 36686: //Shadowcloth
-				if(p_caster->HasSpell(26801)) count++;
+				if(p_caster->HasSpell(26801))
+					count++;
 			break;
 			case 26751: // Primal Mooncloth
-				if(p_caster->HasSpell(26798)) count++;
+				if(p_caster->HasSpell(26798))
+					count++;
 			break;
 			case 31373: //Spellcloth
-				if(p_caster->HasSpell(26797)) count++;
+				if(p_caster->HasSpell(26797))
+					count++;
 			break;
 		}
 
