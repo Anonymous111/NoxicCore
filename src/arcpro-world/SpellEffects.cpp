@@ -3152,8 +3152,62 @@ void Spell::SpellEffectApplyAura(uint32 i)  // Apply Aura
 	else
 		pAura = itr->second;
 
-	pAura->AddMod(GetProto()->EffectApplyAuraName[i], damage, GetProto()->EffectMiscValue[i], i);
+	switch(m_spellInfo->Id)
+	{
+		case 27907:
+		{
+			if(unitTarget->GetEntry() == 15941)
+			{
+				sQuestMgr.OnPlayerKill(p_caster, ((Creature*)unitTarget));
+				unitTarget->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "What? Oh, not this again!");
+			}
+			else if(unitTarget->GetEntry() == 15945)
+			{
+				sQuestMgr.OnPlayerKill(p_caster, ((Creature*)unitTarget));
+				unitTarget->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You can't do this to me! We had a deal!");
+			}
+			else
+			{
+				SendCastResult(SPELL_FAILED_BAD_TARGETS);
+				return;
+			}
+		}break;
+		case 28880:
+		{
+			if(!p_caster)
+				break;
+                
+			if(unitTarget->GetEntry() == 16483)
+			{
+				unitTarget->RemoveAura(29152);
+				unitTarget->SetStandState(0);
+				sQuestMgr.OnPlayerKill(p_caster, ((Creature*)unitTarget));
+				static const char* testo[12] = {"None","Warrior", "Paladin", "Hunter", "Rogue", "Priest", "Death Knight", "Shaman", "Mage", "Warlock", "None", "Druid"};
+				char msg[150];
+				snprintf(msg, 150, "Many thanks to you %s. I'd best get to the crash site and see how I can help out. Until we meet again...", testo[p_caster->getClass()]);
+				unitTarget->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, msg);
+				((Creature*)unitTarget)->Despawn(900000, 300000);
+			}
+		}break;
+		case 38177:
+		{
+			if(!p_caster)
+				break;
 
+			if(unitTarget->GetEntry() == 21387)
+			{
+				((Creature*)unitTarget)->Despawn(5000, 360000);
+				p_caster->CastSpell(p_caster, 38178, true);
+			}
+			else
+			{
+				SendCastResult(SPELL_FAILED_BAD_TARGETS);
+				return;
+			}
+		}break;
+	}
+
+	pAura->AddMod(GetProto()->EffectApplyAuraName[i], damage, GetProto()->EffectMiscValue[i], i);
 }
 
 void Spell::SpellEffectEnvironmentalDamage(uint32 i)
@@ -3291,7 +3345,7 @@ void Spell::SpellEffectHeal(uint32 i) // Heal
 				if(unitTarget)
 					Heal(unitTarget->GetMaxHealth() / 100);
 			}break;
-			case 34299: //Druid: Improved Leader of the PAck
+			case 34299: //Druid: Improved Leader of the Pack
 			{
 				if(!unitTarget->IsPlayer() || !unitTarget->isAlive())
 					break;
@@ -3383,6 +3437,70 @@ void Spell::SpellEffectHeal(uint32 i) // Heal
 					}
 				}
 			}break;
+			case 48743://death pact
+			{
+				if(p_caster == NULL)
+					return;
+
+				uint32 maxhp = p_caster->GetMaxHealth();
+				int32 realdmg = float2int32(float(maxhp) * 0.4f);
+				Heal(realdmg);
+			}break;
+			case 50464:
+			{
+				if(m_caster == NULL)
+					return;
+
+				bool bonus = false;
+				Aura* pAura = NULL;
+				for(uint32 i = 0; i < MAX_POSITIVE_AURAS; ++i)
+				{
+					pAura = unitTarget->m_auras[i];
+					if(pAura != NULL && pAura->GetCaster() == m_caster)
+					{
+						if(pAura->m_spellProto->NameHash == SPELL_HASH_REJUVENATION || pAura->m_spellProto->NameHash == SPELL_HASH_REGROWTH ||
+								pAura->m_spellProto->NameHash == SPELL_HASH_LIFEBLOOM || pAura->m_spellProto->NameHash == SPELL_HASH_WILD_GROWTH)
+							bonus = true;
+					}
+				}
+				if(bonus)
+				{
+					int32 new_dmg = damage + float2int32(damage*0.2f);
+					Heal(new_dmg);
+				}
+				else
+					Heal((int32)damage);
+			}break;
+			case 48153: // Guardian spirit
+			{
+				if(p_caster == NULL)
+					return;
+
+				Heal(float2int32(unitTarget->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * (damage/100.0f)));
+			}break;
+			case 20267:
+			{
+				if(u_caster != NULL)
+				{
+					Aura* aur = NULL;
+					aur = u_caster->FindAura(20185);
+					if(aur != NULL)
+					{
+						Unit* orgcstr = u_caster->FindAura(20185)->GetUnitCaster();
+						if(orgcstr)
+							Heal(float2int32(orgcstr->GetAP() * 0.10f + orgcstr->GetDamageDoneMod(SCHOOL_HOLY) * 0.10f));
+					}
+				}
+			}break;
+			case 54172:
+			case 54968:
+			{
+				Heal((int32)forced_basepoints[0]);
+			}break;
+			case 23880:
+			{
+				Heal(float2int32(unitTarget->GetUInt32Value(UNIT_FIELD_MAXHEALTH) / 100.0f));
+			}break;
 			default:
 				Heal(damage);
 			break;
@@ -3423,12 +3541,12 @@ void Spell::SpellEffectQuestComplete(uint32 i) // Quest Complete
 	if(!p_caster)
 		return;
 
-	QuestLogEntry* en = p_caster->GetQuestLogForEntry(GetProto()->EffectMiscValue[i]);
-	if(en)
+	QuestLogEntry* pQuest = p_caster->GetQuestLogForEntry(GetProto()->EffectMiscValue[i]);
+	if(pQuest)
 	{
-		en->Complete();
-		en->UpdatePlayerFields();
-		en->SendQuestComplete();
+		pQuest->Complete();
+		pQuest->UpdatePlayerFields();
+		pQuest->SendQuestComplete();
 	}
 }
 
@@ -3438,7 +3556,10 @@ void Spell::SpellEffectWeapondamageNoschool(uint32 i) // Weapon damage + (no Sch
 	if(!unitTarget || !u_caster)
 		return;
 
-	u_caster->Strike(unitTarget, (GetType() == SPELL_DMG_TYPE_RANGED ? RANGED : MELEE), GetProto(), damage, 0, 0, false, true);
+	if(GetType() == SPELL_DMG_TYPE_RANGED && m_spellInfo->speed > 0.0f)
+		u_caster->Strike(unitTarget, RANGED, m_spellInfo, 0, 0, 0, false, true);
+	else
+		u_caster->Strike(unitTarget, (GetType() == SPELL_DMG_TYPE_RANGED ? RANGED : MELEE), GetProto(), damage, 0, 0, false, true);
 }
 
 void Spell::SpellEffectResurrect(uint32 i) // Resurrect (Flat)
@@ -3497,6 +3618,13 @@ void Spell::SpellEffectAddExtraAttacks(uint32 i) // Add Extra Attacks
 {
 	if(!u_caster)
 		return;
+
+	if(ProcedOnSpell)
+		u_caster->m_extraattacks[0] = ProcedOnSpell->procCharges;
+        
+	if(GetSpellProto()->procCharges > 0)
+		u_caster->m_extraattacks[0] = GetSpellProto()->procCharges;
+
 	u_caster->m_extraattacks += damage;
 }
 
