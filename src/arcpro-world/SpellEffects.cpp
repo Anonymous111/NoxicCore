@@ -444,8 +444,7 @@ void Spell::SpellEffectInstantKill(uint32 i)
 	Felhunter: Restores $18792s1% of total Mana every $18792t1 sec.
 
 	*/
-	uint32 spellId = GetProto()->Id;
-
+	uint32 spellId = GetSpellProto()->Id;
 	switch(spellId)
 	{
 		case 7814:
@@ -472,31 +471,27 @@ void Spell::SpellEffectInstantKill(uint32 i)
 			return;
 		break;
 		case 18788: //Demonic Sacrifice (508745)
-			uint32 DemonicSacEffectSpellId = 0;
+			uint32 spellid1 = 0;
 			switch(unitTarget->GetEntry())
 			{
 				case 416: //Imp
-					DemonicSacEffectSpellId = 18789;
+					spellid1 = 18789;
 				break;
 				case 417: //Felhunter
-					DemonicSacEffectSpellId = 18792;
+					spellid1 = 18792;
 				break;
 				case 1860: //VoidWalker
-					DemonicSacEffectSpellId = 18790;
+					spellid1 = 18790;
 				break;
 				case 1863: //Succubus
-					DemonicSacEffectSpellId = 18791;
+					spellid1 = 18791;
 				break;
 				case 17252: //felguard
-					DemonicSacEffectSpellId = 35701;
+					spellid1 = 35701;
 				break;
 			}
-			if(DemonicSacEffectSpellId)
-			{
-				SpellEntry* se = dbcSpell.LookupEntryForced(DemonicSacEffectSpellId);
-				if(se && u_caster)
-					u_caster->CastSpell(u_caster, se, true);
-			}
+			if(spellid1 && spellid1 != 0)
+					u_caster->CastSpell(u_caster, dbcSpell.LookupEntryForced(spellid1), true);
 		break;
 		case 7812: // Sacrifice Voidwalker
 		case 19438:
@@ -836,14 +831,14 @@ void Spell::SpellEffectSchoolDMG(uint32 i) // dmg school
 						dmg += p_caster->GetUInt32Value(PLAYER_SHIELD_BLOCK);
 				}
 			}break;
-			case 34428: // Victory Rush
+			/*case 34428: // Victory Rush
 			{
 				if(p_caster != NULL)
 				{
 					p_caster->RemoveFlag(UNIT_FIELD_AURASTATE, AURASTATE_FLAG_VICTORIOUS);
 					dmg = (p_caster->GetAP()*(m_spellInfo->EffectBasePoints[i]+1)) / 100;
 				}
-			}break;
+			}break;*/
 			case 6572: // Revenge, Deals damage plus AP boost.
 			case 6574:
 			case 7379:
@@ -875,7 +870,7 @@ void Spell::SpellEffectSchoolDMG(uint32 i) // dmg school
 			case 11566:
 			case 11567:
 			case 25286:*/
-			case 29707:
+			/*case 29707:
 			case 30324:
 			case 47449:
 			case 47450:
@@ -902,7 +897,7 @@ void Spell::SpellEffectSchoolDMG(uint32 i) // dmg school
 							}
 						}
 				}
-			}break;
+			}break;*/
 			case 845: // Cleave
 			case 7369:
 			case 11608:
