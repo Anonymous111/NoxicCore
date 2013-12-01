@@ -5544,118 +5544,421 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 71905;
 	}
-	sp = CheckAndReturnSpellEntry(71905);
+	sp = CheckAndReturnSpellEntry(71905); // Soul Fragment
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_APPLY_AURA;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_DUMMY;
 	}
-	sp = CheckAndReturnSpellEntry(1455);
+	sp = CheckAndReturnSpellEntry(1455); // Life Tap Rank 2
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(1456);
+	sp = CheckAndReturnSpellEntry(1456); // Life Tap Rank 3
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(3391);
+	sp = CheckAndReturnSpellEntry(3391); // Thrash
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(8182);
+	sp = CheckAndReturnSpellEntry(8182); // Frost Resistance
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(8185);
+	sp = CheckAndReturnSpellEntry(8185); // Fire Resistance
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(10476);
+	sp = CheckAndReturnSpellEntry(10476); // Frost Resistance Rank 2
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(10477);
+	sp = CheckAndReturnSpellEntry(10477); // Frost Resistance Rank 3
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(10534);
+	sp = CheckAndReturnSpellEntry(10534); // Fire Resistance Rank 2
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(11687);
+	sp = CheckAndReturnSpellEntry(11687); // Life Tap Rank 4
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(11688);
+	sp = CheckAndReturnSpellEntry(11688); // Life Tap Rank 5
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(11689);
+	sp = CheckAndReturnSpellEntry(11689); // Life Tap Rank 6
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(12284);
+	sp = CheckAndReturnSpellEntry(12284); // Mace Specialization
 	if(sp != NULL)
 		sp->procChance = 1;
-	sp = CheckAndReturnSpellEntry(12292);
+	sp = CheckAndReturnSpellEntry(12292); // Death Wish
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(12322);
+	sp = CheckAndReturnSpellEntry(12322); // Unbridled Wrath
 	if(sp != NULL)
 		sp->procChance = 8;
-	sp = CheckAndReturnSpellEntry(12701);
+	sp = CheckAndReturnSpellEntry(12701); // 
 	if(sp != NULL)
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(12702);
+	sp = CheckAndReturnSpellEntry(12702); // 
 	if(sp != NULL)
 		sp->procChance = 3;
-	sp = CheckAndReturnSpellEntry(12703);
+	sp = CheckAndReturnSpellEntry(12703); // 
 	if(sp != NULL)
 		sp->procChance = 4;
-	sp = CheckAndReturnSpellEntry(12704);
+	sp = CheckAndReturnSpellEntry(12704); // 
 	if(sp != NULL)
 		sp->procChance = 6;
-	sp = CheckAndReturnSpellEntry(12999);
+	sp = CheckAndReturnSpellEntry(12999); // 
 	if(sp != NULL)
 		sp->procChance = 16;
-	sp = CheckAndReturnSpellEntry(13000);
+	sp = CheckAndReturnSpellEntry(13000); // 
 	if(sp != NULL)
 		sp->procChance = 24;
-	sp = CheckAndReturnSpellEntry(13001);
+	sp = CheckAndReturnSpellEntry(13001); // 
 	if(sp != NULL)
 		sp->procChance = 32;
-	sp = CheckAndReturnSpellEntry(13002);
+	sp = CheckAndReturnSpellEntry(13002); // 
 	if(sp != NULL)
 		sp->procChance = 40;
-	sp = CheckAndReturnSpellEntry(14076);
+	sp = CheckAndReturnSpellEntry(14076); // 
 	if(sp != NULL)
 		sp->procChance = 30;
-	sp = CheckAndReturnSpellEntry(14094);
+	sp = CheckAndReturnSpellEntry(14094); // 
 	if(sp != NULL)
 		sp->procChance = 60;
-	sp = CheckAndReturnSpellEntry(15494);
+	sp = CheckAndReturnSpellEntry(15494); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(15600);
+	sp = CheckAndReturnSpellEntry(15600); // 
 	if(sp != NULL)
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(15601);
+	sp = CheckAndReturnSpellEntry(15601); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(15642);
+	sp = CheckAndReturnSpellEntry(15642); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(16843);
+	sp = CheckAndReturnSpellEntry(16843); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(18797);
+	sp = CheckAndReturnSpellEntry(18797); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(18803);
+	sp = CheckAndReturnSpellEntry(18803); // 
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(19105);
+	sp = CheckAndReturnSpellEntry(19105); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(19109);
+	sp = CheckAndReturnSpellEntry(19109); // 
 	if(sp != NULL)
 		sp->procChance = 10;
-
-	sp = CheckAndReturnSpellEntry(19228);
+	sp = CheckAndReturnSpellEntry(19228); // 
 	if(sp != NULL)
 	{
 		sp->procChance = 7;
 		sp->procFlags = PROC_ON_CAST_SPECIFIC_SPELL;
 	}
+	sp = CheckAndReturnSpellEntry(19232); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 14;
+		sp->procFlags = PROC_ON_CAST_SPECIFIC_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(21919); // 
+	if(sp != NULL)
+		sp->procChance = 10;
+	sp = CheckAndReturnSpellEntry(23158); // 
+	if(sp != NULL)
+		sp->procChance = 4;
+	sp = CheckAndReturnSpellEntry(27035); // 
+	if(sp != NULL)
+		sp->procChance = 10;
+	sp = CheckAndReturnSpellEntry(27521); // 
+	if(sp != NULL)
+		sp->procChance = 2;
+	sp = CheckAndReturnSpellEntry(27867); // 
+	if(sp != NULL)
+		sp->procChance = 2;
+	sp = CheckAndReturnSpellEntry(16164); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+	sp = CheckAndReturnSpellEntry(16246); // 
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procCharges++;
+	}
+	sp = CheckAndReturnSpellEntry(17364); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_SPELL_HIT_VICTIM;
+	sp = CheckAndReturnSpellEntry(51521); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	sp = CheckAndReturnSpellEntry(51522); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	sp = CheckAndReturnSpellEntry(51514); // 
+	if(sp != NULL)
+		sp->AuraInterruptFlags |= AURA_INTERRUPT_ON_UNUSED2;
+	sp = CheckAndReturnSpellEntry(63374); // 
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[1][0] = 0x80000000;
+		sp->EffectSpellClassMask[1][1] = 0;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 63685; // 
+	}
+	sp = CheckAndReturnSpellEntry(63373); // 
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[1][0] = 0x80000000;
+		sp->EffectSpellClassMask[1][1] = 0;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 63685; // 
+	}
+	sp = CheckAndReturnSpellEntry(51556); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+		sp->EffectTriggerSpell[0] = 52752; // 
+	}
+	sp = CheckAndReturnSpellEntry(51557); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+		sp->EffectTriggerSpell[0] = 52752; // 
+	}
+	sp = CheckAndReturnSpellEntry(51558); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+		sp->EffectTriggerSpell[0] = 52752; // 
+	}
+	sp = CheckAndReturnSpellEntry(52752); // 
+	if(sp != NULL)
+	{
+		sp->spell_can_crit = false;
+		sp->logsId = sp->Id;
+	}
+	sp = CheckAndReturnSpellEntry(974); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
+		sp->EffectTriggerSpell[0] = sp->Id;
+	}
+	sp = CheckAndReturnSpellEntry(32593); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
+		sp->EffectTriggerSpell[0] = sp->Id;
+	}
+	sp = CheckAndReturnSpellEntry(32594); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
+		sp->EffectTriggerSpell[0] = sp->Id;
+	}
+	sp = CheckAndReturnSpellEntry(49283); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
+		sp->EffectTriggerSpell[0] = sp->Id;
+	}
+	sp = CheckAndReturnSpellEntry(49284); // 
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
+		sp->EffectTriggerSpell[0] = sp->Id;
+	}
+    sp = CheckAndReturnSpellEntry(51528); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 1.3f;
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+	}
+	sp = CheckAndReturnSpellEntry(51529); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 2.6f;
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+	}
+	sp = CheckAndReturnSpellEntry(51530); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 3.9f;
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+	}
+	sp = CheckAndReturnSpellEntry(51531); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 5.2f;
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+	}
+	sp = CheckAndReturnSpellEntry(51532); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 6.5f;
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+	}
+	sp = CheckAndReturnSpellEntry(53817); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	sp = CheckAndReturnSpellEntry(52179); // 
+	if(sp != NULL)
+	{
+		sp->EffectAmplitude[0] = 0;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN;
+		sp->EffectMiscValue[0] = 127;
+	}
+	sp = CheckAndReturnSpellEntry(30823); // 
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_MELEE_ATTACK | PROC_TARGET_SELF;
+	sp = CheckAndReturnSpellEntry(51479); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->EffectImplicitTargetA[0] = 1;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
+		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->Effect[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(51478); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->EffectImplicitTargetA[0] = 1;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
+		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->Effect[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(51474); // 
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->EffectImplicitTargetA[0] = 1;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
+		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->Effect[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(51975); // 
+	if(sp != NULL)
+	{
+		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // 
+		if(sp2 != NULL)
+		{
+			sp->EffectRadiusIndex[0] = sp2->EffectRadiusIndex[0];
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_ALL_PARTY_IN_AREA;
+		}
+	}
+	sp = CheckAndReturnSpellEntry(52025); // 
+	if(sp != NULL)
+	{
+		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // 
+		if(sp2 != NULL)
+		{
+			sp->EffectRadiusIndex[0] = sp2->EffectRadiusIndex[0];
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_ALL_PARTY_IN_AREA;
+		}
+	}
+	sp = CheckAndReturnSpellEntry(8349); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(8502); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(8503); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(11306); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(11307);
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(25535); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(25537); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(61650); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(61654); // 
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 19823; // 
+	}
+	sp = CheckAndReturnSpellEntry(12319); // Flurry Rank 1
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12971); // Flurry Rank 2
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12972); // Flurry Rank 3
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12973); // Flurry Rank 4
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12974); // Flurry Rank 5
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16256); // Flurry Rank 1
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16281); // Flurry Rank 2
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16282); // Flurry Rank 3
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16283); // Flurry Rank 4
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16284); // Flurry Rank 5
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 
 	//Compact Harvest Reaper
 	sp = CheckAndReturnSpellEntry(4078);
