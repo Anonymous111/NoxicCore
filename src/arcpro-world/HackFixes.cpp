@@ -5589,233 +5589,287 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(12292); // Death Wish
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(12322); // Unbridled Wrath
+	sp = CheckAndReturnSpellEntry(12322); // Unbridled Wrath Rank 1
 	if(sp != NULL)
+	{
 		sp->procChance = 8;
-	sp = CheckAndReturnSpellEntry(12701); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
+	}
+	sp = CheckAndReturnSpellEntry(12701); // Mace Specialization Rank 2
 	if(sp != NULL)
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(12702); // 
+	sp = CheckAndReturnSpellEntry(12702); // Mace Specialization Rank 3
 	if(sp != NULL)
 		sp->procChance = 3;
-	sp = CheckAndReturnSpellEntry(12703); // 
+	sp = CheckAndReturnSpellEntry(12703); // Mace Specialization Rank 4
 	if(sp != NULL)
 		sp->procChance = 4;
-	sp = CheckAndReturnSpellEntry(12704); // 
+	sp = CheckAndReturnSpellEntry(12704); // Mace Specialization Rank 5
 	if(sp != NULL)
 		sp->procChance = 6;
-	sp = CheckAndReturnSpellEntry(12999); // 
+	sp = CheckAndReturnSpellEntry(12999); // Unbridled Wrath Rank 2
 	if(sp != NULL)
+	{
 		sp->procChance = 16;
-	sp = CheckAndReturnSpellEntry(13000); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
+	}
+	sp = CheckAndReturnSpellEntry(13000); // Unbridled Wrath Rank 3
 	if(sp != NULL)
+	{
 		sp->procChance = 24;
-	sp = CheckAndReturnSpellEntry(13001); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
+	}
+	sp = CheckAndReturnSpellEntry(13001); // Unbridled Wrath Rank 4
 	if(sp != NULL)
+	{
 		sp->procChance = 32;
-	sp = CheckAndReturnSpellEntry(13002); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
+	}
+	sp = CheckAndReturnSpellEntry(13002); // Unbridled Wrath Rank 5
 	if(sp != NULL)
+	{
 		sp->procChance = 40;
-	sp = CheckAndReturnSpellEntry(14076); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
+	}
+	sp = CheckAndReturnSpellEntry(14076); // Dirty Tricks Rank 1
 	if(sp != NULL)
 		sp->procChance = 30;
-	sp = CheckAndReturnSpellEntry(14094); // 
+	sp = CheckAndReturnSpellEntry(14094); // Dirty Tricks Rank 2
 	if(sp != NULL)
 		sp->procChance = 60;
-	sp = CheckAndReturnSpellEntry(15494); // 
+	sp = CheckAndReturnSpellEntry(15494); // Fury of Forgewright
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(15600); // 
+	sp = CheckAndReturnSpellEntry(15600); // Hand of Justice
 	if(sp != NULL)
+	{
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(15601); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 15601; // Hand of Justice
+	}
+	sp = CheckAndReturnSpellEntry(15601); // Hand of Justice
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(15642); // 
+	sp = CheckAndReturnSpellEntry(15642); // Ironfoe
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(16843); // 
+	sp = CheckAndReturnSpellEntry(16843); // Crimson Fury
+	if(sp != NULL)
+	{
+		sp->procChance = 10;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16844; // Crimson Fury
+	}
+	sp = CheckAndReturnSpellEntry(18797); // Flurry Axe
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(18797); // 
-	if(sp != NULL)
-		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(18803); // 
+	sp = CheckAndReturnSpellEntry(18803); // Focus
 	if(sp != NULL)
 		sp->procChance = 100;
-	sp = CheckAndReturnSpellEntry(19105); // 
+	sp = CheckAndReturnSpellEntry(19105); // MHTest01 Effect
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(19109); // 
+	sp = CheckAndReturnSpellEntry(19109); // MHTest02 Effect
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(19228); // 
+	sp = CheckAndReturnSpellEntry(19228); // ??
 	if(sp != NULL)
 	{
 		sp->procChance = 7;
 		sp->procFlags = PROC_ON_CAST_SPECIFIC_SPELL;
 	}
-	sp = CheckAndReturnSpellEntry(19232); // 
+	sp = CheckAndReturnSpellEntry(19232); // ??
 	if(sp != NULL)
 	{
 		sp->procChance = 14;
 		sp->procFlags = PROC_ON_CAST_SPECIFIC_SPELL;
 	}
-	sp = CheckAndReturnSpellEntry(21919); // 
+	sp = CheckAndReturnSpellEntry(21919); // Thrash
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(23158); // 
+	sp = CheckAndReturnSpellEntry(23158); // Concussive Shot Cooldown Reduction
 	if(sp != NULL)
 		sp->procChance = 4;
-	sp = CheckAndReturnSpellEntry(27035); // 
+	sp = CheckAndReturnSpellEntry(27035); // ??
 	if(sp != NULL)
 		sp->procChance = 10;
-	sp = CheckAndReturnSpellEntry(27521); // 
+	sp = CheckAndReturnSpellEntry(27521); // Mana Restore
 	if(sp != NULL)
+	{
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(27867); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 32848; // Mana Restore
+	}
+	sp = CheckAndReturnSpellEntry(27867); // Freeze
 	if(sp != NULL)
+	{
 		sp->procChance = 2;
-	sp = CheckAndReturnSpellEntry(16164); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 27868; // Freeze
+	}
+	sp = CheckAndReturnSpellEntry(16164); // Elemental Focus
 	if(sp != NULL)
+	{
 		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
-	sp = CheckAndReturnSpellEntry(16246); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16246; // Clearcasting
+	}
+	sp = CheckAndReturnSpellEntry(16246); // Clearcasting
 	if(sp != NULL)
 	{
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->procCharges++;
 	}
-	sp = CheckAndReturnSpellEntry(17364); // 
+	sp = CheckAndReturnSpellEntry(17364); // Stormstrike
 	if(sp != NULL)
+	{
 		sp->procFlags = PROC_ON_SPELL_HIT_VICTIM;
-	sp = CheckAndReturnSpellEntry(51521); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 32175; // Stormstrike
+		sp->EffectApplyAuraName[2] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[2] = 32176; // Stormstrike
+	}
+	sp = CheckAndReturnSpellEntry(51521); // Improved Stormstrike Rank 1
 	if(sp != NULL)
+	{
 		sp->procFlags = PROC_ON_CAST_SPELL;
-	sp = CheckAndReturnSpellEntry(51522); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 63375; // Improved Stormstrike
+	}
+	sp = CheckAndReturnSpellEntry(51522); // Improved Stormstrike Rank 2
 	if(sp != NULL)
+	{
 		sp->procFlags = PROC_ON_CAST_SPELL;
-	sp = CheckAndReturnSpellEntry(51514); // 
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 63375; // Improved Stormstrike
+	}
+	sp = CheckAndReturnSpellEntry(51514); // Hex
 	if(sp != NULL)
 		sp->AuraInterruptFlags |= AURA_INTERRUPT_ON_UNUSED2;
-	sp = CheckAndReturnSpellEntry(63374); // 
+	sp = CheckAndReturnSpellEntry(63374); // Frozen Power Rank 2
 	if(sp != NULL)
 	{
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->EffectSpellClassMask[1][0] = 0x80000000;
 		sp->EffectSpellClassMask[1][1] = 0;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 63685; // 
+		sp->EffectTriggerSpell[1] = 63685; // Freeze
 	}
-	sp = CheckAndReturnSpellEntry(63373); // 
+	sp = CheckAndReturnSpellEntry(63373); // Frozen Power Rank 1
 	if(sp != NULL)
 	{
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->EffectSpellClassMask[1][0] = 0x80000000;
 		sp->EffectSpellClassMask[1][1] = 0;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 63685; // 
+		sp->EffectTriggerSpell[1] = 63685; // Freeze
 	}
-	sp = CheckAndReturnSpellEntry(51556); // 
+	sp = CheckAndReturnSpellEntry(51556); // Ancestral Awakening Rank 1
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
-		sp->EffectTriggerSpell[0] = 52752; // 
+		sp->EffectTriggerSpell[0] = 52752; // Ancestral Awakening
 	}
-	sp = CheckAndReturnSpellEntry(51557); // 
+	sp = CheckAndReturnSpellEntry(51557); // Ancestral Awakening Rank 2
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
-		sp->EffectTriggerSpell[0] = 52752; // 
+		sp->EffectTriggerSpell[0] = 52752; // Ancestral Awakening
 	}
-	sp = CheckAndReturnSpellEntry(51558); // 
+	sp = CheckAndReturnSpellEntry(51558); // Ancestral Awakening Rank 3
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
-		sp->EffectTriggerSpell[0] = 52752; // 
+		sp->EffectTriggerSpell[0] = 52752; // Ancestral Awakening
 	}
-	sp = CheckAndReturnSpellEntry(52752); // 
+	sp = CheckAndReturnSpellEntry(52752); // Ancestral Awakening
 	if(sp != NULL)
 	{
 		sp->spell_can_crit = false;
 		sp->logsId = sp->Id;
 	}
-	sp = CheckAndReturnSpellEntry(974); // 
+	sp = CheckAndReturnSpellEntry(974); // Earth Shield Rank 1
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
 		sp->EffectTriggerSpell[0] = sp->Id;
 	}
-	sp = CheckAndReturnSpellEntry(32593); // 
+	sp = CheckAndReturnSpellEntry(32593); // Earth Shield Rank 2
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
 		sp->EffectTriggerSpell[0] = sp->Id;
 	}
-	sp = CheckAndReturnSpellEntry(32594); // 
+	sp = CheckAndReturnSpellEntry(32594); // Earth Shield Rank 3
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
 		sp->EffectTriggerSpell[0] = sp->Id;
 	}
-	sp = CheckAndReturnSpellEntry(49283); // 
+	sp = CheckAndReturnSpellEntry(49283); // Earth Shield Rank 4
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
 		sp->EffectTriggerSpell[0] = sp->Id;
 	}
-	sp = CheckAndReturnSpellEntry(49284); // 
+	sp = CheckAndReturnSpellEntry(49284); // Earth Shield Rank 5
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_ANY_DAMAGE_VICTIM | PROC_REMOVEONUSE;
 		sp->EffectTriggerSpell[0] = sp->Id;
 	}
-    sp = CheckAndReturnSpellEntry(51528); // 
+    sp = CheckAndReturnSpellEntry(51528); // Maelstrom Weapon Rank 1
 	if(sp != NULL)
 	{
 		sp->procChance = 0;
 		sp->ProcsPerMinute = 1.3f;
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 	}
-	sp = CheckAndReturnSpellEntry(51529); // 
+	sp = CheckAndReturnSpellEntry(51529); // Maelstrom Weapon Rank 2
 	if(sp != NULL)
 	{
 		sp->procChance = 0;
 		sp->ProcsPerMinute = 2.6f;
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 	}
-	sp = CheckAndReturnSpellEntry(51530); // 
+	sp = CheckAndReturnSpellEntry(51530); // Maelstrom Weapon Rank 3
 	if(sp != NULL)
 	{
 		sp->procChance = 0;
 		sp->ProcsPerMinute = 3.9f;
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 	}
-	sp = CheckAndReturnSpellEntry(51531); // 
+	sp = CheckAndReturnSpellEntry(51531); // Maelstrom Weapon Rank 4
 	if(sp != NULL)
 	{
 		sp->procChance = 0;
 		sp->ProcsPerMinute = 5.2f;
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 	}
-	sp = CheckAndReturnSpellEntry(51532); // 
+	sp = CheckAndReturnSpellEntry(51532); // Maelstrom Weapon Rank 5
 	if(sp != NULL)
 	{
 		sp->procChance = 0;
 		sp->ProcsPerMinute = 6.5f;
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 	}
-	sp = CheckAndReturnSpellEntry(53817); // 
+	sp = CheckAndReturnSpellEntry(53817); // Maelstrom Weapon
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_CAST_SPELL;
-	sp = CheckAndReturnSpellEntry(52179); // 
+	sp = CheckAndReturnSpellEntry(52179); // Astral Shift
 	if(sp != NULL)
 	{
 		sp->EffectAmplitude[0] = 0;
@@ -5825,140 +5879,200 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(30823); // 
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_MELEE_ATTACK | PROC_TARGET_SELF;
-	sp = CheckAndReturnSpellEntry(51479); // 
+	sp = CheckAndReturnSpellEntry(51479); // Astral Shift Rank 3
 	if(sp != NULL)
 	{
 		sp->procChance = 100;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
-		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->EffectTriggerSpell[0] = 52179; // Astral Shift
 		sp->Effect[1] = 0;
 	}
-	sp = CheckAndReturnSpellEntry(51478); // 
+	sp = CheckAndReturnSpellEntry(51478); // Astral Shift Rank 2
 	if(sp != NULL)
 	{
 		sp->procChance = 100;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
-		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->EffectTriggerSpell[0] = 52179; // Astral Shift
 		sp->Effect[1] = 0;
 	}
-	sp = CheckAndReturnSpellEntry(51474); // 
+	sp = CheckAndReturnSpellEntry(51474); // Astral Shift Rank 1
 	if(sp != NULL)
 	{
 		sp->procChance = 100;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_SPELL_LAND_VICTIM;
-		sp->EffectTriggerSpell[0] = 52179; // 
+		sp->EffectTriggerSpell[0] = 52179; // Astral Shift
 		sp->Effect[1] = 0;
 	}
-	sp = CheckAndReturnSpellEntry(51975); // 
+	sp = CheckAndReturnSpellEntry(51975); // ??
 	if(sp != NULL)
 	{
-		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // 
+		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // Mana Spring Totem
 		if(sp2 != NULL)
 		{
 			sp->EffectRadiusIndex[0] = sp2->EffectRadiusIndex[0];
 			sp->EffectImplicitTargetA[0] = EFF_TARGET_ALL_PARTY_IN_AREA;
 		}
 	}
-	sp = CheckAndReturnSpellEntry(52025); // 
+	sp = CheckAndReturnSpellEntry(52025); // Cleansing Totem Effect
 	if(sp != NULL)
 	{
-		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // 
+		SpellEntry* sp2 = dbcSpell.LookupEntryForced(58780); // Mana Spring Totem
 		if(sp2 != NULL)
 		{
 			sp->EffectRadiusIndex[0] = sp2->EffectRadiusIndex[0];
 			sp->EffectImplicitTargetA[0] = EFF_TARGET_ALL_PARTY_IN_AREA;
 		}
 	}
-	sp = CheckAndReturnSpellEntry(8349); // 
+	sp = CheckAndReturnSpellEntry(8349); // Fire Nova Rank 1
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(8502); // 
+	sp = CheckAndReturnSpellEntry(8502); // Fire Nova Rank 2
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(8503); // 
+	sp = CheckAndReturnSpellEntry(8503); // Fire Nova Rank 3
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(11306); // 
+	sp = CheckAndReturnSpellEntry(11306); // Fire Nova Rank 4
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(11307);
+	sp = CheckAndReturnSpellEntry(11307); // Fire Nova Rank 5
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(25535); // 
+	sp = CheckAndReturnSpellEntry(25535); // Fire Nova Rank 6
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(25537); // 
+	sp = CheckAndReturnSpellEntry(25537); // Fire Nova Rank 7
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(61650); // 
+	sp = CheckAndReturnSpellEntry(61650); // Fire Nova Rank 8
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
-	sp = CheckAndReturnSpellEntry(61654); // 
+	sp = CheckAndReturnSpellEntry(61654); // Fire Nova Rank 9
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 19823; // 
+		sp->EffectTriggerSpell[1] = 19823; // Fire Nova Visual
 	}
+	sp = CheckAndReturnSpellEntry(12966); // Flurry Rank 1
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12967); // Flurry Rank 2
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12968); // Flurry Rank 3
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12969); // Flurry Rank 4
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(12970); // Flurry Rank 5
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 	sp = CheckAndReturnSpellEntry(12319); // Flurry Rank 1
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12966; // Flurry Rank 1
+	}
 	sp = CheckAndReturnSpellEntry(12971); // Flurry Rank 2
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12967; // Flurry Rank 2
+	}
 	sp = CheckAndReturnSpellEntry(12972); // Flurry Rank 3
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12968; // Flurry Rank 3
+	}
 	sp = CheckAndReturnSpellEntry(12973); // Flurry Rank 4
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12969; // Flurry Rank 4
+	}
 	sp = CheckAndReturnSpellEntry(12974); // Flurry Rank 5
+	if(sp != NULL)
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12970; // Flurry Rank 5
+	}
+	sp = CheckAndReturnSpellEntry(16257); // Flurry Rank 1
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16277); // Flurry Rank 2
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16278); // Flurry Rank 3
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16279); // Flurry Rank 4
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	sp = CheckAndReturnSpellEntry(16280); // Flurry Rank 5
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_CRIT_ATTACK;
 	sp = CheckAndReturnSpellEntry(16256); // Flurry Rank 1
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16257; // Flurry Rank 1
+	}
 	sp = CheckAndReturnSpellEntry(16281); // Flurry Rank 2
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16277; // Flurry Rank 2
+	}
 	sp = CheckAndReturnSpellEntry(16282); // Flurry Rank 3
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16278; // Flurry Rank 3
+	}
 	sp = CheckAndReturnSpellEntry(16283); // Flurry Rank 4
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16279; // Flurry Rank 4
+	}
 	sp = CheckAndReturnSpellEntry(16284); // Flurry Rank 5
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 16280; // Flurry Rank 5
+	}
 
 	//Compact Harvest Reaper
 	sp = CheckAndReturnSpellEntry(4078);
