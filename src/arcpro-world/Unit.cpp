@@ -8044,7 +8044,7 @@ void Unit::SendEnvironmentalDamageLog(uint64 guid, uint8 type, uint32 damage)
 	SendMessageToSet(&data, true, false);
 }
 
-bool AuraInterface::HasActiveAura(uint32 spellid)
+/*bool Unit::HasActiveAura(uint32 spellid)
 {
 	for(uint32 x = 0; x < MAX_AURAS; x++)
 	{
@@ -8057,7 +8057,7 @@ bool AuraInterface::HasActiveAura(uint32 spellid)
 	return false;
 }
 
-bool AuraInterface::HasActiveAura(uint32 spellid, uint64 guid)
+bool Unit::HasActiveAura(uint32 spellid, uint64 guid)
 {
 	for(uint32 x = 0; x < MAX_AURAS; x++)
 	{
@@ -8068,4 +8068,4 @@ bool AuraInterface::HasActiveAura(uint32 spellid, uint64 guid)
 		}
 	}
 	return false;
-}
+}*/

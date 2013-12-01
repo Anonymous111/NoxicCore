@@ -42,6 +42,11 @@ class DynamicObject;
 #define MAX_TOTAL_AURAS_START				(MAX_PASSIVE_AURAS_START)
 #define MAX_TOTAL_AURAS_END					(MAX_REMOVABLE_AURAS_END)
 
+//Thanks to Sandshroud
+#define MAX_POSITIVE_AURAS 40
+#define MAX_AURAS 86
+#define MAX_PASSIVE_AURAS 169
+
 bool SERVER_DECL Rand(float);
 
 #define UF_TARGET_DIED			1
@@ -1421,8 +1426,8 @@ public:
 	bool HasAura(uint32 spellid); // this checks passive auras too
 	uint16 GetAuraStackCount(uint32 spellid);
 	bool HasAuraVisual(uint32 visualid); // not spell id!!!
-	bool HasActiveAura(uint32 spelllid);
-	bool HasActiveAura(uint32 spelllid, uint64);
+	//bool HasActiveAura(uint32 spelllid);
+	//bool HasActiveAura(uint32 spelllid, uint64);
 	bool HasBuff(uint32 spelllid); // this does not check passive auras & it was visible auras
 	bool HasBuff(uint32 spelllid, uint64 guid); // this does not check passive auras & it was visible auras
 	bool HasVisialPosAurasOfNameHashWithCaster(uint32 namehash, Unit* caster);
