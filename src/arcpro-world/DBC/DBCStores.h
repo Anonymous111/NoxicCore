@@ -703,7 +703,7 @@ struct SpellEntry
 	uint32 manaPerSecond;                                     //45
 	uint32 manaPerSecondPerLevel;                             //46
 	uint32 rangeIndex;                                        //47
-	float  speed;                                             //48
+	float speed;                                             //48
 	uint32 modalNextSpell;                                    //49
 	uint32 maxstack;                                          //50
 	uint32 Totem[2];                                          //51 - 52
@@ -736,17 +736,17 @@ struct SpellEntry
 	uint32 activeIconID;                                      //135 activeIconID;
 	uint32 spellPriority;                                     //136
 	const char*  Name;                                        //137
-//	char*  NameAlt[15];                                       //138 - 152 not used
-//	uint32 NameFlags;                                         //153 not used
-	const char*  Rank;                                        //154
-//	char*  RankAlt[15];                                       //155 - 169 not used
-//	uint32 RankFlags;                                         //170 not used
-	char*  Description;                                       //171
-//	char*  DescriptionAlt[15];                                //172 - 186 not used
-//	uint32 DescriptionFlags;                                  //187 not used
-	const char*  BuffDescription;                             //188
-//	char*  BuffDescription[15];                               //189 - 203 not used
-//	uint32 buffdescflags;                                     //204 not used
+	//char* NameAlt[15];                                       //138 - 152 not used
+	//uint32 NameFlags;                                         //153 not used
+	const char* Rank;                                        //154
+	//char* RankAlt[15];                                       //155 - 169 not used
+	//uint32 RankFlags;                                         //170 not used
+	char* Description;                                       //171
+	//char* DescriptionAlt[15];                                //172 - 186 not used
+	//uint32 DescriptionFlags;                                  //187 not used
+	const char* BuffDescription;                             //188
+	//char* BuffDescription[15];                               //189 - 203 not used
+	//uint32 buffdescflags;                                     //204 not used
 	uint32 ManaCostPercentage;                                //205
 	uint32 StartRecoveryCategory;                             //206
 	uint32 StartRecoveryTime;                                 //207
@@ -765,12 +765,12 @@ struct SpellEntry
 	int32  RequiresAreaId;                                    //225 References AreaGroup.dbc
 	uint32 School;                                            //226 Enumerated in Unit.h
 	uint32 RuneCostID;                                        //227 References SpellRuneCost.dbc
-//	uint32 SpellMissileID;                                    //228 References SpellMissile.dbc
-//	uint32 UnKnown;                                           //229 powerdisplayid ?
-//	uint32 UnKnown;                                           //230
-//	uint32 UnKnown;                                           //231
-//	uint32 UnKnown;                                           //232
-//	uint32 SpellDescriptionVariable;                          //233 References SpellDescriptionVariables.dbc
+	//uint32 SpellMissileID;                                    //228 References SpellMissile.dbc
+	//uint32 UnKnown;                                           //229 powerdisplayid ?
+	//uint32 UnKnown;                                           //230
+	//uint32 UnKnown;                                           //231
+	//uint32 UnKnown;                                           //232
+	//uint32 SpellDescriptionVariable;                          //233 References SpellDescriptionVariables.dbc
 	uint32 SpellDifficultyID;                                 //234 References SpellDifficulty.dbc
 
 	/// CUSTOM: these fields are used for the modifications made in the world.cpp
@@ -781,36 +781,40 @@ struct SpellEntry
 	uint32 BGR_one_buff_on_target;          //!!! CUSTOM, these are related to creating a item through a spell
 	//caster can have only 1 Aura per spell group, ex pal auras
 	uint32 BGR_one_buff_from_caster_on_self;//!!! CUSTOM, these are related to creating a item through a spell
-//	uint32 buffIndexType;                   //!!! CUSTOM, <Fill description for variable>
+	//uint32 buffIndexType;                   //!!! CUSTOM, <Fill description for variable>
 	uint32 c_is_flags;                      //!!! CUSTOM, store spell checks in a static way : isdamageind,ishealing
-//	uint32 buffType;                        //!!! CUSTOM, these are related to creating a item through a spell
+	//uint32 buffType;                        //!!! CUSTOM, these are related to creating a item through a spell
 	uint32 RankNumber;                      //!!! CUSTOM, this protects players from having >1 rank of a spell
 	uint32 NameHash;                        //!!! CUSTOM, related to custom spells, summon spell quest related spells
 	uint32 talent_tree;                     //!!! CUSTOM,
 	uint32 in_front_status;                 //!!! CUSTOM,
 	uint32 EffectSpellGroupRelation_high[ MAX_SPELL_EFFECTS ];     //!!! this is not contained in client dbc but server must have it
 	uint32 ThreatForSpell;
-	float  ThreatForSpellCoef;
+	float ThreatForSpellCoef;
 	uint32 ProcOnNameHash[ MAX_SPELL_EFFECTS ];
 	uint32 spell_coef_flags;                //!!! CUSTOM, store flags for spell coefficient calculations
+	float ProcsPerMinute;
+	bool spell_can_crit;
 
-	float  base_range_or_radius_sqr;        //!!! CUSTOM, needed for aoe spells most of the time
+	uint32 logsId;
+
+	float base_range_or_radius_sqr;        //!!! CUSTOM, needed for aoe spells most of the time
 	// love me or hate me, all "In a cone in front of the caster" spells don't necessarily mean "in front"
-	float  cone_width;
+	float cone_width;
 	//Spell Coefficient
-	float  casttime_coef;                   //!!! CUSTOM, faster spell bonus calculation
-	float  fixed_dddhcoef;                  //!!! CUSTOM, fixed DD-DH coefficient for some spells
-	float  fixed_hotdotcoef;                //!!! CUSTOM, fixed HOT-DOT coefficient for some spells
-	float  Dspell_coef_override;            //!!! CUSTOM, overrides any spell coefficient calculation and use this value in DD&DH
-	float  OTspell_coef_override;           //!!! CUSTOM, overrides any spell coefficient calculation and use this value in HOT&DOT
-	int    ai_target_type;
+	float casttime_coef;                   //!!! CUSTOM, faster spell bonus calculation
+	float fixed_dddhcoef;                  //!!! CUSTOM, fixed DD-DH coefficient for some spells
+	float fixed_hotdotcoef;                //!!! CUSTOM, fixed HOT-DOT coefficient for some spells
+	float Dspell_coef_override;            //!!! CUSTOM, overrides any spell coefficient calculation and use this value in DD&DH
+	float OTspell_coef_override;           //!!! CUSTOM, overrides any spell coefficient calculation and use this value in HOT&DOT
+	int ai_target_type;
 
-	bool   self_cast_only;
-	bool   apply_on_shapeshift_change;
-	bool   always_apply;
-	bool   is_melee_spell;                  //!!! CUSTOM,
-	bool   is_ranged_spell;                 //!!! CUSTOM,
-	bool   noproc;
+	bool self_cast_only;
+	bool apply_on_shapeshift_change;
+	bool always_apply;
+	bool is_melee_spell;                  //!!! CUSTOM,
+	bool is_ranged_spell;                 //!!! CUSTOM,
+	bool noproc;
 
 	uint32 SchoolMask;                      // Custom
 	uint32 CustomFlags;						// Custom
