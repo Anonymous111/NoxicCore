@@ -386,7 +386,7 @@ void ApplyNormalFixes()
 
 		switch(namehash)
 		{
-				//case SPELL_HASH_SANCTITY_AURA:
+			//case SPELL_HASH_SANCTITY_AURA:
 			case SPELL_HASH_DEVOTION_AURA:
 			case SPELL_HASH_RETRIBUTION_AURA:
 			case SPELL_HASH_CONCENTRATION_AURA:
@@ -1444,7 +1444,10 @@ void ApplyNormalFixes()
 	//Warrior: Death Wish
 	sp = dbcSpell.LookupEntryForced(12292);
 	if(sp != NULL)
+	{
 		sp->c_is_flags = SPELL_FLAG_IS_FORCEDBUFF;
+		sp->procChance = 100;
+	}
 
 	/**********************************************************
 	 *	Arms
@@ -2986,10 +2989,10 @@ void ApplyNormalFixes()
 		sp->EffectMiscValue[2] = SMT_MISC_EFFECT;
 	// Still related to shadowstep - prevent the trigger spells from breaking stealth.
 	sp = CheckAndReturnSpellEntry(44373);
-	if(sp)
+	if(sp != NULL)
 		sp->AttributesEx |= ATTRIBUTESEX_NOT_BREAK_STEALTH;
 	sp = CheckAndReturnSpellEntry(36563);
-	if(sp)
+	if(sp != NULL)
 		sp->AttributesEx |= ATTRIBUTESEX_NOT_BREAK_STEALTH;
 	sp = CheckAndReturnSpellEntry(36554);
 	if(sp != NULL)
@@ -5586,9 +5589,6 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(12284); // Mace Specialization
 	if(sp != NULL)
 		sp->procChance = 1;
-	sp = CheckAndReturnSpellEntry(12292); // Death Wish
-	if(sp != NULL)
-		sp->procChance = 100;
 	sp = CheckAndReturnSpellEntry(12322); // Unbridled Wrath Rank 1
 	if(sp != NULL)
 	{
@@ -5985,93 +5985,265 @@ void ApplyNormalFixes()
 	}
 	sp = CheckAndReturnSpellEntry(12966); // Flurry Rank 1
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(12967); // Flurry Rank 2
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(12968); // Flurry Rank 3
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(12969); // Flurry Rank 4
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(12970); // Flurry Rank 5
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(12319); // Flurry Rank 1
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12966; // Flurry Rank 1
 	}
 	sp = CheckAndReturnSpellEntry(12971); // Flurry Rank 2
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12967; // Flurry Rank 2
 	}
 	sp = CheckAndReturnSpellEntry(12972); // Flurry Rank 3
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12968; // Flurry Rank 3
 	}
 	sp = CheckAndReturnSpellEntry(12973); // Flurry Rank 4
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12969; // Flurry Rank 4
 	}
 	sp = CheckAndReturnSpellEntry(12974); // Flurry Rank 5
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12970; // Flurry Rank 5
 	}
 	sp = CheckAndReturnSpellEntry(16257); // Flurry Rank 1
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(16277); // Flurry Rank 2
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(16278); // Flurry Rank 3
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(16279); // Flurry Rank 4
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(16280); // Flurry Rank 5
 	if(sp != NULL)
-		sp->procFlags = PROC_ON_CRIT_ATTACK;
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procCharges++;
+	}
 	sp = CheckAndReturnSpellEntry(16256); // Flurry Rank 1
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 16257; // Flurry Rank 1
 	}
 	sp = CheckAndReturnSpellEntry(16281); // Flurry Rank 2
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 16277; // Flurry Rank 2
 	}
 	sp = CheckAndReturnSpellEntry(16282); // Flurry Rank 3
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 16278; // Flurry Rank 3
 	}
 	sp = CheckAndReturnSpellEntry(16283); // Flurry Rank 4
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 16279; // Flurry Rank 4
 	}
 	sp = CheckAndReturnSpellEntry(16284); // Flurry Rank 5
 	if(sp != NULL)
 	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK;
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 16280; // Flurry Rank 5
+	}
+	sp = CheckAndReturnSpellEntry(61177); // Northrend Inscription Research
+	if(sp != NULL)
+	{
+		sp->Effect[1] = 0;
+		//sp->EffectBaseDice[1] = 0;
+		sp->EffectBasePoints[1] = 0;
+		sp->EffectImplicitTargetA[1] = 0;
+		sp->EffectDieSides[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(61288); // Minor Inscription Research
+	if(sp != NULL)
+	{
+		sp->Effect[1] = 0;
+		//sp->EffectBaseDice[1] = 0;
+		sp->EffectBasePoints[1] = 0;
+		sp->EffectImplicitTargetA[1] = 0;
+		sp->EffectDieSides[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(60893); // Northrend Alchemy Research
+	if(sp != NULL)
+	{
+		sp->Effect[1] = 0;
+		//sp->EffectBaseDice[1] = 0;
+		sp->EffectBasePoints[1] = 0;
+		sp->EffectImplicitTargetA[1] = 0;
+		sp->EffectDieSides[1] = 0;
+	}
+	sp = CheckAndReturnSpellEntry(46097); // Brutal Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	}
+	sp = CheckAndReturnSpellEntry(43860); // Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	}
+	sp = CheckAndReturnSpellEntry(43861); // Merciless Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	}
+	sp = CheckAndReturnSpellEntry(43862); // Vengeful Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	}
+	sp = CheckAndReturnSpellEntry(60564); // Savage Gladiator's Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 60565; // Savage Magic
+	}
+	sp = CheckAndReturnSpellEntry(60571); // Hateful Gladiator's Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 60566; // Hateful Magic
+	}
+	sp = CheckAndReturnSpellEntry(60572); // Deadly Gladiator's Totem of Survival
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 60567; // Deadly Magic
+	}
+	sp = CheckAndReturnSpellEntry(37575); // ??
+	if(sp != NULL)
+	{
+		sp->EffectSpellClassMask[0][0] = 0x00100000 | 0x10000000 | 0x80000000;
+		sp->EffectSpellClassMask[0][1] = 0x08000000;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	}
+	sp = CheckAndReturnSpellEntry(60567); // Deadly Magic
+	if(sp != NULL)
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+	sp = CheckAndReturnSpellEntry(46098); // Brutal Totem of Third WInd
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[0][0] = 0x00000080;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 46099; // Brutal Gladiator's Totem of the Third Wind
+	}
+	sp = CheckAndReturnSpellEntry(34138); // Totem of the Third Wind
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[0][0] = 0x00000080;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 34132; // Gladiator's Totem of the Third Wind
+	}
+	sp = CheckAndReturnSpellEntry(42370); // Merciless Totem of the Third WInd
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[0][0] = 0x00000080;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 42371; // Merciless Gladiator's Totem of the Third Wind
+	}
+	sp = CheckAndReturnSpellEntry(43728); // Vengeful Totem of Third WInd
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectSpellClassMask[0][0] = 0x00000080;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 43729; // Vengeful Gladiator's Totem of the Third Wind
 	}
 
 	//Compact Harvest Reaper
@@ -6947,15 +7119,15 @@ void ApplyNormalFixes()
 		sp->procChance = 100;
 	}
 
-	sp = CheckAndReturnSpellEntry(38332);		// Ribbon of Sacrifice
+	sp = CheckAndReturnSpellEntry(38332); // Ribbon of Sacrifice
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_CAST_SPELL;
 
-	sp = CheckAndReturnSpellEntry(40475);		// Black temple melee trinket
+	sp = CheckAndReturnSpellEntry(40475); // Black temple melee trinket
 	if(sp != NULL)
 		sp->procChance = 5;
 
-	sp = CheckAndReturnSpellEntry(32642);		// Sporegarr - Petrified Lichen Guard
+	sp = CheckAndReturnSpellEntry(32642); // Sporegarr - Petrified Lichen Guard
 	if(sp != NULL)
 	{
 		sp->procFlags = PROC_ON_BLOCK_VICTIM;
@@ -7564,7 +7736,7 @@ void ApplyNormalFixes()
 	//////////////////////////////////////////////////////
 	// Blessing of Zim'Torga
 	sp = CheckAndReturnSpellEntry(51729);
-	if(sp)
+	if(sp != NULL)
 	{
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_SCRIPTED_OR_SINGLE_TARGET;
 		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDBUFF;
@@ -7572,7 +7744,7 @@ void ApplyNormalFixes()
 
 	// Blessing of Zim'Abwa
 	sp = CheckAndReturnSpellEntry(51265);
-	if(sp)
+	if(sp != NULL)
 	{
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_SCRIPTED_OR_SINGLE_TARGET;
 		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDBUFF;
@@ -7580,7 +7752,7 @@ void ApplyNormalFixes()
 
 	// Blessing of Zim'Rhuk
 	sp = CheckAndReturnSpellEntry(52051);
-	if(sp)
+	if(sp != NULL)
 	{
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_SCRIPTED_OR_SINGLE_TARGET;
 		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDBUFF;
@@ -7591,15 +7763,152 @@ void ApplyNormalFixes()
 	 * to the one taught by Warlock trainers.
 	 */
 	sp = CheckAndReturnSpellEntry(7720);
-	if(sp)
+	if(sp != NULL)
 	{
 		const uint32 ritOfSummId = 62330;
 		CreateDummySpell(ritOfSummId);
-		SpellEntry * ritOfSumm = dbcSpell.LookupEntryForced(ritOfSummId);
+		SpellEntry* ritOfSumm = dbcSpell.LookupEntryForced(ritOfSummId);
 		if(ritOfSumm != NULL)
 		{
 			memcpy(ritOfSumm, sp, sizeof(SpellEntry));
 			ritOfSumm->Id = ritOfSummId;
 		}
+	}
+
+	//////////////////////////////////////////////////////
+	// MISCELLANEOUS SPELL FIXES                        //
+	//////////////////////////////////////////////////////
+
+	sp = CheckAndReturnSpellEntry(3286); // Bind
+	if(sp != NULL)
+	{
+		sp->Effect[0] = 11;
+		sp->Effect[1] = 24;
+		sp->EffectImplicitTargetA[0] = sp->EffectImplicitTargetA[1] = 149;
+	}
+	sp = CheckAndReturnSpellEntry(196); // 1H Axes
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_HUNTER|CLASSMASK_ROGUE|CLASSMASK_DEATHKNIGHT|CLASSMASK_SHAMAN;
+	sp = CheckAndReturnSpellEntry(197); // 2H Axes
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_HUNTER|CLASSMASK_DEATHKNIGHT|CLASSMASK_SHAMAN;
+	sp = CheckAndReturnSpellEntry(198); // 1H Maces
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_ROGUE|CLASSMASK_PRIEST|CLASSMASK_DEATHKNIGHT|CLASSMASK_SHAMAN|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(199); // 2H Maces
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_DEATHKNIGHT|CLASSMASK_SHAMAN|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(200); // Polearms
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_HUNTER|CLASSMASK_DEATHKNIGHT|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(201); // 1H Swords
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_HUNTER|CLASSMASK_ROGUE|CLASSMASK_DEATHKNIGHT|CLASSMASK_MAGE|CLASSMASK_WARLOCK;
+	sp = CheckAndReturnSpellEntry(202); // 2H Swords
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_PALADIN|CLASSMASK_HUNTER|CLASSMASK_DEATHKNIGHT;
+	sp = CheckAndReturnSpellEntry(227); // Staves
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_PRIEST|CLASSMASK_SHAMAN|CLASSMASK_MAGE|CLASSMASK_WARLOCK|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(1180); // Daggers
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE|CLASSMASK_PRIEST|CLASSMASK_SHAMAN|CLASSMASK_MAGE|CLASSMASK_WARLOCK|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(15590); // Fist Weapons
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE|CLASSMASK_SHAMAN|CLASSMASK_DRUID;
+	sp = CheckAndReturnSpellEntry(5009); // Wands
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_PRIEST|CLASSMASK_MAGE|CLASSMASK_WARLOCK;
+	sp = CheckAndReturnSpellEntry(264); // Bows
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE;
+	sp = CheckAndReturnSpellEntry(266); // Guns
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE;
+	sp = CheckAndReturnSpellEntry(2567); // Thrown
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE;
+	sp = CheckAndReturnSpellEntry(5011); // Crossbows
+	if(sp != NULL)
+		sp->trnr_req_clsmsk = CLASSMASK_WARRIOR|CLASSMASK_HUNTER|CLASSMASK_ROGUE;
+	sp = CheckAndReturnSpellEntry(10535);
+	if(sp != NULL)
+		sp->procChance = 100;
+	sp = CheckAndReturnSpellEntry(50040);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(50041);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(50043);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(64745);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60675);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60685);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60686);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60687);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60688);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(60690);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(64936);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = sp->EffectBasePoints[0]+1;
+		sp->procFlags = PROC_ON_CAST_SPELL;
 	}
 }
