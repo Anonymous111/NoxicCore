@@ -7535,46 +7535,47 @@ void Player::ZoneUpdate(uint32 ZoneId)
 	LOG_DETAIL("ZONE_UPDATE: Player %s entered zone %s", GetName(), sAreaStore.LookupString((int)p->name));
 	UpdatePvPArea();*/
 
+	Player* pPlayer = TO_PLAYER(this);
 	// remove auras
 	switch(oldzone)
 	{
 		case 4197: // Wintergrasp
 		{
-			if(TO_PLAYER(this)->HasActiveAura(52108))
-				TO_PLAYER(this)->RemoveAura(52108);
+			if(pPlayer->HasAura(52108))
+				pPlayer->RemoveAura(52108);
 		}break;
 		case 3518: // Nagrand
 		{
-			if(TO_PLAYER(this)->HasActiveAura(33795))
-				TO_PLAYER(this)->RemoveAura(33795);
+			if(pPlayer->HasAura(33795))
+				pPlayer->RemoveAura(33795);
 		}break;
 		case 210: // Icecrown (Argent)
 		{
-			if(TO_PLAYER(this)->HasActiveAura(64373))
-				TO_PLAYER(this)->RemoveAura(64373);
+			if(pPlayer->HasAura(64373))
+				pPlayer->RemoveAura(64373);
 		}break;
 		case 4298: // Scarlet Enclave
 		{
-			if(TO_PLAYER(this)->HasActiveAura(51721))
-				TO_PLAYER(this)->RemoveAura(51721);
+			if(pPlayer->HasAura(51721))
+				pPlayer->RemoveAura(51721);
 		}break;
 	}
 	// send area auras
 	switch(m_zoneId)
 	{
 		case 4197: // wintergrasp
-			CastSpell(TO_PLAYER(this), 52108, true); 
+			CastSpell(pPlayer, 52108, true); 
 		break;
 		case 210: // Icecrown (argent)
 		{
 			if(at && at->AreaId == 4658)
-				CastSpell(TO_PLAYER(this), 64373, true);
+				CastSpell(pPlayer, 64373, true);
 		}break;
 		case 4298: // Scarlet Enclave
 		{
 			if(at && at->AreaId == 4342)
-				if(TO_PLAYER(this)->getClass() == DEATHKNIGHT)
-					CastSpell(TO_PLAYER(this), 51721, true);
+				if(pPlayer->getClass() == DEATHKNIGHT)
+					CastSpell(pPlayer, 51721, true);
 		}break;
 	}
 }
@@ -7584,7 +7585,6 @@ void Player::UpdateChannels(uint16 AreaID)
 	set<Channel*>::iterator i;
 	Channel* c;
 	string channelname, AreaName;
-
 
 	if(GetMapId() == 450)
 		AreaID = 2917;
