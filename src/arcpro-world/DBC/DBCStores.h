@@ -795,6 +795,7 @@ struct SpellEntry
 	uint32 spell_coef_flags;                //!!! CUSTOM, store flags for spell coefficient calculations
 	float ProcsPerMinute;
 	bool spell_can_crit;
+	uint32 trnr_req_clsmsk;
 
 	uint32 logsId;
 
