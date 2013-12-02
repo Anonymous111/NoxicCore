@@ -27,9 +27,9 @@ INSERT INTO `loot_gameobjects` (`entryid`,`itemid`,`normal25percentchance`,`minc
 INSERT INTO `loot_gameobjects` (`entryid`,`itemid`,`normal10percentchance`,`mincount`,`maxcount`) VALUES (190663,36062,0.726,1,1); -- Coldwraith Handwraps
 INSERT INTO `loot_gameobjects` (`entryid`,`itemid`,`normal10percentchance`,`mincount`,`maxcount`) VALUES (190663,36325,0.2492,1,1); -- Halgrind Carapace
 
-DELETE FROM `arc_world`.`db_version` WHERE  `db_name`='ArcPro 4.3.4';
-DELETE FROM `arc_world`.`db_version` WHERE  `db_name`='ArcPro 3.3.5a';
-DELETE FROM `arc_world`.`db_version` WHERE  `db_name`='ArcPro';
-INSERT INTO `arc_world`.`db_version` (`db_name`, `revision`, `changeset`, `game_version`, `last_included_arcemu_update`, `last_db_update_by`) VALUES 
+DELETE FROM `db_version` WHERE  `db_name`='ArcPro 4.3.4';
+DELETE FROM `db_version` WHERE  `db_name`='ArcPro 3.3.5a';
+DELETE FROM `db_version` WHERE  `db_name`='ArcPro';
+INSERT INTO `db_version` (`db_name`, `revision`, `changeset`, `game_version`, `last_included_arcemu_update`, `last_db_update_by`) VALUES 
 ('ArcPro 3.3.5a', 1, 1, '3.3.5a', '2013-12-01_01_loot_gameobject', 'zdroid9770');
 UPDATE `world_db_version` SET `LastUpdate`='2013-12-01_01_loot_gameobject' WHERE `LastUpdate` = '2013-11-28_01_isle_of_conquest';

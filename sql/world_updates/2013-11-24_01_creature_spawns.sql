@@ -7,4 +7,4 @@ ALTER TABLE `creature_spawns`
 	CHANGE COLUMN `position_y` `position_y` FLOAT(8,2) NOT NULL DEFAULT '0' AFTER `position_x`,
 	CHANGE COLUMN `position_z` `position_z` FLOAT(8,2) NOT NULL DEFAULT '0' AFTER `position_y`,
 	CHANGE COLUMN `orientation` `orientation` FLOAT(5,2) NOT NULL DEFAULT '0' AFTER `position_z`;
-UPDATE `world_db_version` SET `LastUpdate`='2013-11-24_01_creature_spawns' WHERE `LastUpdate` = '2012-08-04_21-25_worldmap_info';
+UPDATE `world_db_version` SET `LastUpdate` = '2013-11-24_01_creature_spawns' WHERE `LastUpdate` = '2012-08-14_21-25_worldmap_info';
