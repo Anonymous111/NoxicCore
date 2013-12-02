@@ -568,6 +568,26 @@ class TutenKash : public CreatureAIScript
 		int nrspells;
 };
 
+class RazorfenGong : public GameObjectAIScript
+{
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(RazorfenGong)
+	RazorfenGong(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+
+	void OnActivate(Player* pPlayer)
+	{
+		// First Spawn 10: http://www.wowhead.com/npc=7349
+		// Second Spawn 4-6: http://www.wowhead.com/npc=7351
+		// Third Spawn 1: http://www.wowhead.com/npc=7355
+		/*In order to summon Tuten'kash you will need to bang a gong 3 times. 
+		The gong is located about half way through RFD. 
+		When you hit the gong for the first time 10 level 35 elite spiders will spawn. 
+		You'll need to kill them before hitting it again. 
+		After you kill them hit it again to spawn 4 level 37 elite spiders. 
+		After you kill them hit the gong one final time to spawn Tuten'kash. 
+		The only special thing that Tuten'kash does is root the group.*/
+	}
+};
 
 void SetupRazorfenDowns(ScriptMgr* mgr)
 {
@@ -577,4 +597,5 @@ void SetupRazorfenDowns(ScriptMgr* mgr)
 	mgr->register_creature_script(7356, &PlaguemawTheRotting::Create);
 	mgr->register_creature_script(7354, &Ragglesnout::Create);
 	mgr->register_creature_script(7355, &TutenKash::Create);
+	mgr->register_gameobject_script(148917, &RazorfenGong::Create);
 }
