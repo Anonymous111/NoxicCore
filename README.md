@@ -1,6 +1,6 @@
 # ArcPro
-ArcPro is a MMORPG Emulator created in C++.
-ArcPro is a full featured server for World of Warcraft, in its Wrath of the Lich King version supporting client version 3.3.5a.
+ArcPro is a MMORPG Emulator created with C++, C and other misc computer languages.
+ArcPro is a full featured server for World of Warcraft, in its Wrath of the Lich King version supporting client version 3.3.5a  and closed alpha for the Cataclysm version supporting client version 4.3.4.
 
 The emulator is based off the open source project ArcEmu. Thanks to the ArcEmu Team and the 
 contributors for all their hard work. 
@@ -12,8 +12,6 @@ It is completely open source; community involvement is HIGHLY encouraged.
 
 World of Warcraft, and all World of Warcraft or Warcraft art, images, and lore are copyrighted by Blizzard Entertainment, Inc..
 
-We are currently working on Spells.
-This emulator is not playable yet. Contributions are greatly appreciated!
-We do not support private servers and the project is in alpha stage.
+The cataclysm version of this emulator is not playable/combatible yet. Contributions are greatly appreciated!
 
-Our latest information can be found at [ArcPro's Forum](http://forums.arcpro.info)!
+Our latest information can be found at [ArcPro's Forum](http://arcpro.sexyi.am)!
