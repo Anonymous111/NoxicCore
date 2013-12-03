@@ -8,6 +8,7 @@ extensive changes over time to optimize, improve and cleanup the codebase
 at the same time as improving the in-game mechanics and functionality.
 
 It is completely open source; community involvement is highly encouraged.
+World of Warcraft, and all World of Warcraft or Warcraft art, images, and lore are copyrighted by Blizzard Entertainment, Inc..
 
 If you wish to contribute ideas or code please visit our site linked below or
 make pull requests to our [Github repository](https://github.com/ArcPro/ArcPro).
