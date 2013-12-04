@@ -213,7 +213,7 @@ void WorldSession::CharacterEnumProc(QueryResult* result)
 
 			data << uint32(char_flags);
 			data << uint32(0); //Character recustomization flags
-			//data << uint8(0); //Unknown 3.2.0 -- No longer used in the last build of 3.2.2
+			data << uint8(0); //Unknown 3.2.0 -- No longer used in the last build of 3.2.2
 
 			if(Class == WARLOCK || Class == HUNTER)
 			{
