@@ -265,7 +265,18 @@ public:
 						pQuest->SendUpdateAddKill(i);
 						pQuest->UpdatePlayerFields();
 
-						pPrisoner->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You've freed me! The winds speak to my people one again and grant us their strength. I thank you, stranger.");
+						switch(pPrisoner->GetEntry())
+						{
+							case 20677:
+								pPrisoner->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You've freed me! The winds speak to my people once again and grant us their strength. I thank you, stranger.");
+							break;
+                                                        case 20678:
+								pPrisoner->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I am free! I will ask the spirit of fire to return to us so that my people may have the courage to fight their masters! I thank you, $r.");
+							break;
+							case 20679:
+								pPrisoner->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I'm free! The spirit of water returns to my people. It will bring us the wisdom we need to survive in this harsh land. I am in your debt, $N.");
+							break;
+						}
 						pPrisoner->Despawn(5000, 6 * 60 * 1000);
 						pPrisoner->SetStandState(STANDSTATE_STAND);
 					}
