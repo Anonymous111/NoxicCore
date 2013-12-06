@@ -24,8 +24,9 @@
 #include "../Common/EasyFunctions.h"
 
 // Northrend
-void SetupZoneIcecrown(ScriptMgr* mgr);
 void SetupZoneBoreanTundra(ScriptMgr* mgr);
+void SetupZoneIcecrown(ScriptMgr* mgr);
+void SetupZoneSholazarBasin(ScriptMgr* mgr);
 
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);

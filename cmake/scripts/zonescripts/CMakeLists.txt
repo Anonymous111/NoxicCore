@@ -27,6 +27,7 @@ SET( sources
 	Orgrimmar.cpp
     Setup.cpp
 	ShadowmoonValley.cpp
+	SholazarBasin.cpp
 	SilvermoonCity.cpp
 	SilverpineForest.cpp
 	Stranglethorn.cpp

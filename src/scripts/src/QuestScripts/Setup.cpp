@@ -53,6 +53,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupDeathKnight(mgr);
 	SetupDesolace(mgr);
 	SetupDragonblight(mgr);
+	SetupDurator(mgr);
 	SetupDuskwood(mgr);
 	SetupDustwallowMarsh(mgr);
 	SetupEasternPlaguelands(mgr);

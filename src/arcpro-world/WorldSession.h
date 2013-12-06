@@ -259,7 +259,6 @@ public:
 
 	bool CanUseCommand(char cmdstr);
 
-
 	void SetSocket(WorldSocket* sock)
 	{
 		_socket = sock;

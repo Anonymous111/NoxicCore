@@ -44,6 +44,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupZoneNagrand(mgr);
 	SetupZoneOrgrimmar(mgr);
 	SetupZoneShadowmoonValley(mgr);
+	SetupZoneSholazarBasin(mgr);
 	SetupZoneSilvermoonCity(mgr);
 	SetupZoneSilverpineForest(mgr);
 	SetupZoneStranglethorn(mgr);

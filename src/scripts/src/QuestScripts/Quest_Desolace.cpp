@@ -33,7 +33,6 @@ class ProtectingtheShipment : public QuestScript
 			float SSY = mTarget->GetPositionY();
 			float SSZ = mTarget->GetPositionZ();
 
-
 			Creature* creat = mTarget->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 5644);
 			if(creat == NULL)
 				return;

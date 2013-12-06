@@ -50,6 +50,7 @@ void SetupDarkshore(ScriptMgr * mgr);
 void SetupDeathKnight(ScriptMgr* mgr);
 void SetupDesolace(ScriptMgr* mgr);
 void SetupDragonblight(ScriptMgr* mgr);
+void SetupDurator(ScriptMgr* mgr);
 void SetupDuskwood(ScriptMgr* mgr);
 void SetupDustwallowMarsh(ScriptMgr* mgr);
 void SetupEasternPlaguelands(ScriptMgr* mgr);
