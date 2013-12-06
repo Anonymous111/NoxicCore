@@ -2334,7 +2334,6 @@ void ApplyNormalFixes()
 	//Paladin - Forbearance - Is forced debuff
 	sp = CheckAndReturnSpellEntry(25771);
 	if(sp != NULL)
-		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDDEBUFF;
 	{
 		sp->c_is_flags = SPELL_FLAG_IS_FORCEDDEBUFF;
 		sp->Attributes = ATTRIBUTES_IGNORE_INVULNERABILITY;
@@ -3550,10 +3549,13 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 		sp->casterAuraSpellNot = 57724; //sated debuff
 
-	//Sated
+	// Sated - is debuff
 	sp = CheckAndReturnSpellEntry(57724);
 	if(sp != NULL)
-		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDDEBUFF;
+	{
+		sp->c_is_flags = SPELL_FLAG_IS_FORCEDDEBUFF;
+		sp->Attributes = ATTRIBUTES_IGNORE_INVULNERABILITY;
+	}
 
 	/**********************************************************
 	 *	Heroism
@@ -3563,10 +3565,13 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 		sp->casterAuraSpellNot = 57723; //sated debuff
 
-	//Sated
+	// Sated - is debuff
 	sp = CheckAndReturnSpellEntry(57723);
 	if(sp != NULL)
+	{
 		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDDEBUFF;
+		sp->Attributes = ATTRIBUTES_IGNORE_INVULNERABILITY;
+	}
 
 	/**********************************************************
 	 *	Lightning Overload
@@ -4417,10 +4422,13 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_DYNAMIC_OBJECT;
 
-	// Hypothermia: undispellable
+	// Hypothermia - forced debuff
 	sp = CheckAndReturnSpellEntry(41425);
 	if(sp != NULL)
+	{
 		sp->c_is_flags = SPELL_FLAG_IS_FORCEDDEBUFF;
+		sp->Attributes = ATTRIBUTES_IGNORE_INVULNERABILITY;
+	}
 
 	// Mage - Permafrost Rank 1
 	sp = CheckAndReturnSpellEntry(11175);
@@ -7367,10 +7375,13 @@ void ApplyNormalFixes()
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_NONE;
 	}
 
-	//Bandage
+	// Recently Bandaged - is debuff
 	sp = CheckAndReturnSpellEntry(11196);
 	if(sp != NULL)
+	{
 		sp->c_is_flags = SPELL_FLAG_IS_FORCEDDEBUFF;
+		sp->Attributes = ATTRIBUTES_IGNORE_INVULNERABILITY;
+	}
 
 	//////////////////////////////////////////
 	// DEATH KNIGHT							//
