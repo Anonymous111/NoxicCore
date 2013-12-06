@@ -2750,11 +2750,12 @@ void Spell::HandleAddAura(uint64 guid)
 		if(GetProto()->Id != 31884)
 			spellid = 25771;
 
-		if(Target->IsPlayer())
+		/*if(Target->IsPlayer())
 		{
 			sEventMgr.AddEvent(TO<Player*>(Target), &Player::AvengingWrath, EVENT_PLAYER_AVENGING_WRATH, 30000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
 			TO<Player*>(Target)->mAvengingWrath = false;
-		}
+		}*/
+		p_caster->CastSpell(unitTarget, 61987, true);
 	}
 	else if(GetProto()->MechanicsType == MECHANIC_HEALING && GetProto()->Id != 11196)  // Cast spell Recently Bandaged
 		spellid = 11196;
