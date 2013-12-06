@@ -1745,6 +1745,12 @@ GossipMenuItem GossipMenu::GetItem(uint32 Id)
 
 uint32 ObjectMgr::GetGossipTextForNpc(uint32 ID)
 {
+	if(!mNpcToGossipText[ID])
+	{
+		sLog.Error("ObjectMgr", "Gossip text id wasn't found for npc entry %u, using default text index", ID);
+		return Arcpro::Gossip::DEFAULT_TXTINDEX;
+	}
+
 	return mNpcToGossipText[ID];
 }
 
