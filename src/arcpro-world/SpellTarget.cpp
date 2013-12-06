@@ -114,7 +114,6 @@ void Spell::FillTargetMap(uint32 i)
 		return;
 	}
 
-
 	//always add this guy :P
 	if(!(TargetType & (SPELL_TARGET_AREA | SPELL_TARGET_AREA_SELF | SPELL_TARGET_AREA_CURTARGET | SPELL_TARGET_AREA_CONE | SPELL_TARGET_OBJECT_SELF | SPELL_TARGET_OBJECT_PETOWNER)))
 	{
@@ -166,6 +165,13 @@ void Spell::FillTargetMap(uint32 i)
 
 	if(TargetType & SPELL_TARGET_OBJECT_SCRIPTED)
 		AddScriptedOrSpellFocusTargets(i, TargetType, GetRadius(i), m_spellInfo->MaxTargets);
+
+	// Mind Sear hacks
+	if(GetProto()->Id == 53022 || GetProto()->Id == 49821)
+	{
+		Object* target = m_caster->GetMapMgr()->_GetObject(m_targets.m_unitTarget);
+		RemoveTarget(i, target);
+	}
 }
 
 void Spell::AddScriptedOrSpellFocusTargets(uint32 i, uint32 TargetType, float r, uint32 maxtargets)
@@ -383,6 +389,16 @@ void Spell::AddAOETargets(uint32 i, uint32 TargetType, float r, uint32 maxtarget
 		if(dist <= r)
 			AddTarget(i, TargetType, (*itr));
 	}
+}
+
+void Spell::RemoveTarget(uint32 i, Object* obj)
+{
+	TargetsList* t = &m_targetUnits[i];
+
+	if(obj == NULL || !obj->IsInWorld())
+		return;
+
+	t->erase(std::remove(t->begin(), t->end(), obj->GetGUID()), t->end())
 }
 
 bool Spell::AddTarget(uint32 i, uint32 TargetType, Object* obj)
