@@ -1840,11 +1840,15 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(20501);
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_CAST_SPELL | static_cast<uint32>(PROC_TARGET_SELF);
-
-	// Warrior - Unbridled Wrath
-	sp = CheckAndReturnSpellEntry(12322);
+	sp = CheckAndReturnSpellEntry(12322); // Warrior - Unbridled Wrath - Rank 1
 	if(sp != NULL)
+	{
+		sp->procChance = 8;
+		sp->ProcsPerMinute = 3;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
 		sp->procFlags = PROC_ON_MELEE_ATTACK | static_cast<uint32>(PROC_TARGET_SELF);
+	}
 	sp = CheckAndReturnSpellEntry(12999);
 	if(sp != NULL)
 		sp->procFlags = PROC_ON_MELEE_ATTACK | static_cast<uint32>(PROC_TARGET_SELF);
@@ -3949,7 +3953,43 @@ void ApplyNormalFixes()
 
 	// Insert mage spell fixes here
 
+	sp = dbcSpell.LookupEntryForced(44449);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 44450;
+		sp->EffectImplicitTargetA[1] = 1;
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+	}
 	sp = dbcSpell.LookupEntryForced(44469);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 44450;
+		sp->EffectImplicitTargetA[1] = 1;
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+	}
+	sp = dbcSpell.LookupEntryForced(44470);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 44450;
+		sp->EffectImplicitTargetA[1] = 1;
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+	}
+	sp = dbcSpell.LookupEntryForced(44471);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 44450;
+		sp->EffectImplicitTargetA[1] = 1;
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
+	}
+	sp = dbcSpell.LookupEntryForced(44472);
 	if(sp != NULL)
 	{
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
@@ -4659,6 +4699,7 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 17941;
 		sp->procFlags = PROC_ON_ANY_HOSTILE_ACTION | static_cast<uint32>(PROC_TARGET_SELF);
 		sp->procChance = 2;
+		sp->EffectSpellClassMask[0][0] = 0x0;
 	}
 	sp = CheckAndReturnSpellEntry(18095);
 	if(sp != NULL)
@@ -4667,6 +4708,7 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 17941;
 		sp->procFlags = PROC_ON_ANY_HOSTILE_ACTION | static_cast<uint32>(PROC_TARGET_SELF);
 		sp->procChance = 4;
+		sp->EffectSpellClassMask[0][0] = 0x0;
 	}
 	//Shadow Trance should be removed on the first SB
 	sp = CheckAndReturnSpellEntry(17941);
@@ -5218,7 +5260,10 @@ void ApplyNormalFixes()
 	{
 		sp = CheckAndReturnSpellEntry(HealthStoneID[i]);
 		if(sp != NULL)
+		{
 			sp->Reagent[1] = 0;
+			sp->ReagentCount[1] = 0;
+		}
 	}
 
 	//Backdraft Rank 1
@@ -5509,15 +5554,22 @@ void ApplyNormalFixes()
 	// Druid - Intensity
 	sp = CheckAndReturnSpellEntry(17106);
 	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_CAST_SPELL;
-
+	}
 	sp = CheckAndReturnSpellEntry(17107);
 	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_CAST_SPELL;
-
+	}
 	sp = CheckAndReturnSpellEntry(17108);
 	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
 
 	// Druid - Natural Shapeshifter
 	sp = CheckAndReturnSpellEntry(16833);
@@ -5589,13 +5641,6 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(12284); // Mace Specialization
 	if(sp != NULL)
 		sp->procChance = 1;
-	sp = CheckAndReturnSpellEntry(12322); // Unbridled Wrath Rank 1
-	if(sp != NULL)
-	{
-		sp->procChance = 8;
-		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
-	}
 	sp = CheckAndReturnSpellEntry(12701); // Mace Specialization Rank 2
 	if(sp != NULL)
 		sp->procChance = 2;
@@ -5612,6 +5657,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->procChance = 16;
+		sp->ProcsPerMinute = 6;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
 	}
@@ -5619,6 +5665,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->procChance = 24;
+		sp->ProcsPerMinute = 9;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
 	}
@@ -5626,6 +5673,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->procChance = 32;
+		sp->ProcsPerMinute = 12;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
 	}
@@ -5633,6 +5681,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->procChance = 40;
+		sp->ProcsPerMinute = 15;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 12964; // Unbridled Wrath
 	}
@@ -5695,7 +5744,7 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(23158); // Concussive Shot Cooldown Reduction
 	if(sp != NULL)
 		sp->procChance = 4;
-	sp = CheckAndReturnSpellEntry(27035); // ??
+	sp = CheckAndReturnSpellEntry(27035); // Sword Specialization
 	if(sp != NULL)
 		sp->procChance = 10;
 	sp = CheckAndReturnSpellEntry(27521); // Mana Restore
@@ -7052,6 +7101,7 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(49622);
 	if(sp != NULL)
 	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 49623;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->procChance = 10;
@@ -7062,6 +7112,7 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(58901);
 	if(sp != NULL)
 	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 58904;
 		sp->procFlags = PROC_ON_RANGED_CRIT_ATTACK | PROC_ON_CRIT_ATTACK;
 		sp->procChance = 10;
@@ -7072,6 +7123,7 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(60490);
 	if(sp != NULL)
 	{
+		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 60492;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->procChance = 10;
@@ -7910,5 +7962,77 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->procChance = sp->EffectBasePoints[0]+1;
 		sp->procFlags = PROC_ON_CAST_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(13743);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procChance = 50;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(13875);
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+	}
+	sp = CheckAndReturnSpellEntry(33876);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 198;
+	sp = CheckAndReturnSpellEntry(33982);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 256;
+	sp = CheckAndReturnSpellEntry(33983);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 330;
+	sp = CheckAndReturnSpellEntry(48565);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 536;
+	sp = CheckAndReturnSpellEntry(48566);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 634;
+	sp = CheckAndReturnSpellEntry(33878);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 86;
+	sp = CheckAndReturnSpellEntry(33986);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 120;
+	sp = CheckAndReturnSpellEntry(33987);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 155;
+	sp = CheckAndReturnSpellEntry(48563);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 251;
+	sp = CheckAndReturnSpellEntry(48564);
+	if(sp != NULL)
+		sp->EffectBasePoints[0] = 299;
+	sp = CheckAndReturnSpellEntry(48411);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->Effect[1] = 0;
+		sp->Effect[2] = 0;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procChance = 100;
+	}
+	sp = CheckAndReturnSpellEntry(48412);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->Effect[1] = 0;
+		sp->Effect[2] = 0;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procChance = 100;
+	}
+	sp = CheckAndReturnSpellEntry(30326);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 32554;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_PET;
 	}
 }
