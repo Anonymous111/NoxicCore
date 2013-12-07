@@ -49,32 +49,32 @@ public:
 			if(!_unit->IsSummon())
 				return;
 
-			Unit* summoner = TO< Summon* >(_unit)->GetOwner();
+			Unit* summoner = TO<Summon*>(_unit)->GetOwner();
 
 			if(summoner != NULL)
 			{
 				if(summoner->IsPlayer())
 				{
-					Player* p = TO_PLAYER(summoner);
-					if(p->HasQuest(11608))
+					Player* pPlayer = TO_PLAYER(summoner);
+					if(pPlayer->HasQuest(11608))
 					{
-						GameObject* pSinkhole = p->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(p->GetPositionX(), p->GetPositionY(), p->GetPositionZ(), 300171);
+						GameObject* pSinkhole = p->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 300171);
 						if(pSinkhole != NULL)
 						{
 							_unit->CastSpell(_unit, 45502, true);
 
 							float posX = pSinkhole->GetPositionX();
 							if(posX == 2657.13f)
-								sEAS.KillMobForQuest(p, 11608, 0);
+								sEAS.KillMobForQuest(pPlayer, 11608, 0);
 
 							if(posX == 2716.02f)
-								sEAS.KillMobForQuest(p, 11608, 1);
+								sEAS.KillMobForQuest(pPlayer, 11608, 1);
 
 							if(posX == 2877.96f)
-								sEAS.KillMobForQuest(p, 11608, 2);
+								sEAS.KillMobForQuest(pPlayer, 11608, 2);
 
 							if(posX == 2962.16f)
-								sEAS.KillMobForQuest(p, 11608, 3);
+								sEAS.KillMobForQuest(pPlayer, 11608, 3);
 
 						}
 					}
@@ -86,6 +86,6 @@ public:
 
 void SetupZoneBoreanTundra(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_PURIFYING_TOTEM, &PurifyingTotem::Create); // Purifying Totem
-	mgr->register_creature_script(25401, &SeaforiumDepthCharge::Create); // Seaforium Depth Charge
+	mgr->register_creature_script(CN_PURIFYING_TOTEM, &PurifyingTotem::Create);
+	mgr->register_creature_script(25401, &SeaforiumDepthCharge::Create);
 }

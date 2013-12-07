@@ -33,6 +33,6 @@ public:
 
 void SetupZoneShadowmoonValley(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(19806, &EclipsionSpawn::Create);	// Eclipsion Bloodwarder
-	mgr->register_creature_script(22018, &EclipsionSpawn::Create);	// Eclipsion Cavalier
+	mgr->register_creature_script(19806, &EclipsionSpawn::Create);
+	mgr->register_creature_script(22018, &EclipsionSpawn::Create);
 }

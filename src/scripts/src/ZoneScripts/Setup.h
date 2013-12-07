@@ -23,11 +23,6 @@
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
 
-// Northrend
-void SetupZoneBoreanTundra(ScriptMgr* mgr);
-void SetupZoneIcecrown(ScriptMgr* mgr);
-void SetupZoneSholazarBasin(ScriptMgr* mgr);
-
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
 void SetupZoneBlastedLands(ScriptMgr* mgr);
@@ -60,6 +55,11 @@ void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);
 void SetupZoneHellfirePeninsula(ScriptMgr* mgr);
 void SetupZoneNagrand(ScriptMgr* mgr);
 void SetupZoneShadowmoonValley(ScriptMgr* mgr);
+
+// Northrend
+void SetupZoneBoreanTundra(ScriptMgr* mgr);
+void SetupZoneIcecrown(ScriptMgr* mgr);
+void SetupZoneSholazarBasin(ScriptMgr* mgr);
 
 // Other
 void SetupZoneMisc(ScriptMgr* mgr);

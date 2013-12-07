@@ -34,7 +34,6 @@
     {
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
-		ParentClass::OnCombatStop(pTarget);
     }
 };*/
 

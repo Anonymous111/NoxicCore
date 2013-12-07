@@ -60,81 +60,66 @@ public:
 
 				switch(msg)
 				{
-				case 0:
-					{
+					case 0:
 						whisp = "No mercy.";
-					}break;
-				case 1:
-					{
+					break;
+					case 1:
 						whisp = "Kill them all.";
-					}break;
-				case 2:
-					{
+					break;
+					case 2:
 						whisp = "Mercy is for the weak.";
-					}break;
-				case 3:
-					{
+					break;
+					case 3:
 						whisp = "End it.";
-					}break;
-				case 4:
-					{
+					break;
+					case 4:
 						whisp = "Finish it.";
-					}break;
-				case 5:
-					{
+					break;
+					case 5:
 						whisp = "No survivors.";
-					}break;
-				case 6:
+					break;
+					case 6:
 					{
 						whisp = "Kill or be killed, ";
 						whisp += TO_PLAYER(mTarget)->GetName();
 						whisp += ".";
 					}break;
-				case 7:
-					{
+					case 7:
 						whisp = "Do not hesitate.";
-					}break;
-				case 8:
-					{
+					break;
+					case 8:
 						whisp = "Harness your rage and focus.";
-					}break;
-				case 9:
-					{
+					break;
+					case 9:
 						whisp = "Strike it down.";
-					}break;
-				case 10:
-					{
+					break;
+					case 10:
 						whisp = "Suffering to the conquered.";
-					}break;
-				case 11:
-					{
+					break;
+					case 11:
 						whisp = "Show it the meaning of terror.";
-					}break;
-				case 12:
-					{
+					break;
+					case 12:
 						whisp = "End it's miserable life.";
-					}break;
-				case 13:
-					{
+					break;
+					case 13:
 						whisp = "Give into the darkness, Death Knight.";
-					}break;
-				case 14:
-					{
+					break;
+					case 14:
 						whisp = "Do you think it would hesitate to kill you, a monster like you?";
-					}break;
-				case 15:
-					{
+					break;
+					case 15:
 						whisp = "Living or dead, you will serve me.";
-					}break;
+					break;
 				}
 
 				/* this is probably best way around
 				   it spawns invisible lich king near you for 1 sec */
-				Creature * cr = sEAS.SpawnCreature(TO_PLAYER(mTarget), 16980, mTarget->GetPositionX(), mTarget->GetPositionY(), mTarget->GetPositionZ(), 0.0f, 1000, 1);
+				Creature* pCreature = sEAS.SpawnCreature(TO_PLAYER(mTarget), 16980, mTarget->GetPositionX(), mTarget->GetPositionY(), mTarget->GetPositionZ(), 0.0f, 1000, 1);
 			
-				if(cr)
+				if(pCreature)
 				{
-					cr->SendChatMessage( CHAT_MSG_MONSTER_WHISPER, LANG_UNIVERSAL, whisp.c_str() );
+					pCreature->SendChatMessage(CHAT_MSG_MONSTER_WHISPER, LANG_UNIVERSAL, whisp.c_str());
 					TO_PLAYER(mTarget)->PlaySound(sound);
 				}
 			}
@@ -156,13 +141,11 @@ public:
 			switch(say)
 			{
 				case 0:
-					{
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Come then, death knight!");
-					}break;
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Come then, death knight!");
+				break;
 				case 1:
-					{
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You may take my life, but you won't take my freedom!");
-					}break;
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You may take my life, but you won't take my freedom!");
+				break;
 			}
 
 			// Enrage! :P
@@ -184,7 +167,7 @@ public:
 	ADD_CREATURE_FACTORY_FUNCTION(PeasantAI);
 	PeasantAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnCombatStart(Unit * mTarget)
+	void OnCombatStart(Unit* mTarget)
 	{
 		RegisterAIUpdateEvent(1000);
 	}
@@ -199,37 +182,32 @@ public:
 			switch(msg)
 			{
 				case 0:
-					{
-						say = "I... I got a sick grandma at home... I... I'm all she's got, mister ";
-					}break;
+					say = "I... I got a sick grandma at home... I... I'm all she's got, mister ";
+				break;
 				case 1:
-					{
-						say = "I picked the wrong week to quit drinkin'!";
-					}break;
+					say = "I picked the wrong week to quit drinkin'!";
+				break;
 				case 2:
-					{
-						say = "You don't have to do this! Nobody has to die!";
-					}break;
+					say = "You don't have to do this! Nobody has to die!";
+				break;
 				case 3:
-					{
-						say = "Ungh... I... I think I pooped...";
-					}break;
+					say = "Ungh... I... I think I pooped...";
+				break;
 				case 4:
-					{
-						say = "I've got five kids, man! They'll die without me!";
-					}break;
+					say = "I've got five kids, man! They'll die without me!";
+				break;
 			}
 
-			Unit * u = _unit->GetAIInterface()->GetMostHated();
-			if( u )
-				_unit->smsg_AttackStop(u);
+			Unit* pUnit = _unit->GetAIInterface()->GetMostHated();
+			if(pUnit)
+				_unit->smsg_AttackStop(pUnit);
 
 			_unit->GetAIInterface()->disable_melee = true;
 			_unit->GetAIInterface()->_UpdateCombat(0);
 
 			RemoveAIUpdateEvent();
 			_unit->Root();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, say.c_str() );
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, say.c_str());
 			_unit->WipeHateList();
 			_unit->SetEmoteState(431);
 		}
@@ -244,13 +222,13 @@ public:
 
 	void OnReachWP(uint32 WPId, bool bForwards)
 	{
-		Creature * car = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords( _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 28821);
+		Creature* pCreature = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 28821);
 		// Despawn them when they reach their last WP, they are not running backwards
 		if(WPId == _unit->GetAIInterface()->GetWayPointsCount())
 		{
 			_unit->Despawn(0, 10000);
-			if( car != NULL )
-				car->Despawn(0, 9000);
+			if(pCreature != NULL)
+				pCreature->Despawn(0, 9000);
 		}
 	}
 };
@@ -281,42 +259,42 @@ public:
 
 	void AIUpdate()
 	{
-		Player *plr = TO_PLAYER(_unit->GetAIInterface()->getNextTarget());
-		if(plr == NULL || (plr->GetHealthPct() > 10 && _unit->GetHealthPct() > 10))
+		Player* pPlayer = TO_PLAYER(_unit->GetAIInterface()->getNextTarget());
+		if(pPlayer == NULL || (pPlayer->GetHealthPct() > 10 && _unit->GetHealthPct() > 10))
 			return;
 
 		RemoveAIUpdateEvent();
-		// plr stuff (stop attacking etc.)
-		plr->smsg_AttackStop(_unit);
-		plr->GetSession()->OutPacket(SMSG_CANCEL_COMBAT);
-		plr->EventAttackStop();
+		// pPlayer stuff (stop attacking etc.)
+		pPlayer->smsg_AttackStop(_unit);
+		pPlayer->GetSession()->OutPacket(SMSG_CANCEL_COMBAT);
+		pPlayer->EventAttackStop();
 
 		// NPC stuff (stop attacking, despawn)
 		if(_unit->isAlive())
 		{
 			_unit->Root();
-			_unit->smsg_AttackStop(plr);
+			_unit->smsg_AttackStop(pPlayer);
 			_unit->SetFaction(2084);
 			_unit->Despawn(3000, 30000);
 		}
 
 		// duel arbiter
-		GameObject *arbiter = plr->GetMapMgr()->GetGameObject(GET_LOWGUID_PART(plr->GetDuelArbiter()));
+		GameObject* arbiter = pPlayer->GetMapMgr()->GetGameObject(GET_LOWGUID_PART(pPlayer->GetDuelArbiter()));
 		if(arbiter != NULL)
 		{
 			arbiter->RemoveFromWorld(true);
 			delete arbiter;
 		}
-		plr->SetDuelArbiter(0); // reset players arbiter
+		pPlayer->SetDuelArbiter(0); // reset players arbiter
 
 		if(_unit->GetHealthPct() < 10) // Player is winner
 		{
-			sEAS.KillMobForQuest(plr, 12733, 0);
+			sEAS.KillMobForQuest(pPlayer, 12733, 0);
 			if(_unit->isAlive())
 				_unit->Emote(EMOTE_ONESHOT_BEG);
 		}
 		else
-			plr->Emote(EMOTE_ONESHOT_BEG);
+			pPlayer->Emote(EMOTE_ONESHOT_BEG);
 	}
 };
 

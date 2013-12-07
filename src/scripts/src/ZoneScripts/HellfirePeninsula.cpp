@@ -29,14 +29,10 @@ public:
 		AddSpell(12553, Target_Current, 50.0f, 0, 10);
 	}
 
-	void OnCombatStart(Unit* mTarget)
-	{
-		ParentClass::OnCombatStart(mTarget);
-	}
+	void OnCombatStart(Unit* mTarget) {}
 
 	void OnCombatStop(Unit* mTarget)
 	{
-		ParentClass::OnCombatStop(mTarget);
 		_unit->Despawn(0,0);
 	}
 
@@ -49,7 +45,6 @@ public:
 			_unit->GetAIInterface()->setNextTarget(TO_UNIT(NULL));
 			_unit->SetFaction(35);
 		}
-		ParentClass::AIUpdate();
 	}
 };*/
 

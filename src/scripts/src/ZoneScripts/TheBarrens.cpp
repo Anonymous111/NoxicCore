@@ -43,8 +43,6 @@ public:
 	{
 		delete this;
 	}
-
-	//static CreatureAIScript* Create(Creature* pCreature) { return new SavannahProwler(pCreature); }
 };
 
 class Gilthares_Firebough : public CreatureAIScript
@@ -62,57 +60,57 @@ public:
 			sEAS.DeleteWaypoints(_unit);
 			if(_unit->m_escorter == NULL)
 				return;
-			Player* plr = _unit->m_escorter;
+			Player* pPlayer = _unit->m_escorter;
 			_unit->m_escorter = NULL;
-			plr->GetQuestLogForEntry(898)->SendQuestComplete();
+			pPlayer->GetQuestLogForEntry(898)->SendQuestComplete();
 		}
 	}
 };
 
 class Wizzlecranks_Shredder : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Wizzlecranks_Shredder);
-		Wizzlecranks_Shredder(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Wizzlecranks_Shredder);
+	Wizzlecranks_Shredder(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 195)
 		{
-			if(iWaypointId == 195)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thank you Young warior!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(863)->SendQuestComplete();
-			}
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thank you Young warior!");
+			_unit->Despawn(5000, 1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
+			Player* pPlayer = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			pPlayer->GetQuestLogForEntry(863)->SendQuestComplete();
 		}
+	}
 };
 
 int kolkarskilled = 0;
 class VerogtheDervish : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VerogtheDervish);
-		VerogtheDervish(Creature* pCreature) : CreatureAIScript(pCreature) {}
-		void OnDied(Unit* mKiller)
-		{
-			kolkarskilled++;
-			if(mKiller->IsPlayer())
-			{
-				Player* mPlayer = TO_PLAYER(mKiller);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(VerogtheDervish);
+	VerogtheDervish(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-				if(kolkarskilled > 8 && mPlayer->GetQuestLogForEntry(851))
-				{
-					_unit->GetMapMgr()->GetInterface()->SpawnCreature(3395, -1209.8f, -2729.84f, 106.33f, 4.8f, true, false, 0, 0)->Despawn(600000, 0);
-					kolkarskilled = 0;
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am slain! Summon Verog!");
-				}
+	void OnDied(Unit* mKiller)
+	{
+		kolkarskilled++;
+		if(mKiller->IsPlayer())
+		{
+			Player* mPlayer = TO_PLAYER(mKiller);
+
+			if(kolkarskilled > 8 && mPlayer->GetQuestLogForEntry(851))
+			{
+				_unit->GetMapMgr()->GetInterface()->SpawnCreature(3395, -1209.8f, -2729.84f, 106.33f, 4.8f, true, false, 0, 0)->Despawn(600000, 0);
+				kolkarskilled = 0;
+				_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am slain! Summon Verog!");
 			}
 		}
-
+	}
 };
 
 void SetupZoneTheBarrens(ScriptMgr* mgr)

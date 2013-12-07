@@ -21,37 +21,37 @@
 
 class Kaliri : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Kaliri);
-		Kaliri(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Kaliri);
+	Kaliri(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->SetFaction(35);
-		}
+	void OnLoad()
+	{
+		_unit->SetFaction(35);
+	}
 };
 
-#define QUEST_CLUCK		 3861
-#define ITEM_CHICKEN_FEED   11109
+#define QUEST_CLUCK 3861
+#define ITEM_CHICKEN_FEED 11109
 
 class Chicken : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Chicken);
-		Chicken(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Chicken);
+	Chicken(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->SetFaction(12);
-			_unit->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-			RegisterAIUpdateEvent(120000);
-		}
+	void OnLoad()
+	{
+		_unit->SetFaction(12);
+		_unit->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+		RegisterAIUpdateEvent(120000);
+	}
 
-		void AIUpdate()
-		{
-			if(_unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
-				OnLoad();
-		}
+	void AIUpdate()
+	{
+		if(_unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
+			OnLoad();
+	}
 };
 
 /*class ArmyofDeadGhoul : public CreatureAIScript
@@ -84,36 +84,36 @@ public:
 
 	void OnLoad()
 	{
-		Player * plr = sEAS.GetNearestPlayer(_unit);
+		Player* pPlayer = sEAS.GetNearestPlayer(_unit);
 		switch(rand()%8)
 		{
 			case 0:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Will the nightmare ever end?! I cannot force myself awake!", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Will the nightmare ever end?! I cannot force myself awake!", pPlayer);
+			break;
 			case 1:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My soul is not a trinket! Mortal, you must release me from these chains!", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My soul is not a trinket! Mortal, you must release me from these chains!", pPlayer);
+			break;
 			case 2:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My eyes! It burns... it burns...", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My eyes! It burns... it burns...", pPlayer);
+			break;
 			case 3:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Torture me no more! Release me, mortal! The Swamp of Sorrows... mortal... please...", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Torture me no more! Release me, mortal! The Swamp of Sorrows... mortal... please...", pPlayer);
+			break;
 			case 4:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Foolish mortal, I will rend your soul in two once I am released!", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Foolish mortal, I will rend your soul in two once I am released!", pPlayer);
+			break;
 			case 5:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Foolish mortals you do not yet see the potential of that Artifact.", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Foolish mortals you do not yet see the potential of that Artifact.", pPlayer);
+			break;
 			case 6:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You are an agent of their wicked god, fool. I will see you destroyed!", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You are an agent of their wicked god, fool. I will see you destroyed!", pPlayer);
+			break;
 			case 7:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "It hurts so much... Itharius, my old friend... Please help me...", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "It hurts so much... Itharius, my old friend... Please help me...", pPlayer);
+			break;
 			case 8:
-				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My charge to watch the temple has failed... my corrupted soul knows no peace...", plr);
-				break;
+				_unit->SendChatMessageToPlayer(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My charge to watch the temple has failed... my corrupted soul knows no peace...", pPlayer);
+			break;
 		}
 	}
 };*/
@@ -208,8 +208,6 @@ public:
 			state = -1;
 			RemoveAIUpdateEvent();
 		}
-
-		ParentClass::AIUpdate();
 	}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
@@ -231,8 +229,8 @@ public:
 			state = pTransporter->start_event;
 			RegisterAIUpdateEvent(1000);
 		}
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+
 private:
 	int8 state;
 	int32 timer;
@@ -332,8 +330,6 @@ public:
 			state = -1;
 			RemoveAIUpdateEvent();
 		}
-
-		ParentClass::AIUpdate();
 	}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
@@ -352,9 +348,8 @@ public:
 			state = pTransporter->start_event;
 			RegisterAIUpdateEvent(1000);
 		}
-		
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+
 private:
 	uint8 state;
 	int32 timer;
@@ -379,7 +374,6 @@ public:
 			_unit->SetFacing(_unit->GetOrientation()+float(M_PI));
 			_unit->SetEmoteState(0);
 		}
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
 };
 
@@ -407,8 +401,6 @@ public:
 			_unit->SetStandState(0);
 			RemoveAIUpdateEvent();
 		}
-
-		ParentClass::AIUpdate();
 	}
 
 	void OnTransporterUpdate(Transporter* pTransporter)
@@ -425,8 +417,8 @@ public:
 			state = 1;
 			RegisterAIUpdateEvent(1000);
 		}
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+
 private:
 	uint8 state;
 	int32 timer;
@@ -445,7 +437,6 @@ public:
 		{
 			Emote("NAP'S OVER!! WE ARE HEADING OUT!", Text_Say);
 		}
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
 };
 
@@ -469,7 +460,6 @@ public:
 			// stand up
 			_unit->SetStandState(0);
 		}
-		ParentClass::OnTransporterUpdate(pTransporter);
 	}
 };
 
@@ -487,7 +477,6 @@ public:
 	void OnLoad()
 	{
 		RegisterAIUpdateEvent(1000);
-		ParentClass::OnLoad();
 	}
 
 	void AIUpdate()
@@ -515,9 +504,8 @@ public:
 			timer = AddTimer(2000);
 			state = RandomUInt(1);
 		}
-
-		ParentClass::AIUpdate();
 	}
+
 private:
 	uint8 state;
 	uint8 initiliaze_state;
@@ -634,8 +622,8 @@ void SetupZoneMisc(ScriptMgr* mgr)
 
 	mgr->register_creature_script(21468, &Kaliri::Create);
 	mgr->register_creature_script(620, &Chicken::Create);
-	/*mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create); // Army of the Dead Ghoul
-	mgr->register_creature_script(8506, &EranikusTheChained::Create); // Eranikus the Chained
+	/*mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create);
+	mgr->register_creature_script(8506, &EranikusTheChained::Create);
 
 	// Zeppelin Thundercaller
 	mgr->register_creature_script(CLOUDKICKER, &Cloudkicker::Create);

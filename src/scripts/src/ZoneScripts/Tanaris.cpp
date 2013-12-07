@@ -37,29 +37,28 @@ public:
 
 class ScreecherSpirit : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ScreecherSpirit);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ScreecherSpirit);
+	ScreecherSpirit(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		ScreecherSpirit(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	void OnLoad()
+	{
+		if(!_unit)
+			return;
 
-		void OnLoad()
-		{
-			if(!_unit)
-				return;
+		Creature* cialo = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 5307);
+		if(!cialo)
+			return;
 
-			Creature* cialo = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 5307);
-			if(!cialo)
-				return;
+		if(!cialo->isAlive())
+			cialo->Despawn(1, 6 * 60 * 1000);
 
-			if(!cialo->isAlive())
-				cialo->Despawn(1, 6 * 60 * 1000);
-
-			_unit->Despawn(60 * 1000, 0);
-		}
+		_unit->Despawn(60 * 1000, 0);
+	}
 };
 
 void SetupZoneTanaris(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(8612, &ScreecherSpirit::Create);
-	mgr->register_creature_script(7898, &PirateTreasureTrigger::Create);	// Pirate treasure trigger mob
+	mgr->register_creature_script(7898, &PirateTreasureTrigger::Create);
 }

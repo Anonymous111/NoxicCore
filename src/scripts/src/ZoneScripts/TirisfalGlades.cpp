@@ -29,15 +29,12 @@ class Zealot : public CreatureAIScript
 		{
 			if(!_unit->HasAura(3287))
 				return;
+
 			if(iWaypointId == 2)
-			{
 				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "My mind. . .me flesh. . .I'm. . .rotting. . . .!");
-			}
 
 			if(iWaypointId == 7)
-			{
 				_unit->CastSpell(_unit, dbcSpell.LookupEntry(5), true);
-			}
 		}
 };
 
@@ -64,6 +61,7 @@ class CalvinMontague : public CreatureAIScript
 					QuestLogEntry* pQuest = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(590);
 					if(!pQuest)
 						return;
+
 					pQuest->SendQuestComplete();
 				}
 			}

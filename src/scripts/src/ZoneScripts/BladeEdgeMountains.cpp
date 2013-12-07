@@ -89,7 +89,7 @@ public:
 			Ogre->SetStandState(STANDSTATE_SIT);
 			Ogre->Despawn(60000, 3*60*1000);
 
-			GameObject *Mug = sEAS.GetNearestGameObject(_unit, 184315);
+			GameObject* Mug = sEAS.GetNearestGameObject(_unit, 184315);
 			if(Mug != NULL)
 				Mug->Despawn(0, 0);
 
@@ -125,9 +125,8 @@ class WyrmcultBlackwhelp : public CreatureAIScript
 				Unit* Caster = a->GetUnitCaster();
 				if(Caster->IsPlayer())
 				{
-
-					QuestLogEntry* qle = TO_PLAYER(Caster)->GetQuestLogForEntry(10747);
-					if(qle != NULL)
+					QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(10747);
+					if(pQuest != NULL)
 					{
 						// casting the spell that will create the item for the player
 						_unit->CastSpell(Caster, 38178, true);
@@ -149,13 +148,12 @@ class BladespireQAI : public CreatureAIScript
 		{
 			if(mKiller->IsPlayer())
 			{
-				QuestLogEntry* en = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10503);
-				if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
+				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10503);
+				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 				{
-					uint32 newcount = en->GetMobCount(0) + 1;
-					en->SetMobCount(0, newcount);
-					en->SendUpdateAddKill(0);
-					en->UpdatePlayerFields();
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
 					return;
 				}
 			}
@@ -164,14 +162,14 @@ class BladespireQAI : public CreatureAIScript
 
 class MagnetoAura : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MagnetoAura);
-		MagnetoAura(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(MagnetoAura);
+	MagnetoAura(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->CastSpell(_unit, 37136, true);
-		}
+	void OnLoad()
+	{
+		_unit->CastSpell(_unit, 37136, true);
+	}
 };
 
 class BloodmaulQAI : public CreatureAIScript
@@ -215,70 +213,65 @@ public:
 
 /*class BrutebaneStoutTriggerAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTriggerAI);
-		BrutebaneStoutTriggerAI(Creature* pCreature) : CreatureAIScript(pCreature)
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTriggerAI);
+	BrutebaneStoutTriggerAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	{
+		_unit->SetFaction(35);
+		SetCanMove(false);
+		plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
+		Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_1);
+		if(Ogre == NULL)
 		{
-			_unit->SetFaction(35);
-
-			SetCanMove(false);
-
-			plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
-			Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_1);
+			Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_2);
 			if(Ogre == NULL)
 			{
-				Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_2);
+				Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_3);
 				if(Ogre == NULL)
-				{
-					Ogre = GetNearestCreature(CN_BLADESPIRE_OGRE_3);
-					if(Ogre == NULL)
-					{
-						return;
-					}
-				}
+					return;
 			}
-			Ogre->MoveTo(_unit);
-			RegisterAIUpdateEvent(1000);
 		}
+		Ogre->MoveTo(_unit);
+		RegisterAIUpdateEvent(1000);
+	}
 
-		void AIUpdate()
+	void AIUpdate()
+	{
+		if(Ogre == NULL)
+			return;
+
+		if(GetRange(Ogre) <= 5)
 		{
-			if(Ogre == NULL)
+			Ogre->SetDisplayWeaponIds(28562, 0);
+			Ogre->GetUnit()->SetEmoteState(92);
+			Ogre->GetUnit()->SetFaction(35);
+			Ogre->GetUnit()->SetStandState(STANDSTATE_SIT);
+			NdGo = GetNearestGameObject(184315);
+			if(NdGo == NULL)
 				return;
-			if(GetRange(Ogre) <= 5)
+
+			NdGo->Despawn(0, 0);
+			Ogre->Despawn(60 * 1000, 3 * 60 * 1000);
+			if(plr == NULL)
+				return;
+
+			QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10512);
+
+			if(pQuest != NULL && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 			{
-				Ogre->SetDisplayWeaponIds(28562, 0);
-				Ogre->GetUnit()->SetEmoteState(92);
-				Ogre->GetUnit()->SetFaction(35);
-				Ogre->GetUnit()->SetStandState(STANDSTATE_SIT);
-				NdGo = GetNearestGameObject(184315);
-				if(NdGo == NULL)
-					return;
-
-				NdGo->Despawn(0, 0);
-				Ogre->Despawn(60 * 1000, 3 * 60 * 1000);
-				if(plr == NULL)
-					return;
-
-				QuestLogEntry* qle = plr->GetQuestLogForEntry(10512);
-
-				if(qle != NULL && qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
-				{
-					qle->SetMobCount(0, qle->GetMobCount(0) + 1);
-					qle->SendUpdateAddKill(0);
-					qle->UpdatePlayerFields();
-				}
-
-				Despawn(0, 0);
-				return;
+				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+				pQuest->SendUpdateAddKill(0);
+				pQuest->UpdatePlayerFields();
 			}
-			ParentClass::AIUpdate();
+			Despawn(0, 0);
+			return;
 		}
+	}
 
-		Player*					plr;
-		GameObject*				Keg;
-		GameObject*				NdGo;
-		MoonScriptCreatureAI*	Ogre;
+	Player* plr;
+	GameObject* Keg;
+	GameObject* NdGo;
+	MoonScriptCreatureAI* Ogre;
 };*/
 
 void SetupZoneBladeEdgeMountains(ScriptMgr* mgr)

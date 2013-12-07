@@ -31,36 +31,34 @@
 
 /*bool isSpectralGryphonZone(uint32 zone)
 {
-	return ( map == MAP_NORTHREND && ( zone == ZONE_ICECROWN || zone == ZONE_STORMPEAKS || zone == ZONE_WYRMREST_TEMPLE ) );
+	return (map == MAP_NORTHREND && (zone == ZONE_ICECROWN || zone == ZONE_STORMPEAKS || zone == ZONE_WYRMREST_TEMPLE));
 }
 
-void SpectralGryphonHook(Player * plr, uint32 Zone, uint32 OldZone)
+void SpectralGryphonHook(Player* pPlayer, uint32 Zone, uint32 OldZone)
 {
-	if( plr == NULL )
+	if(pPlayer == NULL)
 		return;
 
-	if( plr->IsDead() )
+	if(pPlayer->IsDead())
 	{
-		if( plr->GetMapId() == MAP_NORTHREND && isSpectralGryphonZone(Zone) )
+		if(pPlayer->GetMapId() == MAP_NORTHREND && isSpectralGryphonZone(Zone))
 		{
 			uint32 spellId = SWIFT_SPECTRAL_GRYPHON
-			if( plr->getRace() == RACE_NIGHTELF )
+			if(pPlayer->getRace() == RACE_NIGHTELF)
 				spellId = SWIFT_FLYING_WHISP;
 
-			if( !plr->HasAura(spellId) )
-			{
-				plr->CastSpell(plr, spellId, true);
-			}
+			if(!pPlayer->HasAura(spellId))
+				pPlayer->CastSpell(pPlayer, spellId, true);
 		}
-		else if( isSpectralGryphonZone(OldZone) )
+		else if(isSpectralGryphonZone(OldZone))
 		{
 			uint32 spellId = SWIFT_SPECTRAL_GRYPHON;
-			if( plr->getRace() == RACE_NIGHTELF )
+			if(pPlayer->getRace() == RACE_NIGHTELF)
 				spellId = SWIFT_FLYING_WHISP;
 
-			if( plr->HasAura(spellId) )
+			if(pPlayer->HasAura(spellId))
 			{
-				plr->RemoveAura(spellId);
+				pPlayer->RemoveAura(spellId);
 				// The dead don't need a chute, they're already dead
 			}
 		}
@@ -68,13 +66,13 @@ void SpectralGryphonHook(Player * plr, uint32 Zone, uint32 OldZone)
 	else
 	{
 		uint32 spellId = SWIFT_SPECTRAL_GRYPHON
-		if( plr->getRace() == RACE_NIGHTELF )
+		if(pPlayer->getRace() == RACE_NIGHTELF)
 			spellId = SWIFT_FLYING_WHISP;
 
-		if( plr->HasAura(spellId) && !plr->HasAura(PARACHUTE) )
+		if(pPlayer->HasAura(spellId) && !pPlayer->HasAura(PARACHUTE))
 		{
-			plr->RemoveAura(spellId);
-			plr->CastSpell(plr, PARACHUTE, true);
+			pPlayer->RemoveAura(spellId);
+			pPlayer->CastSpell(pPlayer, PARACHUTE, true);
 		}
 	}
 }*/

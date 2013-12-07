@@ -19,38 +19,37 @@
 
 #include "Setup.h"
 
-class ChampionVranesh : public CreatureAIScript
+/*class ChampionVranesh : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(ChampionVranesh);
 	ChampionVranesh(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-/*Just before taking off to patrol the Royal Exchange, Vranesh walks up to Champion Bachi and bows before him. He then leaves the building and mounts up.
+    //Just before taking off to patrol the Royal Exchange, Vranesh walks up to Champion Bachi and bows before him. He then leaves the building and mounts up.
 
-    Emote: Champion Vranesh inclines his head slightly to the pair of guardians in greeting.
+    //Emote: Champion Vranesh inclines his head slightly to the pair of guardians in greeting.
 
-Upon arriving at the guards in front of the bank:
+    //Upon arriving at the guards in front of the bank:
 
-    Emote: Champion Vranesh arches a sculpted brow at the guards, a disapproving scowl on his face.
+    //Emote: Champion Vranesh arches a sculpted brow at the guards, a disapproving scowl on his face.
 
-Upon arriving at the guards in front of the jewelcrafters:
+    //Upon arriving at the guards in front of the jewelcrafters:
 
-    Emote: Champion Vranesh glances from guard to guard.
+    //Emote: Champion Vranesh glances from guard to guard.
 
-Upon arriving at Farstrider ranger practice grounds:
+    //Upon arriving at Farstrider ranger practice grounds:
 
-    Emote: Champion Vranesh surveys the small ranger practice ground with a condescending smirk.
+    //Emote: Champion Vranesh surveys the small ranger practice ground with a condescending smirk.
 
-The guards will respond with some of the following after each of his emotes:
+    //The guards will respond with some of the following after each of his emotes:
 
-    Silvermoon City Guardian says: Our lives are yours, Blood Knight.
-    Silvermoon City Guardian says: Glory to the Sun K-- ah... Silvermoon!
-    Silvermoon City Guardian says: Your power strengthens us all.
+    //Silvermoon City Guardian says: Our lives are yours, Blood Knight.
+    //Silvermoon City Guardian says: Glory to the Sun K-- ah... Silvermoon!
+    //Silvermoon City Guardian says: Your power strengthens us all.
 
-	He is also known to be mounted on a blood elf paladin's charger
-*/
-	
-};
+	//He is also known to be mounted on a blood elf paladin's charger
+
+};*/
 
 void SetupZoneSilvermoonCity(ScriptMgr* mgr)
 {

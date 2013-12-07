@@ -34,9 +34,9 @@ class A_Me01  : public CreatureAIScript
 				sEAS.DeleteWaypoints(_unit);
 				if(_unit->m_escorter == NULL)
 					return;
-				Player* plr = _unit->m_escorter;
+				Player* pPlayer = _unit->m_escorter;
 				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(4245)->SendQuestComplete();
+				pPlayer->GetQuestLogForEntry(4245)->SendQuestComplete();
 			}
 		}
 };

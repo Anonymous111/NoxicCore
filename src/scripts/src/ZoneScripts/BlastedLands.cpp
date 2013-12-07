@@ -28,9 +28,7 @@ public:
 	void OnDied(Unit* mKiller)
 	{
 		if(mKiller->IsPlayer())
-		{
 			_unit->CastSpell(_unit, 10853, true);
-		}
 	}
 };
 

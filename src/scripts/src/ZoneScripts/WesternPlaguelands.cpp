@@ -45,7 +45,7 @@ public:
 
 void SetupZoneWesternPlaguelands(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(4474,  &RottingCadaver::Create);		// Rotting Cadaver
-	mgr->register_creature_script(1806,  &SummonOozeling::Create);	// Vile Slime
-	mgr->register_creature_script(1808,  &SummonOozeling::Create);	// Devouring Ooze
+	mgr->register_creature_script(4474, &RottingCadaver::Create);
+	mgr->register_creature_script(1806, &SummonOozeling::Create);
+	mgr->register_creature_script(1808, &SummonOozeling::Create);
 }
