@@ -29,7 +29,15 @@ class A_Me01  : public CreatureAIScript
 		{
 			if(iWaypointId == 28)
 			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tr..........");
+				//_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tr.........."); // Where the fuck did this come from????
+				/* From wowpedia:
+
+				    A-Me says: A-Me good. Good, A-Me. Follow... follow A-me. Home. A-me go home.
+				    A-Me says: Bad, Un'Goro Gorilla. Un'Goro Gorilla, bad!
+				    A-Me says: Good...good, A-Me. A-Me good. Home. Find home.
+				    A-Me says: Danger, Danger! <mob name> try hurt A-Me.
+				    A-Me says: A-me home! A-Me, good! Good A-Me. Home Home. Home. 
+				*/
 				_unit->Despawn(5000, 1000);
 				sEAS.DeleteWaypoints(_unit);
 				if(_unit->m_escorter == NULL)

@@ -24,11 +24,16 @@ class YennikuAI : public CreatureAIScript
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(YennikuAI);
 	YennikuAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
-// Yenniku says: Zanzil is creating an army that will wash over all of Stranglethorn! Bloodscalps, Skullsplitter, Gurubashi and Horde... all will serve Zanzil!
+
 	void OnLoad()
 	{
 		_unit->SetUInt32Value(UNIT_FIELD_FACTIONTEMPLATE, 28);
 	}
+	/*
+    	Ana'thek the Cruel says: You stay back! Da troll is mine!
+
+    	Yenniku says: Zanzil is creating an army that will wash over all of Stranglethorn! Bloodscalps, Skullsplitter, Gurubashi and Horde...all will serve Zanzil!
+    */
 };
 
 void SetupZoneStranglethorn(ScriptMgr* mgr)
