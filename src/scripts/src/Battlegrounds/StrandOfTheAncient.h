@@ -19,7 +19,7 @@
  *
  */
 
-#define BUFF_COUNT		3
+#define BUFF_COUNT 3
 
 #define SOTA_NUM_CANONS 10
 #define SOTA_NUM_DEMOLISHERS 6
@@ -27,34 +27,37 @@
 #define SOTA_EAST_WS_DEMOLISHER_INDEX 5
 #define SOTA_WEST_WS_DEMOLISHER_INDEX 4
 
-#define TEAM_DEFENDER	0
-#define TEAM_ATTACKER	1
-#define GUN_LEFT		0
-#define GUN_RIGHT		1
+#define TEAM_DEFENDER 0
+#define TEAM_ATTACKER 1
+#define GUN_LEFT 0
+#define GUN_RIGHT 1
 
 #define ROUND_LENGTH 600 //in secs
 
-enum SOTAControlPoints{
-	SOTA_CONTROL_POINT_EAST_GY    = 0,
-	SOTA_CONTROL_POINT_WEST_GY    = 1,
-	SOTA_CONTROL_POINT_SOUTH_GY   = 2,
-	NUM_SOTA_CONTROL_POINTS
+enum SOTAControlPoints
+{
+	SOTA_CONTROL_POINT_EAST_GY	= 0,
+	SOTA_CONTROL_POINT_WEST_GY	= 1,
+	SOTA_CONTROL_POINT_SOUTH_GY	= 2,
+	NUM_SOTA_CONTROL_POINTS		= 3
 };
 
-enum SOTAGraveyards{
-	SOTA_GY_EAST            = 0,
-	SOTA_GY_WEST            = 1,
-	SOTA_GY_SOUTH           = 2,
-	SOTA_GY_DEFENDER        = 3,
-	SOTA_GY_ATTACKER_BEACH  = 4,
-	NUM_SOTA_GRAVEYARDS
+enum SOTAGraveyards
+{
+	SOTA_GY_EAST			= 0,
+	SOTA_GY_WEST			= 1,
+	SOTA_GY_SOUTH			= 2,
+	SOTA_GY_DEFENDER		= 3,
+	SOTA_GY_ATTACKER_BEACH	= 4,
+	NUM_SOTA_GRAVEYARDS		= 5
 };
 
-enum SOTACPStates{
-	SOTA_CP_STATE_UNCONTROLLED    = 0,
-	SOTA_CP_STATE_ALLY_CONTROL    = 1,
-	SOTA_CP_STATE_HORDE_CONTROL   = 2,
-	MAX_SOTA_CP_STATES
+enum SOTACPStates
+{
+	SOTA_CP_STATE_UNCONTROLLED	= 0,
+	SOTA_CP_STATE_ALLY_CONTROL	= 1,
+	SOTA_CP_STATE_HORDE_CONTROL	= 2,
+	MAX_SOTA_CP_STATES			= 3
 };
 
 enum Gate
@@ -67,26 +70,30 @@ enum Gate
     GATE_COUNT	= 5,
 };
 
-enum SOTABattleRoundProgress{
+enum SOTABattleRoundProgress
+{
 	SOTA_ROUND_PREPARATION,
 	SOTA_ROUND_STARTED,
 	SOTA_NUM_ROUND_STAGES
 };
 
-struct SOTAControlPoint{
-	GameObject *pole;
-	GameObject *banner;
+struct SOTAControlPoint
+{
+	GameObject* pole;
+	GameObject* banner;
 	SOTACPStates state;
 	uint32 worldstate;
 
-	SOTAControlPoint(){
+	SOTAControlPoint()
+	{
 		pole = NULL;
 		banner = NULL;
 		state = SOTA_CP_STATE_UNCONTROLLED;
 		worldstate = 0;
 	}
 
-	~SOTAControlPoint(){
+	~SOTAControlPoint()
+	{
 		pole = NULL;
 		banner = NULL;
 		state = SOTA_CP_STATE_UNCONTROLLED;
@@ -94,16 +101,19 @@ struct SOTAControlPoint{
 	}
 };
 
-struct SOTAGraveyard{
-	Creature *spiritguide;
+struct SOTAGraveyard
+{
+	Creature* spiritguide;
 	uint32 faction;
 
-	SOTAGraveyard(){
+	SOTAGraveyard()
+	{
 		spiritguide = NULL;
 		faction = MAX_PLAYER_TEAMS;
 	}
 
-	~SOTAGraveyard(){
+	~SOTAGraveyard()
+	{
 		spiritguide = NULL;
 		faction = MAX_PLAYER_TEAMS;
 	}
@@ -111,69 +121,68 @@ struct SOTAGraveyard{
 
 class StrandOfTheAncient : public CBattleground
 {
-	private:
-		uint32 Attackers; // 0 - horde / 1 - alliance
-		uint32 Defenders;
-		uint32 BattleRound;
-		uint32 RoundTime;
-		uint32 RoundFinishTime[ 2 ];
-		SOTABattleRoundProgress roundprogress;
-		GameObject* m_boats[4];
-		GameObject* m_buffs[BUFF_COUNT];
-		GameObject* m_relic;
-		GameObject* m_endgate;
-		GameObject* m_gates[GATE_COUNT];
-		GameObject* m_gateSigils[GATE_COUNT];
-		GameObject* m_gateTransporters[GATE_COUNT];
-		PassengerMap boat1Crew;
-		PassengerMap boat2Crew;
-		Creature *canon[ SOTA_NUM_CANONS ];
-		Creature *demolisher[ SOTA_NUM_DEMOLISHERS ];
+private:
+	uint32 Attackers; // 0 - horde / 1 - alliance
+	uint32 Defenders;
+	uint32 BattleRound;
+	uint32 RoundTime;
+	uint32 RoundFinishTime[2];
+	SOTABattleRoundProgress roundprogress;
+	GameObject* m_boats[4];
+	GameObject* m_buffs[BUFF_COUNT];
+	GameObject* m_relic;
+	GameObject* m_endgate;
+	GameObject* m_gates[GATE_COUNT];
+	GameObject* m_gateSigils[GATE_COUNT];
+	GameObject* m_gateTransporters[GATE_COUNT];
+	PassengerMap boat1Crew;
+	PassengerMap boat2Crew;
+	Creature* canon[SOTA_NUM_CANONS];
+	Creature* demolisher[SOTA_NUM_DEMOLISHERS];
 
-		SOTAControlPoint controlpoint[ NUM_SOTA_CONTROL_POINTS ];
-		SOTAGraveyard graveyard[ NUM_SOTA_GRAVEYARDS ];
+	SOTAControlPoint controlpoint[NUM_SOTA_CONTROL_POINTS];
+	SOTAGraveyard graveyard[NUM_SOTA_GRAVEYARDS];
 
-	public:
-		static CBattleground* Create(MapMgr* m, uint32 i, uint32 l, uint32 t) { return new StrandOfTheAncient(m, i, l, t); }
+public:
+	static CBattleground* Create(MapMgr* m, uint32 i, uint32 l, uint32 t) { return new StrandOfTheAncient(m, i, l, t); }
 
-		StrandOfTheAncient(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t);
-		~StrandOfTheAncient();
+	StrandOfTheAncient(MapMgr* mgr, uint32 id, uint32 lgroup, uint32 t);
+	~StrandOfTheAncient();
 
-		uint32 GetNameID() { return 34; } // in worldstring_tables
+	uint32 GetNameID() { return 34; } // in worldstring_tables
 
-		uint32 GetRoundTime() { return RoundTime; };
-		LocationVector GetStartingCoords(uint32 team);
-		void HookOnAreaTrigger(Player* plr, uint32 id);
-		void HookFlagStand(Player* plr, GameObject* obj);
-		void HookOnFlagDrop(Player* plr);
-		void HookFlagDrop(Player* plr, GameObject* obj);
-		void HookOnPlayerKill(Player* plr, Player* pVictim);
-		void HookOnHK(Player* plr);
-		void HookOnShadowSight();
-		void HookGenerateLoot(Player* plr, Object* pOCorpse);
-		void HookOnUnitKill(Player* plr, Unit* pVictim);
-		void HookOnUnitDied( Unit *victim );
-		bool HookSlowLockOpen( GameObject *go, Player *player, Spell *spell );
-		bool HookQuickLockOpen( GameObject *go, Player *player, Spell *spell );
-		void HookOnPlayerDeath(Player* plr);
-		void HookOnMount(Player* plr);
-		bool HookHandleRepop(Player* plr);
-		void OnAddPlayer(Player* plr);
-		void OnRemovePlayer(Player* plr);
-		void OnPlatformTeleport(Player* plr);
-		void OnCreate();
-		void OnStart();
-		void SetIsWeekend(bool isweekend);
-		void SetRoundTime(uint32 secs) { RoundTime = secs; };
-		void SetTime( uint32 secs );
-		void TimeTick();
-		void PrepareRound();
-		void StartRound();
-		void FinishRound();
-		void Finish( uint32 winningteam );
+	uint32 GetRoundTime() { return RoundTime; };
+	LocationVector GetStartingCoords(uint32 team);
+	void HookOnAreaTrigger(Player* plr, uint32 id);
+	void HookFlagStand(Player* plr, GameObject* obj);
+	void HookOnFlagDrop(Player* plr);
+	void HookFlagDrop(Player* plr, GameObject* obj);
+	void HookOnPlayerKill(Player* plr, Player* pVictim);
+	void HookOnHK(Player* plr);
+	void HookOnShadowSight();
+	void HookGenerateLoot(Player* plr, Object* pOCorpse);
+	void HookOnUnitKill(Player* plr, Unit* pVictim);
+	void HookOnUnitDied(Unit *victim);
+	bool HookSlowLockOpen(GameObject *go, Player *player, Spell *spell);
+	bool HookQuickLockOpen(GameObject *go, Player *player, Spell *spell);
+	void HookOnPlayerDeath(Player* plr);
+	void HookOnMount(Player* plr);
+	bool HookHandleRepop(Player* plr);
+	void OnAddPlayer(Player* plr);
+	void OnRemovePlayer(Player* plr);
+	void OnPlatformTeleport(Player* plr);
+	void OnCreate();
+	void OnStart();
+	void SetIsWeekend(bool isweekend);
+	void SetRoundTime(uint32 secs) { RoundTime = secs; };
+	void SetTime(uint32 secs);
+	void TimeTick();
+	void PrepareRound();
+	void StartRound();
+	void FinishRound();
+	void Finish(uint32 winningteam);
 
-		void SpawnControlPoint( SOTAControlPoints point, SOTACPStates state );
-		void CaptureControlPoint( SOTAControlPoints point );
-		void SpawnGraveyard( SOTAGraveyards gyid, uint32 team );
-
+	void SpawnControlPoint(SOTAControlPoints point, SOTACPStates state);
+	void CaptureControlPoint(SOTAControlPoints point);
+	void SpawnGraveyard(SOTAGraveyards gyid, uint32 team);
 };
