@@ -4296,7 +4296,7 @@ void ApplyNormalFixes()
 		sp->procFlags = 0;
 		sp->procCharges = 1;
 		sp->RankNumber = 100;
-		sp->AuraInterruptFlags = 0;
+		sp->AuraInterruptFlags = AURA_INTERRUPT_ON_CAST_SPELL;
 	}
 
 	sp = CheckAndReturnSpellEntry(57531);
@@ -4305,7 +4305,7 @@ void ApplyNormalFixes()
 		sp->procFlags = 0;
 		sp->procCharges = 1;
 		sp->RankNumber = 101;
-		sp->AuraInterruptFlags = 0;
+		sp->AuraInterruptFlags = AURA_INTERRUPT_ON_CAST_SPELL;
 	}
 
 	//Hot Streak proc
