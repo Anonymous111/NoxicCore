@@ -3344,6 +3344,64 @@ bool EyeOfAcherus(uint32 i, Spell * pSpell)
 	return true;
 };
 
+bool PlantingSeaforiumDepthCharge(uint32 i, Spell* pSpell)
+{
+	if(pSpell == NULL || pSpell->p_caster == NULL || !pSpell->p_caster->IsInWorld())
+		return true;
+
+	Player* pPlayer = pSpell->p_caster;
+	QuestLogEntry* pQuest = GetQuest(pPlayer, 11608);
+	if(!pQuest)
+		return true;
+
+	GameObject* pSinkhole = pPlayer->GetMapMgr()->GetMapScript()->FindClosestGameObject(300171, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ());
+	if( pSinkhole == NULL )
+		return true;
+
+	pPlayer->GetMapMgr()->GetMapScript()->SpawnCreature(25401, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+        
+	float posX = pSinkhole->GetPositionX();
+	if(posX == 2657.13f)
+		KillMobForQuest(pPlayer, 11608, 0);
+
+	if(posX == 2716.02f)
+		KillMobForQuest(pPlayer, 11608, 1);
+
+	if(posX == 2877.96f)
+		KillMobForQuest(pPlayer, 11608, 2);
+
+	if(posX == 2962.16f)
+		KillMobForQuest(pPlayer, 11608, 3);
+
+	return true;
+}
+
+bool ChickenNet(uint32 i, Spell* pSpell)
+{
+	if(!pSpell->p_caster != NULL)
+		return false;
+
+	Player* pPlayer = pSpell->p_caster;
+	QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(12532);
+	if(pQuest == NULL)
+		pQuest = pPlayer->GetQuestLogForEntry(12702);
+
+	if(pQuest == NULL)
+		return false;
+
+	if(!pSpell->GetUnitTarget()->IsCreature())
+		return false;
+
+	Creature* Chicken = TO_CREATURE(pSpell->GetUnitTarget());
+	if(Chicken != NULL && Chicken->GetEntry() == 28161)
+	{
+		Chicken->Despawn(5000, 360000);
+		pPlayer->CastSpell(pSpell->u_caster, dbcSpell.LookupEntry(51037), true);
+		return true;
+	}
+	return false;
+}
+
 void SetupQuestItems(ScriptMgr* mgr)
 {
 	mgr->register_dummy_spell(3607, &YennikuRelease);
@@ -3453,4 +3511,6 @@ void SetupQuestItems(ScriptMgr* mgr)
 	mgr->register_script_effect(SPELL_BENDINGSHINBONE, &BendingShinbone);
 	mgr->register_dummy_spell(51858, &SiphonofAcherus);
 	mgr->register_dummy_spell(51852, &EyeOfAcherus);
+	mgr->register_dummy_spell(45503, &PlantingSeaforiumDepthCharge);
+	mgr->register_dummy_spell(51959, &ChickenNet);
 }
