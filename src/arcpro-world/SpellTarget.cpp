@@ -398,7 +398,7 @@ void Spell::RemoveTarget(uint32 i, Object* obj)
 	if(obj == NULL || !obj->IsInWorld())
 		return;
 
-	t->erase(std::remove(t->begin(), t->end(), obj->GetGUID()), t->end())
+	t->erase(std::remove(t->begin(), t->end(), obj->GetGUID()), t->end());
 }
 
 bool Spell::AddTarget(uint32 i, uint32 TargetType, Object* obj)

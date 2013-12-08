@@ -58,7 +58,7 @@ public:
 					Player* pPlayer = TO_PLAYER(summoner);
 					if(pPlayer->HasQuest(11608))
 					{
-						GameObject* pSinkhole = p->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 300171);
+						GameObject* pSinkhole = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 300171);
 						if(pSinkhole != NULL)
 						{
 							_unit->CastSpell(_unit, 45502, true);

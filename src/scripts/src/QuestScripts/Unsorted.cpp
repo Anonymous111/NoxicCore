@@ -55,12 +55,11 @@ class Quest_Grulloc_Has_Two_Skulls : public QuestScript
 
 class Quest_Zuluhed_the_Whacked : public QuestScript
 {
-	public:
-		void OnQuestStart(Player* mTarget, QuestLogEntry* qLogEntry)
-		{
-			sEAS.SpawnCreature(mTarget, 11980, -4177.39f, 376.289f, 117.78f, 2.7381f, 2 * 60 * 1000);
-		}
-
+public:
+	void OnQuestStart(Player* mTarget, QuestLogEntry* qLogEntry)
+	{
+		sEAS.SpawnCreature(mTarget, 11980, -4177.39f, 376.289f, 117.78f, 2.7381f, 2 * 60 * 1000);
+	}
 };
 
 void SetupUnsorted(ScriptMgr* mgr)

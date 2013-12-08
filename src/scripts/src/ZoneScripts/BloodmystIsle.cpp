@@ -98,7 +98,7 @@ public:
 				RandomCreature->Despawn(60000, 0);
 				if(RandomCreature->GetEntry() == 17681 && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 				{
-					pQuest->SetMobCount(0, Quest->GetMobCount(0) + 1);
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
 					pQuest->SendUpdateAddKill(0);
 					pQuest->UpdatePlayerFields();
 				};
