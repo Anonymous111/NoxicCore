@@ -27,7 +27,8 @@ class ArchmageMalin_Gossip : public Arcpro::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcpro::Gossip::Menu menu(pObject->GetGUID(), 11469);
+			GossipMenu* Menu;
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11469, plr);
 
 			if(plr->GetQuestLogForEntry(11223))
 				menu.AddItem(Arcpro::Gossip::ICON_CHAT, "Can you send me to Theramore? I have an urgent message for Lady Jaina from Highlord Bolvar.", 1);
@@ -35,10 +36,13 @@ class ArchmageMalin_Gossip : public Arcpro::Gossip::Script
 			menu.Send(plr);
 		}
 
-		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
 		{
-			TO_CREATURE(pObject)->CastSpell(plr, dbcSpell.LookupEntry(42711), true);
-			Arcpro::Gossip::Menu::Complete(plr);
+			if(IntId == 1)
+			{
+				plr->Gossip_Complete();
+				pCreature->CastSpell(plr, 42711, true);
+			}
 		}
 
 		void Destroy() { delete this; }
