@@ -9,38 +9,39 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
-	ArathiHighlands.cpp
-	AzuremystIsle.cpp
-	BladeEdgeMountains.cpp
-	BlastedLands.cpp
-	BloodmystIsle.cpp
-	BoreanTundra.cpp
-	Darnassus.cpp
-	Durotar.cpp
-	ElwynnForest.cpp
-	Exodar.cpp
-	HellfirePeninsula.cpp
-	Icecrown.cpp
-	Ironforge.cpp
-	Misc.cpp
-	Nagrand.cpp
-	Orgrimmar.cpp
+	Eastern Kingdoms/ArathiHighlands.cpp
+	Kalimdor/AzuremystIsle.cpp
+	Outland/BladeEdgeMountains.cpp
+	Eastern Kingdoms/BlastedLands.cpp
+	Kalimdor/BloodmystIsle.cpp
+	Northrend/BoreanTundra.cpp
+	Kalimdor/Darnassus.cpp
+	Kalimdor/Durotar.cpp
+	Eastern Kingdoms/ElwynnForest.cpp
+	Kalimdor/Exodar.cpp
+	Outland/HellfirePeninsula.cpp
+	Northrend/Icecrown.cpp
+	Eastern Kingdoms/Ironforge.cpp
+	Other/Misc.cpp
+	Outland/Nagrand.cpp
+	Kalimdor/Orgrimmar.cpp
     Setup.cpp
-	ShadowmoonValley.cpp
-	SholazarBasin.cpp
-	SilvermoonCity.cpp
-	SilverpineForest.cpp
-	Stranglethorn.cpp
-	Tanaris.cpp
-	TheBarrens.cpp
-	TheScarletEnclave.cpp
-	ThousandNeedles.cpp
-	ThunderBluff.cpp
-	TirisfalGlades.cpp
-	Undercity.cpp
-	UnGoroCrater.cpp
-	WesternPlaguelands.cpp
-	Westfall.cpp
+	Outland/ShadowmoonValley.cpp
+	Northrend/SholazarBasin.cpp
+	Eastern Kingdoms/SilvermoonCity.cpp
+	Eastern Kingdoms/SilverpineForest.cpp
+	Eastern Kingdoms/StormwindCity.cpp
+	Eastern Kingdoms/Stranglethorn.cpp
+	Kalimdor/Tanaris.cpp
+	Kalimdor/TheBarrens.cpp
+	Eastern Kingdoms/TheScarletEnclave.cpp
+	Kalimdor/ThousandNeedles.cpp
+	Kalimdor/ThunderBluff.cpp
+	Eastern Kingdoms/TirisfalGlades.cpp
+	Eastern Kingdoms/Undercity.cpp
+	Kalimdor/UnGoroCrater.cpp
+	Eastern Kingdoms/WesternPlaguelands.cpp
+	Eastern Kingdoms/Westfall.cpp
 )
 
 SET( headers
