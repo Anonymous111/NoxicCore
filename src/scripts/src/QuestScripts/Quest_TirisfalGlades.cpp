@@ -95,5 +95,5 @@ void SetupTirisfalGlades(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(410, new TheDormantShade());
 	mgr->register_quest_script(590, new ARoguesDeal());
-	//mgr->register_quest_script(407, new FieldsofGrief());
+	mgr->register_quest_script(407, new FieldsofGrief());
 }

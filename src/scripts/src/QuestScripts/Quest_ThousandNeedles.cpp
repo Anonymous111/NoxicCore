@@ -144,6 +144,6 @@ class RumorsforKravel : public QuestScript
 
 void SetupThousandNeedles(ScriptMgr* mgr)
 {
-	//mgr->register_quest_script(4770, new HomewardBound());
+	mgr->register_quest_script(4770, new HomewardBound());
 	mgr->register_quest_script(1117, new RumorsforKravel());
 }

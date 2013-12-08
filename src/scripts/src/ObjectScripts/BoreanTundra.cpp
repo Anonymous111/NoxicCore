@@ -22,73 +22,68 @@
 // Call to Arms!
 class BellRope : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(BellRope);
-		BellRope(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(BellRope);
+	BellRope(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
 
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 11965))
-				sEAS.KillMobForQuest(pPlayer, 11965, 0);
-		};
-
+	void OnActivate(Player* pPlayer)
+	{
+		if(sEAS.GetQuest(pPlayer, 11965))
+			sEAS.KillMobForQuest(pPlayer, 11965, 0);
+	};
 };
 
 // Reading the Meters
 class ColdarraGeoMonitorNexus : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNexus);
-		ColdarraGeoMonitorNexus(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNexus);
+	ColdarraGeoMonitorNexus(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
 
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 11900))
-				sEAS.KillMobForQuest(pPlayer, 11900, 0);
-		};
-
+	void OnActivate(Player* pPlayer)
+	{
+		if(sEAS.GetQuest(pPlayer, 11900))
+			sEAS.KillMobForQuest(pPlayer, 11900, 0);
+	};
 };
 
 class ColdarraGeoMonitorSouth : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorSouth);
-		ColdarraGeoMonitorSouth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorSouth);
+	ColdarraGeoMonitorSouth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
 
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 11900))
-				sEAS.KillMobForQuest(pPlayer, 11900, 1);
-		};
-
+	void OnActivate(Player* pPlayer)
+	{
+		if(sEAS.GetQuest(pPlayer, 11900))
+			sEAS.KillMobForQuest(pPlayer, 11900, 1);
+	};
 };
 
 class ColdarraGeoMonitorNorth : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNorth);
-		ColdarraGeoMonitorNorth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorNorth);
+	ColdarraGeoMonitorNorth(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
 
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 11900))
-				sEAS.KillMobForQuest(pPlayer, 11900, 2);
-		};
-
+	void OnActivate(Player* pPlayer)
+	{
+		if(sEAS.GetQuest(pPlayer, 11900))
+			sEAS.KillMobForQuest(pPlayer, 11900, 2);
+	};
 };
 
 class ColdarraGeoMonitorWest : public GameObjectAIScript
 {
-	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorWest);
-		ColdarraGeoMonitorWest(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
+public:
+	ADD_GAMEOBJECT_FACTORY_FUNCTION(ColdarraGeoMonitorWest);
+	ColdarraGeoMonitorWest(GameObject* goinstance) : GameObjectAIScript(goinstance) {};
 
-		void OnActivate(Player* pPlayer)
-		{
-			if(sEAS.GetQuest(pPlayer, 11900))
-				sEAS.KillMobForQuest(pPlayer, 11900, 3);
-		};
-
+	void OnActivate(Player* pPlayer)
+	{
+		if(sEAS.GetQuest(pPlayer, 11900))
+			sEAS.KillMobForQuest(pPlayer, 11900, 3);
+	};
 };
 
 class NerubarEggSac : public GameObjectAIScript

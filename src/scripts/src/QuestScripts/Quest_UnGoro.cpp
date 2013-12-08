@@ -79,5 +79,5 @@ class ChasingAMe01 : public QuestScript
 
 void SetupUnGoro(ScriptMgr* mgr)
 {
-	//mgr->register_quest_script(4245, new ChasingAMe01());
+	mgr->register_quest_script(4245, new ChasingAMe01());
 }

@@ -184,7 +184,7 @@ class AkilzonAI : public MoonScriptBossAI
 
 		if(IsTimerFinished(mSummonTime))
 		{
-			CreatureAIScript* Eagle = NULL;
+			MoonScriptCreatureAI* Eagle = NULL;
 			// Spawn 3 Soaring Eagles
 			for(int x = 0; x < 3; x++)
 			{
@@ -206,11 +206,11 @@ class AkilzonAI : public MoonScriptBossAI
 	int32 mSummonTime;
 };
 
-class SoaringEagleAI : public CreatureAIScript
+class SoaringEagleAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(SoaringEagleAI);
-	SoaringEagleAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(SoaringEagleAI);
+	SoaringEagleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(EAGLE_SWOOP, Target_Destination, 5, 0, 0);
 		GetUnit()->m_noRespawn = true;
@@ -277,7 +277,7 @@ public:
 		{
 			if(IsTimerFinished(mTotemTimer))
 			{
-				CreatureAIScript* Totem = NULL;
+				MoonScriptCreatureAI* Totem = NULL;
 				Totem = SpawnCreature(CN_TOTEM, (_unit->GetPositionX() + RandomFloat(3) - 3), (_unit->GetPositionY() + RandomFloat(3) - 3), _unit->GetPositionZ(), 0, true);
 				if(Totem)
 				{
@@ -342,11 +342,11 @@ public:
 	int SplitCount;
 };
 
-class LynxSpiritAI : public CreatureAIScript
+class LynxSpiritAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(LynxSpiritAI);
-	LynxSpiritAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(LynxSpiritAI, MoonScriptCreatureAI);
+	LynxSpiritAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		// Lynx Flurry
 		AddSpell(43290, Target_Self, 15, 0, 8);
@@ -355,22 +355,22 @@ public:
 	}
 };
 
-class CLTOTEMAI : public CreatureAIScript
+class CLTOTEMAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(CLTOTEMAI);
-	CLTOTEMAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(CLTOTEMAI);
+	CLTOTEMAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		SetDespawnWhenInactive(true);
 		AddSpell(CLT_LIGHTNING, Target_RandomPlayer, 100, 0.5f, 2);
 	}
 };
 
-class GAZAKROTHAI : public CreatureAIScript
+class GAZAKROTHAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(GAZAKROTHAI);
-	GAZAKROTHAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	MOONSCRIPT_FACTORY_FUNCTION(GAZAKROTHAI, MoonScriptCreatureAI);
+	GAZAKROTHAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 	void OnCombatStart(Unit* pTarget)
 	{
 		RegisterAIUpdateEvent(500);
@@ -382,11 +382,11 @@ public:
 	}
 };
 
-class LORDRAADANAI : public CreatureAIScript
+class LORDRAADANAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(LORDRAADANAI);
-	LORDRAADANAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(LORDRAADANAI, MoonScriptCreatureAI);
+	LORDRAADANAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		FlameBreathTimer = ThunderClapTimer = INVALIDATE_TIMER;
 	}
@@ -413,32 +413,32 @@ protected:
 	int32 FlameBreathTimer, ThunderClapTimer;
 };
 
-class SLITHERAI : public CreatureAIScript
+class SLITHERAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(SLITHERAI);
-	SLITHERAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(SLITHERAI, MoonScriptCreatureAI);
+	SLITHERAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(S_POISON_BOLT, Target_RandomPlayer, 100, 2, 2);
 	}
 };
 
-class THURGAI : public CreatureAIScript
+class THURGAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(THURGAI);
-	THURGAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(THURGAI, MoonScriptCreatureAI);
+	THURGAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(TH_CLEAVE, Target_Current, 100, 0, 6);
 		AddSpell(TH_BLOODLUST, Target_Self, 100, 0, 30);
 	}
 };
 
-class DARKHEARTAI : public CreatureAIScript
+class DARKHEARTAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(DARKHEARTAI);
-	DARKHEARTAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(DARKHEARTAI, MoonScriptCreatureAI);
+	DARKHEARTAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(DH_FEAR, Target_Destination, 100, 0, 20);
 	}
@@ -447,18 +447,18 @@ public:
 class FENSTALKERAI : public ArcSciptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(FENSTALKERAI);
-	FENSTALKERAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(FENSTALKERAI, MoonScriptCreatureAI);
+	FENSTALKERAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(FEN_VOLATILE_INFECTION, Target_RandomPlayer, 100, 0, 20);
 	}
 };
 
-class ALYSONANTILLEAI : public CreatureAIScript
+class ALYSONANTILLEAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(ALYSONANTILLEAI);
-	ALYSONANTILLEAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(ALYSONANTILLEAI, MoonScriptCreatureAI);
+	ALYSONANTILLEAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
     {
 		AddSpell(ALYS_HEAL, Target_WoundedFriendly, 100, 2, 10);
 		DispelTimer = INVALIDATE_TIMER;
@@ -502,22 +502,22 @@ protected:
 	int32 DispelTimer;
 };
 
-class KORAGGAI : public CreatureAIScript
+class KORAGGAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(KORAGGAI);
-	KORAGGAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(KORAGGAI, MoonScriptCreatureAI);
+	KORAGGAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(KOR_MIGHTY_BLOW, Target_Current, 100, 0, 10);
 		AddSpell(KOR_COLD_STARE, Target_RandomPlayer, 100, 0, 20);
 	}
 };
 
-class FEATHERVORTEXAI : public CreatureAIScript
+class FEATHERVORTEXAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(FEATHERVORTEXAI, CreatureAIScript);
-	FEATHERVORTEXAI(Creature* pCreature) : CreatureAIScript(pCreature), mTarget(0)
+	MOONSCRIPT_FACTORY_FUNCTION(FEATHERVORTEXAI, MoonScriptCreatureAI);
+	FEATHERVORTEXAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature), mTarget(0)
 	{
 		GetUnit()->CastSpell(GetUnit(), FEATHER_VORTEX_VISUAL, true);
 		SetAllowMelee(false);
@@ -607,11 +607,11 @@ bool ColdStare(uint32 i, SPELLPOINTER pSpell)
 	return true;
 }
 
-class PillarOfFire : public CreatureAIScript
+class PillarOfFire : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(SOARINGEAGLEAI);
-	PillarOfFire(Creature* pCreature) : CreatureAIScript(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(SOARINGEAGLEAI, MoonScriptCreatureAI);
+	PillarOfFire(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		SetDespawnWhenInactive(true);
 		GetUnit()->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

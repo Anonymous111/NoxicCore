@@ -23,135 +23,6 @@
 
 #include "Setup.h"
 
-#define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \
-	Menu->SendTo(plr);
-
-
-class StrFever : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			if(!plr)
-				return;
-
-			GossipMenu* Menu;
-			Creature* doctor = TO_CREATURE(pObject);
-			if(doctor == NULL)
-				return;
-
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, plr);
-			if(plr->GetQuestLogForEntry(348) && plr->GetItemInterface()->GetItemCount(2799, 0) && !plr->GetItemInterface()->GetItemCount(2797, 0))
-				Menu->AddItem(0, "I'm ready, Summon Him!", 1);
-
-			Menu->SendTo(plr);
-		}
-
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-		{
-			if(!plr)
-				return;
-
-			Creature* doctor = TO_CREATURE(pObject);
-			if(doctor == NULL)
-				return;
-
-			switch(IntId)
-			{
-				case 0:
-					GossipHello(pObject, plr);
-					break;
-
-				case 1:
-					{
-						plr->GetItemInterface()->RemoveItemAmt(2799, 1);
-						doctor->CastSpell(doctor, dbcSpell.LookupEntry(12380), true);
-						if(!plr || !plr->GetMapMgr() || !plr->GetMapMgr()->GetInterface())
-							return;
-						Creature* firstenemy = sEAS.SpawnCreature(plr, 1511, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
-						firstenemy->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-						firstenemy->Despawn(10 * 60 * 1000, 0);
-					}
-					break;
-			}
-		}
-
-};
-
-class Beka : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka);
-		Beka(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* mKiller)
-		{
-			if(mKiller->IsPlayer())
-			{
-				Player* mPlayer = TO_PLAYER(mKiller);
-				Creature*  beka1 = sEAS.SpawnCreature(mPlayer, 1516, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
-				beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-				beka1->Despawn(10 * 60 * 1000, 0);
-			}
-			else
-			{
-				Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
-				if(mPlayer)
-				{
-					Creature*  beka1 = sEAS.SpawnCreature(mPlayer, 1516, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
-					beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-					beka1->Despawn(10 * 60 * 1000, 0);
-				}
-			}
-		}
-};
-
-class Beka1 : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka1);
-		Beka1(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* mKiller)
-		{
-			if(mKiller->IsPlayer())
-			{
-				Player* mPlayer = TO_PLAYER(mKiller);
-				Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1514, -13770.5f, -6.79f, 42.8f, 5.7f, 0);
-				beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-				beka1->Despawn(10 * 60 * 1000, 0);
-			}
-			else
-			{
-				Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
-				if(mPlayer)
-				{
-					Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1514, -13770.5f, -6.79f, 42.8f, 5.7f, 0);
-					beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-					beka1->Despawn(10 * 60 * 1000, 0);
-				}
-			}
-		}
-};
-
-class Beka2 : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka2);
-		Beka2(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* mKiller)
-		{
-			float SSX = mKiller->GetPositionX();
-			float SSY = mKiller->GetPositionY();
-			float SSZ = mKiller->GetPositionZ();
-
-			Creature* doctor = mKiller->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 1449);
-			if(doctor)
-				doctor->Emote(EMOTE_ONESHOT_CHEER);
-		}
-};
-
 class BloodscalpClanHeads : public QuestScript
 {
 	public:
@@ -291,32 +162,9 @@ class FacingNegolash : public QuestScript
 		}
 };
 
-class NegolashAI : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NegolashAI);
-
-		NegolashAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-		}
-		void OnDied(Unit* mKiller)
-		{
-			_unit->Despawn(180000, 0);
-			RemoveAIUpdateEvent();
-		}
-};
-
-
 void SetupStranglethornVale(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(1449, new StrFever());
-
-	mgr->register_creature_script(1511, &Beka::Create);
-
-	mgr->register_creature_script(1516, &Beka1::Create);
-
 	mgr->register_quest_script(584, new BloodscalpClanHeads());
-
 	mgr->register_quest_script(1118, new BacktoBootyBay());
 	mgr->register_quest_script(609, new VoodooDues());
 }

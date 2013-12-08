@@ -141,7 +141,6 @@ void SetupQuestGossip(ScriptMgr* mgr)
 
 	// **** Dalaran quests start **** //
 	GossipScript* TeleportQGossip = new TeleportQ_Gossip;
-
 	// Horde
 	mgr->register_gossip_script(26471, TeleportQGossip);
 	mgr->register_gossip_script(29155, TeleportQGossip);

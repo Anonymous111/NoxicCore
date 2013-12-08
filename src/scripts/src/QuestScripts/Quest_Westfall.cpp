@@ -70,5 +70,5 @@ class TheDefiasBrotherhood : public QuestScript
 
 void SetupWestfall(ScriptMgr* mgr)
 {
-	//mgr->register_quest_script(155, new TheDefiasBrotherhood());
+	mgr->register_quest_script(155, new TheDefiasBrotherhood());
 }

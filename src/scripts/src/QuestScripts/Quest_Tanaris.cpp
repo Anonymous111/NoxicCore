@@ -25,8 +25,6 @@
 
 #define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \ Menu->SendTo(plr);
 
-
-
 class SpiritScreeches : public GossipScript
 {
 	public:
