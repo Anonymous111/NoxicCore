@@ -65,30 +65,7 @@ class MissingInAction : public QuestScript
 		}
 };
 
-class Corporal_Keeshan : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Corporal_Keeshan);
-		Corporal_Keeshan(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			if(iWaypointId == 19)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tell Marshal Marris. I'm outta here!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(219)->SendQuestComplete();
-			}
-		}
-};
-
 void SetupRedrigeMountains(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(349, &Corporal_Keeshan::Create);
-	//mgr->register_quest_script(219, new MissingInAction());
+	mgr->register_quest_script(219, new MissingInAction());
 }

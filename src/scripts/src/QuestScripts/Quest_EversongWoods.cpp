@@ -400,15 +400,29 @@ class ProspectorAnvilwardAI : public CreatureAIScript
 		}
 };
 
+class ThirstUnending : public QuestScript
+{
+public:
+	Player* pPlayer;
+	Creature* pCreature = _unit->GetEntry(15274);
+	if(pCreature->GetSpellEntry(28730 || 25046 || 50613))
+	{
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(8346);
+		//pCreature->KillMob() // Should kill the mob, what is that damn command?!
+		pQuest->SendQuestComplete();
+	}
+};
+
 void SetupEversongWoods(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(15420, new ProspectorAnvilwardGossip);
 	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
-	/*GossipScript * DwarvenSpyGossip = (GossipScript*) new DwarvenSpy();
+	/*GossipScript* DwarvenSpyGossip = (GossipScript*) new DwarvenSpy();
 	mgr->register_gossip_script(15420, DwarvenSpyGossip);
 	mgr->register_creature_script(15420, &DwarvenSpyState::Create);
 	mgr->register_dummy_spell(33980, &Whitebark_Memory);
 	mgr->register_creature_script(19456, &WhitebarkSpirit::Create);
 	mgr->register_quest_script(8488, CREATE_QUESTSCRIPT(UnexpectedResults));
 	mgr->register_creature_script(15402, &ApprenticeMirveda::Create);*/
+	mgr->register_quest_script(8346, new ThirstUnending());
 }

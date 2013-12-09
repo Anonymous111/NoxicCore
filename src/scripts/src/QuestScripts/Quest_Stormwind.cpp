@@ -23,50 +23,6 @@
 
 #include "Setup.h"
 
-class DashelStonefist : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DashelStonefist);
-		DashelStonefist(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->SetFaction(12);
-			_unit->SetStandState(STANDSTATE_STAND);
-		}
-
-		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
-		{
-			if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.2f)
-			{
-				if(mAttacker->IsPlayer())
-				{
-					_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-					RegisterAIUpdateEvent(1000);
-					QuestLogEntry* pQuest = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(1447);
-					if(!pQuest)
-						return;
-					pQuest->SendQuestComplete();
-				}
-			}
-		}
-
-		void AIUpdate()
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Okay, okay! Enough fighting. No one else needs to get hurt.");
-			_unit->RemoveNegativeAuras();
-			_unit->SetFaction(12);
-			_unit->SetHealthPct(100);
-			_unit->GetAIInterface()->WipeTargetList();
-			_unit->GetAIInterface()->WipeHateList();
-			_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
-			_unit->GetAIInterface()->disable_melee = true;
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, 0);
-			RemoveAIUpdateEvent();
-		}
-};
-
 class TheMissingDiplomat : public QuestScript
 {
 	public:
@@ -101,6 +57,5 @@ class TheMissingDiplomat : public QuestScript
 
 void SetupStormwind(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(4961, &DashelStonefist::Create);
 	mgr->register_quest_script(1447, new TheMissingDiplomat());
 }

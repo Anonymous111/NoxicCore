@@ -23,58 +23,6 @@
 
 #include "Setup.h"
 
-class DraeneiFishingNet : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* pPlayer)
-		{
-			if(pObject == NULL || !pObject->IsItem() || pPlayer == NULL)
-				return;
-
-			QuestLogEntry* QuestEntry = pPlayer->GetQuestLogForEntry(9452);
-			if(QuestEntry == NULL)
-				return;
-
-#ifndef BLIZZLIKE
-			//if ( QuestEntry->GetMobCount( 0 ) >= QuestEntry->GetQuest()->required_mobcount[ 0 ] )
-			//	return;
-#endif
-			if(pPlayer->GetMapMgr() == NULL)
-				return;
-
-			// Meh, double object looking - we should find a way to remove this
-			GameObject* School = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 181616);
-			if(School == NULL || pPlayer->CalcDistance(School) > 5.0f)
-				return;
-
-#ifdef BLIZZLIKE
-			sEventMgr.AddEvent(School, &GameObject::Despawn, static_cast< uint32 >(20000), EVENT_GAMEOBJECT_ITEM_SPAWN, 1000, 1, 0);
-#else
-			School->Despawn(20000, 0);
-#endif
-			pPlayer->CastSpell(pPlayer, dbcSpell.LookupEntry(TO_ITEM(pObject)->GetProto()->Spells[ 0 ].Id), false);
-			uint32 Chance = RandomUInt(10);
-			if(Chance <= 3)
-			{
-				Creature* NewCreature = sEAS.SpawnCreature(pPlayer, 17102, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), 180000);
-				if(NewCreature != NULL)
-				{
-					NewCreature->GetAIInterface()->StopMovement(500);
-					NewCreature->setAttackTimer(1000, false);
-					NewCreature->m_noRespawn = true;
-				};
-
-				return;
-			};
-
-			sEAS.AddItem(23614, pPlayer);
-			QuestEntry->SendUpdateAddKill(1);
-			QuestEntry->UpdatePlayerFields();
-			pPlayer->Gossip_Complete();
-		};
-
-};
-
 typedef std::pair< uint64, Creature* > QuestDefinition;
 typedef std::vector< QuestDefinition > QuestCreature;
 
@@ -292,7 +240,6 @@ class TotemofVark : public QuestScript
 
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
-	//mgr->register_item_gossip_script( 23654, CREATE_GOSSIPSCRIPT( DraeneiFishingNet ) );
 	/*mgr->register_quest_script( 9539, new TotemofCoo() );
 	mgr->register_quest_script( 9540, new TotemofTikti());
 	mgr->register_quest_script( 9541, new TotemofYor() );

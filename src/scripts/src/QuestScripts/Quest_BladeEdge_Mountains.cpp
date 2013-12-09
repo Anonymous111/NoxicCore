@@ -35,28 +35,6 @@ class IntotheSoulgrinder : public QuestScript
 		}
 };
 
-class powerconv : public GameObjectAIScript
-{
-	public:
-		powerconv(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new powerconv(GO); }
-
-		void OnActivate(Player* pPlayer)
-		{
-			QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(10584);
-			if(qle == NULL)
-				return;
-
-			Creature* magneto = sEAS.SpawnCreature(pPlayer, 21729, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), 0, 0);
-			if(magneto != NULL)
-			{
-				magneto->Despawn(5 * 60 * 1000, 0);
-			}
-
-			_gameobject->Despawn(300000, 0);
-		}
-};
-
 void SetupBladeEdgeMountains(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(11000, new IntotheSoulgrinder());
