@@ -43,8 +43,44 @@ public:
 	}
 };
 
+/*--------------------------------------------------------------------------------------------------------*/
+// Crisis at the Sunwell
+
+class ScryingOrb : public GameObjectAIScript
+{
+	public:
+		ScryingOrb(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new ScryingOrb(GO); }
+
+		void OnActivate(Player* pPlayer)
+		{
+			QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(11490);
+			if(pQuest)
+			{
+				float SSX = pPlayer->GetPositionX();
+				float SSY = pPlayer->GetPositionY();
+				float SSZ = pPlayer->GetPositionZ();
+
+				GameObject* pOrb = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 187578);
+				if(pOrb)
+				{
+					pOrb->SetState(0);
+					pQuest->SetMobCount(0, 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
+				}
+				return;
+			}
+			else
+			{
+				pPlayer->BroadcastMessage("Missing required quest : The Scryer's Scryer");
+			}
+		}
+};
+
 void SetupIsleofQuelDanasGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(187431, &OrbOfTransLocQuelTop::Create);
 	mgr->register_gameobject_script(187428, &OrbOfTransLocQuelLower::Create);
+	mgr->register_gameobject_script(187578, &ScryingOrb::Create);
 }

@@ -31,7 +31,25 @@ class AlterofTidalMastery : public GameObjectAIScript
 		}
 };
 
+class VanquishingAquantion : public GameObjectAIScript
+{
+public:
+	VanquishingAquantion(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new VanquishingAquantion(GO); }
+
+	void OnActivate(Player* pPlayer)
+	{
+		QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(9174);
+		if(pQuest == NULL)
+			return;
+
+		Creature* naga = sEAS.SpawnCreature(pPlayer, 16292, 7938, -7632, 114, 3.05f, 0);
+		naga->Despawn(6 * 60 * 1000, 0);
+	}
+};
+
 void SetupGhostlandsGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(181157, &AlterofTidalMastery::Create);
+	mgr->register_gameobject_script(181157, &VanquishingAquantion::Create);
 }
