@@ -228,6 +228,28 @@ public:
 	}
 };
 
+class powerconv : public GameObjectAIScript
+{
+	public:
+		powerconv(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new powerconv(GO); }
+
+		void OnActivate(Player* pPlayer)
+		{
+			QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(10584);
+			if(qle == NULL)
+				return;
+
+			Creature* magneto = sEAS.SpawnCreature(pPlayer, 21729, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), 0, 0);
+			if(magneto != NULL)
+			{
+				magneto->Despawn(5 * 60 * 1000, 0);
+			}
+
+			_gameobject->Despawn(300000, 0);
+		}
+};
+
 void SetupBladeEdgeMountainsGameobjects(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(185932, &Obsidias_Egg::Create);
@@ -240,4 +262,5 @@ void SetupBladeEdgeMountainsGameobjects(ScriptMgr* mgr)
 	uint32 LegionObliskIds[] = { 185193, 185195, 185196, 185197, 185198, 0 };
 	mgr->register_gameobject_script(LegionObliskIds, &LegionObelisk::Create); // Legion Obelisk
 	mgr->register_gameobject_script(185512, &StasisChamberAlpha::Create); // Stasis Chamber Alpha
+	mgr->register_gameobject_script(184906, &powerconv::Create);
 }

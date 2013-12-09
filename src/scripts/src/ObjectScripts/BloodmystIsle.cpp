@@ -69,12 +69,23 @@ public:
 
 	void OnActivate(Player* pPlayer)
 	{
-		if(!pPlayer->HasQuest(9667))
+		QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(9667);
+		if(qle == NULL)
 			return;
 
-		Creature* Princess = sEAS.GetNearestCreature(pPlayer, 17682);
-		if(Princess != NULL)
-			Princess->Despawn(1000, 1000);
+		if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
+		{
+			qle->SetMobCount(0, qle->GetMobCount(0) + 1);
+			qle->SendUpdateAddKill(0);
+			qle->UpdatePlayerFields();
+		}
+
+		Creature* princess = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 17682);
+		if(!princess)
+			return;
+
+		princess->Despawn(1000, 6 * 60 * 1000);
+		return;
 	}
 };
 
