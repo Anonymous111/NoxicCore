@@ -99,70 +99,8 @@ class Baleheim : public CreatureAIScript
 		}
 };
 
-class Plaguethis_Gossip : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			GossipMenu* Menu;
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 40002, plr);
-			Menu->AddItem(0, "Where would you like to fly too?", 2);
-			if(plr->GetQuestLogForEntry(11332) != NULL)
-				Menu->AddItem(0, "Greer, I need a gryphon to ride and some bombs to drop on New Agamand!", 1);
-
-
-			Menu->SendTo(plr);
-		}
-
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
-		{
-			Creature* pCreature = (pObject->IsCreature()) ? TO_CREATURE(pObject) : NULL;
-			if(pCreature == NULL)
-				return;
-
-			switch(IntId)
-			{
-				case 1:
-					{
-						Item* item;
-						item = objmgr.CreateItem(33634 , plr);
-						item->SetStackCount(10);
-
-						if(!plr->GetItemInterface()->AddItemToFreeSlot(item))
-						{
-							plr->GetSession()->SendNotification("No free slots were found in your inventory!");
-							item->DeleteMe();
-						}
-						else
-						{
-							plr->SendItemPushResult(false, true, false, true, plr->GetItemInterface()->LastSearchResult()->ContainerSlot,
-							                        plr->GetItemInterface()->LastSearchResult()->Slot, 1, item->GetEntry(), item->GetItemRandomSuffixFactor(),
-							                        item->GetItemRandomPropertyId(), item->GetStackCount());
-
-						}
-
-						if(pCreature->GetEntry() == 23859)
-						{
-							TaxiPath* path = sTaxiMgr.GetTaxiPath(745);
-							plr->TaxiStart(path, 17759, 0);
-						}
-						break;
-					}
-				case 2:
-					{
-						plr->GetSession()->SendTaxiList(pCreature);
-						break;
-					}
-			}
-		}
-
-};
-
-
 void SetupHowlingFjord(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(23859, new Plaguethis_Gossip()); // Thanks Dzjhenghiz
-
 	mgr->register_creature_script(23643, &ChillmereScourge::Create);
 	mgr->register_creature_script(23645, &ChillmereScourge::Create);
 	mgr->register_creature_script(23644, &ChillmereScourge::Create);

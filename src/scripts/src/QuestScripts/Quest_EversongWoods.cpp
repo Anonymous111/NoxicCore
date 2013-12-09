@@ -156,114 +156,6 @@ class ApprenticeMirveda : public CreatureAIScript
 			_unit->_setFaction();
 			_unit->SetUInt32Value(UNIT_NPC_FLAGS, 2);
 		}
-};
-
-// The Dwarven Spy Quest 8483
-class SCRIPT_DECL DwarvenSpy : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* pPlayer, bool AutoSend)
-		{
-			if(!pPlayer)
-				return;
-
-			GossipMenu *Menu;
-			Creature *DwarvenSpy = (Creature*)(pObject);
-			if(DwarvenSpy == NULL)
-				return;
-
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 8239, pPlayer);
-			if(pPlayer->GetQuestLogForEntry(8483) && pPlayer->GetItemInterface()->GetItemCount(20764) < 1)
-				Menu->AddItem( 0, "I need a moment of your time, sir.", 1);
-
-			if(AutoSend)
-				Menu->SendTo(pPlayer);
-		}
-		void GossipSelectOption(Object* pObject, Player* pPlayer, uint32 Id, uint32 IntId, const char * EnteredCode)
-		{
-			if(!pPlayer)
-				return;
-
-			Creature *DwarvenSpy = (Creature*)(pObject);
-			if(DwarvenSpy == NULL)
-				return;
-
-			switch (IntId)
-			{
-				case 0:
-					GossipHello(pObject, pPlayer, true);
-				break;
-				case 1:
-				{
-					GossipMenu *Menu;
-					if(pPlayer->GetItemInterface()->GetItemCount(20764) < 1)
-					{
-						if(!DwarvenSpy)
-							return;
-
-						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 8240, pPlayer);
-						Menu->AddItem( 0, "Why... yes, of course. I've something to show you right inside this building, Mr. Anvilward.", 2);
-						Menu->SendTo(pPlayer);
-					}
-					return;
-				}break;
-				case 2:
-				{
-					if(pPlayer->GetItemInterface()->GetItemCount(20764) < 1)
-					{
-						if(!DwarvenSpy)
-							return;
-
-						DwarvenSpy->SetUInt32Value(UNIT_NPC_FLAGS, 0);
-						DwarvenSpy->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Very well. Let's see what you have to show me");
-						DwarvenSpy->GetAIInterface()->setMoveType(2);
-						DwarvenSpy->GetAIInterface()->StopMovement(3000);
-						sEAS.WaypointCreate(DwarvenSpy,9290.84f, -6683.41f, 22.423f, 5.983f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9294.61f, -6682.60f, 22.424f, 1.340f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9297.54f, -6670.08f, 22.399f, 0.307f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9306.00f, -6667.38f, 22.429f, 1.123f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9309.392, -6659.37f, 22.432f, 1.748f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9307.65f, -6652.02f, 24.712f, 2.648f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9299.86f, -6648.17f, 28.341f, 3.403f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9293.33f, -6649.84f, 30.444f, 4.068f, 0, 0, 15426);
-						sEAS.WaypointCreate(DwarvenSpy,9288.21f, -6657.44f, 31.829f, 1.208f, 0, 0, 15426);
-					}
-					return;
-				}break;
-			}
-		}
-		void Destroy()
-		{
-			delete this;
-		}
-};
-
-class DwarvenSpyState : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DwarvenSpyState);
-		DwarvenSpyState(Creature* pCreature) : CreatureAIScript(pCreature) {}
-		void OnLoad()
-		{
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			_unit->SetUInt32Value(UNIT_FIELD_FACTIONTEMPLATE, 35);
-			_unit->_setFaction();
-			_unit->SetUInt32Value(UNIT_NPC_FLAGS, 1);
-		}
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			switch(iWaypointId)
-			{
-				case 9:
-				{
-					sEAS.DeleteWaypoints(_unit);
-					_unit->Despawn(120000,1000);
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "What manner of trick is this? If you seek to ambush me, I warn you I will not go down quietly!");
-					_unit->SetUInt32Value(UNIT_FIELD_FACTIONTEMPLATE, 14);
-					_unit->_setFaction();
-				}break;
-			}
-		}
 };*/
 
 static LocationExtra ProspectorAnvilwardWaypoints[] =
@@ -277,77 +169,6 @@ static LocationExtra ProspectorAnvilwardWaypoints[] =
 	{ 9289.426f, -6657.825f, 31.829f, 6.154f, 0 },
 	{ 9294.095f, -6658.863f, 34.482f, 6.063f, 0 },
 };
-
-class ProspectorAnvilwardGossip : public GossipScript
-{
-	public:
-		void GossipHello(Object* pObject, Player* Plr);
-		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode);
-		void GossipEnd(Object* pObject, Player* Plr) { Plr->CloseGossip(); }
-};
-
-void ProspectorAnvilwardGossip::GossipHello(Object* pObject, Player* Plr)
-{
-	GossipMenu* Menu;
-	objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 2, Plr);
-
-	Menu->AddItem(0, "Show me...", 1);
-
-	Menu->SendTo(Plr);
-}
-
-void ProspectorAnvilwardGossip::GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-{
-	if(!pObject->IsCreature())
-		return;
-	Creature* _unit = TO< Creature* >(pObject);
-	switch(IntId)
-	{
-		case 1:
-			{
-				QuestLogEntry* qLogEntry = Plr->GetQuestLogForEntry(8483);
-				if(qLogEntry != NULL)
-				{
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Follow me!");
-					_unit->m_custom_waypoint_map = new WayPointMap;
-					_unit->GetAIInterface()->SetWaypointMap(_unit->m_custom_waypoint_map);
-					WayPoint* wp = new WayPoint;
-					wp->id = 1;
-					wp->x = _unit->GetSpawnX();
-					wp->y = _unit->GetSpawnY();
-					wp->z = _unit->GetSpawnZ() + 2.05f;
-					wp->o = _unit->GetSpawnO();
-					wp->flags = 256;
-					wp->backwardskinid = wp->forwardskinid = _unit->GetDisplayId();
-					wp->backwardemoteid = wp->forwardemoteid = 0;
-					wp->backwardemoteoneshot = wp->forwardemoteoneshot = false;
-					wp->waittime = 0;
-					_unit->m_custom_waypoint_map->push_back(wp);
-					for(uint32 i = 0; i < sizeof(ProspectorAnvilwardWaypoints) / sizeof(LocationExtra); i++)
-					{
-						wp = new WayPoint;
-						wp->id = i + 2;
-						wp->x = ProspectorAnvilwardWaypoints[i].x;
-						wp->y = ProspectorAnvilwardWaypoints[i].y;
-						wp->z = ProspectorAnvilwardWaypoints[i].z;
-						wp->o = ProspectorAnvilwardWaypoints[i].o;
-						wp->flags = 256;
-						wp->backwardskinid = wp->forwardskinid = _unit->GetDisplayId();
-						wp->backwardemoteid = wp->forwardemoteid = 0;
-						wp->backwardemoteoneshot = wp->forwardemoteoneshot = false;
-						wp->waittime = 0;
-						_unit->m_custom_waypoint_map->push_back(wp);
-					}
-				}
-				else
-				{
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I have nothing for you. Go away!");
-				}
-				GossipEnd(pObject, Plr);
-			}
-			break;
-	}
-}
 
 class ProspectorAnvilwardAI : public CreatureAIScript
 {
@@ -415,11 +236,8 @@ public:
 
 void SetupEversongWoods(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(15420, new ProspectorAnvilwardGossip);
 	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
-	/*GossipScript* DwarvenSpyGossip = (GossipScript*) new DwarvenSpy();
-	mgr->register_gossip_script(15420, DwarvenSpyGossip);
-	mgr->register_creature_script(15420, &DwarvenSpyState::Create);
+	/*mgr->register_creature_script(15420, &DwarvenSpyState::Create);
 	mgr->register_dummy_spell(33980, &Whitebark_Memory);
 	mgr->register_creature_script(19456, &WhitebarkSpirit::Create);
 	mgr->register_quest_script(8488, CREATE_QUESTSCRIPT(UnexpectedResults));

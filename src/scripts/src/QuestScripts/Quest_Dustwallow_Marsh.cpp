@@ -266,10 +266,11 @@ class TheMissingDiplomat2 : public QuestScript
 void SetupDustwallowMarsh(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(5089, &BalosJackenQAI::Create);
+	mgr->register_creature_script(4500, &OverlordMokMorokk::Create);
+	mgr->register_creature_script(4966, &PrivateHendel::Create);
+
 	mgr->register_quest_script(4961, new Cleansing_of_the_Orb_of_Orahil());
 	mgr->register_quest_script(1955, new Cleansing_of_the_Orb_of_Orahil());
-	mgr->register_creature_script(4500, &OverlordMokMorokk::Create);
 	mgr->register_quest_script(1173, new ChallengeOverlordMokMorokk());
-	mgr->register_creature_script(4966, &PrivateHendel::Create);
 	mgr->register_quest_script(1324, new TheMissingDiplomat2());
 }

@@ -41,39 +41,6 @@ class Flayer : public CreatureAIScript
 
 };
 
-class Darrowshire_Spirit : public GossipScript
-{
-	public:
-
-		void GossipHello(Object* pObject, Player* plr)
-		{
-			QuestLogEntry* en = plr->GetQuestLogForEntry(5211);
-
-			if(en && en->GetMobCount(0) < en->GetQuest()->required_mobcount[0])
-			{
-				uint32 newcount = en->GetMobCount(0) + 1;
-
-				en->SetMobCount(0, newcount);
-				en->SendUpdateAddKill(0);
-				en->UpdatePlayerFields();
-			}
-
-			GossipMenu* Menu;
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 3873, plr);
-
-			Menu->SendTo(plr);
-
-			if(!pObject || !pObject->IsCreature())
-				return;
-
-			Creature* Spirit = TO_CREATURE(pObject);
-
-			Spirit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-			Spirit->Despawn(4000, 0);
-		}
-
-};
-
 class ArajTheSummoner : public CreatureAIScript
 {
 	public:
@@ -92,8 +59,6 @@ class ArajTheSummoner : public CreatureAIScript
 
 void SetupEasternPlaguelands(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(11064, new Darrowshire_Spirit());
-
 	mgr->register_creature_script(8532, &Flayer::Create);
 	mgr->register_creature_script(8531, &Flayer::Create);
 	mgr->register_creature_script(8530, &Flayer::Create);
