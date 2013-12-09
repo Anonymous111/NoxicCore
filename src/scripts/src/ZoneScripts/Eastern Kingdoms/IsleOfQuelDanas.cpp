@@ -49,7 +49,7 @@ class TheBattleForTheSunReachArmory : public CreatureAIScript
 		}
 };
 
-void SetupZoneUndercity(ScriptMgr* mgr)
+void SetupZoneIsleOfQuelDanas(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(24999, &TheBattleForTheSunReachArmory::Create);
 	mgr->register_creature_script(25001, &TheBattleForTheSunReachArmory::Create);

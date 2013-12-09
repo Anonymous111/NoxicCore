@@ -37,7 +37,7 @@ class The_Plains_Vision : public CreatureAIScript
 		}
 };
 
-void SetupZoneUndercity(ScriptMgr* mgr)
+void SetupZoneMulgore(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(2983, &The_Plains_Vision::Create);
 }

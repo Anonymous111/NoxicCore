@@ -26,8 +26,16 @@
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
 void SetupZoneBlastedLands(ScriptMgr* mgr);
+void SetupZoneDuskwood(ScriptMgr* mgr);
+void SetupZoneEasternPlaguelands(ScriptMgr* mgr);
 void SetupZoneElwynnForest(ScriptMgr* mgr);
+void SetupZoneEversongWoods(ScriptMgr* mgr);
+void SetupZoneGhostlands(ScriptMgr* mgr);
+void SetupZoneHillsbradFoothills(ScriptMgr* mgr);
 void SetupZoneIronforge(ScriptMgr* mgr);
+void SetupZoneIsleOfQuelDanas(ScriptMgr* mgr);
+void SetupZoneLochModan(ScriptMgr* mgr);
+void SetupZoneRedridgeMountains(ScriptMgr* mgr);
 void SetupZoneSilvermoonCity(ScriptMgr* mgr);
 void SetupZoneSilverpineForest(ScriptMgr* mgr);
 void SetupZoneStormwindCity(ScriptMgr* mgr);
@@ -39,10 +47,16 @@ void SetupZoneWesternPlaguelands(ScriptMgr* mgr);
 void SetupZoneWestfall(ScriptMgr* mgr);
 
 // Kalimdor
+void SetupZoneAzshara(ScriptMgr* mgr);
+void SetupZoneAzuremystIsle(ScriptMgr* mgr);
 void SetupZoneBloodmystIsle(ScriptMgr* mgr);
+void SetupZoneDarkshore(ScriptMgr* mgr);
 void SetupZoneDarnassus(ScriptMgr* mgr);
+void SetupZoneDesolace(ScriptMgr* mgr);
 void SetupZoneDurotar(ScriptMgr* mgr);
+void SetupZoneDustwallowMarsh(ScriptMgr* mgr);
 void SetupZoneExodar(ScriptMgr* mgr);
+void SetupZoneMulgore(ScriptMgr* mgr)
 void SetupZoneOrgrimmar(ScriptMgr* mgr);
 void SetupZoneTanaris(ScriptMgr* mgr);
 void SetupZoneTheBarrens(ScriptMgr* mgr);
@@ -51,14 +65,16 @@ void SetupZoneThunderBluff(ScriptMgr* mgr);
 void SetupZoneUnGoroCrater(ScriptMgr* mgr);
 
 // Outland
-void SetupZoneAzuremystIsle(ScriptMgr* mgr);
 void SetupZoneBladeEdgeMountains(ScriptMgr* mgr);
 void SetupZoneHellfirePeninsula(ScriptMgr* mgr);
 void SetupZoneNagrand(ScriptMgr* mgr);
 void SetupZoneShadowmoonValley(ScriptMgr* mgr);
+void SetupZoneTerrokarForest(ScriptMgr* mgr);
 
 // Northrend
 void SetupZoneBoreanTundra(ScriptMgr* mgr);
+void SetupZoneDragonblight(ScriptMgr* mgr);
+void SetupZoneHowlingFjord(ScriptMgr* mgr);
 void SetupZoneIcecrown(ScriptMgr* mgr);
 void SetupZoneSholazarBasin(ScriptMgr* mgr);
 

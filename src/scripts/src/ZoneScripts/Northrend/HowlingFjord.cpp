@@ -97,7 +97,7 @@ class Baleheim : public CreatureAIScript
 		}
 };
 
-void SetupZoneUndercity(ScriptMgr* mgr)
+void SetupZoneHowlingFjord(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(23643, &ChillmereScourge::Create);
 	mgr->register_creature_script(23645, &ChillmereScourge::Create);

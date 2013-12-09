@@ -25,40 +25,65 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 	return SCRIPT_TYPE_MISC;
 }
 
-extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
+extern "C" SCRIPT_DECL void _exp_script_register(mgr);
 {
+	// Eastern Kingdom
 	SetupZoneArathiHighlands(mgr);
-	SetupZoneAzuremystIsle(mgr);
-	SetupZoneBladeEdgeMountains(mgr);
 	SetupZoneBlastedLands(mgr);
-	SetupZoneBloodmystIsle(mgr);
-	SetupZoneBoreanTundra(mgr);
-	SetupZoneDarnassus(mgr);
-	SetupZoneDurotar(mgr);
+	SetupZoneDuskwood(mgr);
+	SetupZoneEasternPlaguelands(mgr);
 	SetupZoneElwynnForest(mgr);
-	SetupZoneExodar(mgr);
-	SetupZoneHellfirePeninsula(mgr);
-	SetupZoneIcecrown(mgr);
+	SetupZoneEversongWoods(mgr);
+	SetupZoneGhostlands(mgr);
+	SetupZoneHillsbradFoothills(mgr);
 	SetupZoneIronforge(mgr);
-	SetupZoneMisc(mgr);
-	SetupZoneNagrand(mgr);
-	SetupZoneOrgrimmar(mgr);
-	SetupZoneShadowmoonValley(mgr);
-	SetupZoneSholazarBasin(mgr);
+	SetupZoneIsleOfQuelDanas(mgr);
+	SetupZoneLochModan(mgr);
+	SetupZoneRedridgeMountains(mgr);
 	SetupZoneSilvermoonCity(mgr);
 	SetupZoneSilverpineForest(mgr);
 	SetupZoneStormwindCity(mgr);
 	SetupZoneStranglethorn(mgr);
+	SetupZoneTheScarletEnclave(mgr);
+	SetupZoneTirisfalGlades(mgr);
+	SetupZoneUndercity(mgr);
+	SetupZoneWesternPlaguelands(mgr);
+	SetupZoneWestfall(mgr);
+
+	// Kalimdor
+	SetupZoneAzshara(mgr);
+	SetupZoneAzuremystIsle(mgr);
+	SetupZoneBloodmystIsle(mgr);
+	SetupZoneDarkshore(mgr);
+	SetupZoneDarnassus(mgr);
+	SetupZoneDesolace(mgr);
+	SetupZoneDurotar(mgr);
+	SetupZoneDustwallowMarsh(mgr);
+	SetupZoneExodar(mgr);
+	SetupZoneMulgore(mgr);
+	SetupZoneOrgrimmar(mgr);
 	SetupZoneTanaris(mgr);
 	SetupZoneTheBarrens(mgr);
 	SetupZoneThousandNeedles(mgr);
-	SetupZoneTheScarletEnclave(mgr);
 	SetupZoneThunderBluff(mgr);
-	SetupZoneTirisfalGlades(mgr);
-	SetupZoneUndercity(mgr);
 	SetupZoneUnGoroCrater(mgr);
-	SetupZoneWesternPlaguelands(mgr);
-	SetupZoneWestfall(mgr);
+
+	// Outland
+	SetupZoneBladeEdgeMountains(mgr);
+	SetupZoneHellfirePeninsula(mgr);
+	SetupZoneNagrand(mgr);
+	SetupZoneShadowmoonValley(mgr);
+	SetupZoneTerrokarForest(mgr);
+
+	// Northrend
+	SetupZoneBoreanTundra(mgr);
+	SetupZoneDragonblight(mgr);
+	SetupZoneHowlingFjord(mgr);
+	SetupZoneIcecrown(mgr);
+	SetupZoneSholazarBasin(mgr);
+
+	// Other
+	SetupZoneMisc(mgr);
 }
 
 #ifdef WIN32

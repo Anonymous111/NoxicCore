@@ -37,7 +37,7 @@ class Lunaclaw : public CreatureAIScript
 		}
 };
 
-void SetupZoneOrgrimmar(ScriptMgr* mgr)
+void SetupZoneDarkshore(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(12138, &Lunaclaw::Create);
 }

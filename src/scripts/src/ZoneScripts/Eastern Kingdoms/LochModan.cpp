@@ -41,7 +41,7 @@ class Miran : public CreatureAIScript
 		}
 };
 
-void SetupZoneUndercity(ScriptMgr* mgr)
+void SetupZoneLochModan(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(1379, &Miran::Create);
 }

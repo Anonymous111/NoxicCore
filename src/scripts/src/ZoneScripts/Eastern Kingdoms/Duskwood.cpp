@@ -68,7 +68,7 @@ class ElizaAI : public MoonScriptCreatureAI
 		Creature*	mElizaGuard;
 };
 
-void SetupZoneWestfall(ScriptMgr* mgr)
+void SetupZoneDuskwood(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
 }
