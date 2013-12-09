@@ -54,6 +54,7 @@ set(sources
 	Raid_BlackwingLair.cpp
 	Raid_CoT_BattleOfMountHyjal.cpp
 	Raid_GruulsLair.cpp
+	Raid_IcecrownCitadel.cpp
 	Raid_Karazhan.cpp
 	Raid_MoltenCore.cpp
 	Raid_Naxxramas.cpp
