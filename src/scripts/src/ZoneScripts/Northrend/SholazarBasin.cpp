@@ -19,7 +19,47 @@
 
 #include "../Setup.h"
 
+// -----------------------------------------------------------------------------
+// Quest 12532 - Flown the Coop!
+// Quest 12702 - Chicken Party! (by bartus
+
+class ChickenEscapee : public CreatureAIScript
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(ChickenEscapee);
+		ChickenEscapee(Creature* c) : CreatureAIScript(c) {}
+
+		void OnLoad()
+		{
+			RegisterAIUpdateEvent(1000);
+		}
+
+		void AIUpdate()
+		{
+			// Let's see if we are netted
+			Aura* a = _unit->FindAura(51959);
+			if(a != NULL)
+			{
+				Unit* Caster = a->GetUnitCaster();
+				if(Caster->IsPlayer())
+				{
+
+					QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12532);
+					if(pQuest == NULL)
+						pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12702);
+
+					if(pQuest != NULL)
+					{
+						// casting the spell that will create the item for the player
+						_unit->CastSpell(Caster, 51037, true);
+						_unit->Despawn(1000, 360000);
+					}
+				}
+			}
+		}
+};
+
 void SetupZoneSholazarBasin(ScriptMgr* mgr)
 {
-
+	mgr->register_creature_script(28161, &ChickenEscapee::Create);
 }
