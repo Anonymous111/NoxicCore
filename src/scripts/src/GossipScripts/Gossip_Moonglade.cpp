@@ -82,8 +82,127 @@ class BunthenPlainswind_Gossip : public Arcpro::Gossip::Script
 		void Destroy() { delete this; }
 };
 
+// bear ghost gossip
+#define GOSSIP_GHOST_BEAR_A    "What do you represent, spirit?"
+#define GOSSIP_GHOST_BEAR_B    "I seek to understand the importance of strength of the body."
+#define GOSSIP_GHOST_BEAR_C    "I seek to understand the importance of strength of the heart."
+#define GOSSIP_GHOST_BEAR_D    "I have heard your words, Great Bear Spirit, and I understand. I now seek your blessings to fully learn the way of the Claw."
+
+class SCRIPT_DECL BearGhost_Gossip : public GossipScript
+{
+	public:
+		void GossipHello(Object* pObject, Player* plr)
+		{
+			GossipMenu* Menu;
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4719, plr);
+
+			if(plr->HasQuest(5930)) // horde
+			{
+				Menu->AddItem(0, GOSSIP_GHOST_BEAR_A, 1);
+			}
+			else if(plr->HasQuest(5929)) // ally
+			{
+				Menu->AddItem(0, GOSSIP_GHOST_BEAR_A, 5);
+			}
+
+			Menu->SendTo(plr);
+		}
+
+		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
+		{
+			Creature*  pCreature = (pObject->IsCreature()) ? (TO_CREATURE(pObject)) : NULL;
+			if(!pObject->IsCreature())
+				return;
+
+			GossipMenu* Menu;
+			switch(IntId)
+			{
+				case 0: // Return to start
+					GossipHello(pCreature, plr);
+					break;
+				case 1:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4721, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_B, 2);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 2:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4733, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_C, 3);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 3:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4734, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_D, 4);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 4:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4735, plr);
+						Menu->SendTo(plr);
+
+						QuestLogEntry* qle = plr->GetQuestLogForEntry(5930);
+						if(qle == NULL)
+							return;
+
+						if(qle->CanBeFinished())
+							return;
+
+						qle->Complete();
+						qle->SendQuestComplete();
+						qle->UpdatePlayerFields();
+						break;
+					}
+				case 5:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4721, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_B, 6);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 6:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4733, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_C, 7);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 7:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4734, plr);
+						Menu->AddItem(0, GOSSIP_GHOST_BEAR_D, 8);
+						Menu->SendTo(plr);
+						break;
+					}
+				case 8:
+					{
+						objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4735, plr);
+						Menu->SendTo(plr);
+
+						QuestLogEntry* qle = plr->GetQuestLogForEntry(5929);
+						if(qle == NULL)
+							return;
+
+						if(qle->CanBeFinished())
+							return;
+
+						qle->Complete();
+						qle->SendQuestComplete();
+						qle->UpdatePlayerFields();
+						break;
+					}
+			}
+		}
+};
+
 void SetupMoongladeGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(11800, new SilvaFilnaveth_Gossip); // Silva Fil'naveth
 	mgr->register_creature_gossip(11798, new BunthenPlainswind_Gossip); // Bunthen Plainswind
+	mgr->register_gossip_script(11956, new BearGhost_Gossip); // Great Bear Spirit
 }
