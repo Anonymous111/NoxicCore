@@ -10,38 +10,53 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 #sources -contains source files for our library.
 SET( sources
 	Eastern Kingdoms/ArathiHighlands.cpp
-	Kalimdor/AzuremystIsle.cpp
-	Outland/BladeEdgeMountains.cpp
 	Eastern Kingdoms/BlastedLands.cpp
-	Kalimdor/BloodmystIsle.cpp
-	Northrend/BoreanTundra.cpp
-	Kalimdor/Darnassus.cpp
-	Kalimdor/Durotar.cpp
+	Eastern Kingdoms/Duskwood.cpp
+	Eastern Kingdoms/EasternPlaguelands.cpp
 	Eastern Kingdoms/ElwynnForest.cpp
-	Kalimdor/Exodar.cpp
-	Outland/HellfirePeninsula.cpp
-	Northrend/Icecrown.cpp
+	Eastern Kingdoms/EversongWoods.cpp
+	Eastern Kingdoms/Ghostlands.cpp
+	Eastern Kingdoms/HillsbradFoothills.cpp
 	Eastern Kingdoms/Ironforge.cpp
-	Other/Misc.cpp
-	Outland/Nagrand.cpp
-	Kalimdor/Orgrimmar.cpp
-    Setup.cpp
-	Outland/ShadowmoonValley.cpp
-	Northrend/SholazarBasin.cpp
+	Eastern Kingdoms/IsleOfQuelDanas.cpp
+	Eastern Kingdoms/LochModan.cpp
+	Eastern Kingdoms/RedridgeMountains.cpp
 	Eastern Kingdoms/SilvermoonCity.cpp
 	Eastern Kingdoms/SilverpineForest.cpp
 	Eastern Kingdoms/StormwindCity.cpp
 	Eastern Kingdoms/Stranglethorn.cpp
-	Kalimdor/Tanaris.cpp
-	Kalimdor/TheBarrens.cpp
 	Eastern Kingdoms/TheScarletEnclave.cpp
-	Kalimdor/ThousandNeedles.cpp
-	Kalimdor/ThunderBluff.cpp
 	Eastern Kingdoms/TirisfalGlades.cpp
 	Eastern Kingdoms/Undercity.cpp
-	Kalimdor/UnGoroCrater.cpp
 	Eastern Kingdoms/WesternPlaguelands.cpp
 	Eastern Kingdoms/Westfall.cpp
+	Kalimdor/Azshara.cpp
+	Kalimdor/AzuremystIsle.cpp
+	Kalimdor/BloodmystIsle.cpp
+	Kalimdor/Darkshore.cpp
+	Kalimdor/Darnassus.cpp
+	Kalimdor/Desolace.cpp
+	Kalimdor/Durotar.cpp
+	Kalimdor/DustwallowMarsh.cpp
+	Kalimdor/Exodar.cpp
+	Kalimdor/Mulgore.cpp
+	Kalimdor/Orgrimmar.cpp
+	Kalimdor/Tanaris.cpp
+	Kalimdor/TheBarrens.cpp
+	Kalimdor/ThousandNeedles.cpp
+	Kalimdor/ThunderBluff.cpp
+	Kalimdor/UnGoroCrater.cpp
+	Northrend/BoreanTundra.cpp
+	Northrend/Dragonblight.cpp
+	Northrend/HowlingFjord.cpp
+	Northrend/Icecrown.cpp
+	Northrend/SholazarBasin.cpp
+	Other/Misc.cpp
+	Outland/BladeEdgeMountains.cpp
+	Outland/HellfirePeninsula.cpp
+	Outland/Nagrand.cpp
+	Outland/ShadowmoonValley.cpp
+	Outland/TerrokarForest.cpp
 )
 
 SET( headers
