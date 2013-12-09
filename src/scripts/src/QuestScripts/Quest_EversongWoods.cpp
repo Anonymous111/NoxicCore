@@ -23,29 +23,7 @@
 #include "Setup.h"
 
 // Whitebark's Memory Quest 10166
-/*bool Whitebark_Memory(uint32 i, Spell* pSpell)
-{
-	Player *pPlayer = (Player*)pSpell->u_caster;
-	if(!pPlayer)
-		return true;
-
-	if(!pSpell->u_caster->IsPlayer())
-		return true;
-
-	QuestLogEntry *en = pPlayer->GetQuestLogForEntry(10166);
-	if(en == NULL)
-		return true;
-
-	Creature * WhitebarkSprit= pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(8187.786, -6337.986, 64.51,19456);
-	if (WhitebarkSprit==NULL )
-	{
-		Creature * WhitebarkSpawn= sEAS.SpawnCreature(pPlayer, 19456, 8187.786, -6337.986, 64.51, 3.369,120000);
-		WhitebarkSpawn->SetUInt32Value(UNIT_NPC_FLAGS, 0);
-		WhitebarkSpawn->SetUInt32Value(UNIT_FIELD_FACTIONTEMPLATE, 14);
-		WhitebarkSpawn->_setFaction();
-	}
-	return true;
-};
+/*
 
 class WhitebarkSpirit : public CreatureAIScript
 {
@@ -238,7 +216,6 @@ void SetupEversongWoods(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
 	/*mgr->register_creature_script(15420, &DwarvenSpyState::Create);
-	mgr->register_dummy_spell(33980, &Whitebark_Memory);
 	mgr->register_creature_script(19456, &WhitebarkSpirit::Create);
 	mgr->register_quest_script(8488, CREATE_QUESTSCRIPT(UnexpectedResults));
 	mgr->register_creature_script(15402, &ApprenticeMirveda::Create);*/

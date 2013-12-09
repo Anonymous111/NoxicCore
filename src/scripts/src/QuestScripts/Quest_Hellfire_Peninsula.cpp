@@ -175,10 +175,6 @@ void SetupHellfirePeninsula(ScriptMgr* mgr)
 	mgr->register_creature_script(19415, &BurdenOfSoulsQAI::Create);
 	mgr->register_creature_script(16992, &Dreadtusk::Create);
 
-	/*-------------------------------------------------------------------*/
-	// TODO
-	//mgr->register_dummy_spell(35460, &FuryOfTheDreghoodElders);
-
 
 	/*-------------------------------------------------------------------*/
 	// NPC States

@@ -37,37 +37,6 @@ class PaladinDeadNPC : public CreatureAIScript
 		}
 };
 
-/*--------------------------------------------------------------------------------------------------------*/
-
-class GildedBrazier : public GameObjectAIScript
-{
-	public:
-		GildedBrazier(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new GildedBrazier(GO); }
-
-		void OnActivate(Player* pPlayer)
-		{
-			if(pPlayer->GetQuestLogForEntry(9678))
-			{
-				float SSX = pPlayer->GetPositionX();
-				float SSY = pPlayer->GetPositionY();
-				float SSZ = pPlayer->GetPositionZ();
-				float SSO = pPlayer->GetOrientation();
-
-				GameObject* Brazier = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 181956);
-				if(Brazier)
-				{
-					Brazier->SetState(0);
-					pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(17716, SSX, SSY, SSZ, SSO, true, false, 0, 0)->Despawn(600000, 0);
-				}
-			}
-			else
-			{
-				pPlayer->BroadcastMessage("Missing required quest : The First Trial");
-			}
-		}
-};
-
 class stillbladeQAI : public CreatureAIScript
 {
 	public:
@@ -99,6 +68,5 @@ void SetupPaladin(ScriptMgr* mgr)
 	mgr->register_creature_script(17542, &PaladinDeadNPC::Create);
 	mgr->register_creature_script(6177, &PaladinDeadNPC::Create);
 	mgr->register_creature_script(6172, &PaladinDeadNPC::Create);
-	mgr->register_gameobject_script(181956, &GildedBrazier::Create);
 	mgr->register_creature_script(17716, &stillbladeQAI::Create);
 }

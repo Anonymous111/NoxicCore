@@ -23,44 +23,7 @@
 
 #include "Setup.h"
 
-class Flayer : public CreatureAIScript
-{
-	public:
-		Flayer(Creature* pCreature) : CreatureAIScript(pCreature) { }
-		static CreatureAIScript* Create(Creature* c) { return new Flayer(c); }
-
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			Creature* creat = _unit->GetMapMgr()->GetInterface()->SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(creat)
-				creat->Despawn(60000, 0);
-		}
-
-};
-
-class ArajTheSummoner : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* pCreature) : CreatureAIScript(pCreature) { }
-
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0);
-			sEAS.GameobjectDelete(go, 60000);
-		}
-};
-
 void SetupEasternPlaguelands(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(8532, &Flayer::Create);
-	mgr->register_creature_script(8531, &Flayer::Create);
-	mgr->register_creature_script(8530, &Flayer::Create);
-	mgr->register_creature_script(1852, &ArajTheSummoner::Create);
+
 }
