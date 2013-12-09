@@ -56,30 +56,7 @@ class ProtectingtheShipment : public QuestScript
 		}
 };
 
-class Miran : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Miran);
-		Miran(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			if(iWaypointId == 7)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I'm outta here!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(309)->SendQuestComplete();
-			}
-		}
-};
-
 void SetupLochModan(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(1379, &Miran::Create);
 	mgr->register_quest_script(309, new ProtectingtheShipment());
 }

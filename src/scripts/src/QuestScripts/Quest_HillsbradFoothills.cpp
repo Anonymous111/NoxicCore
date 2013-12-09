@@ -50,21 +50,7 @@ class WantedBaronVardus : public QuestScript
 		}
 };
 
-class Baron_Vardus : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Baron_Vardus);
-		Baron_Vardus(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnDied(Unit* mKiller)
-		{
-			BaronVardusAllowSpawn = true;
-		}
-};
-
-
 void SetupHillsbradFoothills(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(2306, &Baron_Vardus::Create);
 	mgr->register_quest_script(566, new WantedBaronVardus());
 }

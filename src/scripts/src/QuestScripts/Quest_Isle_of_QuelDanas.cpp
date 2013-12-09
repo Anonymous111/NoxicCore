@@ -23,42 +23,7 @@
 
 #include "Setup.h"
 
-// The Battle for the Sun's Reach Armory
-class TheBattleForTheSunReachArmory : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TheBattleForTheSunReachArmory);
-		TheBattleForTheSunReachArmory(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* pKiller)
-		{
-			if(pKiller->IsPlayer())
-			{
-				QuestLogEntry* pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11537);
-				if(pQuest == NULL)
-				{
-					pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11538);
-					if(pQuest == NULL)
-						return;
-				}
-
-				if(pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[ 1 ])
-				{
-					uint32 newcount = pQuest->GetMobCount(1) + 1;
-					pQuest->SetMobCount(1, newcount);
-					pQuest->SendUpdateAddKill(1);
-					pQuest->UpdatePlayerFields();
-					return;
-				}
-			}
-		}
-};
-
-
-
 void SetupIsleOfQuelDanas(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(24999, &TheBattleForTheSunReachArmory::Create);
-	mgr->register_creature_script(25001, &TheBattleForTheSunReachArmory::Create);
-	mgr->register_creature_script(25002, &TheBattleForTheSunReachArmory::Create);
+
 }

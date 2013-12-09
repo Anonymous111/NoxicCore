@@ -26,24 +26,6 @@ Edits by : FenixGman
 **********************/
 #include "Setup.h"
 
-class Lunaclaw : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Lunaclaw);
-
-		Lunaclaw(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			Player* plr = TO_PLAYER(mKiller);
-
-			sEAS.SpawnCreature(plr, 12144, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 0, 1 * 60 * 1000);
-		}
-};
-
 class MoongladeQuest : public QuestScript
 {
 	public:
@@ -58,6 +40,4 @@ void SetupDruid(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(5921, new MoongladeQuest());
 	mgr->register_quest_script(5922, new MoongladeQuest());
-
-	mgr->register_creature_script(12138, &Lunaclaw::Create);
 }
