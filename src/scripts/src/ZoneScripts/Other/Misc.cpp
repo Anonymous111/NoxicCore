@@ -615,6 +615,65 @@ void OnTransporterUpdate(Transporter* pTransporter, bool delayed)
 	}
 }*/
 
+#define SAY_DOC1 "I'm saved! Thank you, doctor!"
+#define SAY_DOC2 "HOORAY! I AM SAVED!"
+#define SAY_DOC3 "Sweet, sweet embrace... take me..."
+
+#define A_RUNTOX -3742.96
+#define A_RUNTOY -4531.52
+#define A_RUNTOZ 11.91
+
+#define H_RUNTOX -1016.44
+#define H_RUNTOY -3508.48
+#define H_RUNTOZ 62.96
+
+const uint32 allianceSoldierId[3] =
+{
+	12938, // 12938 Injured Alliance Soldier
+	12936, // 12936 Badly injured Alliance Soldier
+	12937  // 12937 Critically injured Alliance Soldier
+};
+
+const uint32 hordeSoldierId[3] =
+{
+	12923, //12923 Injured Soldier
+	12924, //12924 Badly injured Soldier
+	12925  //12925 Critically injured Soldier
+};
+
+class InjuredSoldier : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(InjuredSoldier);
+	InjuredSoldier(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnLoad()
+	{
+		_unit->SetUInt32Value(UNIT_FIELD_BYTES_0, 16777472);
+		_unit->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+		_unit->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_COMBAT);
+		_unit->SetUInt32Value(UNIT_FIELD_BYTES_1, 7);
+
+		uint32 sid = _unit->GetEntry();
+
+		switch(sid)
+		{
+			case 12923:
+			case 12938:
+				_unit->SetHealthPct(75);
+				break;
+			case 12924:
+			case 12936:
+				_unit->SetHealthPct(50);
+				break;
+			case 12925:
+			case 12937:
+				_unit->SetHealthPct(25);
+				break;
+		}
+	}
+};
+
 void SetupZoneMisc(ScriptMgr* mgr)
 {
 	// Main script used for Zeppelin Masters
@@ -644,4 +703,10 @@ void SetupZoneMisc(ScriptMgr* mgr)
 	mgr->register_creature_script(FASTWRENCH, &Zepp_Worker::Create);
 	mgr->register_creature_script(GAZZLEGEAR, &Zepp_Worker::Create);
 	mgr->register_creature_script(CROSSWIRE, &Zepp_Worker::Create);*/
+	mgr->register_creature_script(12923, &InjuredSoldier::Create);
+	mgr->register_creature_script(12924, &InjuredSoldier::Create);
+	mgr->register_creature_script(12925, &InjuredSoldier::Create);
+	mgr->register_creature_script(12936, &InjuredSoldier::Create);
+	mgr->register_creature_script(12937, &InjuredSoldier::Create);
+	mgr->register_creature_script(12938, &InjuredSoldier::Create);
 }

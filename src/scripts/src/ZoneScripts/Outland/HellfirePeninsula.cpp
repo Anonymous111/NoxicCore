@@ -19,7 +19,7 @@
 
 #include "../Setup.h"
 
-/*class Aeranas : public CreatureAIScript
+class Aeranas : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(Aeranas, CreatureAIScript)
@@ -46,9 +46,25 @@ public:
 			_unit->SetFaction(35);
 		}
 	}
-};*/
+};
+
+class PrisonersatDeatholme : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(PrisonersatDeatholme);
+	PrisonersatDeatholme(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnLoad()
+	{
+		_unit->SetStandState(STANDSTATE_DEAD);
+		_unit->GetAIInterface()->m_canMove = false;
+	}
+};
 
 void SetupZoneHellfirePeninsula(ScriptMgr* mgr)
 {
-	//mgr->register_creature_script(17085, &Aeranas::Create);
+	mgr->register_creature_script(17085, &Aeranas::Create);
+	mgr->register_creature_script(16208, &PrisonersatDeatholme::Create);
+	mgr->register_creature_script(16206, &PrisonersatDeatholme::Create);
+	mgr->register_creature_script(16209, &PrisonersatDeatholme::Create);
 }
