@@ -17,7 +17,7 @@
  *
  */
  
-#include "Setup.h"
+#include "../Setup.h"
 #define SKIP_ALLOCATOR_SHARING 1
 #include <ScriptSetup.h>
 
@@ -46,11 +46,11 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupIronforgeGameobjects(mgr);
 	SetupIsleofQuelDanasGameobjects(mgr);
 	SetupLochModanGameobjects(mgr);
+	SetupOldHillsbradGameObjects(mgr);
 	SetupRedridgeMountainsGameobjects(mgr);
 	SetupSearingGorgeGameobjects(mgr);
 	SetupSilvermoonCityGameobjects(mgr);
 	SetupSilverpineForestGameobjects(mgr);
-	SetupStormPeaksGameobjects(mgr);
 	SetupStormwindCityGameobjects(mgr);
 	SetupStranglethornGameobjects(mgr);
 	SetupSwampofSorrowsGameobjects(mgr);
@@ -89,7 +89,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupWinterspringGameobjects(mgr);
 
 	// Outland
-	SetupAzuremystIsleGameobjects(mgr);
 	SetupBladeEdgeMountainsGameobjects(mgr);
 	SetupHellfirePeninsulaGameobjects(mgr);
 	SetupNagrandGameobjects(mgr);
@@ -101,7 +100,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBoreanTundraGameobjects(mgr);
 	SetupCrystalsongForestGameobjects(mgr);
 	SetupDalaranGameobjects(mgr);
-	SetupZulDrakGameobjects(mgr);
+	SetupStormPeaksGameobjects(mgr);
 	SetupWintergraspGameobjects(mgr);
 	SetupZulDrakGameobjects(mgr);
 

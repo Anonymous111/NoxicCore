@@ -41,6 +41,7 @@ void SetupHinterlandsGameobjects(ScriptMgr* mgr);
 void SetupIronforgeGameobjects(ScriptMgr* mgr);
 void SetupIsleofQuelDanasGameobjects(ScriptMgr* mgr);
 void SetupLochModanGameobjects(ScriptMgr* mgr);
+void SetupOldHillsbradGameObjects(ScriptMgr* mgr);
 void SetupRedridgeMountainsGameobjects(ScriptMgr* mgr);
 void SetupSearingGorgeGameobjects(ScriptMgr* mgr);
 void SetupSilvermoonCityGameobjects(ScriptMgr* mgr);
