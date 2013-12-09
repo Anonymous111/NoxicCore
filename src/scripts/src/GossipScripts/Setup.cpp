@@ -3,7 +3,7 @@
  * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
  * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
  * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
- * Copyright (C) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,9 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 	return SCRIPT_TYPE_MISC;
 }
 
-extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
+extern "C" SCRIPT_DECL void _exp_script_register(mgr);
 {
+	SetupAlteracMountainsGossip(mgr);
 	SetupArgentTournamentGossip(mgr);
 	SetupAzsharaGossip(mgr);
 	SetupAzuremystIsleGossip(mgr);
@@ -40,19 +41,38 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)
 	SetupBoreanTundraGossip(mgr);
 	SetupCrystalsongForestGossip(mgr);
 	SetupDalaranGossip(mgr);
-	SetupInnkeepers(mgr);
+	SetupDarkshoreGossip(mgr);
+	SetupDragonblightGossip(mgr);
+	SetupDustwallowMarshGossip(mgr);
+	SetupEasternPlaguelandsGossip(mgr);
+	SetupEversongWoodsGossip(mgr);
+	SetupGhostlandsGossip(mgr);
 	SetupGuardGossip(mgr);
+	SetupHellfirePeninsulaGossip(mgr);
+	SetupHowlingFjordGossip(mgr);
+	SetupInnkeepers(mgr);
+	SetupIsleOfQuelDanasGossip(mgr);
 	SetupLocksmiths(mgr);
-	SetupTrainerScript(mgr);
 	SetupMiscGossip(mgr);
-	SetupMulgoreGossip(mgr);
-	SetupShattrathGossip(mgr);
-	SetupTanarisGossip(mgr);
 	SetupMoongladeGossip(mgr);
+	SetupMulgoreGossip(mgr);
+	SetupNagrandGossip(mgr);
+	SetupNetherstormGossip(mgr);
+	SetupShadowmoonValleyGossip(mgr);
+	SetupShattrathGossip(mgr);
+	SetupSholazarBasinGossip(mgr);
+	SetupSilithusGossip(mgr);
+	SetupSilvermoonCityGossip(mgr);
 	SetupStormwindGossip(mgr);
-	SetupTheramoreGossip(mgr);
+	SetupStranglethornValeGossip(mgr);
+	SetupTanarisGossip(mgr);
 	SetupTeldrassilGossip(mgr);
+	SetupTerrokarForestGossip(mgr);
+	SetupTheBarrensGossip(mgr);
+	SetupTheramoreGossip(mgr);
 	SetupTheScarletEnclaveGossip(mgr);
+	SetupTheStormPeaksGossip(mgr);
+	SetupTrainerScript(mgr);
 	SetupWyrmrestTempleGossip(mgr);
 	SetupXpEliminatorGossip(mgr);
 	SetupZangarmarshGossip(mgr);

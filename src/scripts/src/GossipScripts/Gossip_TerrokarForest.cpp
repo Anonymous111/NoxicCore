@@ -78,7 +78,7 @@ class TheMomentofTruth : public GossipScript
 
 };
 
-void SetupWyrmrestTempleGossip(ScriptMgr* mgr)
+void SetupTerrokarForestGossip(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(19606, new TheMomentofTruth());
 }

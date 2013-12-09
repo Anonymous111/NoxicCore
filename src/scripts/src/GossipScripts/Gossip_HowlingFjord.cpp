@@ -78,7 +78,7 @@ class Plaguethis_Gossip : public GossipScript
 
 };
 
-void SetupNetherstormGossip(ScriptMgr* mgr)
+void SetupHowlingFjordGossip(ScriptMgr* mgr)
 {
 	mgr->register_gossip_script(23859, new Plaguethis_Gossip()); // Thanks Dzjhenghiz
 }
