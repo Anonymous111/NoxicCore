@@ -2918,6 +2918,14 @@ void ApplyNormalFixes()
 	//////////////////////////////////////////
 
 	// Insert rogue spell fixes here
+	
+	sp = dbSpell.LookupEntryForced(57934); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[2] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectImplicitTargetA[2] = EFF_TARGET_DUEL;
+		sp->EffectTriggerSpell[2] = 57933;
+	}
 
 	//Rogue - Blade Twisting Rank 1
 	sp = CheckAndReturnSpellEntry(31124);
@@ -8045,5 +8053,52 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[0] = 32554;
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_PET;
+	}
+	sp = dbcSpell.LookupEntryForced(50622); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->EffectImplicitTargetA[1] = sp->EffectImplicitTargetA[0] = EFF_TARGET_ALL_TARGETABLE_AROUND_LOCATION_IN_RADIUS;
+		sp->EffectRadiusIndex[1] = sp->EffectRadiusIndex[0];
+	}
+	sp = dbcSpell.LookupEntryForced(85288); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[2] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectImplicitTargetA[2] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectTriggerSpell[2] = 85384;
+	}
+	sp = dbcSpell.LookupEntryForced(50685); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CRIT_ATTACK | PROC_ON_SPELL_CRIT_HIT;
+		sp->ProcOnNameHash[0] = SPELL_HASH_HEROIC_STRIKE;
+	}
+	sp = dbcSpell.LookupEntryForced(50034); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL; 
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 50031;
+		sp->ProcOnNameHash[0] = SPELL_HASH_DEATH_STRIKE;
+		sp->ProcOnNameHash[1] = SPELL_HASH_OBLITERATE;
+	}
+	sp = dbcSpell.LookupEntryForced(56807); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->ProcOnNameHash[0] = SPELL_HASH_HEMORRHAGE;
+	}
+	sp = dbcSpell.LookupEntryForced(55342); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_SUMMON;
+		sp->EffectMiscValue[0] = 47244;
+		sp->EffectMiscValueB[0] = 1021;
+		sp->EffectBasePoints[0] = 2;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SELF;
+		sp->Effect[1] = SPELL_EFFECT_NULL;
+		sp->Effect[2] = SPELL_EFFECT_NULL;
+		sp->c_is_flags |= SPELL_FLAG_IS_INHERITING_LEVEL;
 	}
 }
