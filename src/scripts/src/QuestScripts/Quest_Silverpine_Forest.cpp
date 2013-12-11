@@ -1,0 +1,62 @@
+/*
+ * ArcPro MMORPG Server
+ * Copyright (c) 2011-2013 ArcPro Speculation <http://arcpro.info/>
+ * Copyright (c) 2008-2013 ArcEmu Team <http://www.arcemu.org/>
+ * Copyright (c) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
+ * Copyright (c) 2005-2007 Ascent Team <http://www.ascentemu.com/>
+ * Copyright (c) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+#include "Setup.h"
+
+class EscortingErland : public QuestScript
+{
+	public:
+
+		void OnQuestStart(Player* mTarget, QuestLogEntry* qLogEntry)
+		{
+			float SSX = mTarget->GetPositionX();
+			float SSY = mTarget->GetPositionY();
+			float SSZ = mTarget->GetPositionZ();
+
+			Creature* creat = mTarget->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 3465);
+			if(creat == NULL)
+				return;
+			creat->m_escorter = mTarget;
+			creat->GetAIInterface()->setMoveType(11);
+			creat->GetAIInterface()->StopMovement(3000);
+			creat->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I to the horror I fear wolfs, do not allow to approach them to me closely. Follow me");
+			creat->SetUInt32Value(UNIT_NPC_FLAGS, 0);
+
+			sEAS.CreateCustomWaypointMap(creat);
+			sEAS.WaypointCreate(creat, 1408.243286f, 1086.476929f, 53.684814f, 4.145067f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1400.292236f, 1070.908325f, 52.454960f, 2.442609f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1370.173218f, 1087.330811f, 52.136669f, 3.921230f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1344.565063f, 1063.532349f, 52.780121f, 3.053365f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1291.855225f, 1065.194336f, 54.129812f, 2.291528f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1278.805664f, 1080.154541f, 53.967297f, 1.062379f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1293.010742f, 1106.864624f, 50.572147f, 1.476284f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1298.289917f, 1148.772827f, 52.434540f, 1.625511f, 0, 256, 2684);
+			sEAS.WaypointCreate(creat, 1289.469727f, 1200.744995f, 52.651005f, 1.488066f, 0, 256, 2684);
+			sEAS.EnableWaypoints(creat);
+		}
+};
+
+void SetupSilverpineForest(ScriptMgr* mgr)
+{
+	mgr->register_quest_script(435, new EscortingErland());
+}
