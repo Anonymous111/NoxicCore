@@ -9,27 +9,27 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
-	Eastern Kingdoms/ArathiHighlands.cpp
-	Eastern Kingdoms/BlastedLands.cpp
-	Eastern Kingdoms/Duskwood.cpp
-	Eastern Kingdoms/EasternPlaguelands.cpp
-	Eastern Kingdoms/ElwynnForest.cpp
-	Eastern Kingdoms/EversongWoods.cpp
-	Eastern Kingdoms/Ghostlands.cpp
-	Eastern Kingdoms/HillsbradFoothills.cpp
-	Eastern Kingdoms/Ironforge.cpp
-	Eastern Kingdoms/IsleOfQuelDanas.cpp
-	Eastern Kingdoms/LochModan.cpp
-	Eastern Kingdoms/RedridgeMountains.cpp
-	Eastern Kingdoms/SilvermoonCity.cpp
-	Eastern Kingdoms/SilverpineForest.cpp
-	Eastern Kingdoms/StormwindCity.cpp
-	Eastern Kingdoms/Stranglethorn.cpp
-	Eastern Kingdoms/TheScarletEnclave.cpp
-	Eastern Kingdoms/TirisfalGlades.cpp
-	Eastern Kingdoms/Undercity.cpp
-	Eastern Kingdoms/WesternPlaguelands.cpp
-	Eastern Kingdoms/Westfall.cpp
+	EasternKingdoms/ArathiHighlands.cpp
+	EasternKingdoms/BlastedLands.cpp
+	EasternKingdoms/Duskwood.cpp
+	EasternKingdoms/EasternPlaguelands.cpp
+	EasternKingdoms/ElwynnForest.cpp
+	EasternKingdoms/EversongWoods.cpp
+	EasternKingdoms/Ghostlands.cpp
+	EasternKingdoms/HillsbradFoothills.cpp
+	EasternKingdoms/Ironforge.cpp
+	EasternKingdoms/IsleOfQuelDanas.cpp
+	EasternKingdoms/LochModan.cpp
+	EasternKingdoms/RedridgeMountains.cpp
+	EasternKingdoms/SilvermoonCity.cpp
+	EasternKingdoms/SilverpineForest.cpp
+	EasternKingdoms/StormwindCity.cpp
+	EasternKingdoms/Stranglethorn.cpp
+	EasternKingdoms/TheScarletEnclave.cpp
+	EasternKingdoms/TirisfalGlades.cpp
+	EasternKingdoms/Undercity.cpp
+	EasternKingdoms/WesternPlaguelands.cpp
+	EasternKingdoms/Westfall.cpp
 	Kalimdor/Azshara.cpp
 	Kalimdor/AzuremystIsle.cpp
 	Kalimdor/BloodmystIsle.cpp
