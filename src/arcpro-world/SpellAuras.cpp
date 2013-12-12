@@ -4774,6 +4774,23 @@ void Aura::SpellAuraMechanicImmunity(bool apply)
 			/* Supa's test run of Unit::RemoveAllAurasByMechanic */
 			m_target->RemoveAllAurasByMechanic((uint32)mod->m_miscValue , static_cast<uint32>(-1) , false);
 
+			if(mod->m_miscValue == MECHANIC_ROOTED && m_spellProto->NameHash == SPELL_HASH_BLINK) // Thanks to TheConquistador
+			{
+				m_target->RemoveAllAurasByMechanic(MECHANIC_STUNNED , (uint32)(-1) , false);
+				m_target->RemoveAllAurasByMechanic(MECHANIC_INCAPACIPATED , (uint32)(-1) , false);
+				for(uint32 x = MAX_POSITIVE_AURAS_EXTEDED_START; x < MAX_POSITIVE_AURAS_EXTEDED_END; x++)
+					if(m_target->m_auras[x])
+						for(uint32 y = 0; y < 3; ++y)
+							switch(m_target->m_auras[x]->GetSpellProto()->EffectApplyAuraName[y])
+							{
+								case SPELL_AURA_MOD_STUN:
+								case SPELL_AURA_MOD_ROOT:
+								{
+									m_target->m_auras[x]->Remove();
+									y = 100;
+								}break;
+							}
+			}
 			//Insignia/Medallion of A/H			//Every Man for Himself
 			if(m_spellProto->Id == 42292 || m_spellProto->Id == 59752)
 			{

@@ -2654,6 +2654,10 @@ void ApplyNormalFixes()
 		sp->c_is_flags |= SPELL_FLAG_IS_CASTED_ON_PET_SUMMON_PET_OWNER | SPELL_FLAG_IS_EXPIREING_WITH_PET;
 		sp->Effect[0] = SPELL_EFFECT_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[0] = 19579;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_PET;
+		sp->EffectImplicitTargetB[0] = EFF_TARGET_SELF;
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_PET;
+		sp->EffectImplicitTargetB[1] = EFF_TARGET_SELF;
 	}
 	sp = CheckAndReturnSpellEntry(20895);
 	if(sp != NULL)
@@ -8100,5 +8104,82 @@ void ApplyNormalFixes()
 		sp->Effect[1] = SPELL_EFFECT_NULL;
 		sp->Effect[2] = SPELL_EFFECT_NULL;
 		sp->c_is_flags |= SPELL_FLAG_IS_INHERITING_LEVEL;
+	}
+	sp = dbcSpell.LookupEntryForced(20707); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 3026;
+	}
+	sp = dbcSpell.LookupEntryForced(31569); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->ProcOnNameHash[0] = SPELL_HASH_BLINK;
+	}
+	sp = dbcSpell.LookupEntryForced(29801); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procFlags = PROC_ON_MELEE_ATTACK | static_cast<uint32>(PROC_TARGET_SELF);
+	}
+	sp = dbcSpell.LookupEntryForced(31848); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 31848;  //!!self proc!
+		sp->ProcOnNameHash[0] = SPELL_HASH_DIVINE_PLEA;
+		sp->procChance = 100;
+	}
+	sp = dbcSpell.LookupEntryForced(19028); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[0]= SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 25228;
+	}
+	sp = dbcSpell.LookupEntryForced(31687); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_SUMMON;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_DYNAMIC_OBJECT;
+		sp->EffectMiscValue[0] = 510;
+		sp->EffectMiscValueB[0] = 67;
+	}
+	sp = dbcSpell.LookupEntryForced(53270); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_NULL;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_DUMMY;
+	}
+	sp = dbcSpell.LookupEntryForced(53209); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_HEAL;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SELF;
+		sp->EffectImplicitTargetB[0] = EFF_TARGET_NONE;
+	}
+	sp = dbcSpell.LookupEntryForced(34485); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL ;
+		sp->ProcOnNameHash[0] = SPELL_HASH_STEADY_SHOT;
+	}
+	sp = dbcSpell.LookupEntryForced(56829); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL ;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->procChance = 100;
+		sp->EffectTriggerSpell[0] = 56829;
+		sp->ProcOnNameHash[ 0 ] = SPELL_HASH_MISDIRECTION;
+	}
+	sp = dbcSpell.LookupEntryForced(20154); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_MELEE_ATTACK;
+		sp->procChance = 100;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 25742;
 	}
 }
