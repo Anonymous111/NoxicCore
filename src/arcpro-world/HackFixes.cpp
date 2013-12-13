@@ -1103,6 +1103,9 @@ void ApplyNormalFixes()
 
 		/* Note: when applying spell hackfixes, please follow a template */
 		/* Please don't put fixes like "sp = CheckAndReturnSpellEntry(15270);" inside the loop */
+		
+		if(sp->NameHash == SPELL_HASH_HYPOTHERMIA)
+			sp->c_is_flags |= SPELL_FLAG_IS_FORCEDDEBUFF;
 
 		//////////////////////////////////////////
 		// WARRIOR								//
@@ -3524,7 +3527,7 @@ void ApplyNormalFixes()
 	/**********************************************************
 	 *	Shamanistic Rage
 	 **********************************************************/
-	SpellEntry*  parentsp = CheckAndReturnSpellEntry(30823);
+	SpellEntry* parentsp = CheckAndReturnSpellEntry(30823);
 	SpellEntry* triggersp = CheckAndReturnSpellEntry(30824);
 	if(parentsp != NULL && triggersp != NULL)
 		triggersp->EffectBasePoints[0] = parentsp->EffectBasePoints[0];
@@ -8185,8 +8188,15 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(19028); // Thanks to TheConquistador
 	if(sp != NULL)
 	{
-		sp->Effect[0]= SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectTriggerSpell[0] = 25228;
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_SPLIT_DAMAGE;
+		sp->EffectMiscValue[0] = 20;
+		sp->Effect[1] = 6;
+		sp->EffectApplyAuraName[1] = 79;
+		sp->EffectBasePoints[1] = 4; //4+1=5
+		sp->EffectImplicitTargetA[1] = EFF_TARGET_SELF;
+		sp->EffectImplicitTargetB[1] = EFF_TARGET_PET;
+		sp->c_is_flags |= SPELL_FLAG_IS_EXPIREING_WITH_PET;
 	}
 	sp = dbcSpell.LookupEntryForced(31687); // Thanks to TheConquistador
 	if(sp != NULL)
@@ -8241,4 +8251,22 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[0] = 25742;
 	}
+	sp = dbcSpell.LookupEntryForced(12472); // Thanks to TheConquistador
+	if(sp != NULL)
+		sp->EffectMiscValue[1] = SMT_TRIGGER;
+	sp = dbcSpell.LookupEntryForced(27498);
+	if(sp != NULL)
+		sp->procChance = 7;
+	sp = dbcSpell.LookupEntryForced(14531);
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_HIT_VICTIM | PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
+	sp = dbcSpell.LookupEntryForced(14774);
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_HIT_VICTIM | PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
+	sp = dbcSpell.LookupEntryForced(64343);
+	if(sp != NULL)
+		sp->AuraInterruptFlags	|= AURA_INTERRUPT_ON_CAST_SPELL;
+	sp = dbcSpell.LookupEntryForced(54203);
+	if(sp != NULL)
+		sp->logsId = sp->Id;
 }
