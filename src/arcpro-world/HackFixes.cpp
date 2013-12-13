@@ -3527,7 +3527,7 @@ void ApplyNormalFixes()
 	/**********************************************************
 	 *	Shamanistic Rage
 	 **********************************************************/
-	SpellEntry*  parentsp = CheckAndReturnSpellEntry(30823);
+	SpellEntry* parentsp = CheckAndReturnSpellEntry(30823);
 	SpellEntry* triggersp = CheckAndReturnSpellEntry(30824);
 	if(parentsp != NULL && triggersp != NULL)
 		triggersp->EffectBasePoints[0] = parentsp->EffectBasePoints[0];
@@ -8195,4 +8195,19 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(12472); // Thanks to TheConquistador
 	if(sp != NULL)
 		sp->EffectMiscValue[1] = SMT_TRIGGER;
+	sp = dbcSpell.LookupEntryForced(27498);
+	if(sp != NULL)
+		sp->procChance = 7;
+	sp = dbcSpell.LookupEntryForced(14531);
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_HIT_VICTIM | PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
+	sp = dbcSpell.LookupEntryForced(14774);
+	if(sp != NULL)
+		sp->procFlags = PROC_ON_CRIT_HIT_VICTIM | PROC_ON_RANGED_CRIT_ATTACK_VICTIM;
+	sp = dbcSpell.LookupEntryForced(64343);
+	if(sp != NULL)
+		sp->AuraInterruptFlags	|= AURA_INTERRUPT_ON_CAST_SPELL;
+	sp = dbcSpell.LookupEntryForced(54203);
+	if(sp != NULL)
+		sp->logsId = sp->Id;
 }
