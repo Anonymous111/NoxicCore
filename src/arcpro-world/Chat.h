@@ -136,6 +136,8 @@ enum Languages
 #define MSG_COLOR_SEXBLUE		 "|cff00E5EE"
 #define MSG_COLOR_SEXHOTPINK	 "|cffFF6EB4"
 
+#define MSG_GM_ICON "|Tinterface\\Chatframe\\UI_ChatIcon-Blizz.blp:12:24:1:-1|t"
+
 #define CHECKSESSION if(m_session == NULL) return NULL; \
 	if(m_session->GetPlayer() == NULL) return NULL;
 
