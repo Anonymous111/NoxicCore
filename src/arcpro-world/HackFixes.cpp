@@ -2926,7 +2926,7 @@ void ApplyNormalFixes()
 
 	// Insert rogue spell fixes here
 	
-	sp = dbSpell.LookupEntryForced(57934); // Thanks to TheConquistador
+	sp = dbcSpell.LookupEntryForced(57934); // Thanks to TheConquistador
 	if(sp != NULL)
 	{
 		sp->Effect[2] = SPELL_EFFECT_TRIGGER_SPELL;
@@ -7557,7 +7557,13 @@ void ApplyNormalFixes()
 	 **********************************************************/
 	sp = CheckAndReturnSpellEntry(49576);
 	if(sp != NULL)
-		sp->Effect[0] = SPELL_EFFECT_DUMMY;
+	{
+		sp->Effect[0] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 49560;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetB[0] = EFF_TARGET_NONE;
+		sp->FacingCasterFlags = 0;
+	}
 
 	/**********************************************************
 	 *	Acherus Deatcharger
@@ -8210,4 +8216,23 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(54203);
 	if(sp != NULL)
 		sp->logsId = sp->Id;
+	sp = dbcSpell.LookupEntryForced(46699);
+	if(sp != NULL)
+		sp->EffectApplyAuraName[0] = SPELL_AURA_CONSUMES_NO_AMMO;
+	sp = dbcSpell.LookupEntryForced(34299);
+	if(sp != NULL)
+		sp->proc_interval = 6000; //6 secs
+	sp = dbcSpell.LookupEntryForced(49137);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->ProcOnNameHash[0] = SPELL_HASH_CHAINS_OF_ICE;
+	}
+	sp = dbcSpell.LookupEntryForced(49560); // Thanks to TheConquistador
+	if(sp != NULL)
+	{
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetB[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->FacingCasterFlags = 0; 
+	}
 }
