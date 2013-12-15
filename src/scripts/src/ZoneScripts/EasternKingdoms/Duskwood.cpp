@@ -26,7 +26,7 @@
 #define ELIZA_FROSTBOLT			20819
 #define ELIZA_SUMMON_GUARD		3107
 
-class ElizaAI : public MoonScriptCreatureAI
+/*class ElizaAI : public MoonScriptCreatureAI
 {
 	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ElizaAI, MoonScriptCreatureAI);
@@ -66,9 +66,9 @@ class ElizaAI : public MoonScriptCreatureAI
 		int32		mElizaCombatTimer;
 		SpellDesc*	mSummonGuard;
 		Creature*	mElizaGuard;
-};
+};*/
 
 void SetupZoneDuskwood(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
+	//mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
 }

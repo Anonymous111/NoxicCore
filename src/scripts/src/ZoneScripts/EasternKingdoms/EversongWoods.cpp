@@ -19,7 +19,7 @@
 
 #include "../Setup.h"
 
-static LocationExtra ProspectorAnvilwardWaypoints[] =
+/*static LocationExtra ProspectorAnvilwardWaypoints[] =
 {
 	{ 9294.834f, -6681.092f, 22.428f, 1.284f, 0 },
 	{ 9297.834f, -6671.092f, 22.387f, 0.793f, 0 },
@@ -80,7 +80,7 @@ class ProspectorAnvilwardAI : public CreatureAIScript
 
 			_unit->SetFaction(35);
 		}
-};
+};*/
 
 class ApprenticeMirveda : public CreatureAIScript
 {
@@ -136,7 +136,7 @@ class WhitebarkSpirit : public CreatureAIScript
 
 void SetupZoneEversongWoods(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
+	//mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
 	mgr->register_creature_script(19456, &WhitebarkSpirit::Create);
 	mgr->register_creature_script(15402, &ApprenticeMirveda::Create);
 }

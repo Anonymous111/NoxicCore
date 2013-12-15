@@ -49,7 +49,7 @@ public:
 
 	//He is also known to be mounted on a blood elf paladin's charger
 
-};*/
+};
 
 class BloodKnightStillblade : public CreatureAIScript
 {
@@ -113,11 +113,11 @@ class LordDawnstar : public CreatureAIScript
 			_unit->setDeathState(CORPSE);
 			_unit->GetAIInterface()->m_canMove = false;
 		}
-};
+};*/
 
 void SetupZoneSilvermoonCity(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(18146, &ChampionVranesh::Create);
-	mgr->register_creature_script(17768, &BloodKnightStillblade::Create);
-	mgr->register_creature_script(17832, &LordDawnstar::Create);
+	//mgr->register_creature_script(18146, &ChampionVranesh::Create);
+	//mgr->register_creature_script(17768, &BloodKnightStillblade::Create);
+	//mgr->register_creature_script(17832, &LordDawnstar::Create);
 }

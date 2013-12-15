@@ -19,6 +19,8 @@
 
 #include "../Setup.h"
 
+bool BaronVardusAllowSpawn = true;
+
 class Baron_Vardus : public CreatureAIScript
 {
 	public:
