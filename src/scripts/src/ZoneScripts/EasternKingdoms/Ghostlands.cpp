@@ -21,25 +21,20 @@
 
 class stillbladeQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(stillbladeQAI);
-		stillbladeQAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(stillbladeQAI);
+	stillbladeQAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		}
+	void OnDied(Unit* mKiller)
+	{
+		float SSX = mKiller->GetPositionX();
+		float SSY = mKiller->GetPositionY();
+		float SSZ = mKiller->GetPositionZ();
 
-		void OnDied(Unit* mKiller)
-		{
-			float SSX = mKiller->GetPositionX();
-			float SSY = mKiller->GetPositionY();
-			float SSZ = mKiller->GetPositionZ();
-
-			GameObject* Brazier = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 181956);
-			if(Brazier)
-			{
-				Brazier->SetState(1);
-			}
-		}
+		GameObject* Brazier = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 181956);
+		if(Brazier)
+			Brazier->SetState(1);
+	}
 };
 
 class FelOrcScavengersQAI : public CreatureAIScript

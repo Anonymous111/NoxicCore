@@ -38,91 +38,89 @@ public:
 
 class NegolashAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NegolashAI);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(NegolashAI);
+	NegolashAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		NegolashAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-		}
-		void OnDied(Unit* mKiller)
-		{
-			_unit->Despawn(180000, 0);
-			RemoveAIUpdateEvent();
-		}
+	void OnDied(Unit* mKiller)
+	{
+		_unit->Despawn(180000, 0);
+		RemoveAIUpdateEvent();
+	}
 };
 
 class Beka : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka);
-		Beka(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Beka);
+	Beka(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			Player* mPlayer = TO_PLAYER(mKiller);
+			Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1516, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
+			beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
+			beka1->Despawn(10 * 60 * 1000, 0);
+		}
+		else
+		{
+			Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
+			if(mPlayer)
 			{
-				Player* mPlayer = TO_PLAYER(mKiller);
 				Creature*  beka1 = sEAS.SpawnCreature(mPlayer, 1516, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
 				beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
 				beka1->Despawn(10 * 60 * 1000, 0);
 			}
-			else
-			{
-				Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
-				if(mPlayer)
-				{
-					Creature*  beka1 = sEAS.SpawnCreature(mPlayer, 1516, -13770.5f, -6.79f, 42.8f, 5.7f , 0);
-					beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-					beka1->Despawn(10 * 60 * 1000, 0);
-				}
-			}
 		}
+	}
 };
 
 class Beka1 : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka1);
-		Beka1(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Beka1);
+	Beka1(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			Player* mPlayer = TO_PLAYER(mKiller);
+			Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1514, -13770.5f, -6.79f, 42.8f, 5.7f, 0);
+			beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
+			beka1->Despawn(10 * 60 * 1000, 0);
+		}
+		else
+		{
+			Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
+			if(mPlayer)
 			{
-				Player* mPlayer = TO_PLAYER(mKiller);
 				Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1514, -13770.5f, -6.79f, 42.8f, 5.7f, 0);
 				beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
 				beka1->Despawn(10 * 60 * 1000, 0);
 			}
-			else
-			{
-				Player* mPlayer = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
-				if(mPlayer)
-				{
-					Creature* beka1 = sEAS.SpawnCreature(mPlayer, 1514, -13770.5f, -6.79f, 42.8f, 5.7f, 0);
-					beka1->GetAIInterface()->MoveTo(-13727.8f, -26.2f, 46.15f, 4.07f);
-					beka1->Despawn(10 * 60 * 1000, 0);
-				}
-			}
 		}
+	}
 };
 
 class Beka2 : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Beka2);
-		Beka2(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Beka2);
+	Beka2(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
-		{
-			float SSX = mKiller->GetPositionX();
-			float SSY = mKiller->GetPositionY();
-			float SSZ = mKiller->GetPositionZ();
+	void OnDied(Unit* mKiller)
+	{
+		float SSX = mKiller->GetPositionX();
+		float SSY = mKiller->GetPositionY();
+		float SSZ = mKiller->GetPositionZ();
 
-			Creature* doctor = mKiller->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 1449);
-			if(doctor)
-				doctor->Emote(EMOTE_ONESHOT_CHEER);
-		}
+		Creature* doctor = mKiller->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 1449);
+		if(doctor)
+			doctor->Emote(EMOTE_ONESHOT_CHEER);
+	}
 };
 
 void SetupZoneStranglethorn(ScriptMgr* mgr)

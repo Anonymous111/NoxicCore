@@ -79,7 +79,7 @@ public:
 		_unit->Despawn(500, 0);
 	}
 
-	/*void AIUpdate(MapManagerScript* MMScript, uint32 p_time)
+	void AIUpdate(MapManagerScript* MMScript, uint32 p_time)
 	{
 		if(p_time > p_timer)
 		{
@@ -89,7 +89,7 @@ public:
 		}
 		else
 			p_timer -= p_time;
-	}*/
+	}
 
 private:
 	uint32 p_timer;

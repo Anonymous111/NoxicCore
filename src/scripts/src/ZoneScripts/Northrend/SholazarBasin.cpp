@@ -25,38 +25,37 @@
 
 class ChickenEscapee : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ChickenEscapee);
-		ChickenEscapee(Creature* c) : CreatureAIScript(c) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ChickenEscapee);
+	ChickenEscapee(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			RegisterAIUpdateEvent(1000);
-		}
+	void OnLoad()
+	{
+		RegisterAIUpdateEvent(1000);
+	}
 
-		void AIUpdate()
+	void AIUpdate()
+	{
+		// Let's see if we are netted
+		Aura* a = _unit->FindAura(51959);
+		if(a != NULL)
 		{
-			// Let's see if we are netted
-			Aura* a = _unit->FindAura(51959);
-			if(a != NULL)
+			Unit* Caster = a->GetUnitCaster();
+			if(Caster->IsPlayer())
 			{
-				Unit* Caster = a->GetUnitCaster();
-				if(Caster->IsPlayer())
+				QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12532);
+				if(pQuest == NULL)
+					pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12702);
+
+				if(pQuest != NULL)
 				{
-
-					QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12532);
-					if(pQuest == NULL)
-						pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(12702);
-
-					if(pQuest != NULL)
-					{
-						// casting the spell that will create the item for the player
-						_unit->CastSpell(Caster, 51037, true);
-						_unit->Despawn(1000, 360000);
-					}
+					// casting the spell that will create the item for the player
+					_unit->CastSpell(Caster, 51037, true);
+					_unit->Despawn(1000, 360000);
 				}
 			}
 		}
+	}
 };
 
 void SetupZoneSholazarBasin(ScriptMgr* mgr)

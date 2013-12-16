@@ -21,12 +21,12 @@
 
 class WoodlandWalker : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WoodlandWalker);
-		WoodlandWalker(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			pCreature->SetFaction(35);
-		}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(WoodlandWalker);
+	WoodlandWalker(Creature* pCreature) : CreatureAIScript(pCreature)
+	{
+		pCreature->SetFaction(35);
+	}
 };
 
 void SetupZoneDragonblight(ScriptMgr* mgr)

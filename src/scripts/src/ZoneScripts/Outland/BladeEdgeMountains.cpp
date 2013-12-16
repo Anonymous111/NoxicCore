@@ -107,57 +107,57 @@ protected:
 
 class WyrmcultBlackwhelp : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WyrmcultBlackwhelp);
-		WyrmcultBlackwhelp(Creature* c) : CreatureAIScript(c) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(WyrmcultBlackwhelp);
+	WyrmcultBlackwhelp(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			RegisterAIUpdateEvent(1000);
-		}
+	void OnLoad()
+	{
+		RegisterAIUpdateEvent(1000);
+	}
 
-		void AIUpdate()
+	void AIUpdate()
+	{
+		// Let's see if we are netted
+		Aura* a = _unit->FindAura(38177);
+		if(a != NULL)
 		{
-			// Let's see if we are netted
-			Aura* a = _unit->FindAura(38177);
-			if(a != NULL)
+			Unit* Caster = a->GetUnitCaster();
+			if(Caster->IsPlayer())
 			{
-				Unit* Caster = a->GetUnitCaster();
-				if(Caster->IsPlayer())
+				QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(10747);
+				if(pQuest != NULL)
 				{
-					QuestLogEntry* pQuest = TO_PLAYER(Caster)->GetQuestLogForEntry(10747);
-					if(pQuest != NULL)
-					{
-						// casting the spell that will create the item for the player
-						_unit->CastSpell(Caster, 38178, true);
-						_unit->Despawn(1000, 360000);
-					}
+					// casting the spell that will create the item for the player
+					_unit->CastSpell(Caster, 38178, true);
+					_unit->Despawn(1000, 360000);
 				}
 			}
 		}
+	}
 };
 
 // The Bladespire Threat Quest
 class BladespireQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BladespireQAI);
-		BladespireQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(BladespireQAI);
+	BladespireQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10503);
+			if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 			{
-				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10503);
-				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-				{
-					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-					pQuest->SendUpdateAddKill(0);
-					pQuest->UpdatePlayerFields();
-					return;
-				}
+				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+				pQuest->SendUpdateAddKill(0);
+				pQuest->UpdatePlayerFields();
+				return;
 			}
 		}
+	}
 };
 
 class MagnetoAura : public CreatureAIScript

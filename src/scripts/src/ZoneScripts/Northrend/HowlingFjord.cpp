@@ -21,80 +21,77 @@
 
 class NorthFleet : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NorthFleet);
-		NorthFleet(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(NorthFleet);
+	NorthFleet(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11230);
+			if(pQuest != NULL)
 			{
-				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11230);
-				if(pQuest != NULL)
+				if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 				{
-					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
-					{
-						uint32 newcount = pQuest->GetMobCount(0) + 1;
-						pQuest->SetMobCount(0, newcount);
-						pQuest->SendUpdateAddKill(0);
-						pQuest->UpdatePlayerFields();
-						return;
-					}
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
+					return;
 				}
 			}
 		}
+	}
 };
 
 class ChillmereScourge : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ChillmereScourge);
-		ChillmereScourge(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ChillmereScourge);
+	ChillmereScourge(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11397);
+			if(pQuest != NULL)
 			{
-				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11397);
-				if(pQuest != NULL)
+				if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 				{
-					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
-					{
-						uint32 newcount = pQuest->GetMobCount(0) + 1;
-						pQuest->SetMobCount(0, newcount);
-						pQuest->SendUpdateAddKill(0);
-						pQuest->UpdatePlayerFields();
-						return;
-					}
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
+					return;
 				}
 			}
 		}
+	}
 };
 
 class Baleheim : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Baleheim);
-		Baleheim(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Baleheim);
+	Baleheim(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11283);
+			if(pQuest != NULL)
 			{
-				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(11283);
-				if(pQuest != NULL)
+				if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
 				{
-					if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[ 0 ])
-					{
-						uint32 newcount = pQuest->GetMobCount(0) + 1;
-						pQuest->SetMobCount(0, newcount);
-						pQuest->SendUpdateAddKill(0);
-						pQuest->UpdatePlayerFields();
-						return;
-					}
+					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+					pQuest->SendUpdateAddKill(0);
+					pQuest->UpdatePlayerFields();
+					return;
 				}
 			}
 		}
+	}
 };
 
 void SetupZoneHowlingFjord(ScriptMgr* mgr)

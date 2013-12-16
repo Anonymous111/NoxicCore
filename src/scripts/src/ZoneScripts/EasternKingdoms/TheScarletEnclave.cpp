@@ -43,7 +43,7 @@ public:
 		_unit->GetAIInterface()->m_canCallForHelp = false;
 	}
 
-	void OnCombatStart(Unit * mTarget)
+	void OnCombatStart(Unit* mTarget)
 	{
 		float chance = 40.0f; // base chance set as 30 %
 		if(_unit->getGender() == 1) // women

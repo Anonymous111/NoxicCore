@@ -31,7 +31,7 @@ public:
 	}
 };
 
-/*class RoyalHistorianArchesonus : public GossipScript
+class RoyalHistorianArchesonus : public GossipScript
 {
 public:
 	void GossipHello(Object* pObject, Player* pPlayer, bool AutoSend)
@@ -81,10 +81,10 @@ public:
 			}break;
 		}
 	}
-};*/
+};
 
 void SetupZoneIronforge(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(2784, &KingMagniBronzebeard::Create);
-	//mgr->register_gossip_script(8879, new RoyalHistorianArchesonus());
+	mgr->register_gossip_script(8879, new RoyalHistorianArchesonus());
 }

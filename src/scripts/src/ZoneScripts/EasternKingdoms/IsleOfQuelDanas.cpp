@@ -21,32 +21,31 @@
 
 class TheBattleForTheSunReachArmory : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TheBattleForTheSunReachArmory);
-		TheBattleForTheSunReachArmory(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(TheBattleForTheSunReachArmory);
+	TheBattleForTheSunReachArmory(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* pKiller)
+	void OnDied(Unit* pKiller)
+	{
+		if(pKiller->IsPlayer())
 		{
-			if(pKiller->IsPlayer())
+			QuestLogEntry* pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11537);
+			if(pQuest == NULL)
 			{
-				QuestLogEntry* pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11537);
+				pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11538);
 				if(pQuest == NULL)
-				{
-					pQuest = (TO_PLAYER(pKiller))->GetQuestLogForEntry(11538);
-					if(pQuest == NULL)
-						return;
-				}
-
-				if(pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[ 1 ])
-				{
-					uint32 newcount = pQuest->GetMobCount(1) + 1;
-					pQuest->SetMobCount(1, newcount);
-					pQuest->SendUpdateAddKill(1);
-					pQuest->UpdatePlayerFields();
 					return;
-				}
+			}
+
+			if(pQuest->GetMobCount(1) < pQuest->GetQuest()->required_mobcount[ 1 ])
+			{
+				pQuest->SetMobCount(1, pQuest->GetMobCount(1) + 1);
+				pQuest->SendUpdateAddKill(1);
+				pQuest->UpdatePlayerFields();
+				return;
 			}
 		}
+	}
 };
 
 void SetupZoneIsleOfQuelDanas(ScriptMgr* mgr)
