@@ -278,7 +278,7 @@ void ApplyNormalFixes()
 		else if(strstr(sp->Name, "Aura")
 		        && !strstr(sp->Name, "Trueshot") && !strstr(sp->Name, "Moonkin")
 		        && !strstr(sp->Name, "Crusader") && !strstr(sp->Name, "Sanctity") && !strstr(sp->Name, "Devotion") && !strstr(sp->Name, "Retribution") && !strstr(sp->Name, "Concentration") && !strstr(sp->Name, "Shadow Resistance") && !strstr(sp->Name, "Frost Resistance") && !strstr(sp->Name, "Fire Resistance")
-		      )
+		     )
 			sp->BGR_one_buff_on_target |= SPELL_TYPE_AURA;
 		else if(strstr(sp->Name, "Track") == sp->Name)
 			sp->BGR_one_buff_on_target |= SPELL_TYPE_TRACK;
@@ -931,7 +931,7 @@ void ApplyNormalFixes()
 				if(spz &&
 				        (spz->Effect[i] == SPELL_EFFECT_SCHOOL_DAMAGE ||
 				         spz->Effect[i] == SPELL_EFFECT_HEAL)
-				 )
+				)
 					spcheck = true;
 			}
 			if(sp->Effect[i] == SPELL_EFFECT_SCHOOL_DAMAGE || sp->Effect[i] == SPELL_EFFECT_HEAL || spcheck)
@@ -3827,6 +3827,8 @@ void ApplyNormalFixes()
 	{
 		sp->procFlags = PROC_ON_MELEE_ATTACK;
 		sp->proc_interval = 8000;
+		sp->procChance = 0;
+		sp->ProcsPerMinute = 3.9f;
 	}
 	sp = CheckAndReturnSpellEntry(51531);
 	if(sp != NULL)
@@ -4087,12 +4089,18 @@ void ApplyNormalFixes()
 	// Fingers of Frost rank 1
 	sp = CheckAndReturnSpellEntry(44543);
 	if(sp != NULL)
+	{
 		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procChance = 7;
+	}
 
 	// Fingers of Frost rank 2
 	sp = CheckAndReturnSpellEntry(44545);
 	if(sp != NULL)
 		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->procFlags = PROC_ON_CAST_SPELL;
+		sp->procChance = 15;
 
 	/**********************************************************
 	*    Improved Blink by Alice
@@ -4447,6 +4455,9 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(43985);
 	if(sp != NULL)
 		sp->EffectImplicitTargetA[0] = EFF_TARGET_DYNAMIC_OBJECT;
+	sp = dbcSpell.LookupEntryForced(58661);
+	if(sp != NULL)
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_DYNAMIC_OBJECT;
 
 	// Hypothermia - forced debuff
 	sp = CheckAndReturnSpellEntry(41425);
@@ -4480,7 +4491,6 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[0] = 18469;
 	}
-
 	//Improved Counterspell rank 2
 	sp = CheckAndReturnSpellEntry(12598);
 	if(sp != NULL)
@@ -4490,6 +4500,50 @@ void ApplyNormalFixes()
 		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[0] = 55021;
 	}
+
+	sp = dbcSpell.LookupEntryForced(29441);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 29442;
+	}
+	sp = dbcSpell.LookupEntryForced(29444);
+	if(sp != NULL)
+	{
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 29442;
+	}
+
+	sp = dbcSpell.LookupEntryForced(44440);
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_HIT_VICTIM | PROC_ON_MELEE_ATTACK_VICTIM | PROC_ON_RANGED_ATTACK_VICTIM | PROC_ON_ANY_DAMAGE_VICTIM;
+	}
+	sp = dbcSpell.LookupEntryForced(44441);
+	if(sp != NULL)
+	{
+		sp->procChance = 100;
+		sp->procFlags = PROC_ON_SPELL_HIT_VICTIM | PROC_ON_MELEE_ATTACK_VICTIM | PROC_ON_RANGED_ATTACK_VICTIM | PROC_ON_ANY_DAMAGE_VICTIM;
+	}
+
+	sp = dbcSpell.LookupEntryForced(43987);
+	if(sp != NULL)
+		sp->c_is_flags |= SPELL_FLAG_IS_REQUIRECOOLDOWNUPDATE;
+	sp = dbcSpell.LookupEntryForced(58659);
+	if(sp != NULL)
+		sp->c_is_flags |= SPELL_FLAG_IS_REQUIRECOOLDOWNUPDATE;
+
+	sp = dbcSpell.LookupEntryForced(44457);
+	if(sp != NULL)
+		sp->c_is_flags |= SPELL_FLAG_ON_ONLY_ONE_TARGET;
+	sp = dbcSpell.LookupEntryForced(55359);
+	if(sp != NULL)
+		sp->c_is_flags |= SPELL_FLAG_ON_ONLY_ONE_TARGET;
+	sp = dbcSpell.LookupEntryForced(55360);
+	if(sp != NULL)
+		sp->c_is_flags |= SPELL_FLAG_ON_ONLY_ONE_TARGET;
+
 	//////////////////////////////////////////
 	// WARLOCK								//
 	//////////////////////////////////////////
@@ -5329,6 +5383,58 @@ void ApplyNormalFixes()
 	//////////////////////////////////////////
 
 	// Insert druid spell fixes here
+
+	sp = dbcSpell.LookupEntryForced(1850);
+	if(sp != NULL)
+		sp->RequiredShapeShift = 1;
+	sp = dbcSpell.LookupEntryForced(9821);
+	if(sp != NULL)
+		sp->RequiredShapeShift = 1;
+	sp = dbcSpell.LookupEntryForced(33357);
+	if(sp != NULL)
+		sp->RequiredShapeShift = 1;
+
+	sp = dbcSpell.LookupEntryForced(30708);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = 6;
+		sp->EffectImplicitTargetA[0] = 22;
+		sp->EffectImplicitTargetB[0] = 15;
+		sp->EffectRadiusIndex[0] = 10;
+		sp->AreaAuraTarget = AA_TARGET_ALLENEMIES;
+	}
+
+	sp = dbcSpell.LookupEntryForced(48418);
+	if(sp != NULL)
+		sp->RequiredShapeShift = (uint32)(1<<(FORM_BEAR-1))|(1<<(FORM_DIREBEAR-1));
+	sp = dbcSpell.LookupEntryForced(48420);
+	if(sp != NULL)
+		sp->RequiredShapeShift = (uint32)(1<<(FORM_CAT-1));
+	sp = dbcSpell.LookupEntryForced(48421);
+	if(sp != NULL)
+		sp->RequiredShapeShift = (uint32)1 << (FORM_MOONKIN-1);
+	sp = dbcSpell.LookupEntryForced(48422);
+	if(sp != NULL)
+		sp->RequiredShapeShift = (uint32)1 << (FORM_TREE-1);
+
+	sp = dbcSpell.LookupEntryForced(48389);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_ANY_HOSTILE_ACTION | PROC_ON_MELEE_ATTACK | PROC_ON_RANGED_ATTACK;
+		sp->EffectSpellClassMask[0][0] = 0x0;
+	}
+	sp = dbcSpell.LookupEntryForced(48392);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_ANY_HOSTILE_ACTION | PROC_ON_MELEE_ATTACK | PROC_ON_RANGED_ATTACK;
+		sp->EffectSpellClassMask[0][0] = 0x0;
+	}
+	sp = dbcSpell.LookupEntryForced(48393);
+	if(sp != NULL)
+	{
+		sp->procFlags = PROC_ON_ANY_HOSTILE_ACTION | PROC_ON_MELEE_ATTACK | PROC_ON_RANGED_ATTACK;
+		sp->EffectSpellClassMask[0][0] = 0x0;
+	}
 
 	/**********************************************************
 	 *	Balance
@@ -7253,6 +7359,27 @@ void ApplyNormalFixes()
 
 	// Insert boss spell fixes here
 
+	sp = dbcSpell.LookupEntryForced(20549);
+	if(sp != NULL)
+		sp->RequiredShapeShift = 0;
+
+	sp = dbcSpell.LookupEntryForced(45057);
+	if(sp != NULL)
+		sp->proc_interval = 30000;
+
+	sp = dbcSpell.LookupEntryForced(43958);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_DUMMY;
+		sp->DurationIndex = 6; // 10 minutes.
+		sp->c_is_flags |= SPELL_FLAG_IS_FORCEDDEBUFF;
+		sp->Effect[1] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[1] = SPELL_AURA_ADD_PCT_MODIFIER;
+		sp->EffectMiscValue[1] = SMT_RESIST_DISPEL;
+		sp->EffectBasePoints[1] = 90;
+	}
+
 	// Major Domo - Magic Reflection
 	sp = CheckAndReturnSpellEntry(20619);
 	if(sp != NULL)
@@ -8343,4 +8470,22 @@ void ApplyNormalFixes()
 		sp->EffectImplicitTargetA[1] = 6;
 		sp->EffectTriggerSpell[1] = 31117;
 	}
+	sp = dbcSpell.LookupEntryForced(20267);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(20268);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(20341);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(20342);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(20343);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(27163);
+	if(sp != NULL)
+			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 }
