@@ -21,24 +21,24 @@
 
 class Miran : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Miran);
-		Miran(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Miran);
+	Miran(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 7)
 		{
-			if(iWaypointId == 7)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I'm outta here!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(309)->SendQuestComplete();
-			}
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I'm outta here!");
+			_unit->Despawn(5000, 1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
+			Player* pPlayer = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			pPlayer->GetQuestLogForEntry(309)->SendQuestComplete();
 		}
+	}
 };
 
 void SetupZoneLochModan(ScriptMgr* mgr)

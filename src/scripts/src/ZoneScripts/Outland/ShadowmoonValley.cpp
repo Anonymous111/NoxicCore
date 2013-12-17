@@ -34,71 +34,63 @@ public:
 // Infiltrating Dragonmaw Fortress Quest
 class InfiltratingDragonmawFortressQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(InfiltratingDragonmawFortressQAI);
-		InfiltratingDragonmawFortressQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(InfiltratingDragonmawFortressQAI);
+	InfiltratingDragonmawFortressQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 
-		void OnDied(Unit* mKiller)
+	void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10836);
+			if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
 			{
-				QuestLogEntry* pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10836);
-				if(pQuest && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-				{
-					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-					pQuest->SendUpdateAddKill(0);
-					pQuest->UpdatePlayerFields();
-					return;
-				}
+				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+				pQuest->SendUpdateAddKill(0);
+				pQuest->UpdatePlayerFields();
+				return;
 			}
 		}
+	}
 };
 
 class KneepadsQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KneepadsQAI);
-		KneepadsQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(KneepadsQAI);
+	KneepadsQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
 		void OnDied(Unit* mKiller)
+	{
+		if(mKiller->IsPlayer())
 		{
-			if(mKiller->IsPlayer())
+			QuestLogEntry* pQuest = NULL;
+			pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10703);
+			if(pQuest == NULL)
 			{
-				QuestLogEntry* pQuest = NULL;
-				pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10703);
+				pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10702);
 				if(pQuest == NULL)
-				{
-					pQuest = (TO_PLAYER(mKiller))->GetQuestLogForEntry(10702);
-					if(pQuest == NULL)
-					{
-						return;
-					}
-				}
-
-				if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-				{
-					uint32 newcount = pQuest->GetMobCount(0) + 1;
-					pQuest->SetMobCount(0, newcount);
-					pQuest->SendUpdateAddKill(0);
-					pQuest->UpdatePlayerFields();
-				}
+					return;
 			}
-			return;
+
+			if(pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
+			{
+				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
+				pQuest->SendUpdateAddKill(0);
+				pQuest->UpdatePlayerFields();
+			}
 		}
+		return;
+	}
 };
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////// Deathbringer Jovaan
 #define CN_DEATHBRINGER_JOVAAN	21633
 
-//WP Coords Wait Times
 struct WPWaitTimes
 {
 	LocationExtra mCoords;
 	uint32 WaitTime;
 };
+
 const WPWaitTimes DeathbringerJovaanWP[] =
 {
 	{ { }, 0},
@@ -110,111 +102,98 @@ const WPWaitTimes DeathbringerJovaanWP[] =
 
 class DeathbringerJovaanAI : public MoonScriptCreatureAI
 {
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(DeathbringerJovaanAI, MoonScriptCreatureAI);
-		DeathbringerJovaanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			mJovaanTimer = INVALIDATE_TIMER;
-			mJovaanPhase = -1;
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(DeathbringerJovaanAI, MoonScriptCreatureAI);
+	DeathbringerJovaanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{
+		mJovaanTimer = INVALIDATE_TIMER;
+		mJovaanPhase = -1;
 
-			for(int i = 1; i < 5; ++i)
-			{
-				AddWaypoint(CreateWaypoint(i, DeathbringerJovaanWP[i].WaitTime, DeathbringerJovaanWP[i].mCoords.addition, DeathbringerJovaanWP[i].mCoords));
-			}
-		}
+		for(int i = 1; i < 5; ++i)
+			AddWaypoint(CreateWaypoint(i, DeathbringerJovaanWP[i].WaitTime, DeathbringerJovaanWP[i].mCoords.addition, DeathbringerJovaanWP[i].mCoords));
+	}
 
-		void AIUpdate()
+	void AIUpdate()
+	{
+		if(IsTimerFinished(mJovaanTimer))
 		{
-			if(IsTimerFinished(mJovaanTimer))
+			switch(mJovaanPhase)
 			{
-				switch(mJovaanPhase)
+				case 0:
 				{
-					case 0:
-						{
-							MoonScriptCreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
-							if(pRazuunAI != NULL)
-							{
-								pRazuunAI->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
-								pRazuunAI->SetCanEnterCombat(false);
-								pRazuunAI->SetMoveType(Move_DontMoveWP);
-								pRazuunAI->SetCanMove(false);
-							}
-							_unit->SetStandState(STANDSTATE_KNEEL);
-							_unit->Emote(EMOTE_ONESHOT_TALK);
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Everything is in readiness, warbringer.");
-							mJovaanPhase = 1;
-							ResetTimer(mJovaanTimer, 6000);
-						}
-						break;
-					case 1:
-						{
-							_unit->Emote(EMOTE_ONESHOT_TALK);
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Warbringer, that will require the use of all the hold's infernals. It may leave us vulnerable to a counterattack.");
-							mJovaanPhase = 2;
-							ResetTimer(mJovaanTimer, 11000);
-						}
-						break;
-					case 2:
-						{
-							_unit->SetStandState(STANDSTATE_STAND);
-							mJovaanPhase = 3;
-							ResetTimer(mJovaanTimer, 1000);
-						}
-						break;
-					case 3:
-						{
-							_unit->Emote(EMOTE_ONESHOT_SALUTE);
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "It shall be as you say, warbringer. One last question, if I may...");
-							mJovaanPhase = 4;
-							ResetTimer(mJovaanTimer, 10000);
-						}
-						break;
-					case 4:
-						{
-							_unit->Emote(EMOTE_ONESHOT_QUESTION);
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "What's in the crate?");
-							mJovaanPhase = 5;
-							ResetTimer(mJovaanTimer, 10000);
-						}
-						break;
-					case 5:
-						{
-							_unit->Emote(EMOTE_ONESHOT_SALUTE);
-							mJovaanPhase = -1;
-							RemoveTimer(mJovaanTimer);
-						}
-						break;
-				}
-			}
-			ParentClass::AIUpdate();
-		}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
-		{
-			switch(iWaypointId)
-			{
+					MoonScriptCreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
+					if(pRazuunAI != NULL)
+					{
+						pRazuunAI->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
+						pRazuunAI->SetCanEnterCombat(false);
+						pRazuunAI->SetMoveType(Move_DontMoveWP);
+						pRazuunAI->SetCanMove(false);
+					}
+					_unit->SetStandState(STANDSTATE_KNEEL);
+					_unit->Emote(EMOTE_ONESHOT_TALK);
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Everything is in readiness, warbringer.");
+					mJovaanPhase = 1;
+					ResetTimer(mJovaanTimer, 6000);
+				}break;
+				case 1:
+				{
+					_unit->Emote(EMOTE_ONESHOT_TALK);
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Warbringer, that will require the use of all the hold's infernals. It may leave us vulnerable to a counterattack.");
+					mJovaanPhase = 2;
+					ResetTimer(mJovaanTimer, 11000);
+				}break;
+				case 2:
+				{
+					_unit->SetStandState(STANDSTATE_STAND);
+					mJovaanPhase = 3;
+					ResetTimer(mJovaanTimer, 1000);
+				}break;
 				case 3:
-					{
-						RegisterAIUpdateEvent(1000);
-						_unit->Emote(EMOTE_ONESHOT_POINT);
-						mJovaanPhase = 0;
-						mJovaanTimer = AddTimer(1500);
-					}
-					break;
+				{
+					_unit->Emote(EMOTE_ONESHOT_SALUTE);
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "It shall be as you say, warbringer. One last question, if I may...");
+					mJovaanPhase = 4;
+					ResetTimer(mJovaanTimer, 10000);
+				}break;
 				case 4:
-					{
-						Despawn(1, 0);
-					}
-					break;
+				{
+					_unit->Emote(EMOTE_ONESHOT_QUESTION);
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "What's in the crate?");
+					mJovaanPhase = 5;
+					ResetTimer(mJovaanTimer, 10000);
+				}break;
+				case 5:
+				{
+					_unit->Emote(EMOTE_ONESHOT_SALUTE);
+					mJovaanPhase = -1;
+					RemoveTimer(mJovaanTimer);
+				}break;
+			}
+		}
+		ParentClass::AIUpdate();
+	}
+
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		switch(iWaypointId)
+		{
+			case 3:
+			{
+				RegisterAIUpdateEvent(1000);
+				_unit->Emote(EMOTE_ONESHOT_POINT);
+				mJovaanPhase = 0;
+				mJovaanTimer = AddTimer(1500);
+			}break;
+			case 4:
+				Despawn(1, 0);
+			break;
 			}
 		}
 
-		int32	mJovaanTimer;
-		int32	mJovaanPhase;
+	int32 mJovaanTimer;
+	int32 mJovaanPhase;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////// Warbringer Razuun
 #define CN_WARBRINGER_RAZUUN	21502
 
 class WarbringerRazuunAI : public MoonScriptCreatureAI

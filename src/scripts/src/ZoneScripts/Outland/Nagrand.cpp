@@ -57,64 +57,60 @@ public:
 
 class mogorQAI : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(mogorQAI);
-		mogorQAI(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-		};
-
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(mogorQAI);
+	mogorQAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	{
+		_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);
+		_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+	}
 };
 
 class NotOnMyWatch : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NotOnMyWatch);
-		NotOnMyWatch(Creature* pCreature) : CreatureAIScript(pCreature) {};
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(NotOnMyWatch);
+	NotOnMyWatch(Creature* pCreature) : CreatureAIScript(pCreature) {};
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			RegisterAIUpdateEvent(1000);
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "In Nagrand, food hunt ogre!");
-		};
+	void OnCombatStart(Unit* mTarget)
+	{
+		RegisterAIUpdateEvent(1000);
+		_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "In Nagrand, food hunt ogre!");
+	}
 
-		void OnCombatStop()
+	void OnCombatStop()
+	{
+		RemoveAIUpdateEvent();
+	}
+
+	void OnDied(Unit* mTarget)
+	{
+		RemoveAIUpdateEvent();
+	}
+
+	void OnLoad()
+	{
+		_unit->SetFaction(14);
+		RemoveAIUpdateEvent();
+	}
+
+	void AIUpdate()
+	{
+		if(_unit->GetHealthPct() < 30)
 		{
+			Unit* pUnit = _unit->GetAIInterface()->GetMostHated();
+			if(pUnit != NULL && pUnit->IsPlayer())
+				TO_PLAYER(pUnit)->EventAttackStop();
+			_unit->SetFaction(35);
+			_unit->GetAIInterface()->WipeHateList();
+			_unit->GetAIInterface()->WipeTargetList();
+			_unit->SetStandState(STANDSTATE_SIT);
+			_unit->SetUInt32Value(UNIT_NPC_FLAGS, 1);
+			_unit->Despawn(180000, 0);
+
 			RemoveAIUpdateEvent();
-		};
-
-		void OnDied(Unit* mTarget)
-		{
-			RemoveAIUpdateEvent();
-		};
-
-		void OnLoad()
-		{
-			_unit->SetFaction(14);
-			RemoveAIUpdateEvent();
-		};
-
-		void AIUpdate()
-		{
-			if(_unit->GetHealthPct() < 30)
-			{
-				Unit* pUnit = _unit->GetAIInterface()->GetMostHated();
-				if(pUnit != NULL && pUnit->IsPlayer())
-					TO_PLAYER(pUnit)->EventAttackStop();
-
-				_unit->SetFaction(35);
-				_unit->GetAIInterface()->WipeHateList();
-				_unit->GetAIInterface()->WipeTargetList();
-				_unit->SetStandState(STANDSTATE_SIT);
-				_unit->SetUInt32Value(UNIT_NPC_FLAGS, 1);
-
-				_unit->Despawn(180000, 0);
-
-				RemoveAIUpdateEvent();
-			};
-		};
-
+		}
+	}
 };
 
 void SetupZoneNagrand(ScriptMgr* mgr)

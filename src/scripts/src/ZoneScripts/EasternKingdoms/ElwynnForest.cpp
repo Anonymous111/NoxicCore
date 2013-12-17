@@ -19,10 +19,10 @@
 
 #include "../Setup.h"
 
-/*class DefiasBandit: public CreatureAIScript
+class DefiasBandit: public MoonScriptCreatureAI
 {
-	ADD_CREATURE_FACTORY_FUNCTION(DefiasBandit);
-    DefiasBandit(Creature* pCreature) : CreatureAIScript(pCreature) 
+	MOONSCRIPT_FACTORY_FUNCTION(DefiasBandit, MoonScriptCreatureAI);
+    DefiasBandit(Creature* pCreature) : MoonScriptCreatureAI(pCreature) 
 	{
 		AddSpell(8646, Target_Current, 20, 0, 4);
 	}
@@ -35,9 +35,9 @@
         _unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
         _unit->GetAIInterface()->SetAIState(STATE_IDLE);
     }
-};*/
+};
 
 void SetupZoneElwynnForest(ScriptMgr* mgr)
 {
-	//mgr->register_creature_script(116, &DefiasBandit::Create);
+	mgr->register_creature_script(116, &DefiasBandit::Create);
 }

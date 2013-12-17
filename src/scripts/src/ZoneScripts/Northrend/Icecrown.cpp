@@ -79,6 +79,5 @@ void SpectralGryphonHook(Player* pPlayer, uint32 Zone, uint32 OldZone)
 
 void SetupZoneIcecrown(ScriptMgr* mgr)
 {
-	//SpectralGryphons
 	//mgr->register_hook(SERVER_HOOK_EVENT_ON_ZONE, (void*)&SpectralGryphonHook);
 }

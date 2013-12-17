@@ -21,24 +21,25 @@
 
 class The_Defias_Traitor : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(The_Defias_Traitor);
-		The_Defias_Traitor(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(The_Defias_Traitor);
+	The_Defias_Traitor(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 19)
 		{
-			if(iWaypointId == 19)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tell your master that this is where Van Cleef is hiding. I'm outta here!");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* pPlayer = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				pPlayer->GetQuestLogForEntry(155)->SendQuestComplete();
-			}
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Tell your master that this is where Van Cleef is hiding. I'm outta here!");
+			_unit->Despawn(5000, 1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
+
+			Player* pPlayer = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			pPlayer->GetQuestLogForEntry(155)->SendQuestComplete();
 		}
+	}
 };
 
 void SetupZoneWestfall(ScriptMgr* mgr)

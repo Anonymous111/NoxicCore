@@ -19,56 +19,51 @@
 
 #include "../Setup.h"
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////// Eliza
-#define CN_ELIZA				314
 #define ELIZA_FROST_NOVA		11831
 #define ELIZA_FROSTBOLT			20819
 #define ELIZA_SUMMON_GUARD		3107
 
 class ElizaAI : public MoonScriptCreatureAI
 {
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ElizaAI, MoonScriptCreatureAI);
-		ElizaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(ElizaAI, MoonScriptCreatureAI);
+	ElizaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{
+		mElizaCombatTimer = INVALIDATE_TIMER;
+		SetCanEnterCombat(false);
+		AddSpell(ELIZA_FROST_NOVA, Target_Current, 10, 0, 1, 0, 10, true);
+		AddSpell(ELIZA_FROSTBOLT, Target_Current, 20, 3, 1);
+		mSummonGuard = AddSpell(ELIZA_SUMMON_GUARD, Target_Self, 0, 0, 0);
+
+		Emote("Wait...you are not my husband. But he must have sent you. And you...look..delicious!", Text_Say);
+		mElizaCombatTimer = AddTimer(4000);
+
+		RegisterAIUpdateEvent(1000);
+	}
+	void AIUpdate()
+	{
+		ParentClass::AIUpdate();
+		if(IsTimerFinished(mElizaCombatTimer))
 		{
-			mElizaCombatTimer = INVALIDATE_TIMER;
-			SetCanEnterCombat(false);
-			AddSpell(ELIZA_FROST_NOVA, Target_Current, 10, 0, 1, 0, 10, true);
-			AddSpell(ELIZA_FROSTBOLT, Target_Current, 20, 3, 1);
-			mSummonGuard = AddSpell(ELIZA_SUMMON_GUARD, Target_Self, 0, 0, 0);
-
-			Emote("Wait...you are not my husband. But he must have sent you. And you...look..delicious!", Text_Say);
-			mElizaCombatTimer = AddTimer(4000);
-
-			RegisterAIUpdateEvent(1000);
+			SetCanEnterCombat(true);
+			AggroNearestUnit();
+			RemoveTimer(mElizaCombatTimer);
 		}
-		void AIUpdate()
+		if(GetHealthPercent() >= 10 && GetHealthPercent() <= 98 && !IsCasting())
 		{
-			ParentClass::AIUpdate();
-			if(IsTimerFinished(mElizaCombatTimer))
-			{
-				SetCanEnterCombat(true);
-				AggroNearestUnit();
-				RemoveTimer(mElizaCombatTimer);
-			}
-			if(GetHealthPercent() >= 10 && GetHealthPercent() <= 98 && !IsCasting())
-			{
-				// Correct me if I'm wrong but I saw only 1 guard spawning
-				mElizaGuard = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 1871);
-				if(mElizaGuard == NULL)
-				{
-					CastSpellNowNoScheduling(mSummonGuard);
-				}
-			}
+			// Correct me if I'm wrong but I saw only 1 guard spawning
+			mElizaGuard = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 1871);
+			if(mElizaGuard == NULL)
+				CastSpellNowNoScheduling(mSummonGuard);
 		}
+	}
 
-		int32		mElizaCombatTimer;
-		SpellDesc*	mSummonGuard;
-		Creature*	mElizaGuard;
+	int32 mElizaCombatTimer;
+	SpellDesc* mSummonGuard;
+	Creature* mElizaGuard;
 };
 
 void SetupZoneDuskwood(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
+	mgr->register_creature_script(314, &ElizaAI::Create);
 }

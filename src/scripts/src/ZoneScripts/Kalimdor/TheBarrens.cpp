@@ -60,6 +60,7 @@ public:
 			sEAS.DeleteWaypoints(_unit);
 			if(_unit->m_escorter == NULL)
 				return;
+
 			Player* pPlayer = _unit->m_escorter;
 			_unit->m_escorter = NULL;
 			pPlayer->GetQuestLogForEntry(898)->SendQuestComplete();
@@ -82,6 +83,7 @@ public:
 			sEAS.DeleteWaypoints(_unit);
 			if(_unit->m_escorter == NULL)
 				return;
+
 			Player* pPlayer = _unit->m_escorter;
 			_unit->m_escorter = NULL;
 			pPlayer->GetQuestLogForEntry(863)->SendQuestComplete();

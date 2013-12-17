@@ -21,36 +21,35 @@
 
 class Flayer : public CreatureAIScript
 {
-	public:
-		Flayer(Creature* pCreature) : CreatureAIScript(pCreature) { }
-		static CreatureAIScript* Create(Creature* c) { return new Flayer(c); }
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Flayer);
+	Flayer(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
+	void OnDied(Unit* mKiller)
+	{
+		if(!mKiller->IsPlayer())
+			return;
 
-			Creature* creat = _unit->GetMapMgr()->GetInterface()->SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(creat)
-				creat->Despawn(60000, 0);
-		}
-
+		Creature* pCreature = _unit->GetMapMgr()->GetInterface()->SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
+		if(pCreature)
+			pCreature->Despawn(60000, 0);
+	}
 };
 
 class ArajTheSummoner : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* pCreature) : CreatureAIScript(pCreature) { }
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
+	ArajTheSummoner(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
+	void OnDied(Unit* mKiller)
+	{
+		if(!mKiller->IsPlayer())
+			return;
 
-			GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0);
-			sEAS.GameobjectDelete(go, 60000);
-		}
+		GameObject* pGameObject = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0);
+		sEAS.GameobjectDelete(pGameObject, 60000);
+	}
 };
 
 void SetupZoneEasternPlaguelands(ScriptMgr* mgr)

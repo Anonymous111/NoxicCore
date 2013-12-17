@@ -47,20 +47,20 @@ class WebbedCreature : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(WebbedCreature);
-	WebbedCreature(Creature* pCreature) : CreatureAIScript(pCreature) {};
+	WebbedCreature(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
 	void OnCombatStart(Unit* pTarget)
 	{
 		_unit->GetAIInterface()->disable_melee = true;
 		_unit->Root();
 		_unit->GetAIInterface()->StopMovement(0);
-	};
+	}
 
 	void OnCombatStop(Unit* pTarget)
 	{
 		_unit->GetAIInterface()->disable_melee = false;
 		_unit->Unroot();
-	};
+	}
 
 	void OnDied(Unit* pKiller)
 	{
@@ -85,7 +85,7 @@ public:
 			{
 				RandomCreature->m_noRespawn = true;
 				RandomCreature->Despawn(60000, 0);
-			};
+			}
 			return;
 		}
 		else
@@ -101,10 +101,10 @@ public:
 					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
 					pQuest->SendUpdateAddKill(0);
 					pQuest->UpdatePlayerFields();
-				};
-			};
-		};
-	};
+				}
+			}
+		}
+	}
 };
 
 void SetupZoneBloodmystIsle(ScriptMgr* mgr)

@@ -22,6 +22,8 @@
 
 #include "StdAfx.h"
 #include "../Common/EasyFunctions.h"
+#include "../Common/Instance_Base.h"
+#include "../Common/Base.h"
 
 // Eastern Kingdom
 void SetupZoneArathiHighlands(ScriptMgr* mgr);
@@ -56,7 +58,7 @@ void SetupZoneDesolace(ScriptMgr* mgr);
 void SetupZoneDurotar(ScriptMgr* mgr);
 void SetupZoneDustwallowMarsh(ScriptMgr* mgr);
 void SetupZoneExodar(ScriptMgr* mgr);
-void SetupZoneMulgore(ScriptMgr* mgr)
+void SetupZoneMulgore(ScriptMgr* mgr);
 void SetupZoneOrgrimmar(ScriptMgr* mgr);
 void SetupZoneTanaris(ScriptMgr* mgr);
 void SetupZoneTheBarrens(ScriptMgr* mgr);

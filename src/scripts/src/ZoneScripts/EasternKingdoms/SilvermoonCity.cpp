@@ -19,7 +19,7 @@
 
 #include "../Setup.h"
 
-/*class ChampionVranesh : public CreatureAIScript
+class ChampionVranesh : public CreatureAIScript
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(ChampionVranesh);
@@ -48,8 +48,7 @@ public:
     //Silvermoon City Guardian says: Your power strengthens us all.
 
 	//He is also known to be mounted on a blood elf paladin's charger
-
-};*/
+};
 
 class BloodKnightStillblade : public CreatureAIScript
 {
@@ -102,22 +101,22 @@ protected:
 
 class LordDawnstar : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LordDawnstar);
-		LordDawnstar(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(LordDawnstar);
+	LordDawnstar(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->SetUInt32Value(UNIT_NPC_FLAGS, 1);
-			_unit->SetStandState(7);
-			_unit->setDeathState(CORPSE);
-			_unit->GetAIInterface()->m_canMove = false;
-		}
+	void OnLoad()
+	{
+		_unit->SetUInt32Value(UNIT_NPC_FLAGS, 1);
+		_unit->SetStandState(7);
+		_unit->setDeathState(CORPSE);
+		_unit->GetAIInterface()->m_canMove = false;
+	}
 };
 
 void SetupZoneSilvermoonCity(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(18146, &ChampionVranesh::Create);
+	//mgr->register_creature_script(18146, &ChampionVranesh::Create);
 	mgr->register_creature_script(17768, &BloodKnightStillblade::Create);
 	mgr->register_creature_script(17832, &LordDawnstar::Create);
 }

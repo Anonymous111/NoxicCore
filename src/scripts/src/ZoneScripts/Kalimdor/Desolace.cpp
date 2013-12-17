@@ -21,24 +21,25 @@
 
 class Dalinda_Malem  : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Dalinda_Malem);
-		Dalinda_Malem(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Dalinda_Malem);
+	Dalinda_Malem(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 13)
 		{
-			if(iWaypointId == 13)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, these orcs wanted me to weld in the boiler");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(1440)->SendQuestComplete();
-			}
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, these orcs wanted me to weld in the boiler");
+			_unit->Despawn(5000, 1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
+
+			Player* pPlayer = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			pPlayer->GetQuestLogForEntry(1440)->SendQuestComplete();
 		}
+	}
 };
 
 void SetupZoneDesolace(ScriptMgr* mgr)

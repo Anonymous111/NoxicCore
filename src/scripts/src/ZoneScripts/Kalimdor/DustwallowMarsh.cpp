@@ -35,7 +35,6 @@ public:
 		if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.2f)
 		{
 			//Missing: modify fAmount to prevent Balos Jacken death.
-			//{...}
 			//force player to loose target and stop melee auto-attack:
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 			//start AIUpdate
@@ -88,91 +87,90 @@ protected:
 
 class OverlordMokMorokk : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(OverlordMokMorokk);
-		OverlordMokMorokk(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(OverlordMokMorokk);
+	OverlordMokMorokk(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->SetStandState(STANDSTATE_STAND);
-		}
+	void OnLoad()
+	{
+		_unit->SetStandState(STANDSTATE_STAND);
+	}
 
-		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
+	void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
+	{
+		uint32 chance = RandomUInt(100);
+		if(chance < 25)
+			_unit->CastSpell(mAttacker, dbcSpell.LookupEntry(6749), true);
+
+		if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.3f)
 		{
-			uint32 chance = RandomUInt(100);
-			if(chance < 25)
+			if(mAttacker->IsPlayer())
 			{
-				_unit->CastSpell(mAttacker, dbcSpell.LookupEntry(6749), true);
-			}
-			if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.3f)
-			{
-				if(mAttacker->IsPlayer())
-				{
-					_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-					RegisterAIUpdateEvent(1000);
-					QuestLogEntry* qle = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(1173);
-					if(!qle)
-						return;
-					qle->SendQuestComplete();
-				}
+				_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+				RegisterAIUpdateEvent(1000);
+				QuestLogEntry* pQuest = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(1173);
+				if(!pQuest)
+					return;
+				pQuest->SendQuestComplete();
 			}
 		}
+	}
 
-		void AIUpdate()
-		{
-			_unit->RemoveNegativeAuras();
-			_unit->SetFaction(29);
-			_unit->SetHealthPct(100);
-			_unit->GetAIInterface()->WipeTargetList();
-			_unit->GetAIInterface()->WipeHateList();
-			_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
-			_unit->GetAIInterface()->disable_melee = true;
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, 0);
-		}
+	void AIUpdate()
+	{
+		_unit->RemoveNegativeAuras();
+		_unit->SetFaction(29);
+		_unit->SetHealthPct(100);
+		_unit->GetAIInterface()->WipeTargetList();
+		_unit->GetAIInterface()->WipeHateList();
+		_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
+		_unit->GetAIInterface()->disable_melee = true;
+		_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+		_unit->SetUInt32Value(UNIT_FIELD_FLAGS, 0);
+	}
 };
 
 class PrivateHendel : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PrivateHendel);
-		PrivateHendel(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(PrivateHendel);
+	PrivateHendel(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnLoad()
-		{
-			_unit->SetFaction(12);
-			_unit->SetStandState(STANDSTATE_STAND);
-		}
+	void OnLoad()
+	{
+		_unit->SetFaction(12);
+		_unit->SetStandState(STANDSTATE_STAND);
+	}
 
-		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
+	void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
+	{
+		if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.37f)
 		{
-			if(_unit->GetUInt32Value(UNIT_FIELD_HEALTH) - fAmount <= _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH) * 0.37f)
+			if(mAttacker->IsPlayer())
 			{
-				if(mAttacker->IsPlayer())
-				{
-					_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-					RegisterAIUpdateEvent(1000);
-					QuestLogEntry* qle = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(1324);
-					if(!qle)
-						return;
-					qle->SendQuestComplete();
-				}
+				_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+				RegisterAIUpdateEvent(1000);
+				QuestLogEntry* pQuest = (TO_PLAYER(mAttacker))->GetQuestLogForEntry(1324);
+				if(!pQuest)
+					return;
+				pQuest->SendQuestComplete();
 			}
 		}
+	}
 
-		void AIUpdate()
-		{
-			_unit->Emote(EMOTE_STATE_KNEEL);
-			_unit->RemoveNegativeAuras();
-			_unit->SetFaction(12);
-			_unit->SetHealthPct(100);
-			_unit->GetAIInterface()->WipeTargetList();
-			_unit->GetAIInterface()->WipeHateList();
-			_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
-			_unit->GetAIInterface()->disable_melee = true;
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, 0);
-		}
+	void AIUpdate()
+	{
+		_unit->Emote(EMOTE_STATE_KNEEL);
+		_unit->RemoveNegativeAuras();
+		_unit->SetFaction(12);
+		_unit->SetHealthPct(100);
+		_unit->GetAIInterface()->WipeTargetList();
+		_unit->GetAIInterface()->WipeHateList();
+		_unit->GetAIInterface()->HandleEvent(EVENT_LEAVECOMBAT, _unit, 0);
+		_unit->GetAIInterface()->disable_melee = true;
+		_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+		_unit->SetUInt32Value(UNIT_FIELD_FLAGS, 0);
+	}
 };
 
 void SetupZoneDustwallowMarsh(ScriptMgr* mgr)

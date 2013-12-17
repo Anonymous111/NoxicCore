@@ -9,6 +9,8 @@ SET( prefix ${ROOT_PATH}/src/scripts/src/${PROJECT_NAME} )
 
 #sources -contains source files for our library.
 SET( sources
+	Setup.cpp
+	../Common/Base.cpp
 	EasternKingdoms/ArathiHighlands.cpp
 	EasternKingdoms/BlastedLands.cpp
 	EasternKingdoms/Duskwood.cpp
@@ -62,6 +64,8 @@ SET( sources
 SET( headers
     Setup.h
 	../Common/EasyFunctions.h
+	../Common/Instance_Base.h
+	../Common/Base.h
 )
  
 foreach(src IN ITEMS ${sources} )
@@ -86,6 +90,4 @@ install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${ARCPRO_SCRIPTLIB_PATH} LIB
 #Cleap up our variables(Not required.)
 unset( prefix )
 unset( SRCS )
-unset( HEADERS )
-unset( headers )
 unset( sources )

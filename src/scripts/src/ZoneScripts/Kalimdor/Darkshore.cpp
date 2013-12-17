@@ -21,20 +21,18 @@
 
 class Lunaclaw : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Lunaclaw);
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Lunaclaw);
+	Lunaclaw(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		Lunaclaw(Creature* pCreature) : CreatureAIScript(pCreature) {}
+	void OnDied(Unit* mKiller)
+	{
+		if(!mKiller->IsPlayer())
+			return;
 
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			Player* plr = TO_PLAYER(mKiller);
-
-			sEAS.SpawnCreature(plr, 12144, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 0, 1 * 60 * 1000);
-		}
+		Player* pPlayer = TO_PLAYER(mKiller);
+		sEAS.SpawnCreature(pPlayer, 12144, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), 0, 1 * 60 * 1000);
+	}
 };
 
 void SetupZoneDarkshore(ScriptMgr* mgr)

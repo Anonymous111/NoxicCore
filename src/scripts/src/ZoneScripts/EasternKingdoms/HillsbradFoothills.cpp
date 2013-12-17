@@ -19,16 +19,18 @@
 
 #include "../Setup.h"
 
+bool BaronVardusAllowSpawn = true;
+
 class Baron_Vardus : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Baron_Vardus);
-		Baron_Vardus(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Baron_Vardus);
+	Baron_Vardus(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnDied(Unit* mKiller)
-		{
-			BaronVardusAllowSpawn = true;
-		}
+	void OnDied(Unit* mKiller)
+	{
+		BaronVardusAllowSpawn = true;
+	}
 };
 
 void SetupZoneHillsbradFoothills(ScriptMgr* mgr)

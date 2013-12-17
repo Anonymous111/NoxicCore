@@ -21,26 +21,26 @@
 
 class Paoka_Swiftmountain : public CreatureAIScript
 {
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Paoka_Swiftmountain);
-		Paoka_Swiftmountain(Creature* pCreature) : CreatureAIScript(pCreature) {}
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(Paoka_Swiftmountain);
+	Paoka_Swiftmountain(Creature* pCreature) : CreatureAIScript(pCreature) {}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+	void OnReachWP(uint32 iWaypointId, bool bForwards)
+	{
+		if(iWaypointId == 72)
 		{
-			if(iWaypointId == 72)
-			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I appreciate the help you have shown Pao'ka. I hope this covers any misfortunes this deed has cost you.");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I appreciate the help you have shown Pao'ka. I hope this covers any misfortunes this deed has cost you.");
+			_unit->Despawn(5000, 1000);
+			sEAS.DeleteWaypoints(_unit);
+			if(_unit->m_escorter == NULL)
+				return;
 
-				Player* pPlayer = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				if(pPlayer->GetQuestLogForEntry(4770))
-					pPlayer->GetQuestLogForEntry(4770)->SendQuestComplete();
-			}
+			Player* pPlayer = _unit->m_escorter;
+			_unit->m_escorter = NULL;
+			if(pPlayer->GetQuestLogForEntry(4770))
+				pPlayer->GetQuestLogForEntry(4770)->SendQuestComplete();
 		}
+	}
 };
 
 void SetupZoneThousandNeedles(ScriptMgr* mgr)
