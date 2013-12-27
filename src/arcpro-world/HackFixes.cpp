@@ -5241,30 +5241,35 @@ void ApplyNormalFixes()
 	sp = CheckAndReturnSpellEntry(32385);
 	if(sp != NULL)
 	{
+		sp->procChance = 100;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->Effect[1] = SPELL_EFFECT_NULL; //remove this effect ? Maybe remove the other one :P xD
 	}
 	sp = CheckAndReturnSpellEntry(32387);
 	if(sp != NULL)
 	{
+		sp->procChance = 100;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->Effect[1] = SPELL_EFFECT_NULL; //remove this effect ? Maybe remove the other one :P xD
 	}
 	sp = CheckAndReturnSpellEntry(32392);
 	if(sp != NULL)
 	{
+		sp->procChance = 100;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->Effect[1] = SPELL_EFFECT_NULL; //remove this effect ? Maybe remove the other one :P xD
 	}
 	sp = CheckAndReturnSpellEntry(32393);
 	if(sp != NULL)
 	{
+		sp->procChance = 100;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->Effect[1] = SPELL_EFFECT_NULL; //remove this effect ? Maybe remove the other one :P xD
 	}
 	sp = CheckAndReturnSpellEntry(32394);
 	if(sp != NULL)
 	{
+		sp->procChance = 100;
 		sp->procFlags = PROC_ON_CAST_SPELL;
 		sp->Effect[1] = SPELL_EFFECT_NULL; //remove this effect ? Maybe remove the other one :P xD
 	}
@@ -8472,20 +8477,23 @@ void ApplyNormalFixes()
 	}
 	sp = dbcSpell.LookupEntryForced(20267);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 	sp = dbcSpell.LookupEntryForced(20268);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 	sp = dbcSpell.LookupEntryForced(20341);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 	sp = dbcSpell.LookupEntryForced(20342);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 	sp = dbcSpell.LookupEntryForced(20343);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
 	sp = dbcSpell.LookupEntryForced(27163);
 	if(sp != NULL)
-			sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+		sp->EffectImplicitTargetA[0] = EFF_TARGET_SINGLE_ENEMY;
+	sp = dbcSpell.LookupEntryForced(37336);
+	if(sp != NULL)
+		sp->Effect[0] = SPELL_EFFECT_DUMMY;
 }
