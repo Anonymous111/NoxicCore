@@ -464,14 +464,15 @@ class SERVER_DECL Vehicle
 		////////////////////////////////////////////////////////////////////////
 		bool HasAccessoryWithGUID(uint64 guid);
 
-	private:
-		std::tr1::array<VehicleSeat*, MAX_VEHICLE_SEATS> seats;
-		std::vector<uint64> installed_accessories;
-		uint32 creature_entry;
-		Unit* owner;
-		VehicleEntry* vehicle_info;
-		uint32 passengercount;
-		uint32 freeseats;
+private:
+	std::tr1::array<VehicleSeat*, MAX_VEHICLE_SEATS> seats;
+	std::vector<uint64> installed_accessories;
+	uint32 creature_entry;
+	Unit* owner;
+	VehicleEntry* vehicle_info;
+	VehicleEntry const* GetVehicleInfo() const { return vehicle_info; }
+	uint32 passengercount;
+	uint32 freeseats;
 };
 
 struct VehicleAccessoryEntry

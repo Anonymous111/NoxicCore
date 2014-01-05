@@ -1526,7 +1526,8 @@ enum VehicleFlags{
 	VEHICLE_FLAG_ADJUST_AIM_POWER                = 0x00000800,           // Lua_IsVehicleAimPowerAdjustable
 };
 
-struct VehicleEntry{
+struct VehicleEntry
+{
 	uint32  ID;                                           // 0
 	uint32  flags;                                        // 1
 	float   turnSpeed;                                    // 2
