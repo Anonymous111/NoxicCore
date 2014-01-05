@@ -70,7 +70,6 @@ void ApplyNormalFixes()
 		for(j = 0; j < 5; ++j)
 			if(tal->RankID[j] != 0)
 				talentSpells.insert(make_pair(tal->RankID[j], tal->TalentTree));
-
 	}
 
 	for(uint32 x = 0; x < cnt; x++)
@@ -2136,7 +2135,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
-		sp->EffectRadiusIndex[0] = 43; //16 yards
+		sp->EffectRadiusIndex[0] = EFFECT_RADIUS_16_YARDS;
 		sp->EffectApplyAuraName[1] = SPELL_AURA_PROC_TRIGGER_SPELL;
 		sp->EffectTriggerSpell[1] = 54172;
 		sp->procFlags = PROC_ON_CAST_SPELL;
@@ -4025,9 +4024,9 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(122);
 	if(sp != NULL)
 	{
-		sp->EffectRadiusIndex[0] = 13; // 10 yards ? before it had 2 yards
-		sp->EffectRadiusIndex[1] = 13; // 10 yards ? before it had 2 yards
-		sp->EffectRadiusIndex[2] = 13; // 10 yards ? before it had 2 yards
+		sp->EffectRadiusIndex[0] = EFFECT_RADIUS_10_YARDS; // 10 yards ? before it had 2 yards
+		sp->EffectRadiusIndex[1] = EFFECT_RADIUS_10_YARDS; // 10 yards ? before it had 2 yards
+		sp->EffectRadiusIndex[2] = EFFECT_RADIUS_10_YARDS; // 10 yards ? before it had 2 yards
 		//sp->AuraInterruptFlags &= ~AURA_INTERRUPT_ON_ANY_DAMAGE_TAKEN;
 	}
 
@@ -5405,7 +5404,7 @@ void ApplyNormalFixes()
 		sp->Effect[0] = 6;
 		sp->EffectImplicitTargetA[0] = 22;
 		sp->EffectImplicitTargetB[0] = 15;
-		sp->EffectRadiusIndex[0] = 10;
+		sp->EffectRadiusIndex[0] = EFFECT_RADIUS_30_YARDS;
 		sp->AreaAuraTarget = AA_TARGET_ALLENEMIES;
 	}
 
@@ -8295,7 +8294,7 @@ void ApplyNormalFixes()
 	if(sp != NULL)
 	{
 		sp->EffectImplicitTargetA[0] = sp->EffectImplicitTargetB[0]; 
-		sp->EffectRadiusIndex[0] = 9;
+		sp->EffectRadiusIndex[0] = EFFECT_RADIUS_20_YARDS;
 		sp->EffectImplicitTargetB[0] = 0;
 	}
 	sp = dbcSpell.LookupEntryForced(87168); // Thanks to TheConquistador
@@ -8555,4 +8554,28 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(37336);
 	if(sp != NULL)
 		sp->Effect[0] = SPELL_EFFECT_DUMMY;
+	sp = dbcSpell.LookupEntryForced(62012);
+	if(sp != NULL)
+		sp->EffectRadiusIndex[0] = EFFECT_RADIUS_0_YARDS;
+	sp = dbcSpell.LookupEntryForced(2378);
+	if(sp != NULL)
+	{
+		sp->manaCost = 0;
+		sp->manaPerSecond = 0;
+	}
+	sp = dbcSpell.LookupEntryForced(40167);
+	if(sp != NULL)
+		sp->Attributes |= ATTRIBUTES_UNK28;
+	sp = dbcSpell.LookupEntryForced(40166);
+	if(sp != NULL)
+		sp->Attributes |= ATTRIBUTES_UNK28;
+	sp = dbcSpell.LookupEntryForced(40165);
+	if(sp != NULL)
+		sp->Attributes |= ATTRIBUTES_UNK28;
+	sp = dbcSpell.LookupEntryForced(40055);
+	if(sp != NULL)
+		sp->Attributes |= ATTRIBUTES_UNK28;
+	sp = dbcSpell.LookupEntryForced(28200);
+	if(sp != NULL)
+		sp->procCharges = 6;
 }
