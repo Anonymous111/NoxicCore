@@ -92,6 +92,21 @@ void Vehicle::Load(Unit* owner, uint32 creature_entry, uint32 vehicleid)
 			owner->SetPower(POWER_TYPE_ENERGY, 50);
 		}break;
 	}
+	
+	switch(GetVehicleInfo()->vehicleid)
+	{
+		case 160: // Stand of the Ancients
+		case 244: // Wintergrasp
+		case 510: // Isle of Conquest
+			m_target->m_special_state |= UNIT_STATE_ROOT;
+			//m_target->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_ROOT); // UNIT_FLAG_ROOT does not exist
+		break;
+		case 321: //Pilgrims Bount: Chair // Thanks to https://github.com/Vincent-Michael
+			m_target->m_special_state |= UNIT_STATE_ROOT;
+		break;
+		default:
+		break;
+	}
 
 	for(uint32 i = 0; i < MAX_VEHICLE_SEATS; i++)
 		if((seats[i] != NULL) && seats[i]->Usable() && (!seats[i]->HasPassenger()))
