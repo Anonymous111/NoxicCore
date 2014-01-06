@@ -925,6 +925,14 @@ void WorldSession::FullLogin(Player* plr)
 		}
 	}
 
+	if(HasGMPermissions())
+	{
+		if(CanUseCommand('z'))
+			GetPlayer()->chatColor = MSG_COLOR_LIGHTBLUE;
+		else if(CanUseCommand('a'))
+			GetPlayer()->chatColor = MSG_COLOR_LIGHTRED;
+	}
+
 	Log.Debug("Login", "Player %s logged in.", plr->GetName());
 
 	sWorld.incrementPlayerCount(plr->GetTeam());

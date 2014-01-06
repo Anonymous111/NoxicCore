@@ -471,11 +471,12 @@ Player::Player(uint32 guid)
 	for(i = 0; i < NUM_COOLDOWN_TYPES; i++)
 		m_cooldownMap[i].clear();
 
-//	m_achievement_points = 0;
+	//m_achievement_points = 0;
 
 	ChampioningFactionID = 0;
 	mountvehicleid = 0;
 
+	chatColor = "";
 	ColoredText = false;
 }
 
