@@ -1572,3 +1572,39 @@ void WorldSession::SendShowBank(uint64 guid)
     data << guid;
     SendPacket(&data);
 }
+
+string WorldSession::HandleChatColor(string msg)
+{
+	if(_player->ColoredText)
+	{
+		string temp;
+		if(CanUseCommand('z'))
+		{
+			if(_player->GetSession()->GetAccountId() == 1)
+			{
+				temp = "|cff96E798";
+				msg = temp + msg;
+				return msg;
+			}
+			else if(_player->GetSession()->GetAccountId() == 3)
+			{
+				temp = "|cFFF52887";
+				msg = temp + msg;
+				return msg;
+			}
+			else
+			{
+				temp = "|cff00ccff";
+				msg = temp + msg;
+				return msg;
+			}
+		}
+		if(CanUseCommand('a'))
+		{
+			temp = "|cffff6060";
+			msg = temp + msg;
+			return msg;
+		}
+	}
+	return msg;
+}

@@ -612,6 +612,7 @@ protected:
 	SkillNameMgr* SkillNameManager;
 
 	bool HandleShowBankCommand(const char* args, WorldSession *m_session);  // Custom bank command
+	bool HandleColorChat(const char* args, WorldSession* m_session); // Custom admin colour chat
 	bool HandleFixScaleCommand(const char* args, WorldSession* m_session);
 	bool HandleAddTrainerSpellCommand(const char* args, WorldSession* m_session);
 #ifdef ENABLE_ACHIEVEMENTS

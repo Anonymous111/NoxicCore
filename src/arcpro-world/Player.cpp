@@ -475,6 +475,8 @@ Player::Player(uint32 guid)
 
 	ChampioningFactionID = 0;
 	mountvehicleid = 0;
+
+	ColoredText = false;
 }
 
 void Player::OnLogin() {}

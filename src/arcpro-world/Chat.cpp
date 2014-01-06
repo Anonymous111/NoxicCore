@@ -776,6 +776,7 @@ void CommandTableStorage::Init()
 		{ "model",				'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "display",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "displayid",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
+		{ "chatcolor",			'a', &ChatHandler::HandleColorChat,								"SYNTAX: None.\nNOTES: Toggles ranked chat colour in chat messages on/off.",																NULL,						0,						0, 0 },
 		{ NULL,					'0', NULL,														"",																																			NULL,						0,						0, 0 }
 	};
 	dupe_command_table(commandTable, _commandTable);
@@ -1391,5 +1392,25 @@ bool ChatHandler::HandleGetPosCommand(const char* args, WorldSession* m_session)
 bool ChatHandler::HandleShowBankCommand(const char* args, WorldSession *m_session) // custom bank command
 {
 	m_session->SendShowBank(m_session->GetPlayer()->GetGUID());
+	return true;
+}
+
+bool ChatHandler::HandleColorChat(const char* args, WorldSession* m_session)
+{
+	Player* plr = m_session->GetPlayer();
+	if(!plr)
+		return false;
+
+	if(plr->ColoredText)
+	{
+		plr->ColoredText = false;
+		RedSystemMessage(m_session, "Coloured chat is now OFF.");
+	}
+	else
+	{
+		plr->ColoredText = true;
+		GreenSystemMessage(m_session, "Coloured chat is now ON.")
+	}
+
 	return true;
 }

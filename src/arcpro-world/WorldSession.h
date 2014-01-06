@@ -207,6 +207,8 @@ class SERVER_DECL WorldSession
 {
 	friend class WorldSocket;
 public:
+	string HandleChatColor(string msg);
+
 	WorldSession(uint32 id, string Name, WorldSocket* sock);
 	~WorldSession();
 
