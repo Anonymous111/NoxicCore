@@ -2763,6 +2763,8 @@ void Spell::HandleAddAura(uint64 guid)
 		spellid = 6788;
 	else if(GetProto()->Id == 45438)  // Cast spell Hypothermia
 		spellid = 41425;
+	else if(GetProto()->Id == 20594) // Stoneskin
+		spellid = 65116;
 	else if(GetProto()->NameHash == SPELL_HASH_HEROISM)
 		spellid = 57723;
 	else if(GetProto()->NameHash == SPELL_HASH_BLOODLUST)
@@ -2777,11 +2779,7 @@ void Spell::HandleAddAura(uint64 guid)
 		if(u_caster->HasAurasWithNameHash(SPELL_HASH_VINDICATION))
 			spellid = u_caster->FindAuraByNameHash(SPELL_HASH_VINDICATION)->m_spellProto->RankNumber == 2 ? 26017 : 67;
 	}
-	else if(GetProto()->Id == 5229 &&
-	        p_caster && (
-	            p_caster->GetShapeShift() == FORM_BEAR ||
-	            p_caster->GetShapeShift() == FORM_DIREBEAR) &&
-	        p_caster->HasAurasWithNameHash(SPELL_HASH_KING_OF_THE_JUNGLE))
+	else if(GetProto()->Id == 5229 && p_caster && (p_caster->GetShapeShift() == FORM_BEAR || p_caster->GetShapeShift() == FORM_DIREBEAR) && p_caster->HasAurasWithNameHash(SPELL_HASH_KING_OF_THE_JUNGLE))
 	{
 		SpellEntry* spellInfo = dbcSpell.LookupEntryForced(51185);
 		if(!spellInfo)

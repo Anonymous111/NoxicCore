@@ -170,7 +170,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
 	if(int(msg.find("|T")) > -1)
 	{
-		GetPlayer()->BroadcastMessage("Don't even THINK about doing that again");
+		GetPlayer()->BroadcastMessage("Don't even THINK about doing that again.");
 		return;
 	}
 
@@ -192,6 +192,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			if(GetPlayer()->m_modlanguage >= 0)
 				data = sChatHandler.FillMessageData(CHAT_MSG_EMOTE, GetPlayer()->m_modlanguage,  msg.c_str(), _player->GetGUID(), _player->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_GM) ? 4 : 0);
@@ -218,6 +220,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			if(GetPlayer()->m_modlanguage >= 0)
 			{
@@ -255,6 +259,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			Group* pGroup = _player->GetGroup();
 			if(pGroup == NULL)
@@ -311,6 +317,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				return;
 			}
 
+			msg = HandleChatColor(msg);
+
 			if(_player->m_playerInfo->guild)
 				_player->m_playerInfo->guild->GuildChat(msg.c_str(), this, lang);
 		}break;
@@ -324,6 +332,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			if(_player->m_playerInfo->guild)
 				_player->m_playerInfo->guild->OfficerChat(msg.c_str(), this, lang);
@@ -341,6 +351,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
+
 			if(lang > 0 && LanguageSkills[lang] && _player->_HasSkillLine(LanguageSkills[lang]) == false)
 				return;
 
@@ -369,6 +382,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			PlayerCache* playercache = objmgr.GetPlayerCache(to.c_str(), false);
 			if(playercache == NULL)
@@ -454,6 +469,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				return;
 			}
 
+			msg = HandleChatColor(msg);
+
 			if(sChatHandler.ParseCommands(msg.c_str(), this) > 0)
 				break;
 
@@ -476,6 +493,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
 
 			/* WorldPacket* data, WorldSession* session, uint32 type, uint32 language, const char* channelName, const char* message */
 			if(GetPlayer()->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_AFK))
@@ -507,6 +526,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				return;
 			}
 
+			msg = HandleChatColor(msg);
+
 			if(GetPlayer()->HasFlag(PLAYER_FLAGS, PLAYER_FLAG_DND))
 				GetPlayer()->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAG_DND);
 			else
@@ -523,6 +544,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 				SystemMessage("Your chat message was blocked by a server-side filter.");
 				return;
 			}
+
+			msg = HandleChatColor(msg);
+
 			if(_player->m_bg != NULL)
 			{
 				data = sChatHandler.FillMessageData(type, lang, msg.c_str(), _player->GetGUID());

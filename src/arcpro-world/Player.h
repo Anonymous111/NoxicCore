@@ -1280,7 +1280,7 @@ public:
 		SetUInt32Value(PLAYER_BYTES_3, ((GetUInt32Value(PLAYER_BYTES_3) & 0x00FFFFFF) | (uint8(newrank) << 24)));
 	}
 	uint32 GetMaxPersonalRating();
-		bool HasTitle(RankTitles title)
+	bool HasTitle(RankTitles title)
 	{
 		return (GetUInt64Value(PLAYER__FIELD_KNOWN_TITLES + ((title >> 6) << 1)) & (uint64(1) << (title % 64))) != 0;
 	}
@@ -2443,6 +2443,7 @@ private:
 	void Social_SetNote(uint32 guid, const char* note);
 
 public:
+	bool ColoredText;
 	bool Social_IsIgnoring(PlayerInfo* m_info);
 	bool Social_IsIgnoring(uint32 guid);
 

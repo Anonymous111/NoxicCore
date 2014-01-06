@@ -376,7 +376,7 @@ bool HandleNameHashCommand(BaseConsole* pConsole, int argc, const char* argv[])
 bool HandleClearConsoleCommand(BaseConsole* pConsole, int argc, const char* argv[])
 {
 	system("cls");
-	pConsole->Write("Out of the ashes, Chuck Norris appears! With a roundhouse kick, your console shall now be cleaned!");
+	//pConsole->Write("Out of the ashes, Chuck Norris appears! With a roundhouse kick, your console shall now be cleaned!");
 	return true;
 }
 
