@@ -1641,7 +1641,8 @@ bool ChatHandler::HandleDBReloadCommand(const char* args, WorldSession* m_sessio
 bool ChatHandler::HandleModifyLevelCommand(const char* args, WorldSession* m_session)
 {
 	Player* plr = getSelectedChar(m_session, true);
-	if(plr == 0) return true;
+	if(plr == 0)
+		return true;
 
 	uint32 Level = args ? atol(args) : 0;
 	if(Level == 0 || Level > sWorld.m_levelCap)
@@ -3988,6 +3989,7 @@ bool ChatHandler::HandleCollisionGetHeight(const char* args, WorldSession* m_ses
 		return true;
 	}
 }
+
 bool ChatHandler::HandleLevelUpCommand(const char* args, WorldSession* m_session)
 {
 	int levels = 0;
@@ -4002,9 +4004,11 @@ bool ChatHandler::HandleLevelUpCommand(const char* args, WorldSession* m_session
 
 	Player* plr = getSelectedChar(m_session, true);
 
-	if(!plr) plr = m_session->GetPlayer();
+	if(!plr)
+		plr = m_session->GetPlayer();
 
-	if(!plr) return false;
+	if(!plr)
+		return false;
 
 	sGMLog.writefromsession(m_session, "used level up command on %s, with %u levels", plr->GetName(), levels);
 
@@ -4067,7 +4071,7 @@ bool ChatHandler::HandleAddTrainerSpellCommand(const char* args, WorldSession* m
 	if(sscanf(args, "%u %u %u %u %u", &spellid, &cost, &reqspell, &reqlevel, &delspell) != 5)
 		return false;
 
-	Trainer* pTrainer =  pCreature->GetTrainer();
+	Trainer* pTrainer = pCreature->GetTrainer();
 	if(pTrainer == NULL)
 	{
 		RedSystemMessage(m_session, "Target is not a trainer.");
