@@ -1426,9 +1426,14 @@ bool ChatHandler::HandleChangeChatColor(const char* args, WorldSession* m_sessio
 	if(args == NULL)
 		return false;
 
+	if(strlen(args) < 6)
+	{
+		RedSystemMessage(m_session, "You have entered less than six hexadecimal letters or numbers. Please try again.");
+		return false;
+	}
 	if(strlen(args) > 6)
 	{
-		RedSystemMessage(m_session, "You have entered more than six letters or numbers. Please try again.");
+		RedSystemMessage(m_session, "You have entered more than six hexadecimal letters or numbers. Please try again.");
 		return false;
 	}
 	if(plr->ColoredText)
