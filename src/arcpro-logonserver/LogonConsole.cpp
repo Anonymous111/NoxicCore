@@ -130,6 +130,7 @@ void LogonConsole::ProcessCmd(char* cmd)
 		{	"?", &LogonConsole::TranslateHelp},
 		{   "help", &LogonConsole::TranslateHelp},
 		{   "createaccount", &LogonConsole::CreateAccount },
+		{   "account", &LogonConsole::CreateAccount },
 		{	"reload", &LogonConsole::ReloadAccts},
 		{	"rehash", &LogonConsole::TranslateRehash},
 		{	"netstatus", &LogonConsole::NetworkStatus},
@@ -192,6 +193,7 @@ void LogonConsole::ProcessHelp(char* command)
 		printf("Console:--------help--------\n");
 		printf("	Help, ?: Prints this help text.\n");
 		printf("	createaccount: Creates new accounts\n");
+		printf("		account: Creates new accounts\n");
 		printf("	Reload: Reloads accounts.\n");
 		printf("	Netstatus: Shows network status.\n");
 		printf("	info:  shows some information about the server.\n");
@@ -216,8 +218,11 @@ void LogonConsole::CreateAccount(char* str)
 	int count = sscanf(str, "%s %s %s", name, password, email);
 	if(count != 3)
 	{
-		std::cout << "usage: createaccount <name> <password> <email>" << std::endl;
-		std::cout << "example: createaccount ghostcrawler Ih4t3p4l4dins greg.street@blizzard.com" << std::endl;
+		std::cout << "Usage: createaccount <name> <password> <email>" << std::endl;
+		std::cout << "Example: createaccount username password example@example.com" << std::endl;
+		std::cout << "--or--" << std::endl;
+		std::cout << "Usage: account <name> <password> <email>" << std::endl;
+		std::cout << "Example: account username password example@example.com" << std::endl;
 		return;
 	}
 

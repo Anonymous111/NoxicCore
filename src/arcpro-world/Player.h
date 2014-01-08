@@ -2443,6 +2443,7 @@ private:
 	void Social_SetNote(uint32 guid, const char* note);
 
 public:
+	std::string chatColor;
 	bool ColoredText;
 	bool Social_IsIgnoring(PlayerInfo* m_info);
 	bool Social_IsIgnoring(uint32 guid);

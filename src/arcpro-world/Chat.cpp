@@ -777,6 +777,7 @@ void CommandTableStorage::Init()
 		{ "display",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "displayid",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "chatcolor",			'a', &ChatHandler::HandleColorChat,								"SYNTAX: None.\nNOTES: Toggles ranked chat colour in chat messages on/off.",																NULL,						0,						0, 0 },
+		{ "changecolor",		'0', &ChatHandler::HandleChangeChatColor,						"Changes the colour of your text when messaging."																							NULL,						0,						0, 0 },
 		{ NULL,					'0', NULL,														"",																																			NULL,						0,						0, 0 }
 	};
 	dupe_command_table(commandTable, _commandTable);
@@ -1411,6 +1412,39 @@ bool ChatHandler::HandleColorChat(const char* args, WorldSession* m_session)
 		plr->ColoredText = true;
 		GreenSystemMessage(m_session, "Coloured chat is now ON.")
 	}
+
+	return true;
+}
+
+bool ChatHandler::HandleChangeChatColor(const char* args, WorldSession* m_session)
+{
+	Player* plr = m_session->GetPlayer();
+
+	if(!plr)
+		return false;
+
+	if(args == NULL)
+		return false;
+
+	if(strlen(args) < 6)
+	{
+		RedSystemMessage(m_session, "You have entered less than six hexadecimal letters or numbers. Please try again.");
+		return false;
+	}
+	if(strlen(args) > 6)
+	{
+		RedSystemMessage(m_session, "You have entered more than six hexadecimal letters or numbers. Please try again.");
+		return false;
+	}
+	if(plr->ColoredText)
+	{
+		string tmp = "|cff";
+		tmp += string(args);
+		plr->chatColor = tmp;
+		GreenSystemMessage(m_session, "Your chat colour string is now '%s'. Be careful this may crash the realm if not properly formatted.", args);
+	}
+	else
+		RedSystemMessage(m_session, "You must have chatColor enabled to use this command.");
 
 	return true;
 }
