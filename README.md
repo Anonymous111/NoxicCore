@@ -1,9 +1,10 @@
-# ArcPro
+# NoxicCore
 ## Introduction
 
-ArcPro is a *MMORPG* Framework based mostly in C++.
+NoxicCore is a *MMORPG* Framework based mostly in C++.
 
-It is derived from *ArcEmu*, and is based on the code of that project with
+It is derived from *ArcPro* and currently being rewritten from the mess caused by the previous developer. 
+The original core was derived from *ArcEmu*, and is based on the code of that project with
 extensive changes over time to optimize, improve and cleanup the codebase 
 at the same time as improving the in-game mechanics and functionality.
 
@@ -11,11 +12,11 @@ It is completely open source; community involvement is highly encouraged.
 World of Warcraft, and all World of Warcraft or Warcraft art, images, and lore are copyrighted by Blizzard Entertainment, Inc..
 
 If you wish to contribute ideas or code please visit our site linked below or
-make pull requests to our [Github repository](https://github.com/ArcPro/ArcPro).
+make pull requests to our [Github repository](https://github.com/NoxicCore/NoxicCore).
 
 For further information on the ArcPro project, please visit our project
-website at [arcpro.org](http://www.arcpro.org). The website is currently unavailable.
-You can visit our temporary website at [arcpro.sexyi.am](http://www.arcpro.sexi.am).
+website at [noxicentry.org](http://www.noxicentry.org). The website is currently unavailable until an announcement is made by
+the project continuer.
 
 ## Requirements
 
@@ -30,7 +31,7 @@ You can visit our temporary website at [arcpro.sexyi.am](http://www.arcpro.sexi.
 
 ## Reporting issues
 
-Issues can be reported via the [Github issue tracker](https://github.com/ArcPro/ArcPro/issues).
+Issues can be reported via the [Github issue tracker](https://github.com/NoxicCore/NoxicCore/issues).
 
 Please take the time to review existing issues before submitting your own to
 prevent duplicates.
@@ -41,17 +42,14 @@ Fixes are submitted as pull requests via Github. For more information on how to
 properly submit a pull request, read the guidlines on the [github help page](https://help.github.com/articles/creating-a-pull-request).
 
 
-## Copyright
+## Copyright & Credits
 
 License: GPL 3.0
 
 Read file [COPYING](COPYING)
+Read file [CREDITS] (CREDITS)
 
 
 ## Links
 
-[Site](http://www.arcpro.sexyi.am)
-
-[Wiki](http://arcpro.sexyi.am)
-
-[Forums](http://www.arcpro.sexyi.am)
+[Site] -- Currently unavailable
