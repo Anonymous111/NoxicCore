@@ -8578,4 +8578,32 @@ void ApplyNormalFixes()
 	sp = dbcSpell.LookupEntryForced(28200);
 	if(sp != NULL)
 		sp->procCharges = 6;
+	sp = dbcSpell.LookupEntryForced(53271);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 54216;
+		sp->Effect[1] = SPELL_EFFECT_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[1] = 54216;
+	}
+	sp = dbcSpell.LookupEntryForced(53290);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 57669;
+		sp->EffectImplicitTargetA[0] = 1;
+		sp->procChance = 33;
+		sp->procflags2 = PROC_ON_SPELL_CRIT_HIT;
+	}
+	sp = dbcSpell.LookupEntryForced(53291);
+	if(sp != NULL)
+	{
+		sp->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+		sp->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+		sp->EffectTriggerSpell[0] = 57669;
+		sp->EffectImplicitTargetA[0] = 1;
+		sp->procChance = 66;
+		sp->procflags2 = PROC_ON_SPELL_CRIT_HIT;
+	}
 }
