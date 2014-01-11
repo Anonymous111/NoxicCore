@@ -20,6 +20,8 @@
  */
 
 #include "StdAfx.h"
+#pragma warning( disable : 4355 )
+
 UpdateMask Player::m_visibleUpdateMask;
 #define COLLISION_INDOOR_CHECK_INTERVAL 1000
 #define CANNON 24933 //39692, 34154
@@ -29,6 +31,7 @@ UpdateMask Player::m_visibleUpdateMask;
 #define MACHINEGUN 25026
 #define DROPMINE 25024
 #define SHIELD 27759
+
 static uint32 TonkSpecials[4] = {FLAMETHROWER, MACHINEGUN, DROPMINE, SHIELD};
 
 //	 0x3F = 0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 for 80 level
@@ -13295,4 +13298,9 @@ void Player::RemoveVehicleComponent()
 {
 	delete vehicle;
 	vehicle = NULL;
+}
+
+uint32 Player::GetQuestStatusForQuest(uint32 questid, uint8 type, bool skiplevelcheck)
+{
+	return sQuestMgr.CalcQuestStatus(this, GetQuestLogForEntry(questid)->GetQuest(), type, skiplevelcheck);
 }

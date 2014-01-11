@@ -1062,6 +1062,7 @@ public:
 	}
 
 	int32 GetOpenQuestSlot();
+	uint32 GetQuestStatusForQuest(uint32 questid, uint8 type = 1, bool skiplevelcheck = false);
 	QuestLogEntry* GetQuestLogForEntry(uint32 quest);
 	QuestLogEntry* GetQuestLogInSlot(uint32 slot) { return m_questlog[slot]; }
 	uint32 GetQuestSharer() { return m_questSharer; }
