@@ -186,6 +186,9 @@ int WorldSession::Update(uint32 InstanceID)
 
 		if(_socket == NULL)
 		{
+			if(_player)
+				sLog.outstring("[%s] has disconnected." _player->GetName());
+
 			bDeleted = true;
 			LogoutPlayer(true);
 			return 1;
@@ -597,6 +600,7 @@ void WorldSession::InitPacketHandlerTable()
 
 	// Player Interaction
 	WorldPacketHandlers[CMSG_WHO].handler = &WorldSession::HandleWhoOpcode;
+	WorldPacketHandlers[CMSG_WHOIS].handler = &WorldSession::HandleWhoisOpcode;
 	WorldPacketHandlers[CMSG_LOGOUT_REQUEST].handler = &WorldSession::HandleLogoutRequestOpcode;
 	WorldPacketHandlers[CMSG_PLAYER_LOGOUT].handler = &WorldSession::HandlePlayerLogoutOpcode;
 	WorldPacketHandlers[CMSG_LOGOUT_CANCEL].handler = &WorldSession::HandleLogoutCancelOpcode;
