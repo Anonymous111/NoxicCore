@@ -380,6 +380,49 @@ bool ChatHandler::HandleAddInvItemCommand(const char* args, WorldSession* m_sess
 	}
 }
 
+bool ChatHandler::HandleRemoveItemCommand(const char* args, WorldSession* m_session)
+{
+	uint32 item_id;
+	int32 count, ocount;
+	int argc = sscanf(args, "%u %u", (unsigned int*)&item_id, (unsigned int*)&count);
+	if(argc == 1)
+		count = 1;
+	else if(argc != 2 || !count)
+		return false;
+
+	ocount = count;
+	Player* plr = getSelectedChar(m_session, true);
+	if(!plr) return true;
+
+	// loop until they're all gone.
+	int32 loop_count = 0;
+	int32 start_count = plr->GetItemInterface()->GetItemCount(item_id, true);
+	int32 start_count2 = start_count;
+	if(count > start_count)
+		count = start_count;
+
+	while(start_count >= count && (count > 0) && loop_count < 20) // Prevent a loop here.
+	{
+		plr->GetItemInterface()->RemoveItemAmt(item_id, count);
+		start_count2 = plr->GetItemInterface()->GetItemCount(item_id, true);
+		count -= (start_count - start_count2);
+		start_count = start_count2;
+		++loop_count;
+	}
+
+	ItemPrototype* iProto	= ItemPrototypeStorage.LookupEntry(item_id);
+
+	if(iProto)
+	{
+		sGMLog.writefromsession(m_session, "used remove item %s (id: %u) count %u from %s", iProto->Name1, item_id, ocount, plr->GetName());
+		BlueSystemMessage(m_session, "Removing %u copies of item %s (id: %u) from %s's inventory.", ocount, GetItemLinkByProto(iProto, m_session->language).c_str(), item_id, plr->GetName());
+		BlueSystemMessage(plr->GetSession(), "%s removed %u copies of item %s from your inventory.", m_session->GetPlayer()->GetName(), ocount, GetItemLinkByProto(iProto, plr->GetSession()->language).c_str());
+	}
+	else RedSystemMessage(m_session, "Cannot remove non valid item id: %u .", item_id);
+
+	return true;
+}
+
 bool ChatHandler::HandleSummonCommand(const char* args, WorldSession* m_session)
 {
 	if(!*args)
