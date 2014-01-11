@@ -470,6 +470,7 @@ private:
 	uint32 creature_entry;
 	Unit* owner;
 	VehicleEntry* vehicle_info;
+	Creature* m_target;
 	VehicleEntry const* GetVehicleInfo() const { return vehicle_info; }
 	uint32 passengercount;
 	uint32 freeseats;

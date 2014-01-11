@@ -8535,7 +8535,7 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 57669;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->procChance = 33;
-		sp->procflags2 = PROC_ON_SPELL_CRIT_HIT;
+		sp->procflags = PROC_ON_SPELL_CRIT_HIT;
 	}
 	sp = dbcSpell.LookupEntryForced(53291);
 	if(sp != NULL)
@@ -8545,6 +8545,6 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 57669;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->procChance = 66;
-		sp->procflags2 = PROC_ON_SPELL_CRIT_HIT;
+		sp->procflags = PROC_ON_SPELL_CRIT_HIT;
 	}
 }

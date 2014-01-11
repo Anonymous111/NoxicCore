@@ -93,7 +93,7 @@ void Vehicle::Load(Unit* owner, uint32 creature_entry, uint32 vehicleid)
 		}break;
 	}
 	
-	switch(GetVehicleInfo()->vehicleid)
+	switch(GetVehicleInfo()->ID)
 	{
 		case 160: // Stand of the Ancients
 		case 244: // Wintergrasp

@@ -777,7 +777,7 @@ void CommandTableStorage::Init()
 		{ "display",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "displayid",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "chatcolor",			'a', &ChatHandler::HandleColorChat,								"SYNTAX: None.\nNOTES: Toggles ranked chat colour in chat messages on/off.",																NULL,						0,						0, 0 },
-		{ "changecolor",		'0', &ChatHandler::HandleChangeChatColor,						"Changes the colour of your text when messaging."																							NULL,						0,						0, 0 },
+		{ "changecolor",		'0', &ChatHandler::HandleChangeChatColor,						"Changes the colour of your text when messaging.",																							NULL,						0,						0, 0 },
 		{ NULL,					'0', NULL,														"",																																			NULL,						0,						0, 0 }
 	};
 	dupe_command_table(commandTable, _commandTable);
@@ -1410,7 +1410,7 @@ bool ChatHandler::HandleColorChat(const char* args, WorldSession* m_session)
 	else
 	{
 		plr->ColoredText = true;
-		GreenSystemMessage(m_session, "Coloured chat is now ON.")
+		GreenSystemMessage(m_session, "Coloured chat is now ON.");
 	}
 
 	return true;
