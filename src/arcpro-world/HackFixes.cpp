@@ -8543,4 +8543,13 @@ void ApplyNormalFixes()
 		sp->procChance = 66;
 		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
 	}
+	sp = dbcSpell.LookupEntryForced(36839);
+	if(sp != NULL)
+		sp->RecoveryTime = 4500;
+	sp = dbcSpell.LookupEntryForced(13754);
+	if(sp != NULL)
+		sp->procFlags = PROC_NULL;
+	sp = dbcSpell.LookupEntryForced(13867);
+	if(sp != NULL)
+		sp->procFlags = PROC_NULL;
 }
