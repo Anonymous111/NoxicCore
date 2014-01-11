@@ -274,6 +274,16 @@ static void SM_PFValue(int32* m, float* v, uint32* group)
 	}
 }
 
+enum AreaAuraTargets
+{
+	AA_TARGET_PARTY			= 0x01,
+	AA_TARGET_RAID			= 0x02,
+	AA_TARGET_ALLFRIENDLY	= 0x04,
+	AA_TARGET_ALLENEMIES	= 0x08,
+	AA_TARGET_PET			= 0x10,
+	AA_TARGET_NOTSELF		= 0x20
+};
+
 enum SPELL_INFRONT_STATUS
 {
 	SPELL_INFRONT_STATUS_REQUIRE_SKIPCHECK	= 0,
@@ -1083,6 +1093,7 @@ enum SpellIsFlags
 	SPELL_FLAG_IS_FORCEDBUFF						= 0x00002000, // forced to be a buff
 	SPELL_FLAG_IS_INHERITING_LEVEL					= 0x00004000, // summons to inherit caster level or not
 	SPELL_FLAG_IS_MAXSTACK_FOR_DEBUFF				= 0x00008000, // summons to inherit caster level or not
+	SPELL_FLAG_ON_ONLY_ONE_TARGET					= 0x00100000,
 };
 
 enum SpellCoefficientsFlags

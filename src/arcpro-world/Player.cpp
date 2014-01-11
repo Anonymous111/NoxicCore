@@ -13300,7 +13300,7 @@ void Player::RemoveVehicleComponent()
 	vehicle = NULL;
 }
 
-uint32 Player::GetQuestStatusForQuest(uint32 questid, uint8 type, bool skiplevelcheck)
+/*uint32 Player::GetQuestStatusForQuest(uint32 questid, uint8 type, bool skiplevelcheck)
 {
 	return sQuestMgr.CalcQuestStatus(this, GetQuestLogForEntry(questid)->GetQuest(), type, skiplevelcheck);
-}
+}*/

@@ -798,6 +798,8 @@ struct SpellEntry
 	uint32 trnr_req_clsmsk;
 
 	uint32 logsId;
+	uint32 AdditionalAura;
+	uint32 AreaAuraTarget;
 
 	float base_range_or_radius_sqr;        //!!! CUSTOM, needed for aoe spells most of the time
 	// love me or hate me, all "In a cone in front of the caster" spells don't necessarily mean "in front"
