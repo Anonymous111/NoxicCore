@@ -193,6 +193,12 @@ void WorldSession::HandleSwapInvItemOpcode(WorldPacket & recv_data)
 		return;
 	}
 
+	if(srcslot > MAX_INVENTORY_SLOT || dstslot > MAX_INVENTORY_SLOT)
+	{ //Item duplication exploit fixed
+		Disconnect(); //Disconnect the exploiters
+		return;
+	}
+
 	Item* dstitem = _player->GetItemInterface()->GetInventoryItem(dstslot);
 	Item* srcitem = _player->GetItemInterface()->GetInventoryItem(srcslot);
 
