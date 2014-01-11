@@ -121,8 +121,10 @@ bool ChatHandler::HandleWAnnounceCommand(const char* args, WorldSession* m_sessi
 	input3 += sWorld.ann_gmtagcolor;
 	if(sWorld.GMAdminTag)
 	{
-		if(m_session->CanUseCommand('z')) input3 += "< Admin >";
-		else if(m_session->GetPermissionCount()) input3 += "< GM >";
+		if(m_session->CanUseCommand('z'))
+			input3 += "< Admin >";
+		else if(m_session->GetPermissionCount())
+			input3 += "< GM >";
 	}
 	if(sWorld.NameinWAnnounce)
 	{
@@ -130,7 +132,11 @@ bool ChatHandler::HandleWAnnounceCommand(const char* args, WorldSession* m_sessi
 		input3 += m_session->GetPlayer()->GetName();
 		input3 += "]:|r " + sWorld.ann_msgcolor;
 	}
-	else if(!sWorld.NameinWAnnounce) {input3 += ": "; input3 += sWorld.ann_msgcolor;}
+	else if(!sWorld.NameinWAnnounce)
+	{
+		input3 += ": ";
+		input3 += sWorld.ann_msgcolor;
+	}
 	snprintf((char*)pAnnounce, 1024, "%s%s", input3.c_str(), args);
 
 	sWorld.SendWorldWideScreenText(pAnnounce); // send message
@@ -152,12 +158,12 @@ bool ChatHandler::HandleGMOnCommand(const char* args, WorldSession* m_session)
 		_player->SetFaction(35);
 		_player->RemovePvPFlag();
 
-		char* sPhase = strtok((char*)args, " ");
+		/*char* sPhase = strtok((char*)args, " ");
 		if(!sPhase)
 			return false;
 
 		uint32 newphase = atoi(sPhase);
-		_player->Phase(PHASE_ANYWHERE, newphase);
+		_player->Phase(PHASE_ANYWHERE, newphase);*/
 
 		BlueSystemMessage(m_session, "GM flag set. It will now appear above your name and in chat messages until you use .gm off.");
 
@@ -179,12 +185,12 @@ bool ChatHandler::HandleGMOffCommand(const char* args, WorldSession* m_session)
 		_player->SetFaction(_player->GetInitialFactionId());
 		_player->UpdatePvPArea();
 
-		char* sPhase = strtok((char*)args, " ");
+		/*char* sPhase = strtok((char*)args, " ");
 		if(!sPhase)
 			return false;
 
 		uint32 newphase = atoi(sPhase);
-		_player->Phase(PHASE_RESET, newphase);
+		_player->Phase(PHASE_RESET, newphase);*/
 
 		BlueSystemMessage(m_session, "GM Flag Removed. < GM > Will no longer show in chat messages or above your name.");
 
