@@ -1,0 +1,6 @@
+'.gm on'
+		When used, set a phase for the GM to see any NPC in the world from any phase.
+		This also includes DND bunnies, the Dead healer NPC to resurrect you from the dead.
+
+'.gm off'
+		Will reset your phase to your original phase for a standard palyer.

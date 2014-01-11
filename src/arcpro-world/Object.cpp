@@ -2155,9 +2155,9 @@ void Object::Phase(uint8 command, uint32 newphase)
 		case PHASE_RESET:
 			m_phase = 1;
 		break;
-		case PHASE_ANYWHERE:
+		/*case PHASE_ANYWHERE:
 			m_phase = 4294967295;
-		break;
+		break;*/
 		default:
 			ARCPRO_ASSERT(false);
 		break;
