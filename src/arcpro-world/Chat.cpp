@@ -84,6 +84,10 @@ ChatCommand* CommandTableStorage::GetSubCommandTable(const char* name)
 		return _achievementCommandTable;
 	else if(!stricmp(name, "vehicle"))
 		return _vehicleCommandTable;
+	else if(!strcmp(name, "learn"))
+		return _learnCommandTable;
+	else if(!strcmp(name, "unlearn"))
+		return _unlearnCommandTable;
 	return 0;
 }
 
@@ -186,9 +190,7 @@ void CommandTableStorage::Override(const char* command, const char* level)
 	}
 
 	if(p->Name == 0)
-	{
 		LOG_ERROR("Invalid command referenced: `%s`", command_name);
-	}
 
 	free(cmd);
 }
@@ -221,6 +223,8 @@ void CommandTableStorage::Dealloc()
 	free(_arenaCommandTable);
 	free(_achievementCommandTable);
 	free(_vehicleCommandTable);
+	free(_learnCommandTable);
+	free(_unlearnCommandTable);
 	free(_commandTable);
 }
 
@@ -471,6 +475,7 @@ void CommandTableStorage::Init()
 		{ "stack",       'm', &ChatHandler::HandleAuraStackCheatCommand,   "Enables aura stacking cheat.",                    NULL, 0, 0, 0 },
 		{ "itemstack",   'm', &ChatHandler::HandleItemStackCheatCommand,   "Enables item stacking cheat.",                    NULL, 0, 0, 0 },
 		{ "triggerpass", 'm', &ChatHandler::HandleTriggerpassCheatCommand, "Ignores area trigger prerequisites.",             NULL, 0, 0, 0 },
+		{ "waterwalk",	'd',	&ChatHandler::HandleDebugWaterWalk,		"Enables waterwalk cheat.",							NULL, 0, 0, 0 },
 		{ NULL,          '0', NULL,                                        "",                                                NULL, 0, 0, 0 }
 	};
 	dupe_command_table(CheatCommandTable, _CheatCommandTable);
@@ -706,8 +711,27 @@ void CommandTableStorage::Init()
 		{ "addpassenger",			'm', &ChatHandler::HandleVehicleAddPassengerCommand,			"Adds a new NPC passenger to the vehicle",				NULL, 0, 0, 0 },
 		{ NULL,						'0', NULL,													"",														NULL, 0, 0, 0 }
 	};
-
 	dupe_command_table(vehicleCommandTable, _vehicleCommandTable);
+
+	static ChatCommand learnCommandTable[] =
+	{
+		{ "all",		'm', &ChatHandler::HandleLearnAllCommand,		"Teaches all class spells.",										NULL, 0, 0, 0 },
+		{ "spell",		'm', &ChatHandler::HandleLearnSpellCommand,		"Teaches a select spell. <spellID> or <spellLink>.",				NULL, 0, 0, 0 },
+		{ "talents",	'm', &ChatHandler::HandleLearnTalentCommand,	"Teaches all class talents.",										NULL, 0, 0, 0 },
+		{ "skill",		'm', &ChatHandler::HandleLearnSkillCommand,		"Teaches a select skill: <skillid> (optional) <value> <maxvalue>",	NULL, 0, 0, 0 },
+		{ NULL,			'0', NULL,										"",																	NULL, 0, 0, 0 }
+	};
+	dupe_command_table(learnCommandTable, _learnCommandTable);
+
+	static ChatCommand unlearnCommandTable[] =
+	{
+		{ "all",		'm', &ChatHandler::HandleResetSpellsCommand,	"Unlearns all spells to starting spells of targeted player. DANGEROUS.",	NULL, 0, 0, 0 },
+		{ "spell",		'm', &ChatHandler::HandleUnlearnCommand,		"Unlearns a select spell. <spellID> or <spellLink>.",						NULL, 0, 0, 0 },
+		{ "talents",	'm', &ChatHandler::HandleResetTalentsCommand,	"Unlearns all talents of targeted player. DANGEROUS.",						NULL, 0, 0, 0 },
+		{ "skills",		'm', &ChatHandler::HandleResetSkillsCommand,	"Unlearns all skills.",														NULL, 0, 0, 0 },
+		{ NULL,			'0', NULL,										"",																			NULL, 0, 0, 0 }
+	};
+	dupe_command_table(unlearnCommandTable, _unlearnCommandTable);
 
 	static ChatCommand commandTable[] =
 	{
@@ -730,6 +754,7 @@ void CommandTableStorage::Init()
 		{ "worldport",			'v', &ChatHandler::HandleWorldPortCommand,						"Teleports you to a location with mapid x y z",																								NULL,						0,						0, 0 },
 		{ "start",				'm', &ChatHandler::HandleStartCommand,							"Teleports you to a starting location",																										NULL,						0,						0, 0 },
 		{ "devtag",				'1', &ChatHandler::HandleDeveloperCommand,						"toggles <dev> tag",																														NULL,						0,						0, 0 },
+		{ "dev",				'1', &ChatHandler::HandleDeveloperCommand,						"toggles <dev> tag",																														NULL,						0,						0, 0 },
 		{ "invincible",			'j', &ChatHandler::HandleInvincibleCommand,						".invincible - Toggles INVINCIBILITY (mobs won't attack you)",																				NULL,						0,						0, 0 },
 		{ "invisible",			'i', &ChatHandler::HandleInvisibleCommand,						".invisible - Toggles INVINCIBILITY and INVISIBILITY (mobs won't attack you and nobody can see you, but they can see your chat messages)",	NULL,						0,						0, 0 },
 		{ "playerinfo",			'm', &ChatHandler::HandlePlayerInfo,							".playerinfo - Displays information about the selected character (account...)",																NULL,						0,						0, 0 },
@@ -772,12 +797,15 @@ void CommandTableStorage::Init()
 		{ "addtrainerspell",	'm', &ChatHandler::HandleAddTrainerSpellCommand,				"",																																			NULL,						0,						0, 0 },
 		{ "achieve",			'0', NULL,														"",																																			achievementCommandTable,	0,						0, 0 },
 		{ "vehicle",			'm', NULL,														"",																																			vehicleCommandTable,		0,						0, 0 },
-		{ "bank",				'a', &ChatHandler::HandleShowBankCommand,						"Open your bank from anywhere.",																											NULL,					 	0,						0, 0 },
+		{ "bank",				'0', &ChatHandler::HandleShowBankCommand,						"Open your bank from anywhere.",																											NULL,					 	0,						0, 0 },
 		{ "model",				'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "display",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "displayid",			'm', NULL,														"Modifies the display identifier (DisplayID) of the target.",																				NULL,						UNIT_FIELD_DISPLAYID,	0, 1 },
 		{ "chatcolor",			'a', &ChatHandler::HandleColorChat,								"SYNTAX: None.\nNOTES: Toggles ranked chat colour in chat messages on/off.",																NULL,						0,						0, 0 },
 		{ "changecolor",		'0', &ChatHandler::HandleChangeChatColor,						"Changes the colour of your text when messaging.",																							NULL,						0,						0, 0 },
+		{ "learn",				'm', NULL,														"",																																			learnCommandTable,			0,						0, 0 },
+		{ "unlearn",			'm', NULL,														"",																																			unlearnCommandTable,		0,						0, 0 },
+		{ "additem",			'm', &ChatHandler::HandleAddInvItemCommand,						"Adds a item to your inventory. <itemID>/<itemLink> <itemCount>",																			NULL,						0,						0, 0 },
 		{ NULL,					'0', NULL,														"",																																			NULL,						0,						0, 0 }
 	};
 	dupe_command_table(commandTable, _commandTable);

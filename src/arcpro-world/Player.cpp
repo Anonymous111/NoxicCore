@@ -5126,10 +5126,12 @@ void Player::UpdateStats()
 
 	uint32 str = GetStat(STAT_STRENGTH);
 	uint32 agi = GetStat(STAT_AGILITY);
+	uint32 stam = GetStat(STAT_STAMINA);
+	uint32 intel = GetStat(STAT_INTELLECT);
+	uint32 spi = GetStat(STAT_SPIRIT);
 	uint32 lev = getLevel();
-
-	// Attack power
 	uint32 cl = getClass();
+
 	switch(cl)
 	{
 		case DRUID:

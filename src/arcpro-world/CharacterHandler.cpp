@@ -935,6 +935,7 @@ void WorldSession::FullLogin(Player* plr)
 
 	Log.Debug("Login", "Player %s logged in.", plr->GetName());
 
+	sLog.outString("[%s] has logged in.", plr->GetName());
 	sWorld.incrementPlayerCount(plr->GetTeam());
 
 	if(plr->m_FirstLogin)

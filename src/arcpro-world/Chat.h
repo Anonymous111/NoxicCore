@@ -187,6 +187,8 @@ class SERVER_DECL CommandTableStorage : public Singleton< CommandTableStorage >
 	ChatCommand* _arenaCommandTable;
 	ChatCommand* _achievementCommandTable;
 	ChatCommand* _vehicleCommandTable;
+	ChatCommand* _learnCommandTable;
+	ChatCommand* _unlearnCommandTable;
 	ChatCommand* _commandTable;
 
 	ChatCommand* GetSubCommandTable(const char* name);
@@ -364,6 +366,10 @@ protected:
 	bool HandlePortToGameObjectSpawnCommand(const char* args, WorldSession* m_session);
 	bool HandleMoveCommand(const char* args, WorldSession* m_session);
 	bool HandleLearnCommand(const char* args, WorldSession* m_session);
+	bool HandleLearnSpellCommand(const char* args, WorldSession* m_session);
+	bool HandleLearnAllCommand(const char* args, WorldSession* m_session);
+	bool HandleLearnTalentCommand(const char* args, WorldSession* m_session);
+	bool HandleUnlearnCommand(const char* args, WorldSession* m_session);
 	bool HandleReviveCommand(const char* args, WorldSession* m_session);
 	bool HandleGenderChanger(const char* args, WorldSession* m_session);
 	bool HandleAddGraveCommand(const char* args, WorldSession* m_session);
@@ -489,7 +495,6 @@ protected:
 	bool HandleNextDayCommand(const char* args, WorldSession* m_session);
 	bool HandlePVPCreditCommand(const char* args, WorldSession* m_session);
 
-	bool HandleUnlearnCommand(const char* args, WorldSession* m_session);
 	bool HandleModifyLevelCommand(const char* args, WorldSession* m_session);
 
 	// Pet
