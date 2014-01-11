@@ -379,7 +379,7 @@ void ApplyNormalFixes()
 		//Quivers, Ammo Pouches and Thori'dal the Star's Fury
 		if((namehash == SPELL_HASH_HASTE && sp->Attributes & 0x10000) || sp->Id == 44972)
 		{
-			sp->Attributes &= ~ATTRIBUTES_PASSIVE;//Otherwise we couldn't remove them
+			sp->Attributes &= ~ATTRIBUTES_PASSIVE; //Otherwise we couldn't remove them
 			sp->BGR_one_buff_on_target |= SPELL_TYPE_QUIVER_HASTE;
 		}
 
@@ -395,10 +395,6 @@ void ApplyNormalFixes()
 			case SPELL_HASH_CRUSADER_AURA:
 				sp->BGR_one_buff_from_caster_on_self = SPELL_TYPE2_PALADIN_AURA;
 			break;
-		}
-
-		switch(namehash)
-		{
 			case SPELL_HASH_BLOOD_PRESENCE:
 			case SPELL_HASH_FROST_PRESENCE:
 			case SPELL_HASH_UNHOLY_PRESENCE:
@@ -8535,7 +8531,7 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 57669;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->procChance = 33;
-		sp->procflags = PROC_ON_SPELL_CRIT_HIT;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
 	}
 	sp = dbcSpell.LookupEntryForced(53291);
 	if(sp != NULL)
@@ -8545,6 +8541,6 @@ void ApplyNormalFixes()
 		sp->EffectTriggerSpell[0] = 57669;
 		sp->EffectImplicitTargetA[0] = 1;
 		sp->procChance = 66;
-		sp->procflags = PROC_ON_SPELL_CRIT_HIT;
+		sp->procFlags = PROC_ON_SPELL_CRIT_HIT;
 	}
 }
