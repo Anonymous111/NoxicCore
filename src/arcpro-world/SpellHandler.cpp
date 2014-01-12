@@ -77,7 +77,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket & recvPacket)
 
 	if(itemProto->InventoryType != 0 && !_player->GetItemInterface()->IsEquipped(itemProto->ItemId))  //Equipable items cannot be used before they're equipped. Prevents exploits
 	{
-		SystemMessage("You must equip that item to use it.");
+		_player->GetItemInterface()->BuildInventoryChangeError(tmpItem, NULL, INV_ERR_ITEM_LOCKED);
 		return; //Prevents exploits such as keeping an on-use trinket in your bag and using WPE to use it from your bag in mid-combat.
 	}
 
