@@ -382,6 +382,61 @@ bool ChatHandler::HandleLearnCommand(const char* args, WorldSession* m_session)
 	return true;
 }
 
+bool ChatHandler::HandleLearnSpellCommand(const char* args, WorldSession *m_session)
+{
+	if(!*args)
+		return false;
+
+	Player* plr = getSelectedChar(m_session, true);
+	if(!plr)
+	{
+		plr = m_session->GetPlayer();
+		SystemMessage(m_session, "Auto-targeting self.");
+	}
+	if(!plr)
+		return false;
+
+	uint32 spell = atol((char*)args);
+	if(spell == 0)
+	{
+		spell = GetSpellIDFromLink(args);
+		if(spell == 0)
+		{
+			SystemMessage(m_session, "Invalid spell %u", spell);
+			return true;
+		}
+	}
+
+	SpellEntry* sp = dbcSpell.LookupEntry(spell);
+	if(!sp)
+	{
+		SystemMessage(m_session, "Invalid spell %u", spell);
+		return true;
+	}
+
+	if(!plr->GetSession()->HasGMPermissions() && (sp->Effect[0] == SPELL_EFFECT_INSTANT_KILL || sp->Effect[1] == SPELL_EFFECT_INSTANT_KILL || sp->Effect[2] == SPELL_EFFECT_INSTANT_KILL))
+	{
+		SystemMessage(m_session, "Don't teach players instant kill spells. This action has been logged.");
+		return true;
+	}
+
+	if(plr->HasSpell(spell)) // check to see if char already knows
+	{
+		std::string OutStr = plr->GetName();
+		OutStr += " already knows that spell.";
+
+		SystemMessage(m_session, OutStr.c_str());
+		return true;
+	}
+
+	plr->addSpell(spell);
+	sGMLog.writefromsession(m_session, "Taught %s spell %u", plr->GetName(), spell);
+	BlueSystemMessageToPlr(plr, "%s taught you Spell %u", m_session->GetPlayer()->GetName(), spell);
+	GreenSystemMessage(m_session, "Taught %s Spell %u", plr->GetName(), spell);
+
+	return true;
+}
+
 bool ChatHandler::HandleLearnAllCommand(const char* args, WorldSession *m_session)
 {
 	Player *plr = getSelectedChar(m_session, true);
@@ -538,22 +593,25 @@ bool ChatHandler::HandleLearnTalentCommand(const char* args, WorldSession * m_se
 	return true;
 }
 
-bool ChatHandler::HandleUnlearnCommand(const char* args, WorldSession * m_session)
+bool ChatHandler::HandleUnlearnCommand(const char* args, WorldSession* m_session)
 {
-	Player * plr = getSelectedChar(m_session, true);
+	Player* plr = getSelectedChar(m_session, true);
 	if(plr == 0)
 		return true;
+
 	uint32 SpellId = atol(args);
 	if(SpellId == 0)
 	{
-		SpellId = GetSpellIDFromLink( args );
-		if( SpellId == 0 )
+		SpellId = GetSpellIDFromLink(args);
+		if(SpellId == 0)
 		{
-			RedSystemMessage(m_session, "You must specify a <spellID> or <spellLink>.");
+			RedSystemMessage(m_session, "You must specify a spell id.");
 			return true;
 		}
 	}
-	sGMLog.writefromsession(m_session, "Removed spell %u from %s", SpellId, plr->GetName());
+
+	sGMLog.writefromsession(m_session, "removed spell %u from %s", SpellId, plr->GetName());
+
 	if(plr->HasSpell(SpellId))
 	{
 		GreenSystemMessageToPlr(plr, "Removed spell %u.", SpellId);

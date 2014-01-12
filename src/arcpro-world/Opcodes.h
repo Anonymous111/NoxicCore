@@ -1035,7 +1035,7 @@ enum Opcodes
 	CMSG_GUILD_BANK_DEPOSIT_MONEY							= 0x3EC, // implemented
 	CMSG_GUILD_BANK_WITHDRAW_MONEY							= 0x3ED, // implemented
     MSG_GUILD_BANK_LOG_QUERY								= 0x3EE, // implemented
-	CMSG_SET_CHANNEL_WATCH									= 0x3EF, /// TODO: implement
+	CMSG_SET_CHANNEL_WATCH									= 0x3EF, // implemented
 	SMSG_USERLIST_ADD										= 0x3F0, /// TODO: implement
 	SMSG_USERLIST_REMOVE									= 0x3F1, /// TODO: implement
 	SMSG_USERLIST_UPDATE									= 0x3F2, /// TODO: implement

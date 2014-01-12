@@ -344,3 +344,12 @@ void WorldSession::HandleChannelNumMembersQuery(WorldPacket & recvPacket)
 		SendPacket(&data);
 	}
 }
+
+void WorldSession::HandleSetChannelWatchOpcode(WorldPacket & recvPacket)
+{
+	string channelName;
+
+	recvPacket >> channelName;
+	
+	LOG_DEBUG("CMSG_SET_CHANNEL_WATCH %s Channel: %s", _player->GetName(), channelName.c_str());
+}

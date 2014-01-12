@@ -603,6 +603,7 @@ protected:
 	void HandleChannelAnnounce(WorldPacket & recvPacket);
 	void HandleChannelModerate(WorldPacket & recvPacket);
 	void HandleChannelNumMembersQuery(WorldPacket & recvPacket);
+	void HandleSetChannelWatchOpcode(WorldPacket & recvPacket);
 	void HandleChannelRosterQuery(WorldPacket & recvPacket);
 
 	// Duel
@@ -757,6 +758,7 @@ protected:
 	void HandleVoiceChatQueryOpcode(WorldPacket & recv_data);
 	void HandleChannelVoiceQueryOpcode(WorldPacket & recv_data);
 	void HandleSetAutoLootPassOpcode(WorldPacket & recv_data);
+	void HandleMeetingStoneInfoOpcode(WorldPacket & recv_data);
 
 	void HandleSetFriendNote(WorldPacket & recv_data);
 	void HandleInrangeQuestgiverQuery(WorldPacket & recv_data);
