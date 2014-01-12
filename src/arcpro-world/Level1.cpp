@@ -943,37 +943,6 @@ bool ChatHandler::HandleTriggerCommand(const char* args, WorldSession* m_session
 	return true;
 }
 
-bool ChatHandler::HandleUnlearnCommand(const char* args, WorldSession* m_session)
-{
-	Player* plr = getSelectedChar(m_session, true);
-	if(plr == 0)
-		return true;
-
-	uint32 SpellId = atol(args);
-	if(SpellId == 0)
-	{
-		SpellId = GetSpellIDFromLink(args);
-		if(SpellId == 0)
-		{
-			RedSystemMessage(m_session, "You must specify a spell id.");
-			return true;
-		}
-	}
-
-	sGMLog.writefromsession(m_session, "removed spell %u from %s", SpellId, plr->GetName());
-
-	if(plr->HasSpell(SpellId))
-	{
-		GreenSystemMessageToPlr(plr, "Removed spell %u.", SpellId);
-		GreenSystemMessage(m_session, "Removed spell %u from %s.", SpellId, plr->GetName());
-		plr->removeSpell(SpellId, false, false, 0);
-	}
-	else
-		RedSystemMessage(m_session, "That player does not have spell %u learnt.", SpellId);
-
-	return true;
-}
-
 bool ChatHandler::HandleNpcSpawnLinkCommand(const char* args, WorldSession* m_session)
 {
 	uint32 id;
