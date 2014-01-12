@@ -871,7 +871,6 @@ void WorldSession::HandleLogoutRequestOpcode(WorldPacket & recv_data)
 	WorldPacket data(SMSG_LOGOUT_RESPONSE, 5);
 
 	LOG_DEBUG("WORLD: Recvd CMSG_LOGOUT_REQUEST Message");
-	sLog.outString("[%s] has logged out.", _player->GetName());
 
 	if(pPlayer)
 	{
@@ -883,41 +882,29 @@ void WorldSession::HandleLogoutRequestOpcode(WorldPacket & recv_data)
 			return;
 		}
 
-		if(GetPermissionCount() > 0)
-		{
-			//Logout on NEXT sessionupdate to preserve processing of dead packets (all pending ones should be processed)
-			SetLogoutTimer(1);
-			return;
-		}
-
-		if(pPlayer->CombatStatus.IsInCombat() || //can't quit still in combat
-				pPlayer->DuelingWith != NULL) //can't quit still dueling or attacking
+		if(pPlayer->CombatStatus.IsInCombat() || pPlayer->DuelingWith != NULL)
 		{
 			data << uint32(1) << uint8(0);
 			SendPacket(&data);
 			return;
 		}
 
-		if(pPlayer->m_isResting || // We are resting so log out instantly
-				pPlayer->GetTaxiState()) // or we are on a taxi
+		sLog.outString("[%s] has logged out.", _player->GetName());
+
+		if(HasGMPermissions() && !pPlayer->IsPvPFlagged())
 		{
 			//Logout on NEXT sessionupdate to preserve processing of dead packets (all pending ones should be processed)
 			SetLogoutTimer(1);
 			return;
 		}
 
-		data << uint32(0); //Filler
-		data << uint8(0); //Logout accepted
+		data << uint32(0) /* Filler */ << uint8(0); //Logout accepted
 		SendPacket(&data);
 
-		//stop player from moving
-		pPlayer->SetMovement(MOVE_ROOT, 1);
+		pPlayer->SetMovement(MOVE_ROOT, 1); // Prevent movement
 		LoggingOut = true;
-		// Set the "player locked" flag, to prevent movement
-		pPlayer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_LOCK_PLAYER);
-
-		//make player sit
-		pPlayer->SetStandState(STANDSTATE_SIT);
+		pPlayer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_LOCK_PLAYER); // Lock the player to prevent movement
+		pPlayer->SetStandState(STANDSTATE_SIT); // Force the player to sit
 		SetLogoutTimer(20000);
 	}
 	/*
@@ -930,15 +917,20 @@ void WorldSession::HandlePlayerLogoutOpcode(WorldPacket & recv_data)
 	CHECK_INWORLD_RETURN
 
 	LOG_DEBUG("WORLD: Recvd CMSG_PLAYER_LOGOUT Message");
-	if(!HasGMPermissions() || pPlayer->CombatStatus.IsInCombat())
+	if(!HasGMPermissions() || _player->CombatStatus.IsInCombat())
 	{
 		// send "You do not have permission to use this"
 		SendNotification(NOTIFICATION_MESSAGE_NO_PERMISSION);
 	}
 	else
 	{
-		sLog.outString("[%s] has logged out.", _player->GetName());
-		LogoutPlayer(true);
+		if(!_player->IsPvPFlagged())
+		{
+			sLog.outString("[%s] has logged out.", _player->GetName());
+			LogoutPlayer(true);
+		}
+		else
+			SendNotification("You can not use this command while PVP flagged.");
 	}
 }
 
@@ -956,21 +948,14 @@ void WorldSession::HandleLogoutCancelOpcode(WorldPacket & recv_data)
 
 	LoggingOut = false;
 
-	//Cancel logout Timer
-	SetLogoutTimer(0);
+	OutPacket(SMSG_LOGOUT_CANCEL_ACK); // Inform the player's client
 
-	//tell client about cancel
-	OutPacket(SMSG_LOGOUT_CANCEL_ACK);
+	SetLogoutTimer(0); // Cancel logout timer
+	pPlayer->SetMovement(MOVE_UNROOT, 5); // Allow movement
+	pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_LOCK_PLAYER); // Unlock the player to allow movement
+	pPlayer->SetStandState(STANDSTATE_STAND); // Force the player to stand
 
-	//unroot player
-	pPlayer->SetMovement(MOVE_UNROOT, 5);
-
-	// Remove the "player locked" flag, to allow movement
-	pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_LOCK_PLAYER);
-
-	//make player stand
-	pPlayer->SetStandState(STANDSTATE_STAND);
-
+	sLog.outString("[%s] has canceled %s logout.", _player->GetName(), (_player->getGender() ? "her" : "his"));
 	LOG_DEBUG("WORLD: sent SMSG_LOGOUT_CANCEL_ACK Message");
 }
 
@@ -2576,5 +2561,14 @@ void WorldSession::HandleRealmSplitOpcode(WorldPacket & recv_data)
 	// 0x1 realm split
 	// 0x2 realm split pending
 	data << split_date;
+	SendPacket(&data);
+}
+
+void WorldSession::HandleMeetingStoneInfoOpcode(WorldPacket & recv_data)
+{
+	LOG_DEBUG("WORLD: Received CMSG_MEETING_STONE_INFO");
+
+	WorldPacket data(SMSG_MEETINGSTONE_SETQUEUE, 5);
+	data << uint32(0) << uint8(6);
 	SendPacket(&data);
 }
