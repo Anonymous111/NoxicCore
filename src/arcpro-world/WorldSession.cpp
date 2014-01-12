@@ -187,7 +187,7 @@ int WorldSession::Update(uint32 InstanceID)
 		if(_socket == NULL)
 		{
 			if(_player)
-				sLog.outstring("[%s] has disconnected." _player->GetName());
+				sLog.outString("[%s] has disconnected.", _player->GetName());
 
 			bDeleted = true;
 			LogoutPlayer(true);
@@ -661,6 +661,7 @@ void WorldSession::InitPacketHandlerTable()
 	WorldPacketHandlers[CMSG_CHANNEL_MODERATE].handler = &WorldSession::HandleChannelModerate;
 	WorldPacketHandlers[CMSG_GET_CHANNEL_MEMBER_COUNT].handler = &WorldSession::HandleChannelNumMembersQuery;
 	WorldPacketHandlers[CMSG_CHANNEL_DISPLAY_LIST].handler = &WorldSession::HandleChannelRosterQuery;
+	WorldPacketHandlers[CMSG_SET_CHANNEL_WATCH].handler = &WorldSession::HandleSetChannelWatchOpcode;
 
 	// Groups / Raids
 	WorldPacketHandlers[CMSG_GROUP_INVITE].handler = &WorldSession::HandleGroupInviteOpcode;
@@ -681,6 +682,7 @@ void WorldSession::InitPacketHandlerTable()
 	WorldPacketHandlers[MSG_RAID_TARGET_UPDATE].handler = &WorldSession::HandleSetPlayerIconOpcode;
 	WorldPacketHandlers[CMSG_REQUEST_PARTY_MEMBER_STATS].handler = &WorldSession::HandlePartyMemberStatsOpcode;
 	WorldPacketHandlers[MSG_PARTY_ASSIGNMENT].handler = &WorldSession::HandleGroupPromote;
+	WorldPacketHandlers[CMSG_MEETINGSTONE_INFO].handler = &WorldSession::HandleMeetingStoneInfoOpcode;
 
 	// LFG System
 	WorldPacketHandlers[CMSG_SET_LFG_COMMENT].handler = &WorldSession::HandleSetLookingForGroupComment;
