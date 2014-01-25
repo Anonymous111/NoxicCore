@@ -605,12 +605,12 @@ bool ChatHandler::HandleUnlearnCommand(const char* args, WorldSession* m_session
 		SpellId = GetSpellIDFromLink(args);
 		if(SpellId == 0)
 		{
-			RedSystemMessage(m_session, "You must specify a spell id.");
+			RedSystemMessage(m_session, "You must specify a <spellId> or <spellLink>.");
 			return true;
 		}
 	}
 
-	sGMLog.writefromsession(m_session, "removed spell %u from %s", SpellId, plr->GetName());
+	sGMLog.writefromsession(m_session, "Removed spell %u from %s", SpellId, plr->GetName());
 
 	if(plr->HasSpell(SpellId))
 	{
